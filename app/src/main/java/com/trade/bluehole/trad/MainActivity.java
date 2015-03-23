@@ -65,10 +65,18 @@ public class MainActivity extends ActionBarActivity {
         Toast.makeText(this,"登陆后台 pressed",Toast.LENGTH_SHORT).show();
         LoginSystemActivity_.intent(this).startForResult(12);
     }
+
     @Click(R.id.productGridViewButton)
     void loadProductData(){
         ProductManagerActivity_.intent(this).start();
     }
+    @Click(R.id.userInfoButton)
+    void loadUserInfo(){
+        UserInfoActivity_.intent(this).start();
+    }
+
+
+
     @OnActivityResult(12)
     void onResult(int resultCode, Intent data) {
        String name= data.getStringExtra("result");

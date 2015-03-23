@@ -37,6 +37,10 @@
             android:name=".ProductManagerActivity_"
             android:label="@string/title_activity_product_manager" >
         </activity>
+        <activity
+            android:name=".UserInfoActivity_"
+            android:label="@string/title_activity_user_info" >
+        </activity>
     </application>
 
 </manifest>
