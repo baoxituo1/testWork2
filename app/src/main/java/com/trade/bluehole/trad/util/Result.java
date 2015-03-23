@@ -7,7 +7,17 @@ public class Result <T,L>{
 	public boolean success;
 	public List<T> list;
 	public L obj;
-	public String message;
+    public T bzseObj;
+
+    public T getBzseObj() {
+        return bzseObj;
+    }
+
+    public void setBzseObj(T bzseObj) {
+        this.bzseObj = bzseObj;
+    }
+
+    public String message;
 	public List<T>  aaData;
 	public int iTotalRecords;
 	public int iTotalDisplayRecords;

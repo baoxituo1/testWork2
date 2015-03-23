@@ -93,6 +93,7 @@
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />
     <orderEntry type="library" exported="" name="phoenix-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.0.0" level="project" />
+    <orderEntry type="library" exported="" name="android-crop-0.9.10" level="project" />
     <orderEntry type="library" exported="" name="codemodel-2.4.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.0.0" level="project" />
   </component>

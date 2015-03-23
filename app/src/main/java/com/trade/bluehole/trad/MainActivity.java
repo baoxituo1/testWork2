@@ -70,11 +70,16 @@ public class MainActivity extends ActionBarActivity {
     void loadProductData(){
         ProductManagerActivity_.intent(this).start();
     }
+
     @Click(R.id.userInfoButton)
     void loadUserInfo(){
         UserInfoActivity_.intent(this).start();
     }
 
+    @Click(R.id.addProductButton)
+    void addProduct(){
+        NewProductActivity_.intent(this).start();
+    }
 
 
     @OnActivityResult(12)

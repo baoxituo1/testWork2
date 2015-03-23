@@ -24,5 +24,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="个人信息"/>
+    <Button
+        android:id="@+id/addProductButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加商品"/>
 
 </LinearLayout>

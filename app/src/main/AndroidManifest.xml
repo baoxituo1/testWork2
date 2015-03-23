@@ -39,8 +39,14 @@
         </activity>
         <activity
             android:name=".UserInfoActivity_"
-            android:label="@string/title_activity_user_info" >
+            android:label="@string/title_activity_user_info"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
+        <activity
+            android:name=".NewProductActivity_"
+            android:label="@string/title_activity_product_manage" >
+        </activity>
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
     </application>
 
 </manifest>
