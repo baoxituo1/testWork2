@@ -1,63 +1,128 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     tools:context="com.trade.bluehole.trad.NewProductActivity">
-
-    <LinearLayout
-        android:id="@+id/user_info_layout2"
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_item_height"
-        android:background="@color/saffron">
-        <ImageView
-            android:visibility="gone"
-            android:id="@+id/result_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-             />
-        <TextView
-            android:id="@+id/tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:textSize="14sp"
-            android:layout_marginBottom="8dp"/>
-        <GridView
-            android:id="@+id/gridview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv"
-            android:numColumns="3"
-            android:stretchMode="columnWidth"
-            android:horizontalSpacing="4dp"
-            android:verticalSpacing="4dp"/>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/user_info_layout3"
-        android:layout_below="@id/user_info_layout2"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/list_item_height"
-        android:background="@color/sienna">
-        <Button
-            android:id="@+id/addProductImage"
-            android:text="选择图片"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/addMoreProductImage"
-            android:text="选择多张图片"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/uploadProductImage"
-            android:text="上传图片到阿里oss"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:layout_height="match_parent">
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/user_info_layout2"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:background="@color/saffron">
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/result_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                     />
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp"/>
+                <GridView
+                    android:id="@+id/gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv"
+                    android:numColumns="5"
+                    android:stretchMode="columnWidth"
+                    android:horizontalSpacing="4dp"
+                    android:verticalSpacing="4dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/user_info_layout3"
+                android:layout_below="@id/user_info_layout2"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/sienna">
+                <!-- <Button
+                     android:id="@+id/addProductImage"
+                     android:text="选择图片"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content" />-->
+                <Button
+                    android:id="@+id/addMoreProductImage"
+                    android:text="选择多张图片"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/user_info_layout4"
+                android:layout_below="@id/user_info_layout3"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/eggplant">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText android:id="@+id/product_name" android:layout_width="match_parent" android:gravity="top"
+                        android:textColor="@color/eggplant"  android:shadowColor="#ffffff" android:background="#ffffff" android:textColorHint="@color/eggplant"
+                        android:layout_height="wrap_content" android:hint="商品描述"
+                        android:lines="5"
+                        android:maxLines="6"
+                     />
+                </LinearLayout>
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_weight="0.3"
+                        android:layout_width="0dp"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="商品价格"
+                        android:textColor="#ffffff"
+                        android:layout_height="20dp" />
+                    <EditText android:id="@+id/product_price" android:layout_weight="0.7" android:layout_width="0dp" android:numeric="decimal"
+                        android:textColor="#ffffff"  android:shadowColor="#ffffff"
+                        android:layout_height="wrap_content" android:hint="请输入商品价格" android:textColorHint="#ffffff"
+                        android:inputType="numberDecimal" android:maxLines="1" android:text=""
+                        android:singleLine="true" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_weight="0.3"
+                        android:layout_width="0dp"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="商品库存"
+                        android:textColor="#ffffff"
+                        android:layout_height="20dp" />
+                    <EditText android:id="@+id/product_number" android:layout_weight="0.7" android:layout_width="0dp" android:numeric="integer"
+                        android:textColor="#ffffff"  android:shadowColor="#ffffff" android:textColorHint="#ffffff"
+                        android:layout_height="wrap_content" android:hint="请输入商品库存"
+                        android:inputType="number" android:maxLines="1" android:text=""
+                        android:singleLine="true" />
+                </LinearLayout>
+
+            </LinearLayout>
+             <LinearLayout
+                android:id="@+id/user_info_layout5"
+                android:layout_below="@id/user_info_layout4"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_item_height"
+                android:background="@color/sienna">
+                <Button
+                    android:id="@+id/uploadProductImage"
+                    android:text="保存"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+      </LinearLayout>
+    </RelativeLayout>
+   </ScrollView>
 </RelativeLayout>

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.adaptor.MyBaseAdapter;
 import com.trade.bluehole.trad.entity.photo.Dir;
@@ -32,7 +31,7 @@ public class ImageDirAdapter extends MyBaseAdapter<Dir>
         Holder holder;
         if (convertView == null)
         {
-            convertView = mInflater.inflate(R.layout.i_imagedir, parent, false);
+            convertView = mInflater.inflate(R.layout.i_photo_imagedir, parent, false);
             holder = new Holder();
             holder.mImageView = (ImageView) convertView.findViewById(R.id.iv);
             holder.mTextView = (TextView) convertView.findViewById(R.id.path);

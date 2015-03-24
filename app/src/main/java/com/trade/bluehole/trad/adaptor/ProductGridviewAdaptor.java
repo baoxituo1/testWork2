@@ -20,7 +20,6 @@ import com.trade.bluehole.trad.entity.ProductIndexVO;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by Administrator on 2015-03-23.
@@ -72,7 +71,7 @@ public class ProductGridviewAdaptor extends BaseAdapter {
         View view=convertView;
         final  HoldObject viewHolder;
         if(null==view){
-            view=inflater.inflate(R.layout.gridview_product_items,parent,false);
+            view=inflater.inflate(R.layout.i_pro_gridview_product,parent,false);
             viewHolder=new HoldObject();
             viewHolder.product_cover_image=(ImageView)view.findViewById(R.id.product_cover_image);
             viewHolder.product_name=(TextView)view.findViewById(R.id.product_name);

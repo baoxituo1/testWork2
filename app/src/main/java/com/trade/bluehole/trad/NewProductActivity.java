@@ -20,28 +20,43 @@ import com.aliyun.mbaas.oss.model.TokenGenerator;
 import com.aliyun.mbaas.oss.storage.OSSFile;
 import com.aliyun.mbaas.oss.util.OSSLog;
 import com.aliyun.mbaas.oss.util.OSSToolKit;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.BaseJsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.soundcloud.android.crop.Crop;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.apache.http.Header;
+
 import com.aliyun.mbaas.oss.storage.OSSBucket;
 import com.trade.bluehole.trad.activity.photo.ImageDirActivity;
 import com.trade.bluehole.trad.adaptor.photo.MainAdapter;
+import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.photo.Photo;
 import com.trade.bluehole.trad.util.MyApplication;
+import com.trade.bluehole.trad.util.Result;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.UUID;
 
 @EActivity(R.layout.activity_product_add)
 public class NewProductActivity extends ActionBarActivity {
+    @App
+    MyApplication myapplication;
+    User user=null;
+    AsyncHttpClient client = new AsyncHttpClient();
     static final String accessKey = "ictZeAtTIlkEXGta"; // 测试代码没有考虑AK/SK的安全性
     static final String screctKey = "8CQkQa7IytCb73hvk12EUazS0hUPw2";
     public OSSBucket sampleBucket;
     private ArrayList<Photo> mList;
     private MainAdapter mAdapter;
+    String imageUrls="";
     static {
         OSSClient.setGlobalDefaultTokenGenerator(new TokenGenerator() { // 设置全局默认加签器
             @Override
@@ -67,12 +82,19 @@ public class NewProductActivity extends ActionBarActivity {
     TextView mTextView;
     @ViewById(R.id.gridview)
     GridView gridView;
+    @ViewById
+    TextView product_name;
+    @ViewById
+    TextView product_price;
+    @ViewById
+    TextView product_number;
 
-    @Click(R.id.addProductImage)
+
+   /* @Click(R.id.addProductImage)
     void addProImageClick(){
         resultView.setImageDrawable(null);
         Crop.pickImage(this);
-    }
+    }*/
 
     /**
      * 点击选择多张图片
@@ -90,28 +112,35 @@ public class NewProductActivity extends ActionBarActivity {
      */
     @Click(R.id.uploadProductImage)
     void uploadProImageClick(){
-        if(!mList.isEmpty()){
+        if(!mList.isEmpty()&&null!=user){
+            imageUrls="";
             for(Photo ls:mList){
                 try {
-                    doUploadFile(ls.imgPath);
+                    String fileName= "pro/"+"image_"+UUID.randomUUID()+".jpg";
+                    doUploadFile(ls.imgPath,fileName);
+                    imageUrls+=fileName+",";
+                    //Log.e("NewProductActivity", "oss-file-name:"+ls.fileName);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-
+            uploadProImg();
         }else{
-            Toast.makeText(this,"上传列表为空",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"上传列表为空或者未登陆",Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void doUploadFile(String path) throws Exception {
-        OSSFile ossFile = new OSSFile(sampleBucket, "test20150324.jpg");
-        ossFile.setUploadFilePath(path, "image/jpg");
+    public void doUploadFile(String formUrl,String fileName) throws Exception {
+
+        OSSFile ossFile = new OSSFile(sampleBucket, fileName);
+        ossFile.setUploadFilePath(formUrl, "image/jpg");
+       // photo.fileName=imgName;
         ossFile.uploadInBackground(new SaveCallback() {
 
             @Override
-            public void onProgress(String arg0, int arg1, int arg2) {
-                // TODO Auto-generated method stub
+            public void onProgress(String objectKey, int byteCount, int totalSize) {
+                Log.e("NewProductActivity","objectKey:"+objectKey+",byteCount:"+byteCount+",totalSize:"+totalSize);
             }
 
             @Override
@@ -120,13 +149,45 @@ public class NewProductActivity extends ActionBarActivity {
             }
             @Override
             public void onSuccess(String arg0) {
-                Log.e("NewProductActivity","上传成功");
+                Log.e("NewProductActivity", "上传成功");
+            }
+        });
+    }
+
+
+    void uploadProImg(){
+        RequestParams params=new RequestParams();
+        params.put("userCode",user.getUserCode());
+        params.put("productName",product_name.getText());
+        params.put("productPrice",product_price.getText());
+        params.put("productNumber",product_number.getText());
+        params.put("imageUrls",imageUrls);
+        Log.e("NewProductActivity", "imageUrls:"+imageUrls);
+        client.get("http://192.168.1.161:8080/qqt_up/shopjson/saveProductJson.do", params, new BaseJsonHttpResponseHandler<String>() {
+
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
+                Log.d(LoginSystemActivity.class.getName(), statusCode + "");
+                if (null != response) {
+                        Toast.makeText(NewProductActivity.this, response, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
+            }
+
+            @Override
+            protected String parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                return rawJsonData;
             }
         });
     }
 
     @AfterViews
     void initData(){
+        user=myapplication.getUser();
         OSSLog.enableLog(true);
         OSSClient.setApplicationContext(getApplicationContext()); // 传入应用程序context
         // 开始单个Bucket的设置

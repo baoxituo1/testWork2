@@ -46,7 +46,7 @@ public class ImagesActivity extends ImageBaseActivity implements LoaderManager.L
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.a_images);
+        setContentView(R.layout.a_photo_images);
 
         mGridView = (GridView) findViewById(R.id.gridview);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener()

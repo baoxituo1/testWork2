@@ -13,6 +13,7 @@ public class Bean implements Parcelable
     public String id;
     public String text;
     public String imgPath;
+    public String fileName;
 
     @Override
     public int describeContents()

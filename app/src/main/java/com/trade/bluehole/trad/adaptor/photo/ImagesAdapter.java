@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.adaptor.MyBaseAdapter;
 import com.trade.bluehole.trad.entity.photo.Photo;
@@ -36,7 +35,7 @@ public class ImagesAdapter extends MyBaseAdapter<Photo>
         Holder holder;
         if (convertView == null)
         {
-            convertView = mInflater.inflate(R.layout.i_images, parent, false);
+            convertView = mInflater.inflate(R.layout.i_photo_images, parent, false);
             holder = new Holder();
             holder.mImageView = (ImageView) convertView.findViewById(R.id.iv);
             holder.mCheckImgaeView = (ImageView) convertView.findViewById(R.id.check);

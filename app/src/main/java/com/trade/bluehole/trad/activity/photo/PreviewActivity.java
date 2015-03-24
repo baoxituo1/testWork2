@@ -35,7 +35,7 @@ public class PreviewActivity extends ImageBaseActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.a_pre_view);
+        setContentView(R.layout.a_photo_pre_view);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
 
         SamplePagerAdapter mAdapter = new SamplePagerAdapter(checkList);
