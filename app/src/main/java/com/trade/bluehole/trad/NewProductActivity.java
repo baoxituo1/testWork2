@@ -36,6 +36,7 @@ import org.apache.http.Header;
 
 import com.aliyun.mbaas.oss.storage.OSSBucket;
 import com.trade.bluehole.trad.activity.photo.ImageDirActivity;
+import com.trade.bluehole.trad.activity.photo.PreviewActivity;
 import com.trade.bluehole.trad.adaptor.photo.MainAdapter;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.photo.Photo;
@@ -90,7 +91,23 @@ public class NewProductActivity extends ActionBarActivity {
     @ViewById
     TextView product_number;
 
+    @AfterViews
+    void initData(){
+        user=myapplication.getUser();
+        OSSLog.enableLog(true);
+        OSSClient.setApplicationContext(getApplicationContext()); // 传入应用程序context
+        // 开始单个Bucket的设置
+        sampleBucket = new OSSBucket("125");
+        sampleBucket.setBucketHostId("oss-cn-beijing.aliyuncs.com"); // 可以在这里设置数据中心域名或者cname域名
+        sampleBucket.setBucketACL(AccessControlList.PUBLIC_READ_WRITE);
 
+
+        mList = new ArrayList<Photo>();
+        Photo p=new Photo();
+        mList.add(p);
+        mAdapter = new MainAdapter(this, mList);
+        gridView.setAdapter(mAdapter);
+    }
    /* @Click(R.id.addProductImage)
     void addProImageClick(){
         resultView.setImageDrawable(null);
@@ -100,7 +117,7 @@ public class NewProductActivity extends ActionBarActivity {
     /**
      * 点击选择多张图片
      */
-    @Click(R.id.addMoreProductImage)
+   // @Click(R.id.addMoreProductImage)
     public void addMoreProImageClick(){
         resultView.setImageDrawable(null);
         Intent intent = new Intent(getApplicationContext(), ImageDirActivity.class);
@@ -140,7 +157,6 @@ public class NewProductActivity extends ActionBarActivity {
 
         OSSFile ossFile = new OSSFile(sampleBucket, fileName);
         ossFile.setUploadFilePath(formUrl, "image/jpg");
-       // photo.fileName=imgName;
         ossFile.uploadInBackground(new SaveCallback() {
 
             @Override
@@ -190,23 +206,7 @@ public class NewProductActivity extends ActionBarActivity {
         });
     }
 
-    @AfterViews
-    void initData(){
-        user=myapplication.getUser();
-        OSSLog.enableLog(true);
-        OSSClient.setApplicationContext(getApplicationContext()); // 传入应用程序context
-        // 开始单个Bucket的设置
-        sampleBucket = new OSSBucket("125");
-        sampleBucket.setBucketHostId("oss-cn-beijing.aliyuncs.com"); // 可以在这里设置数据中心域名或者cname域名
-        sampleBucket.setBucketACL(AccessControlList.PUBLIC_READ_WRITE);
 
-
-        mList = new ArrayList<Photo>();
-        Photo p=new Photo();
-        mList.add(p);
-        mAdapter = new MainAdapter(this, mList);
-        gridView.setAdapter(mAdapter);
-    }
 
 
     @Override
@@ -239,6 +239,24 @@ public class NewProductActivity extends ActionBarActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_add_pro, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if (id == R.id.save_product)
+        {
+            uploadProImageClick();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void beginCrop(Uri source) {

@@ -13,6 +13,7 @@
     <string name="check">选择</string>
     <string name="uncheck">取消选择</string>
     <string name="preview">预览</string>
+    <string name="por_add_done">完成</string>
     <string name="check_dir">选择目录</string>
     <string name="check_length">已经选择<xliff:g id="anystring_you_like">%1$d</xliff:g>张图片</string>
     <string name="tip_max_size">最多只能选择<xliff:g id="anystring_you_like">%1$d</xliff:g>张图片</string>
