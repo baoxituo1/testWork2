@@ -21,7 +21,16 @@ import org.androidannotations.annotations.rest.RestService;
 public class MyApplication extends Application {
 
     private User user;
+    /** 表示通过Intent传递到下一个Activity的图片列表 */
+    public static final String ARG_PHOTO_LIST = "trade.android.app.chooseimages.PHOTO_LIST";
+    /** 表示通过Intent传递到上一个Activity的图片列表 */
+    public static final String RES_PHOTO_LIST = "trade.android.app.chooseimages.PHOTO_LIST";
 
+    /** 表示选择的图片发生了变化 */
+    public static final int RESULT_CHANGE = 10010;
+
+    /** 最多能够选择的图片个数 */
+    public static final int MAX_SIZE = 20;
     public void onCreate() {
         super.onCreate();
         initSomeStuff();
@@ -61,5 +70,7 @@ public class MyApplication extends Application {
 
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config.build());
+
+        ImageManager.init();
     }
 }

@@ -47,6 +47,18 @@
             android:label="@string/title_activity_product_manage" >
         </activity>
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+        <activity
+            android:name=".activity.photo.ImageDirActivity"
+            android:label="@string/title_activity_image_dir" >
+        </activity>
+        <activity
+            android:name=".activity.photo.ImagesActivity"
+            android:label="@string/title_activity_images" >
+        </activity>
+        <activity
+            android:name=".activity.photo.PreviewActivity"
+            android:label="@string/title_activity_images_preview" >
+        </activity>
     </application>
 
 </manifest>
