@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,9 +101,13 @@ public class NewProductActivity extends ActionBarActivity {
      * 点击选择多张图片
      */
     @Click(R.id.addMoreProductImage)
-    void addMoreProImageClick(){
+    public void addMoreProImageClick(){
         resultView.setImageDrawable(null);
         Intent intent = new Intent(getApplicationContext(), ImageDirActivity.class);
+        if(mList.size()>0){
+            mList.remove(mList.size()-1);
+        }
+
         intent.putExtra(MyApplication.ARG_PHOTO_LIST, mList);
         startActivityForResult(intent, 13);
     }
@@ -197,7 +202,9 @@ public class NewProductActivity extends ActionBarActivity {
 
 
         mList = new ArrayList<Photo>();
-        mAdapter = new MainAdapter(getApplicationContext(), mList);
+        Photo p=new Photo();
+        mList.add(p);
+        mAdapter = new MainAdapter(this, mList);
         gridView.setAdapter(mAdapter);
     }
 
@@ -218,9 +225,18 @@ public class NewProductActivity extends ActionBarActivity {
                 {
                     mList.addAll(list);
                 }
-
+                if(mList.size()<10){
+                    Photo p=new Photo();
+                    p.id="99911111";
+                    mList.add(p);
+                }
                 mAdapter.notifyDataSetChanged();
                 mTextView.setText(getString(R.string.check_length, mAdapter.getCount()));
+                if(mList.size()>5){
+                    LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridView.getLayoutParams(); // 取控件mGrid当前的布局参数
+                    linearParams.height=gridView.getHeight()*2+10;
+                    gridView.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件mGrid2
+                }
             }
         }
     }
