@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -71,7 +73,7 @@ public class NewProductActivity extends ActionBarActivity {
                 return OSSToolKit.generateToken(accessKey, screctKey, content);
             }
         });
-        OSSClient.setGlobalDefaultACL(AccessControlList.PUBLIC_READ_WRITE); // 设置全局默认bucket访问权限
+       // OSSClient.setGlobalDefaultACL(AccessControlList.PUBLIC_READ_WRITE); // 设置全局默认bucket访问权限
         OSSClient.setGlobalDefaultHostId("oss-cn-beijing.aliyuncs.com"); // 指明你的bucket是放在北京数据中心
     }
 
@@ -99,7 +101,7 @@ public class NewProductActivity extends ActionBarActivity {
         // 开始单个Bucket的设置
         sampleBucket = new OSSBucket("125");
         sampleBucket.setBucketHostId("oss-cn-beijing.aliyuncs.com"); // 可以在这里设置数据中心域名或者cname域名
-        sampleBucket.setBucketACL(AccessControlList.PUBLIC_READ_WRITE);
+       // sampleBucket.setBucketACL(AccessControlList.PUBLIC_READ_WRITE);
 
 
         mList = new ArrayList<Photo>();
@@ -107,6 +109,20 @@ public class NewProductActivity extends ActionBarActivity {
         mList.add(p);
         mAdapter = new MainAdapter(this, mList);
         gridView.setAdapter(mAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position==(mList.size()-1)){
+                    Intent intent = new Intent(getApplicationContext(), ImageDirActivity.class);
+                    if(mList.size()>0){
+                        mList.remove(mList.size()-1);
+                    }
+
+                    intent.putExtra(MyApplication.ARG_PHOTO_LIST, mList);
+                    startActivityForResult(intent, 13);
+                }
+            }
+        });
     }
    /* @Click(R.id.addProductImage)
     void addProImageClick(){

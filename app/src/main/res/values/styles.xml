@@ -3,6 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>
     </style>
     <style parent="@android:style/Widget.ProgressBar.Horizontal" name="ProgressBarStyle"/>
+
+    <style name="MyActionBar.MenuTextStyle"  parent="TextAppearance.AppCompat.Widget.ActionBar.Menu">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>
