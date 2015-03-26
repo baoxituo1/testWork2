@@ -52,7 +52,7 @@ public class MainAdapter extends MyBaseAdapter<Photo>
         if(null==p.imgPath||"".equals(p.imgPath)){//后面放个加号增加图片
             oh.imageView.setImageResource(R.drawable.onekey_number_add);
         }else{
-            if(p.dataType=="1"){
+            if("1".equals(p.dataType)){
                 ImageManager.imageLoader.displayImage("http://125.oss-cn-beijing.aliyuncs.com/" + mList.get(position).imgPath, oh.imageView, ImageManager.options);
             }else {
                 ImageManager.imageLoader.displayImage("file:///" + mList.get(position).imgPath, oh.imageView, ImageManager.options);
@@ -65,9 +65,11 @@ public class MainAdapter extends MyBaseAdapter<Photo>
             oh.clearBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Toast.makeText(ctx,"clear_clean click",Toast.LENGTH_SHORT).show();
+                    //添加到activity的待删除列表
+                    ctx.del_image_ids+=mList.get(index).id+",";
                     mList.remove(index);
                     MainAdapter.this.notifyDataSetChanged();
-                    Toast.makeText(ctx,"clear_clean click",Toast.LENGTH_SHORT).show();
                 }
             });
         }else{

@@ -28,6 +28,8 @@ public class Bean implements Parcelable
         dest.writeString(id);
         dest.writeString(text);
         dest.writeString(imgPath);
+        dest.writeString(fileName);
+        dest.writeString(dataType);
     }
 
     public static <T extends Bean> T readFromParcel(Parcel in, T t)
@@ -45,6 +47,8 @@ public class Bean implements Parcelable
         t.id = in.readString();
         t.text = in.readString();
         t.imgPath = in.readString();
+        t.fileName = in.readString();
+        t.dataType = in.readString();
         return t;
     }
 

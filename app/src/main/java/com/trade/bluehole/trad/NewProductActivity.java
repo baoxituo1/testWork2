@@ -8,8 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +21,6 @@ import com.aliyun.mbaas.oss.model.TokenGenerator;
 import com.aliyun.mbaas.oss.storage.OSSFile;
 import com.aliyun.mbaas.oss.util.OSSLog;
 import com.aliyun.mbaas.oss.util.OSSToolKit;
-import com.cengalabs.flatui.views.FlatCheckBox;
 import com.cengalabs.flatui.views.FlatToggleButton;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -46,14 +43,17 @@ import org.apache.http.Header;
 
 import com.aliyun.mbaas.oss.storage.OSSBucket;
 import com.trade.bluehole.trad.activity.photo.ImageDirActivity;
-import com.trade.bluehole.trad.adaptor.cover.ProductCoverAdapter;
+import com.trade.bluehole.trad.adaptor.pro.ProductCoverAdapter;
 import com.trade.bluehole.trad.adaptor.photo.MainAdapter;
+import com.trade.bluehole.trad.adaptor.pro.ProductLabelAdapter;
 import com.trade.bluehole.trad.entity.Product;
 import com.trade.bluehole.trad.entity.ProductBase;
+import com.trade.bluehole.trad.entity.ProductIndexVO;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.photo.Photo;
 import com.trade.bluehole.trad.entity.pro.ProductCoverRelVO;
 import com.trade.bluehole.trad.entity.pro.ProductImage;
+import com.trade.bluehole.trad.entity.pro.ProductLabel;
 import com.trade.bluehole.trad.entity.pro.ProductLabelRelVO;
 import com.trade.bluehole.trad.entity.pro.ProductResultVO;
 import com.trade.bluehole.trad.entity.pro.ShopCoverType;
@@ -72,10 +72,18 @@ public class NewProductActivity extends ActionBarActivity {
     public static final String PRODUCT_CODE_EXTRA = "productCode";
     //选中的类别
     public HashMap<Integer, Boolean> state = new HashMap<Integer, Boolean>();
-    //需要提交的名称
+    //需要提交的类型名称
     private String coverName="";
     //需要提交的类型值
     private String coverValue="";
+    //需要提交的标签名称
+    private String labelName="";
+    //需要提交的标签值
+    private String labelValue="";
+    //需要删除的图片id
+    public String del_image_ids="";
+    //要增加的图片集
+    List<ProductImage>wait_to_addImages=new ArrayList<ProductImage>();
     @App
     MyApplication myapplication;
     Gson gson = new Gson();
@@ -84,9 +92,13 @@ public class NewProductActivity extends ActionBarActivity {
     static final String accessKey = "ictZeAtTIlkEXGta"; // 测试代码没有考虑AK/SK的安全性
     static final String screctKey = "8CQkQa7IytCb73hvk12EUazS0hUPw2";
     public OSSBucket sampleBucket;
+    //grid展示图片容器
     private ArrayList<Photo> mList = new ArrayList<Photo>();
-    private MainAdapter mAdapter;
+    //服务器加载回的商品图片
+    private ArrayList<Photo> dataList = new ArrayList<Photo>();
+    private MainAdapter mAdapter;//以选择图片适配器
     ProductCoverAdapter adapter;//分类设置适配器
+    ProductLabelAdapter labelAdapter;//标签设置适配器
     String imageUrls="";
     static {
         OSSClient.setGlobalDefaultTokenGenerator(new TokenGenerator() { // 设置全局默认加签器
@@ -129,6 +141,8 @@ public class NewProductActivity extends ActionBarActivity {
         user=myapplication.getUser();
         //实例化分类适配器
         adapter = new ProductCoverAdapter(this, false);
+        //实例化标签适配器
+        labelAdapter = new ProductLabelAdapter(this, false);
         OSSLog.enableLog(true);
         OSSClient.setApplicationContext(getApplicationContext()); // 传入应用程序context
         // 开始单个Bucket的设置
@@ -200,17 +214,29 @@ public class NewProductActivity extends ActionBarActivity {
         @Override
         public void onClick(DialogPlus dialog, View view) {
             switch (view.getId()) {
-                case R.id.header_container:
-                    Toast.makeText(NewProductActivity.this, "Header clicked", Toast.LENGTH_LONG).show();
-                    break;
                 case R.id.footer_confirm_button:
                     //记录商品变化
                     saveProCoverChecked();
                    // Toast.makeText(NewProductActivity.this, "Confirm button clicked", Toast.LENGTH_LONG).show();
                     break;
                 case R.id.footer_close_button:
-                    Toast.makeText(NewProductActivity.this, "Close button clicked", Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
+                    break;
+            }
+            dialog.dismiss();
+        }
+    };
+    /**
+     * 弹出框按钮点击事件---标签设置
+     */
+    OnClickListener labelClickListener = new OnClickListener() {
+        @Override
+        public void onClick(DialogPlus dialog, View view) {
+            switch (view.getId()) {
+                case R.id.footer_confirm_button:
+                    //记录商品变化
+                    saveProLabelChecked();
+                    break;
+                case R.id.footer_close_button:
                     break;
             }
             dialog.dismiss();
@@ -225,10 +251,25 @@ public class NewProductActivity extends ActionBarActivity {
     void  onAssignCoverClick(){
         DialogPlus dialog = new DialogPlus.Builder(this)
                 .setAdapter(adapter)
-                .setHeader(R.layout.dialog_header)
+                .setHeader(R.layout.dialog_cover_header)
                 .setFooter(R.layout.dialog_footer)
                 .setGravity(DialogPlus.Gravity.BOTTOM)
                 .setOnClickListener(clickListener)
+               // .setOnItemClickListener(itemClickListener)
+                .create();
+        dialog.show();
+    }
+    /**
+     * 点击分配自定义标签
+     */
+    @Click(R.id.pro_label_list_layout)
+    void  onAssignLabelClick(){
+        DialogPlus dialog = new DialogPlus.Builder(this)
+                .setAdapter(labelAdapter)
+                .setHeader(R.layout.dialog_label_header)
+                .setFooter(R.layout.dialog_footer)
+                .setGravity(DialogPlus.Gravity.BOTTOM)
+                .setOnClickListener(labelClickListener)
                // .setOnItemClickListener(itemClickListener)
                 .create();
         dialog.show();
@@ -259,6 +300,31 @@ public class NewProductActivity extends ActionBarActivity {
                 coverValue+=coverType.getCoverTypeCode()+",";
                 //先设置成选择后的分类等点完成的时候再一起同步到数据库
                 product_cover_name.setText(coverName);
+            }
+        }
+        //显示选择内容
+        Toast.makeText(getApplicationContext(), options, Toast.LENGTH_LONG).show();
+
+
+    }
+    /**
+     * 记录商品标签选择变化
+     */
+    void saveProLabelChecked(){
+        System.out.println(labelAdapter.state);
+        HashMap<Integer, Boolean> state =labelAdapter.state;
+        String options="选择的项是:";
+        for(int j=0;j<labelAdapter.getCount();j++){
+            System.out.println("state.get("+j+")=="+state.get(j));
+            if(state.get(j)!=null){
+                ProductLabel obj=(ProductLabel)labelAdapter.getItem(j);
+                String username=obj.getLabelName();
+                String id=obj.getLabelCode();
+                options+="\n"+id+"."+username;
+                labelName+=obj.getLabelName()+",";
+                labelValue+=obj.getLabelCode()+",";
+                //先设置成选择后的分类等点完成的时候再一起同步到数据库
+                product_label_name.setText(labelName);
             }
         }
         //显示选择内容
@@ -391,16 +457,18 @@ public class NewProductActivity extends ActionBarActivity {
         product_number.setText(base.getProductNumber()+"");
 
         if(images!=null&&!images.isEmpty()){
+            mList.clear();
             for(ProductImage ls:images){
                 Photo photo=new Photo();
                 photo.dataType="1";//load数据
                 photo.imgPath=ls.getImageUrl();
                 photo.id=ls.getId()+"";
-                mList.add(photo);
+                dataList.add(photo);
             }
-            if(mList.size()<10){
-                mList.add(new Photo());
+            if(dataList.size()<10){
+                dataList.add(new Photo());
             }
+            mList.addAll(dataList);
             reDrawGridLayout();
             mAdapter.setmList(mList);
             mAdapter.notifyDataSetChanged();
@@ -429,6 +497,9 @@ public class NewProductActivity extends ActionBarActivity {
         //装载全部自定义分类
         adapter.setCovers(obj.getCovers());
         adapter.notifyDataSetChanged();
+        //装载全部自定义标签
+        labelAdapter.setLabels(obj.getLabels());
+        labelAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -443,6 +514,7 @@ public class NewProductActivity extends ActionBarActivity {
                 ArrayList<Photo> list = result.getParcelableArrayListExtra(MyApplication.RES_PHOTO_LIST);
 
                 mList.clear();
+               // mList.addAll(dataList);
                 if (list != null)
                 {
                     mList.addAll(list);

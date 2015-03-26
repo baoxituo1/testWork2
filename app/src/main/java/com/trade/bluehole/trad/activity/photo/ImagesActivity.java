@@ -66,8 +66,7 @@ public class ImagesActivity extends ImageBaseActivity implements LoaderManager.L
                     {
                         Toast.makeText(getApplicationContext(),
                                        getString(R.string.tip_max_size, MyApplication.MAX_SIZE),
-                                       Toast.LENGTH_SHORT)
-                             .show();
+                                       Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }

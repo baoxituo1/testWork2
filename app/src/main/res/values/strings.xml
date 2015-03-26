@@ -22,11 +22,13 @@
     <string name="google_maps_title">Maps</string>
     <string name="google_messenger_title">Messenger</string>
     <string name="dialogHeader_header_title">分类至</string>
-    <string name="dialogHeader_header_sample">方便顾客筛选</string>
+    <string name="dialogHeader_header_sample">方便顾客在店铺筛选</string>
+    <string name="dialogLabel_header_title">设置标签</string>
+    <string name="dialogLabel_header_sample">使顾客快速了解商品特征</string>
 
     <string name="footer_button_close">取消</string>
     <string name="footer_button_confirm">确定</string>
-    <string name="footer_sample">SAMPLE FOOTER</string>
+    <string name="footer_sample">确认操作</string>
     <string name="button_bottom">Bottom</string>
     <string name="button_center">Center</string>
     <string name="button_top">Top</string>

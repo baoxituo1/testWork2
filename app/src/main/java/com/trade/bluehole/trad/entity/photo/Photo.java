@@ -10,8 +10,7 @@ import android.os.Parcelable;
  */
 public class Photo extends Bean
 {
-    public static final Parcelable.Creator<Photo> CREATOR
-            = new Parcelable.Creator<Photo>()
+    public static final Parcelable.Creator<Photo> CREATOR = new Parcelable.Creator<Photo>()
     {
         public Photo createFromParcel(Parcel in)
         {

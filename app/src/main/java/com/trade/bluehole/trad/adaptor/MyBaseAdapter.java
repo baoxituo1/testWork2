@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 基础适配器
- * Created by yanglw on 2014/8/17.
+ *
  */
 public abstract class MyBaseAdapter<T> extends BaseAdapter
 {
