@@ -52,7 +52,11 @@ public class MainAdapter extends MyBaseAdapter<Photo>
         if(null==p.imgPath||"".equals(p.imgPath)){//后面放个加号增加图片
             oh.imageView.setImageResource(R.drawable.onekey_number_add);
         }else{
-            ImageManager.imageLoader.displayImage("file:///" + mList.get(position).imgPath,  oh.imageView,ImageManager.options);
+            if(p.dataType=="1"){
+                ImageManager.imageLoader.displayImage("http://125.oss-cn-beijing.aliyuncs.com/" + mList.get(position).imgPath, oh.imageView, ImageManager.options);
+            }else {
+                ImageManager.imageLoader.displayImage("file:///" + mList.get(position).imgPath, oh.imageView, ImageManager.options);
+            }
         }
         //ImageLoader.getInstance().displayImage("file:///" + mList.get(position).imgPath,imageView,ImageManager.options);
         if(position<(mList.size()-1)){

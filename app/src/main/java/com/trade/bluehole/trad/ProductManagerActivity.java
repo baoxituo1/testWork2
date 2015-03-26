@@ -23,9 +23,13 @@ import com.trade.bluehole.trad.util.Result;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.ViewsById;
 import org.apache.http.Header;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @EActivity(R.layout.activity_product_manager)
 public class ProductManagerActivity extends ActionBarActivity {
@@ -34,6 +38,7 @@ public class ProductManagerActivity extends ActionBarActivity {
     ProductGridviewAdaptor adaptor;
     AsyncHttpClient client = new AsyncHttpClient();
     Gson gson = new Gson();
+    List<ProductIndexVO>mList=new ArrayList<ProductIndexVO>();
    /* @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +67,8 @@ public class ProductManagerActivity extends ActionBarActivity {
                     if (null != response) {
                         if (response.isSuccess()) {
                             Toast.makeText(ProductManagerActivity.this, "获取数据成功", Toast.LENGTH_SHORT).show();
+                            //把数据添加到全局
+                            mList.addAll(response.getAaData());
                             adaptor.setLists(response.getAaData());
                             product_gridview.setAdapter(adaptor);
                             adaptor.notifyDataSetChanged();
@@ -84,4 +91,23 @@ public class ProductManagerActivity extends ActionBarActivity {
             });
         }
     }
+
+    /**
+     * 当视图的选项被点击
+     * @param position
+     */
+    @ItemClick(R.id.product_gridview)
+    public void gridViewItemClicked(int position){
+        if(mList!=null&&mList.size()>position){
+            ProductIndexVO pr= mList.get(position);
+            Intent intent=NewProductActivity_.intent(this).get();
+            intent.putExtra(NewProductActivity.PRODUCT_CODE_EXTRA,pr.getProductCode());
+            intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA,pr.getShopCode());
+            startActivity(intent);
+        }else{
+            Toast.makeText(ProductManagerActivity.this, "数据错误", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 }

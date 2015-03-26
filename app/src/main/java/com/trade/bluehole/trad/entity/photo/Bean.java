@@ -14,6 +14,7 @@ public class Bean implements Parcelable
     public String text;
     public String imgPath;
     public String fileName;
+    public String dataType;
 
     @Override
     public int describeContents()

@@ -27,6 +27,10 @@ public abstract class MyBaseAdapter<T> extends BaseAdapter
         return mList == null ? 0 : mList.size();
     }
 
+    public void setmList(List<T> mList) {
+        this.mList = mList;
+    }
+
     @Override
     public Object getItem(int position)
     {
