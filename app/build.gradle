@@ -32,6 +32,10 @@ dependencies {
     compile 'com.soundcloud.android:android-crop:0.9.10@aar'
     //photoView
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
+    //FlatUI 按钮
+    compile 'com.github.eluleci:flatui:3.0.0'
+    //对话框
+    compile 'com.orhanobut:dialogplus:1.4@aar'
 }
 
 apt {

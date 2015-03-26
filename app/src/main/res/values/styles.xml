@@ -12,4 +12,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>
+
+
+
 </resources>

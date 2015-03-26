@@ -3,12 +3,13 @@ package com.trade.bluehole.trad;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,21 +18,25 @@ import android.widget.Toast;
 
 import com.aliyun.mbaas.oss.OSSClient;
 import com.aliyun.mbaas.oss.callback.SaveCallback;
-import com.aliyun.mbaas.oss.model.AccessControlList;
 import com.aliyun.mbaas.oss.model.OSSException;
 import com.aliyun.mbaas.oss.model.TokenGenerator;
 import com.aliyun.mbaas.oss.storage.OSSFile;
 import com.aliyun.mbaas.oss.util.OSSLog;
 import com.aliyun.mbaas.oss.util.OSSToolKit;
+import com.cengalabs.flatui.views.FlatCheckBox;
+import com.cengalabs.flatui.views.FlatToggleButton;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnClickListener;
+import com.orhanobut.dialogplus.OnItemClickListener;
 import com.soundcloud.android.crop.Crop;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.CheckedChange;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
@@ -41,19 +46,22 @@ import org.apache.http.Header;
 
 import com.aliyun.mbaas.oss.storage.OSSBucket;
 import com.trade.bluehole.trad.activity.photo.ImageDirActivity;
-import com.trade.bluehole.trad.activity.photo.PreviewActivity;
+import com.trade.bluehole.trad.adaptor.cover.ProductCoverAdapter;
 import com.trade.bluehole.trad.adaptor.photo.MainAdapter;
 import com.trade.bluehole.trad.entity.Product;
 import com.trade.bluehole.trad.entity.ProductBase;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.photo.Photo;
+import com.trade.bluehole.trad.entity.pro.ProductCoverRelVO;
 import com.trade.bluehole.trad.entity.pro.ProductImage;
+import com.trade.bluehole.trad.entity.pro.ProductLabelRelVO;
 import com.trade.bluehole.trad.entity.pro.ProductResultVO;
+import com.trade.bluehole.trad.entity.pro.ShopCoverType;
 import com.trade.bluehole.trad.util.MyApplication;
-import com.trade.bluehole.trad.util.Result;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,6 +70,12 @@ public class NewProductActivity extends ActionBarActivity {
     //商品和店铺编码标志
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String PRODUCT_CODE_EXTRA = "productCode";
+    //选中的类别
+    public HashMap<Integer, Boolean> state = new HashMap<Integer, Boolean>();
+    //需要提交的名称
+    private String coverName="";
+    //需要提交的类型值
+    private String coverValue="";
     @App
     MyApplication myapplication;
     Gson gson = new Gson();
@@ -72,6 +86,7 @@ public class NewProductActivity extends ActionBarActivity {
     public OSSBucket sampleBucket;
     private ArrayList<Photo> mList = new ArrayList<Photo>();
     private MainAdapter mAdapter;
+    ProductCoverAdapter adapter;//分类设置适配器
     String imageUrls="";
     static {
         OSSClient.setGlobalDefaultTokenGenerator(new TokenGenerator() { // 设置全局默认加签器
@@ -99,11 +114,9 @@ public class NewProductActivity extends ActionBarActivity {
     @ViewById(R.id.gridview)
     GridView gridView;
     @ViewById
-    TextView product_name;
+    TextView product_name,product_price,product_number,product_cover_name,product_label_name;
     @ViewById
-    TextView product_price;
-    @ViewById
-    TextView product_number;
+    FlatToggleButton toggle_checked_hot;
     @Extra(PRODUCT_CODE_EXTRA)
     String proCode;
     @Extra(SHOP_CODE_EXTRA)
@@ -111,8 +124,11 @@ public class NewProductActivity extends ActionBarActivity {
 
     @AfterViews
     void initData(){
-        Log.e("NewProductActivity", "proCode:"+proCode+",shopCode:"+shopCode);
+        Log.e("NewProductActivity", "proCode:" + proCode + ",shopCode:" + shopCode);
+
         user=myapplication.getUser();
+        //实例化分类适配器
+        adapter = new ProductCoverAdapter(this, false);
         OSSLog.enableLog(true);
         OSSClient.setApplicationContext(getApplicationContext()); // 传入应用程序context
         // 开始单个Bucket的设置
@@ -141,17 +157,121 @@ public class NewProductActivity extends ActionBarActivity {
                 }
             }
         });
+
     }
+
+    /**
+     * 当设置推荐按钮点击
+     */
+    @CheckedChange(R.id.toggle_checked_hot)
+     void hotButtonChange(){
+        Toast.makeText(this,"toggle_checked_hot changed",Toast.LENGTH_SHORT).show();
+        toggle_checked_hot.isChecked();
+
+    }
+
+
+    /**
+     * 弹出框点击事件
+     */
+    OnItemClickListener itemClickListener = new OnItemClickListener() {
+        @Override
+        public void onItemClick(DialogPlus dialog, Object item, View view,final int position) {
+            TextView textView = (TextView) view.findViewById(R.id.text_view);
+            String clickedAppName = textView.getText().toString();
+            Toast.makeText(NewProductActivity.this, clickedAppName + " clicked", Toast.LENGTH_LONG).show();
+           /* FlatCheckBox checkBox = (FlatCheckBox) view.findViewById(R.id.pro_checkbox_cover);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        state.put(position, isChecked);
+                    } else {
+                        state.remove(position);
+                    }
+                }
+            });*/
+        }
+    };
+    /**
+     * 弹出框按钮点击事件
+     */
+    OnClickListener clickListener = new OnClickListener() {
+        @Override
+        public void onClick(DialogPlus dialog, View view) {
+            switch (view.getId()) {
+                case R.id.header_container:
+                    Toast.makeText(NewProductActivity.this, "Header clicked", Toast.LENGTH_LONG).show();
+                    break;
+                case R.id.footer_confirm_button:
+                    //记录商品变化
+                    saveProCoverChecked();
+                   // Toast.makeText(NewProductActivity.this, "Confirm button clicked", Toast.LENGTH_LONG).show();
+                    break;
+                case R.id.footer_close_button:
+                    Toast.makeText(NewProductActivity.this, "Close button clicked", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+                    break;
+            }
+            dialog.dismiss();
+        }
+    };
+
+
+    /**
+     * 点击分配自定义类别
+     */
+    @Click(R.id.pro_cover_list_layout)
+    void  onAssignCoverClick(){
+        DialogPlus dialog = new DialogPlus.Builder(this)
+                .setAdapter(adapter)
+                .setHeader(R.layout.dialog_header)
+                .setFooter(R.layout.dialog_footer)
+                .setGravity(DialogPlus.Gravity.BOTTOM)
+                .setOnClickListener(clickListener)
+               // .setOnItemClickListener(itemClickListener)
+                .create();
+        dialog.show();
+    }
+
     /* @Click(R.id.addProductImage)
     void addProImageClick(){
         resultView.setImageDrawable(null);
         Crop.pickImage(this);
     }*/
 
+
+    /**
+     * 记录商品类别选择变化
+     */
+    void saveProCoverChecked(){
+        System.out.println(adapter.state);
+        HashMap<Integer, Boolean> state =adapter.state;
+        String options="选择的项是:";
+        for(int j=0;j<adapter.getCount();j++){
+            System.out.println("state.get("+j+")=="+state.get(j));
+            if(state.get(j)!=null){
+                ShopCoverType coverType=(ShopCoverType)adapter.getItem(j);
+                String username=coverType.getCoverTypeName();
+                String id=coverType.getCoverTypeCode();
+                options+="\n"+id+"."+username;
+                coverName+=coverType.getCoverTypeName()+",";
+                coverValue+=coverType.getCoverTypeCode()+",";
+                //先设置成选择后的分类等点完成的时候再一起同步到数据库
+                product_cover_name.setText(coverName);
+            }
+        }
+        //显示选择内容
+        Toast.makeText(getApplicationContext(), options, Toast.LENGTH_LONG).show();
+
+
+    }
+
+
     /**
      * 上传图片
      */
-    @Click(R.id.uploadProductImage)
+   // @Click(R.id.uploadProductImage)
     void uploadProImageClick(){
         if(!mList.isEmpty()&&null!=user){
             imageUrls="";
@@ -285,6 +405,30 @@ public class NewProductActivity extends ActionBarActivity {
             mAdapter.setmList(mList);
             mAdapter.notifyDataSetChanged();
         }
+        //组装类别
+        List<ProductCoverRelVO> myCovers=obj.getMyCovers();
+        if(null!=myCovers&&!myCovers.isEmpty()){
+            String covers="";
+            for(ProductCoverRelVO ls:myCovers){
+                covers+=ls.getCoverName()+",";
+            }
+            product_cover_name.setText(covers);
+        }
+        //组装标签
+        List<ProductLabelRelVO> muLabels=obj.getMuLabels();
+        if(null!=muLabels&&!muLabels.isEmpty()){
+            String lables="";
+            for(ProductLabelRelVO ls:muLabels){
+                lables+=ls.getLabelName()+",";
+            }
+            product_label_name.setText(lables);
+        }
+        //是否热销
+        boolean isHot=obj.isHot();
+        toggle_checked_hot.setChecked(isHot);
+        //装载全部自定义分类
+        adapter.setCovers(obj.getCovers());
+        adapter.notifyDataSetChanged();
     }
 
     @Override

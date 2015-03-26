@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:flatui="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray"
@@ -79,14 +80,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
                 android:background="@color/white">
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_margin="10dp"
                     android:layout_height="wrap_content">
                     <TextView
                         android:layout_weight="0.3"
                         android:layout_width="0dp"
-                        android:gravity="center_horizontal|center_vertical"
+                        android:gravity="center_vertical"
                         android:text="商品价格"
                         android:layout_height="20dp" />
                     <EditText android:id="@+id/product_price" android:layout_weight="0.7" android:layout_width="0dp" android:numeric="decimal"
@@ -98,11 +101,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_margin="10dp"
                     android:layout_height="wrap_content">
                     <TextView
                         android:layout_weight="0.3"
                         android:layout_width="0dp"
-                        android:gravity="center_horizontal|center_vertical"
+                        android:gravity="center_vertical"
                         android:text="商品库存"
                         android:layout_height="20dp" />
                     <EditText android:id="@+id/product_number" android:layout_weight="0.7" android:layout_width="0dp" android:numeric="integer"
@@ -118,14 +122,118 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/list_item_height"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
                 android:background="@color/white">
-                <Button
-                    android:id="@+id/uploadProductImage"
-                    android:visibility="gone"
-                    android:text="完成"
+                 <!-- 商品分类 -->
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_margin="10dp"
+                     android:layout_height="wrap_content">
+                     <TextView
+                         android:layout_weight="0.3"
+                         android:layout_width="0dp"
+                         android:gravity="center_vertical"
+                         android:text="分类至"
+                         android:textColor="@color/grey_light"
+                         android:layout_height="20dp" />
+                     <RelativeLayout
+                         android:layout_weight="0.7"
+                         android:layout_width="0dp"
+                         android:layout_height="wrap_content">
+                         <LinearLayout
+                             android:id="@+id/pro_cover_list_layout"
+                             android:layout_width="wrap_content"
+                             android:layout_alignParentRight="true"
+                             android:orientation="horizontal"
+                             android:layout_height="wrap_content">
+                             <TextView
+                                 android:id="@+id/product_cover_name"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:textColor="@color/grey_line"
+                                 android:text="未分类"
+                                 />
+                             <TextView
+                                 android:layout_width="wrap_content"
+                                 android:text=" >"
+                                 android:textColor="@color/grey_line"
+                                 android:layout_height="wrap_content" />
+                         </LinearLayout>
+                     </RelativeLayout>
+                 </LinearLayout>
+                    <!-- 是否热销 -->
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_margin="10dp"
+                     android:layout_height="wrap_content">
+                     <TextView
+                         android:layout_weight="0.3"
+                         android:layout_width="0dp"
+                         android:gravity="center_vertical"
+                         android:textColor="@color/grey_light"
+                         android:text="掌柜推荐"
+                         android:layout_height="20dp" />
+                     <RelativeLayout
+                         android:layout_weight="0.7"
+                         android:layout_width="0dp"
+                         android:layout_height="wrap_content">
+                         <LinearLayout
+                             android:layout_width="wrap_content"
+                             android:layout_alignParentRight="true"
+                             android:orientation="horizontal"
+                             android:layout_height="wrap_content">
+
+
+                             <com.cengalabs.flatui.views.FlatToggleButton
+                                 android:id="@+id/toggle_checked_hot"
+                                 android:layout_width="72dp"
+                                 android:layout_height="36dp"
+                                 android:text="Full Flat"
+                                 android:checked="false"
+                                 flatui:fl_space="14dp"
+                                 flatui:fl_theme="@array/custom_theme"
+                                 flatui:fl_cornerRadius="18dp" />
+                         </LinearLayout>
+                     </RelativeLayout>
+                 </LinearLayout>
+                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_margin="10dp"
+                    android:gravity="left"
+                    android:layout_height="wrap_content">
+                       <TextView
+                           android:layout_weight="0.3"
+                           android:layout_width="0dp"
+                           android:gravity="center_vertical"
+                           android:text="标签"
+                           android:textColor="@color/grey_light"
+                           android:layout_height="20dp" />
+                       <RelativeLayout
+                           android:layout_weight="0.7"
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content">
+                           <LinearLayout
+                               android:layout_width="wrap_content"
+                               android:layout_alignParentRight="true"
+                               android:orientation="horizontal"
+                               android:layout_height="wrap_content">
+                               <TextView
+                                   android:id="@+id/product_label_name"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:textColor="@color/grey_line"
+                                   android:text="其他类别"
+                                   />
+                               <TextView
+                                   android:layout_width="wrap_content"
+                                   android:text=" >"
+                                   android:textColor="@color/grey_line"
+                                   android:layout_height="wrap_content" />
+                           </LinearLayout>
+                       </RelativeLayout>
+                   </LinearLayout>
+
       </LinearLayout>
     </RelativeLayout>
    </ScrollView>

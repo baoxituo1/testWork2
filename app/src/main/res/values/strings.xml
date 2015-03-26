@@ -17,4 +17,18 @@
     <string name="check_dir">选择目录</string>
     <string name="check_length">已经选择<xliff:g id="anystring_you_like">%1$d</xliff:g>张图片</string>
     <string name="tip_max_size">最多只能选择<xliff:g id="anystring_you_like">%1$d</xliff:g>张图片</string>
+    <!--选择商品分类 -->
+    <string name="google_plus_title">Google Plus</string>
+    <string name="google_maps_title">Maps</string>
+    <string name="google_messenger_title">Messenger</string>
+    <string name="dialogHeader_header_title">分类至</string>
+    <string name="dialogHeader_header_sample">方便顾客筛选</string>
+
+    <string name="footer_button_close">取消</string>
+    <string name="footer_button_confirm">确定</string>
+    <string name="footer_sample">SAMPLE FOOTER</string>
+    <string name="button_bottom">Bottom</string>
+    <string name="button_center">Center</string>
+    <string name="button_top">Top</string>
+
 </resources>

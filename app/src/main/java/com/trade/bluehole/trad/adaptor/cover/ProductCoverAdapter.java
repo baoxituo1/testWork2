@@ -9,8 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cengalabs.flatui.views.FlatCheckBox;
+import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.entity.pro.ShopCoverType;
 
@@ -25,6 +27,7 @@ public class ProductCoverAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private boolean isGrid;
     List<ShopCoverType> covers;
+    Context ctx;
     //记录checkbox的状态
     public HashMap<Integer, Boolean> state = new HashMap<Integer, Boolean>();
 
@@ -34,6 +37,7 @@ public class ProductCoverAdapter extends BaseAdapter {
     }
 
     public ProductCoverAdapter(Context context, boolean isGrid) {
+        ctx=context;
         layoutInflater = LayoutInflater.from(context);
         this.isGrid = isGrid;
     }
@@ -71,19 +75,27 @@ public class ProductCoverAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-       // viewHolder.checkBox.setText(cover.getCoverTypeName());
+         viewHolder.checkBox.setText(cover.getCoverTypeName());
         //记录选中项变化值
-        /*viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d("checkBox.setOnChecked:",isChecked+"");
+               // Toast.makeText(ctx, "checkBox change", Toast.LENGTH_LONG).show();
                 if (isChecked) {
                     state.put(position, isChecked);
                 } else {
                     state.remove(position);
                 }
             }
+        });
+
+       /* viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ctx, "checkBox clicked", Toast.LENGTH_LONG).show();
+            }
         });*/
+
         return view;
     }
 
