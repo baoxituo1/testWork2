@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * <br/>
  * <br/>
- * Created by yanglw on 2014/8/17.
+ *
  */
 public class ImagesAdapter extends MyBaseAdapter<Photo>
 {

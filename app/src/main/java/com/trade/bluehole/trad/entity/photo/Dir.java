@@ -3,7 +3,7 @@ package com.trade.bluehole.trad.entity.photo;
 /**
  * 含有图片目录。<br/>
  * <br/>
- * Created by yanglw on 2014/8/15.
+ *
  */
 public class Dir extends Bean
 {

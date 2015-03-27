@@ -16,7 +16,7 @@ import java.util.List;
 
 
 /**
- * Created by yanglw on 2014/8/17.
+ *
  */
 public class ImageDirAdapter extends MyBaseAdapter<Dir>
 {

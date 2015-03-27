@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * 图片。<br/>
  * <br/>
- * Created by yanglw on 2014/8/17.
+ *
  */
 public class Photo extends Bean
 {

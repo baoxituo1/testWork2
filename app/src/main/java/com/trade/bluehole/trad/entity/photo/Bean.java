@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * JavaBean的基类。<br/>
  * <br/>
- * Created by yanglw on 2014/8/15.
+ *
  */
 public class Bean implements Parcelable
 {

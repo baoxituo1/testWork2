@@ -12,7 +12,7 @@ public class ProductResultVO implements java.io.Serializable{
 	private Product pro;
 	private ProductBase proBase;
 	private List<ProductImage> images;
-	private boolean isHot;
+	private Integer hotState;
 	/**
 	 * 商品关联的类别
 	 */
@@ -21,9 +21,11 @@ public class ProductResultVO implements java.io.Serializable{
 	 * 商品关联的标签
 	 */
 	private List<ProductLabelRelVO> muLabels;
-	/**
+
+    /**
 	 * 全部类别
 	 */
+
 	private List<ShopCoverType> covers;
 	/**
 	 * 全部标签
@@ -54,15 +56,8 @@ public class ProductResultVO implements java.io.Serializable{
 		this.images = images;
 	}
 
-	public boolean isHot() {
-		return isHot;
-	}
 
-	public void setHot(boolean isHot) {
-		this.isHot = isHot;
-	}
-
-	public List<ProductCoverRelVO> getMyCovers() {
+    public List<ProductCoverRelVO> getMyCovers() {
 		return myCovers;
 	}
 
@@ -93,5 +88,13 @@ public class ProductResultVO implements java.io.Serializable{
 	public void setLabels(List<ProductLabel> labels) {
 		this.labels = labels;
 	}
+
+    public Integer getHotState() {
+        return hotState;
+    }
+
+    public void setHotState(Integer hotState) {
+        this.hotState = hotState;
+    }
 
 }

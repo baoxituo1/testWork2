@@ -83,7 +83,7 @@ public class NewProductActivity extends ActionBarActivity {
     //需要删除的图片id
     public String del_image_ids="";
     //要增加的图片集
-    List<ProductImage>wait_to_addImages=new ArrayList<ProductImage>();
+    String wait_to_addImages="";
     @App
     MyApplication myapplication;
     Gson gson = new Gson();
@@ -343,11 +343,12 @@ public class NewProductActivity extends ActionBarActivity {
             imageUrls="";
             for(Photo ls:mList){
                 try {
-                    String fileName= "pro/"+"image_"+UUID.randomUUID()+".jpg";
-                    doUploadFile(ls.imgPath,fileName);
-                    imageUrls+=fileName+",";
+                    if(!"1".equals(ls.dataType)){
+                        String fileName= "pro/"+"image_"+UUID.randomUUID()+".jpg";
+                        doUploadFile(ls.imgPath,fileName);
+                        imageUrls+=fileName+",";
+                    }
                     //Log.e("NewProductActivity", "oss-file-name:"+ls.fileName);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -385,13 +386,26 @@ public class NewProductActivity extends ActionBarActivity {
      */
     void uploadProImg(){
         RequestParams params=new RequestParams();
+        //如果商品编码不是空 调用更新方法
+        String methodName="saveProductJson.do";
+        if(null!=proCode&&!"".equals(proCode)){
+            methodName="updateProductJson.do";
+            params.put("productCode",proCode);
+            params.put("shopCode",shopCode);
+            params.put("coverCodes",coverValue);
+            params.put("labelCodes",labelValue);
+            params.put("hot",toggle_checked_hot.isChecked());
+            params.put("wait_del_images",del_image_ids);
+            params.put("wait_insert_images",imageUrls);
+
+        }
         params.put("userCode",user.getUserCode());
         params.put("productName",product_name.getText());
         params.put("productPrice",product_price.getText());
         params.put("productNumber",product_number.getText());
         params.put("imageUrls",imageUrls);
         Log.e("NewProductActivity", "imageUrls:"+imageUrls);
-        client.get("http://192.168.1.161:8080/qqt_up/shopjson/saveProductJson.do", params, new BaseJsonHttpResponseHandler<String>() {
+        client.post("http://192.168.1.161:8080/qqt_up/shopjson/"+methodName, params, new BaseJsonHttpResponseHandler<String>() {
 
 
             @Override
@@ -492,8 +506,9 @@ public class NewProductActivity extends ActionBarActivity {
             product_label_name.setText(lables);
         }
         //是否热销
-        boolean isHot=obj.isHot();
-        toggle_checked_hot.setChecked(isHot);
+        if(obj.getHotState().intValue()>0){
+            toggle_checked_hot.setChecked(true);
+        }
         //装载全部自定义分类
         adapter.setCovers(obj.getCovers());
         adapter.notifyDataSetChanged();

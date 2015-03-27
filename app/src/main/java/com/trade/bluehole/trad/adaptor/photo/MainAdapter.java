@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * 首页图片已经选择的图片列表。<br/>
  * <br/>
- * Created by yanglw on 2014/8/17.
+ *
  */
 public class MainAdapter extends MyBaseAdapter<Photo>
 {
@@ -67,7 +67,9 @@ public class MainAdapter extends MyBaseAdapter<Photo>
                 public void onClick(View v) {
                     Toast.makeText(ctx,"clear_clean click",Toast.LENGTH_SHORT).show();
                     //添加到activity的待删除列表
-                    ctx.del_image_ids+=mList.get(index).id+",";
+                    if(null!=mList.get(index).id!="".equals(mList.get(index).id)){
+                        ctx.del_image_ids+=mList.get(index).id+",";
+                    }
                     mList.remove(index);
                     MainAdapter.this.notifyDataSetChanged();
                 }
