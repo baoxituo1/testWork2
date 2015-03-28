@@ -16,7 +16,8 @@ import com.trade.bluehole.trad.entity.pro.ShopCoverType;
 import java.util.HashMap;
 import java.util.List;
 
-/**商品标签选择适配器
+/**
+ * 商品标签选择适配器
  * Created by Administrator on 2015-03-26.
  */
 public class ProductLabelAdapter extends BaseAdapter {
@@ -25,31 +26,31 @@ public class ProductLabelAdapter extends BaseAdapter {
     private boolean isGrid;
     List<ProductLabel> labels;
     //已经选中的标签
-    List<String>myCheckLabels;
+    List<String> myCheckLabels;
     Context ctx;
     //记录checkbox的状态
     public HashMap<Integer, Boolean> state = new HashMap<Integer, Boolean>();
 
 
-    public void setLabels(List<ProductLabel> covers,List<String>checkLabels) {
+    public void setLabels(List<ProductLabel> covers, List<String> checkLabels) {
         this.labels = covers;
-        myCheckLabels=checkLabels;
+        myCheckLabels = checkLabels;
     }
 
     public ProductLabelAdapter(Context context, boolean isGrid) {
-        ctx=context;
+        ctx = context;
         layoutInflater = LayoutInflater.from(context);
         this.isGrid = isGrid;
     }
 
     @Override
     public int getCount() {
-        return labels==null?0:labels.size();
+        return labels == null ? 0 : labels.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null==labels?null:labels.get(position);
+        return null == labels ? null : labels.get(position);
     }
 
     @Override
@@ -58,50 +59,50 @@ public class ProductLabelAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+    public View getView(int p, View convertView, ViewGroup parent) {
+        final int position=p;
         View view = convertView;
-        ProductLabel cover=labels.get(position);
-        if (view == null) {
-            if (isGrid) {
-                view = layoutInflater.inflate(R.layout.i_pro_cover_grid_item, parent, false);
-            } else {
-                view = layoutInflater.inflate(R.layout.i_pro_cover_list_item, parent, false);
-            }
-            viewHolder = new ViewHolder();
-
-            viewHolder.checkBox = (FlatCheckBox) view.findViewById(R.id.pro_checkbox_cover);
-            view.setTag(viewHolder);
+        ProductLabel cover = labels.get(position);
+        if (isGrid) {
+            view = layoutInflater.inflate(R.layout.i_pro_cover_grid_item, parent, false);
         } else {
-            viewHolder = (ViewHolder) view.getTag();
+            view = layoutInflater.inflate(R.layout.i_pro_cover_list_item, parent, false);
         }
-        viewHolder.checkBox.setText(cover.getLabelName());
-        //判断是否选中
-        if(null!=myCheckLabels&&myCheckLabels.contains(cover.getLabelCode())){
-            viewHolder.checkBox.setChecked(true);
-            //如果是选中的 添加到选中的变化map中
-            state.put(position, true);
-        }else{
-            viewHolder.checkBox.setChecked(false);
-            //如果未选中 看看map中是否包涵 包涵的话清除掉
-            if(state.containsKey(position)){
-                state.remove(position);
-            }
-        }
-        //清除掉缓存造成的初始值
-        state.clear();
-        //记录选中项变化值
-        viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        FlatCheckBox checkBox = (FlatCheckBox) view.findViewById(R.id.pro_checkbox_cover);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // Toast.makeText(ctx, "checkBox change", Toast.LENGTH_LONG).show();
+                String _code = labels.get(position).getLabelCode();
                 if (isChecked) {
                     state.put(position, isChecked);
+                    //判断选中的项是否存在以选择列表，不存在 加进去 ok？yes I Know...
+                    if (!myCheckLabels.contains(_code)) {
+                        myCheckLabels.add(_code);
+                    }
                 } else {
                     state.remove(position);
+                    //相应的未选中 干掉它！
+                    if (myCheckLabels.contains(_code)) {
+                        myCheckLabels.remove(_code);
+                    }
                 }
             }
         });
+        checkBox.setText(cover.getLabelName());
+        //判断是否选中
+        if (null != myCheckLabels && myCheckLabels.contains(cover.getLabelCode())) {
+           checkBox.setChecked(true);
+            //如果是选中的 添加到选中的变化map中
+            state.put(position, true);
+        } else {
+            checkBox.setChecked(false);
+            //如果未选中 看看map中是否包涵 包涵的话清除掉
+            if (state.containsKey(position)) {
+                state.remove(position);
+            }
+        }
 
         return view;
     }

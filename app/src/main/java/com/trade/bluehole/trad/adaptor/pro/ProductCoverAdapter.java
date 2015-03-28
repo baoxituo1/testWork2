@@ -60,8 +60,8 @@ public class ProductCoverAdapter extends BaseAdapter {
     @Override
     public View getView(int p, View convertView, ViewGroup parent) {
         final int position=p;
-        System.out.print("adapter:" + position + ",coverName:" + covers.get(position).getCoverTypeName());
-        System.out.println(state2);
+       // System.out.print("adapter:" + position + ",coverName:" + covers.get(position).getCoverTypeName());
+       // System.out.println(state2);
        // ViewHolder viewHolder;
         //View view = convertView;
         ShopCoverType cover=covers.get(position);
@@ -100,8 +100,8 @@ public class ProductCoverAdapter extends BaseAdapter {
         }*/
         checkBox.setText(cover.getCoverTypeName());
          //判断是否选中
-        String _code=covers.get(position).getCoverTypeCode();
-        System.out.println("_code:"+_code);
+        //String _code=covers.get(position).getCoverTypeCode();
+       // System.out.println("_code:"+_code);
         if(null!=myCheckCovers&&myCheckCovers.contains(cover.getCoverTypeCode())){
             checkBox.setChecked(true);
             //如果是选中的 添加到选中的变化map中

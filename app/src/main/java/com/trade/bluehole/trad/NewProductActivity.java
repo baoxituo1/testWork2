@@ -96,10 +96,16 @@ public class NewProductActivity extends ActionBarActivity {
     private ArrayList<Photo> mList = new ArrayList<Photo>();
     //服务器加载回的商品图片
     private ArrayList<Photo> dataList = new ArrayList<Photo>();
+    //已经选中的自定义编码为复现checkbox
+    List<String>myCheckCovers=new ArrayList<String>();
+    //已经选中的标签编码为复现checkbox
+    List<String>myCheckLabels=new ArrayList<String>();
     private MainAdapter mAdapter;//以选择图片适配器
-    ProductCoverAdapter adapter;//分类设置适配器
+    ProductCoverAdapter coverAdapter;//分类设置适配器
     ProductLabelAdapter labelAdapter;//标签设置适配器
-    String imageUrls="";
+    DialogPlus coverDialog;//商品自定义分类弹出框
+    DialogPlus labelDialog;//商品自定义标签弹出框
+    String imageUrls="";//新增商品 待添加商品列表
     static {
         OSSClient.setGlobalDefaultTokenGenerator(new TokenGenerator() { // 设置全局默认加签器
             @Override
@@ -140,7 +146,7 @@ public class NewProductActivity extends ActionBarActivity {
 
         user=myapplication.getUser();
         //实例化分类适配器
-        adapter = new ProductCoverAdapter(this, false);
+        coverAdapter = new ProductCoverAdapter(this, false);
         //实例化标签适配器
         labelAdapter = new ProductLabelAdapter(this, false);
         OSSLog.enableLog(true);
@@ -171,15 +177,39 @@ public class NewProductActivity extends ActionBarActivity {
                 }
             }
         });
-
+        //实例化弹出窗口
+        initDialog();
     }
 
+    /**
+     * 实例化弹出窗口
+     */
+    void initDialog(){
+        //自定义类别
+         coverDialog  = new DialogPlus.Builder(this)
+                    .setAdapter(coverAdapter)
+                    .setHeader(R.layout.dialog_cover_header)
+                    .setFooter(R.layout.dialog_footer)
+                    .setGravity(DialogPlus.Gravity.BOTTOM)
+                    .setOnClickListener(clickListener)
+                            // .setOnItemClickListener(itemClickListener)
+                    .create();
+
+        labelDialog = new DialogPlus.Builder(this)
+                .setAdapter(labelAdapter)
+                .setHeader(R.layout.dialog_label_header)
+                .setFooter(R.layout.dialog_footer)
+                .setGravity(DialogPlus.Gravity.BOTTOM)
+                .setOnClickListener(labelClickListener)
+                        // .setOnItemClickListener(itemClickListener)
+                .create();
+    }
     /**
      * 当设置推荐按钮点击
      */
     @CheckedChange(R.id.toggle_checked_hot)
      void hotButtonChange(){
-        Toast.makeText(this,"toggle_checked_hot changed",Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this,"toggle_checked_hot changed",Toast.LENGTH_SHORT).show();
         toggle_checked_hot.isChecked();
 
     }
@@ -194,17 +224,6 @@ public class NewProductActivity extends ActionBarActivity {
             TextView textView = (TextView) view.findViewById(R.id.text_view);
             String clickedAppName = textView.getText().toString();
             Toast.makeText(NewProductActivity.this, clickedAppName + " clicked", Toast.LENGTH_LONG).show();
-           /* FlatCheckBox checkBox = (FlatCheckBox) view.findViewById(R.id.pro_checkbox_cover);
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        state.put(position, isChecked);
-                    } else {
-                        state.remove(position);
-                    }
-                }
-            });*/
         }
     };
     /**
@@ -249,30 +268,14 @@ public class NewProductActivity extends ActionBarActivity {
      */
     @Click(R.id.pro_cover_list_layout)
     void  onAssignCoverClick(){
-        DialogPlus dialog = new DialogPlus.Builder(this)
-                .setAdapter(adapter)
-                .setHeader(R.layout.dialog_cover_header)
-                .setFooter(R.layout.dialog_footer)
-                .setGravity(DialogPlus.Gravity.BOTTOM)
-                .setOnClickListener(clickListener)
-               // .setOnItemClickListener(itemClickListener)
-                .create();
-        dialog.show();
+        coverDialog.show();
     }
     /**
      * 点击分配自定义标签
      */
     @Click(R.id.pro_label_list_layout)
     void  onAssignLabelClick(){
-        DialogPlus dialog = new DialogPlus.Builder(this)
-                .setAdapter(labelAdapter)
-                .setHeader(R.layout.dialog_label_header)
-                .setFooter(R.layout.dialog_footer)
-                .setGravity(DialogPlus.Gravity.BOTTOM)
-                .setOnClickListener(labelClickListener)
-               // .setOnItemClickListener(itemClickListener)
-                .create();
-        dialog.show();
+        labelDialog.show();
     }
 
     /* @Click(R.id.addProductImage)
@@ -286,24 +289,32 @@ public class NewProductActivity extends ActionBarActivity {
      * 记录商品类别选择变化
      */
     void saveProCoverChecked(){
-        System.out.println(adapter.state);
-        HashMap<Integer, Boolean> state =adapter.state;
-        String options="选择的项是:";
-        for(int j=0;j<adapter.getCount();j++){
-            System.out.println("state.get("+j+")=="+state.get(j));
-            if(state.get(j)!=null){
-                ShopCoverType coverType=(ShopCoverType)adapter.getItem(j);
-                String username=coverType.getCoverTypeName();
-                String id=coverType.getCoverTypeCode();
-                options+="\n"+id+"."+username;
-                coverName+=coverType.getCoverTypeName()+",";
-                coverValue+=coverType.getCoverTypeCode()+",";
-                //先设置成选择后的分类等点完成的时候再一起同步到数据库
-                product_cover_name.setText(coverName);
+        coverName="";
+        coverValue="";
+        if(coverAdapter.state2.size()>0){
+            System.out.println(coverAdapter.state2);
+            HashMap<Integer, Boolean> state =coverAdapter.state2;
+            String options="选择的项是:";
+            for(int j=0;j<coverAdapter.getCount();j++){
+                System.out.println("state.get("+j+")=="+state.get(j));
+                if(state.get(j)!=null){
+                    ShopCoverType coverType=(ShopCoverType)coverAdapter.getItem(j);
+                    String username=coverType.getCoverTypeName();
+                    String id=coverType.getCoverTypeCode();
+                    options+="\n"+id+"."+username;
+                    coverName+=coverType.getCoverTypeName()+",";
+                    coverValue+=coverType.getCoverTypeCode()+",";
+                    //先设置成选择后的分类等点完成的时候再一起同步到数据库
+                    product_cover_name.setText(coverName);
+                }
             }
+        }else{
+            coverName="未分类";
+            coverValue="NULL";
+            product_cover_name.setText(coverName);
         }
         //显示选择内容
-        Toast.makeText(getApplicationContext(), options, Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), options, Toast.LENGTH_LONG).show();
 
 
     }
@@ -311,25 +322,32 @@ public class NewProductActivity extends ActionBarActivity {
      * 记录商品标签选择变化
      */
     void saveProLabelChecked(){
-        System.out.println(labelAdapter.state);
-        HashMap<Integer, Boolean> state =labelAdapter.state;
-        String options="选择的项是:";
-        for(int j=0;j<labelAdapter.getCount();j++){
-            System.out.println("state.get("+j+")=="+state.get(j));
-            if(state.get(j)!=null){
-                ProductLabel obj=(ProductLabel)labelAdapter.getItem(j);
-                String username=obj.getLabelName();
-                String id=obj.getLabelCode();
-                options+="\n"+id+"."+username;
-                labelName+=obj.getLabelName()+",";
-                labelValue+=obj.getLabelCode()+",";
-                //先设置成选择后的分类等点完成的时候再一起同步到数据库
-                product_label_name.setText(labelName);
+        labelName = "";
+        labelValue = "";
+        if(labelAdapter.state.size()>0) {
+            System.out.println(labelAdapter.state);
+            HashMap<Integer, Boolean> state = labelAdapter.state;
+            String options = "选择的项是:";
+            for (int j = 0; j < labelAdapter.getCount(); j++) {
+                System.out.println("state.get(" + j + ")==" + state.get(j));
+                if (state.get(j) != null) {
+                    ProductLabel obj = (ProductLabel) labelAdapter.getItem(j);
+                    String username = obj.getLabelName();
+                    String id = obj.getLabelCode();
+                    options += "\n" + id + "." + username;
+                    labelName += obj.getLabelName() + ",";
+                    labelValue += obj.getLabelCode() + ",";
+                    //先设置成选择后的分类等点完成的时候再一起同步到数据库
+                    product_label_name.setText(labelName);
+                }
             }
+        }else{
+            labelName="未设置";
+            labelValue="NULL";
+            product_label_name.setText(labelName);
         }
         //显示选择内容
-        Toast.makeText(getApplicationContext(), options, Toast.LENGTH_LONG).show();
-
+        //Toast.makeText(getApplicationContext(), options, Toast.LENGTH_LONG).show();
 
     }
 
@@ -405,14 +423,14 @@ public class NewProductActivity extends ActionBarActivity {
         params.put("productNumber",product_number.getText());
         params.put("imageUrls",imageUrls);
         Log.e("NewProductActivity", "imageUrls:"+imageUrls);
-        client.post("http://192.168.1.161:8080/qqt_up/shopjson/"+methodName, params, new BaseJsonHttpResponseHandler<String>() {
+        client.post("http://192.168.1.161:8080/qqt_up/shopjson/" + methodName, params, new BaseJsonHttpResponseHandler<String>() {
 
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
                 Log.d(NewProductActivity.class.getName(), statusCode + "");
                 if (null != response) {
-                        Toast.makeText(NewProductActivity.this, response, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewProductActivity.this, response, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -493,6 +511,7 @@ public class NewProductActivity extends ActionBarActivity {
             String covers="";
             for(ProductCoverRelVO ls:myCovers){
                 covers+=ls.getCoverName()+",";
+                myCheckCovers.add(ls.getCoverCode());
             }
             product_cover_name.setText(covers);
         }
@@ -502,6 +521,7 @@ public class NewProductActivity extends ActionBarActivity {
             String lables="";
             for(ProductLabelRelVO ls:muLabels){
                 lables+=ls.getLabelName()+",";
+                myCheckLabels.add(ls.getLabelCode());
             }
             product_label_name.setText(lables);
         }
@@ -510,10 +530,10 @@ public class NewProductActivity extends ActionBarActivity {
             toggle_checked_hot.setChecked(true);
         }
         //装载全部自定义分类
-        adapter.setCovers(obj.getCovers());
-        adapter.notifyDataSetChanged();
+        coverAdapter.setCovers(obj.getCovers(),myCheckCovers);
+        coverAdapter.notifyDataSetChanged();
         //装载全部自定义标签
-        labelAdapter.setLabels(obj.getLabels());
+        labelAdapter.setLabels(obj.getLabels(),myCheckLabels);
         labelAdapter.notifyDataSetChanged();
     }
 
