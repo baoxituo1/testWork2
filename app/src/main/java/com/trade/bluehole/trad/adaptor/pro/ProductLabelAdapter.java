@@ -24,13 +24,16 @@ public class ProductLabelAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private boolean isGrid;
     List<ProductLabel> labels;
+    //已经选中的标签
+    List<String>myCheckLabels;
     Context ctx;
     //记录checkbox的状态
     public HashMap<Integer, Boolean> state = new HashMap<Integer, Boolean>();
 
 
-    public void setLabels(List<ProductLabel> covers) {
+    public void setLabels(List<ProductLabel> covers,List<String>checkLabels) {
         this.labels = covers;
+        myCheckLabels=checkLabels;
     }
 
     public ProductLabelAdapter(Context context, boolean isGrid) {
@@ -73,6 +76,20 @@ public class ProductLabelAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         viewHolder.checkBox.setText(cover.getLabelName());
+        //判断是否选中
+        if(null!=myCheckLabels&&myCheckLabels.contains(cover.getLabelCode())){
+            viewHolder.checkBox.setChecked(true);
+            //如果是选中的 添加到选中的变化map中
+            state.put(position, true);
+        }else{
+            viewHolder.checkBox.setChecked(false);
+            //如果未选中 看看map中是否包涵 包涵的话清除掉
+            if(state.containsKey(position)){
+                state.remove(position);
+            }
+        }
+        //清除掉缓存造成的初始值
+        state.clear();
         //记录选中项变化值
         viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -85,13 +102,6 @@ public class ProductLabelAdapter extends BaseAdapter {
                 }
             }
         });
-
-       /* viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ctx, "checkBox clicked", Toast.LENGTH_LONG).show();
-            }
-        });*/
 
         return view;
     }
