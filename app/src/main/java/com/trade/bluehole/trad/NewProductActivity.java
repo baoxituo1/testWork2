@@ -431,6 +431,7 @@ public class NewProductActivity extends ActionBarActivity {
                 Log.d(NewProductActivity.class.getName(), statusCode + "");
                 if (null != response) {
                     Toast.makeText(NewProductActivity.this, response, Toast.LENGTH_SHORT).show();
+                    ProductManagerActivity_.intent(NewProductActivity.this).start();
                 }
             }
 
