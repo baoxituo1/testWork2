@@ -69,8 +69,12 @@
         </activity>
         <activity
             android:name=".activity.shop.ShopNameConfigActivity_"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:label="@string/title_activity_shop_name_config" >
+            android:label="@string/title_activity_shop_name_config"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name=".activity.shop.ShopSloganConfigActivity_"
+            android:label="@string/title_activity_shop_slogan_config" >
         </activity>
     </application>
 

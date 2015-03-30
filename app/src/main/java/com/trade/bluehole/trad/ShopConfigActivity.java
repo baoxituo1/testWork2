@@ -29,6 +29,8 @@ import com.loopj.android.http.RequestParams;
 import com.soundcloud.android.crop.Crop;
 import com.trade.bluehole.trad.activity.shop.ShopNameConfigActivity;
 import com.trade.bluehole.trad.activity.shop.ShopNameConfigActivity_;
+import com.trade.bluehole.trad.activity.shop.ShopSloganConfigActivity;
+import com.trade.bluehole.trad.activity.shop.ShopSloganConfigActivity_;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.photo.Photo;
 import com.trade.bluehole.trad.entity.pro.ProductResultVO;
@@ -179,6 +181,16 @@ public class ShopConfigActivity extends ActionBarActivity {
         intent.putExtra(ShopNameConfigActivity.SHOP_NAME_EXTRA, shopInfo.getTitle());
         startActivityForResult(intent, 14);
     }
+    /**
+     * 修改店铺公告
+     */
+    @Click(R.id.shopSloganLayout)
+    void updateShopSloganClick(){
+        Intent intent= ShopSloganConfigActivity_.intent(this).get();
+        intent.putExtra(ShopSloganConfigActivity.SHOP_CODE_EXTRA,user.getShopCode());
+        intent.putExtra(ShopSloganConfigActivity.SHOP_SLOGAN_EXTRA, shopInfo.getSlogan());
+        startActivityForResult(intent, 15);
+    }
 
     /**
      * 接受Activity结果
@@ -199,6 +211,15 @@ public class ShopConfigActivity extends ActionBarActivity {
                 String _shopName = result.getStringExtra(ShopNameConfigActivity.SHOP_NAME_EXTRA);
                 ShopCommonInfo sc=new ShopCommonInfo();
                 sc.setTitle(_shopName);
+                sc.setShopCode(user.getShopCode());
+                saveDataToServer(sc);
+            }
+        }else if(requestCode==15&&resultCode == RESULT_OK){
+            if (result != null)
+            {
+                String _shopSlogan= result.getStringExtra(ShopSloganConfigActivity.SHOP_SLOGAN_EXTRA);
+                ShopCommonInfo sc=new ShopCommonInfo();
+                sc.setSlogan(_shopSlogan);
                 sc.setShopCode(user.getShopCode());
                 saveDataToServer(sc);
             }
@@ -291,6 +312,9 @@ public class ShopConfigActivity extends ActionBarActivity {
                 params.put("title", obj.getTitle());
                 params.put("shopName", obj.getTitle());
             }
+            if(null!=obj.getSlogan()&&!"".equals(obj.getSlogan())){
+                params.put("slogan", obj.getSlogan());
+            }
         }
         params.put("shopCode", user.getShopCode());
         client.post("http://192.168.1.161:8080/qqt_up/shopjson/editShop.do", params, new BaseJsonHttpResponseHandler<String>() {
@@ -300,10 +324,17 @@ public class ShopConfigActivity extends ActionBarActivity {
                 Log.d(NewProductActivity.class.getName(), response.toString());
                 if (null != response) {
                     if("success".equals(response)){
-                        shopName.setText(obj.getTitle());
+                        String message="";
+                        if(null!=obj.getTitle()&&!"".equals(obj.getTitle())){
+                            message="修改店铺名称!";
+                            shopName.setText(obj.getTitle());
+                        }else if(null!=obj.getSlogan()&&!"".equals(obj.getSlogan())){
+                            message="修改店铺公告!";
+                            shopSlogan.setText(obj.getSlogan());
+                        }
                         new SweetAlertDialog(ShopConfigActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                                 .setTitleText("同步成功!")
-                                .setContentText("修改店铺名称!")
+                                .setContentText(message)
                                 .show();
                     }
                     //Toast.makeText(ShopConfigActivity.this, "数据提交：" + response, Toast.LENGTH_SHORT).show();
