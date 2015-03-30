@@ -71,6 +71,11 @@ public class MainActivity extends ActionBarActivity {
         ProductManagerActivity_.intent(this).start();
     }
 
+    @Click(R.id.shopConfigButton)
+    void configShopInfo(){
+        ShopConfigActivity_.intent(this).start();
+    }
+
     @Click(R.id.userInfoButton)
     void loadUserInfo(){
         UserInfoActivity_.intent(this).start();

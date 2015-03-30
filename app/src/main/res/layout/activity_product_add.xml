@@ -97,7 +97,12 @@
                         android:inputType="numberDecimal" android:maxLines="1" android:text=""
                         android:singleLine="true" />
                 </LinearLayout>
-
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_margin="10dp"
+                    android:layout_height="1dp"
+                    android:background="@color/note"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -162,6 +167,12 @@
                          </LinearLayout>
                      </RelativeLayout>
                  </LinearLayout>
+                 <View
+                     android:layout_width="fill_parent"
+                     android:layout_margin="10dp"
+                     android:layout_height="1dp"
+                     android:background="@color/note"
+                     />
                     <!-- 是否热销 -->
                  <LinearLayout
                      android:layout_width="match_parent"
@@ -197,6 +208,12 @@
                          </LinearLayout>
                      </RelativeLayout>
                  </LinearLayout>
+                 <View
+                     android:layout_width="fill_parent"
+                     android:layout_margin="10dp"
+                     android:layout_height="1dp"
+                     android:background="@color/note"
+                     />
                  <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_margin="10dp"

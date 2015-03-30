@@ -15,6 +15,11 @@
         android:layout_height="wrap_content"
         android:text="登录后台"/>
     <Button
+        android:id="@+id/shopConfigButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="店铺信息"/>
+    <Button
         android:id="@+id/productGridViewButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
