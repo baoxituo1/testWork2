@@ -35,5 +35,6 @@
     <string name="title_activity_shop_config">店铺设置</string>
     <string name="title_activity_shop_name_config">店铺名称</string>
     <string name="title_activity_shop_slogan_config">店铺公告</string>
+    <string name="title_activity_shop_ground_config">店铺招牌</string>
 
 </resources>

@@ -19,7 +19,9 @@ import org.androidannotations.annotations.rest.RestService;
 
 @EApplication
 public class MyApplication extends Application {
-
+    //阿里云oss
+    public static final String accessKey = "ictZeAtTIlkEXGta"; // 测试代码没有考虑AK/SK的安全性
+    public static final String screctKey = "8CQkQa7IytCb73hvk12EUazS0hUPw2";
     private User user;
     /** 表示通过Intent传递到下一个Activity的图片列表 */
     public static final String ARG_PHOTO_LIST = "trade.android.app.chooseimages.PHOTO_LIST";

@@ -2,6 +2,7 @@ package com.trade.bluehole.trad;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.soundcloud.android.crop.Crop;
+import com.trade.bluehole.trad.activity.shop.ShopGroundConfigActivity;
+import com.trade.bluehole.trad.activity.shop.ShopGroundConfigActivity_;
 import com.trade.bluehole.trad.activity.shop.ShopNameConfigActivity;
 import com.trade.bluehole.trad.activity.shop.ShopNameConfigActivity_;
 import com.trade.bluehole.trad.activity.shop.ShopSloganConfigActivity;
@@ -62,14 +65,17 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 @EActivity(R.layout.activity_shop_config)
 public class ShopConfigActivity extends ActionBarActivity {
-    static final String accessKey = "ictZeAtTIlkEXGta"; // 测试代码没有考虑AK/SK的安全性
-    static final String screctKey = "8CQkQa7IytCb73hvk12EUazS0hUPw2";
     public OSSBucket sampleBucket;
+    //json 转换
     Gson gson = new Gson();
-    User user=null;
+    //网络请求
     AsyncHttpClient client = new AsyncHttpClient();
+    //店铺信息
     String shopLogoFleName=null;
     ShopCommonInfo shopInfo=null;
+    User user=null;
+    //页面进度条
+    SweetAlertDialog pDialog;
     @App
     MyApplication myapplication;
     static {
@@ -81,7 +87,7 @@ public class ShopConfigActivity extends ActionBarActivity {
                 String content = httpMethod + "\n" + md5 + "\n" + type + "\n" + date + "\n" + ossHeaders
                         + resource;
 
-                return OSSToolKit.generateToken(accessKey, screctKey, content);
+                return OSSToolKit.generateToken(MyApplication.accessKey, MyApplication.screctKey, content);
             }
         });
         // OSSClient.setGlobalDefaultACL(AccessControlList.PUBLIC_READ_WRITE); // 设置全局默认bucket访问权限
@@ -105,8 +111,16 @@ public class ShopConfigActivity extends ActionBarActivity {
         sampleBucket.setBucketHostId("oss-cn-beijing.aliyuncs.com"); // 可以在这里设置数据中心域名或者cname域名
         //获取用户
         user=myapplication.getUser();
+        //初始化等待dialog
+        pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+            pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+            pDialog.setTitleText("Loading");
+            pDialog.setCancelable(false);
+            pDialog.show();
         //加载数据
-        loadServerData();
+        if(null!=user){
+            loadServerData();
+        }
     }
 
     @ViewById
@@ -159,6 +173,8 @@ public class ShopConfigActivity extends ActionBarActivity {
             shopName.setText(obj.getTitle());
             shopSlogan.setText(obj.getSlogan());
             shopAddress.setText(obj.getAddress());
+            //隐藏进度条
+            pDialog.hide();
         }
     }
 
@@ -190,6 +206,17 @@ public class ShopConfigActivity extends ActionBarActivity {
         intent.putExtra(ShopSloganConfigActivity.SHOP_CODE_EXTRA,user.getShopCode());
         intent.putExtra(ShopSloganConfigActivity.SHOP_SLOGAN_EXTRA, shopInfo.getSlogan());
         startActivityForResult(intent, 15);
+    }
+    /**
+     * 修改店铺公告
+     */
+    @Click(R.id.shopGroundLayout)
+    void updateShopGroundClick(){
+        Intent intent= ShopGroundConfigActivity_.intent(this).get();
+        intent.putExtra(ShopGroundConfigActivity.SHOP_CODE_EXTRA,user.getShopCode());
+        intent.putExtra(ShopGroundConfigActivity.SHOP_USER_EXTRA,user.getUserCode());
+        intent.putExtra(ShopGroundConfigActivity.SHOP_GROUND_EXTRA, shopInfo.getShopBackground());
+        startActivity(intent);
     }
 
     /**
@@ -226,17 +253,6 @@ public class ShopConfigActivity extends ActionBarActivity {
         }
     }
 
-   /* @OnActivityResult(14)
-    void onResult(int resultCode, Intent data) {
-        if (data != null)
-        {
-            String _shopName = data.getStringExtra(ShopNameConfigActivity.SHOP_NAME_EXTRA);
-            ShopCommonInfo sc=new ShopCommonInfo();
-            sc.setTitle(_shopName);
-            sc.setShopCode(user.getShopCode());
-            saveDataToServer(sc);
-        }
-    }*/
     /**
      * 开始裁剪
      *
@@ -304,6 +320,7 @@ public class ShopConfigActivity extends ActionBarActivity {
      * @param obj
      */
     void saveDataToServer(final ShopCommonInfo obj){
+        pDialog.show();
         RequestParams params=new RequestParams();
         params.put("userCode", user.getUserCode());
         params.put("shopCode", user.getShopCode());
@@ -316,11 +333,11 @@ public class ShopConfigActivity extends ActionBarActivity {
                 params.put("slogan", obj.getSlogan());
             }
         }
-        params.put("shopCode", user.getShopCode());
         client.post("http://192.168.1.161:8080/qqt_up/shopjson/editShop.do", params, new BaseJsonHttpResponseHandler<String>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
+                pDialog.hide();
                 Log.d(NewProductActivity.class.getName(), response.toString());
                 if (null != response) {
                     if("success".equals(response)){
@@ -353,4 +370,9 @@ public class ShopConfigActivity extends ActionBarActivity {
     }
 
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        pDialog.dismiss();
+    }
 }

@@ -44,7 +44,5 @@ public class ShopNameConfigActivity extends ActionBarActivity {
         // 关闭Activity
         ShopNameConfigActivity.this.finish();
 
-
-
     }
 }

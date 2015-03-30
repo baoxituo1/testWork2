@@ -155,6 +155,7 @@
                 android:background="@color/note" />
             <!-- 店铺招牌-->
             <LinearLayout
+                android:id="@+id/shopGroundLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="1">

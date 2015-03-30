@@ -76,6 +76,10 @@
             android:name=".activity.shop.ShopSloganConfigActivity_"
             android:label="@string/title_activity_shop_slogan_config" >
         </activity>
+        <activity
+            android:name=".activity.shop.ShopGroundConfigActivity_"
+            android:label="@string/title_activity_shop_ground_config" >
+        </activity>
     </application>
 
 </manifest>
