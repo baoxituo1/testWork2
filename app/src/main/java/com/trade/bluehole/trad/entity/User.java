@@ -16,6 +16,7 @@ public class User  implements
 	private String mobile;
 	private Integer userType;
 	private String nickName;
+	private String shopCode;
 
 	// Constructors
 
@@ -57,6 +58,14 @@ public class User  implements
 
     public String getEmail() {
         return email;
+    }
+
+    public String getShopCode() {
+        return shopCode;
+    }
+
+    public void setShopCode(String shopCode) {
+        this.shopCode = shopCode;
     }
 
     public void setEmail(String email) {

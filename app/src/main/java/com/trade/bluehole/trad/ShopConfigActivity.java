@@ -27,7 +27,10 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.soundcloud.android.crop.Crop;
+import com.trade.bluehole.trad.activity.shop.ShopNameConfigActivity;
+import com.trade.bluehole.trad.activity.shop.ShopNameConfigActivity_;
 import com.trade.bluehole.trad.entity.User;
+import com.trade.bluehole.trad.entity.photo.Photo;
 import com.trade.bluehole.trad.entity.pro.ProductResultVO;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
@@ -38,6 +41,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
@@ -46,7 +50,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.UUID;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 /**
  * 店铺设置
@@ -60,6 +67,7 @@ public class ShopConfigActivity extends ActionBarActivity {
     User user=null;
     AsyncHttpClient client = new AsyncHttpClient();
     String shopLogoFleName=null;
+    ShopCommonInfo shopInfo=null;
     @App
     MyApplication myapplication;
     static {
@@ -140,6 +148,7 @@ public class ShopConfigActivity extends ActionBarActivity {
     @UiThread
     void doInUiThread(ShopCommonInfo obj) {
         if(null!=obj){
+            shopInfo=obj;
             //加载店铺logo
             if(null!=obj.getShopLogo()){
                 ImageManager.imageLoader.displayImage("http://125.oss-cn-beijing.aliyuncs.com/" + obj.getShopLogo(),shopLogoImage,ImageManager.options);
@@ -160,6 +169,16 @@ public class ShopConfigActivity extends ActionBarActivity {
         Crop.pickImage(this);
     }
 
+    /**
+     * 修改店铺名称
+     */
+    @Click(R.id.shopNameLayout)
+    void updateShopNameClick(){
+        Intent intent= ShopNameConfigActivity_.intent(this).get();
+        intent.putExtra(ShopNameConfigActivity.SHOP_CODE_EXTRA,user.getShopCode());
+        intent.putExtra(ShopNameConfigActivity.SHOP_NAME_EXTRA, shopInfo.getTitle());
+        startActivityForResult(intent, 14);
+    }
 
     /**
      * 接受Activity结果
@@ -174,9 +193,29 @@ public class ShopConfigActivity extends ActionBarActivity {
             beginCrop(result.getData());
         } else if (requestCode == Crop.REQUEST_CROP) {
             handleCrop(resultCode, result);
+        }else if(requestCode==14&&resultCode == RESULT_OK){
+            if (result != null)
+            {
+                String _shopName = result.getStringExtra(ShopNameConfigActivity.SHOP_NAME_EXTRA);
+                ShopCommonInfo sc=new ShopCommonInfo();
+                sc.setTitle(_shopName);
+                sc.setShopCode(user.getShopCode());
+                saveDataToServer(sc);
+            }
         }
     }
 
+   /* @OnActivityResult(14)
+    void onResult(int resultCode, Intent data) {
+        if (data != null)
+        {
+            String _shopName = data.getStringExtra(ShopNameConfigActivity.SHOP_NAME_EXTRA);
+            ShopCommonInfo sc=new ShopCommonInfo();
+            sc.setTitle(_shopName);
+            sc.setShopCode(user.getShopCode());
+            saveDataToServer(sc);
+        }
+    }*/
     /**
      * 开始裁剪
      *
@@ -238,6 +277,49 @@ public class ShopConfigActivity extends ActionBarActivity {
         });
     }
 
+
+    /**
+     * 向服务器推送数据更新店铺信息
+     * @param obj
+     */
+    void saveDataToServer(final ShopCommonInfo obj){
+        RequestParams params=new RequestParams();
+        params.put("userCode", user.getUserCode());
+        params.put("shopCode", user.getShopCode());
+        if(null!=obj){
+            if(null!=obj.getTitle()&&!"".equals(obj.getTitle())){
+                params.put("title", obj.getTitle());
+                params.put("shopName", obj.getTitle());
+            }
+        }
+        params.put("shopCode", user.getShopCode());
+        client.post("http://192.168.1.161:8080/qqt_up/shopjson/editShop.do", params, new BaseJsonHttpResponseHandler<String>() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
+                Log.d(NewProductActivity.class.getName(), response.toString());
+                if (null != response) {
+                    if("success".equals(response)){
+                        shopName.setText(obj.getTitle());
+                        new SweetAlertDialog(ShopConfigActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                .setTitleText("同步成功!")
+                                .setContentText("修改店铺名称!")
+                                .show();
+                    }
+                    //Toast.makeText(ShopConfigActivity.this, "数据提交：" + response, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
+            }
+
+            @Override
+            protected String parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                return gson.fromJson(rawJsonData, String.class);
+            }
+        });
+    }
 
 
 }

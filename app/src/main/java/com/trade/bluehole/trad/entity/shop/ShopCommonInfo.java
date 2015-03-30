@@ -19,6 +19,10 @@ public class ShopCommonInfo {
 	private String cityName;
 	private String district;
 
+    public ShopCommonInfo(){
+
+    }
+
 	public String getShopCode() {
 		return shopCode;
 	}

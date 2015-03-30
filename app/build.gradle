@@ -36,6 +36,7 @@ dependencies {
     compile 'com.github.eluleci:flatui:3.0.0'
     //对话框
     compile 'com.orhanobut:dialogplus:1.4@aar'
+    compile 'cn.pedant.sweetalert:library:1.3'
 }
 
 apt {

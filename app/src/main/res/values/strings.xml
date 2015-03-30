@@ -33,5 +33,6 @@
     <string name="button_center">Center</string>
     <string name="button_top">Top</string>
     <string name="title_activity_shop_config">店铺设置</string>
+    <string name="title_activity_shop_name_config">店铺名称</string>
 
 </resources>

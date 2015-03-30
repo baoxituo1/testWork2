@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.trade.bluehole.trad.activity.shop.ShopNameConfigActivity">
+
+    <EditText
+        android:id="@+id/shopName"
+        android:layout_width="match_parent"
+        android:hint="店铺名称"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/shopNameDoneBtn"
+        android:layout_below="@id/shopName"
+        android:text="完成"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
