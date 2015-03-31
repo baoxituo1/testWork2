@@ -28,6 +28,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.soundcloud.android.crop.Crop;
+import com.trade.bluehole.trad.activity.shop.ShopAddressConfigActivity;
+import com.trade.bluehole.trad.activity.shop.ShopAddressConfigActivity_;
 import com.trade.bluehole.trad.activity.shop.ShopGroundConfigActivity;
 import com.trade.bluehole.trad.activity.shop.ShopGroundConfigActivity_;
 import com.trade.bluehole.trad.activity.shop.ShopNameConfigActivity;
@@ -217,6 +219,21 @@ public class ShopConfigActivity extends ActionBarActivity {
         intent.putExtra(ShopGroundConfigActivity.SHOP_USER_EXTRA,user.getUserCode());
         intent.putExtra(ShopGroundConfigActivity.SHOP_GROUND_EXTRA, shopInfo.getShopBackground());
         startActivity(intent);
+    }
+    /**
+     * 修改店铺地址
+     */
+    @Click(R.id.shopAddressLayout)
+    void updateShopAddressClick(){
+        Intent intent= ShopAddressConfigActivity_.intent(this).get();
+        intent.putExtra(ShopAddressConfigActivity.SHOP_CODE_EXTRA,user.getShopCode());
+        intent.putExtra(ShopAddressConfigActivity.SHOP_latitude_EXTRA,shopInfo.getLatitude());
+        intent.putExtra(ShopAddressConfigActivity.SHOP_longitude_EXTRA, shopInfo.getLongitude());
+        intent.putExtra(ShopAddressConfigActivity.SHOP_provinceName_EXTRA, shopInfo.getProvinceName());
+        intent.putExtra(ShopAddressConfigActivity.SHOP_cityNameName_EXTRA, shopInfo.getCityName());
+        intent.putExtra(ShopAddressConfigActivity.SHOP_districtName_EXTRA, shopInfo.getDistrict());
+        intent.putExtra(ShopAddressConfigActivity.SHOP_address_EXTRA, shopInfo.getAddress());
+        startActivityForResult(intent, 17);
     }
 
     /**

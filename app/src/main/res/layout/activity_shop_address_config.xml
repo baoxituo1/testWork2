@@ -17,53 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- 店铺图标-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
-                <!--左侧 -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="left"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="店铺图标"
-                        android:textColor="@color/eggplant" />
-                </LinearLayout>
-
-                <!--右侧 -->
-                <LinearLayout
-                    android:id="@+id/shopLogoLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
-                    android:gravity="right"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/shopLogoImage"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/lib_icon"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/note" />
-            <!-- 店铺名称-->
+            <!-- 省份名称-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -79,24 +33,24 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="店铺名称"
+                        android:text="省份名称"
                         android:textColor="@color/eggplant" />
                 </LinearLayout>
 
                 <!--右侧 -->
                 <LinearLayout
-                    android:id="@+id/shopNameLayout"
+                    android:id="@+id/provinceNameLayout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.6"
-                    android:gravity="right"
+                    android:gravity="left"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/shopName"
+                        android:id="@+id/provinceShopName"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="丽影伊人   >"
+                        android:text="丽影伊人"
                         android:textColor="@color/grey_light" />
                 </LinearLayout>
 
@@ -108,7 +62,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/note" />
-            <!-- 店铺公告-->
+            <!-- 市名称-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,24 +78,24 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="店铺公告"
+                        android:text="城市名称"
                         android:textColor="@color/eggplant" />
                 </LinearLayout>
 
                 <!--右侧 -->
                 <LinearLayout
-                    android:id="@+id/shopSloganLayout"
+                    android:id="@+id/cityNameLayout"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.6"
-                    android:gravity="right"
+                    android:gravity="left"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/shopSlogan"
+                        android:id="@+id/cityName"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="未填写   >"
+                        android:text="丽影伊人"
                         android:textColor="@color/grey_light" />
                 </LinearLayout>
 
@@ -153,9 +107,9 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/note" />
-            <!-- 店铺招牌-->
+
+            <!-- 区县名称-->
             <LinearLayout
-                android:id="@+id/shopGroundLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="1">
@@ -170,22 +124,24 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="店铺招牌"
+                        android:text="区县名称"
                         android:textColor="@color/eggplant" />
                 </LinearLayout>
 
                 <!--右侧 -->
                 <LinearLayout
+                    android:id="@+id/districtNameLayout"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.6"
-                    android:gravity="right"
+                    android:gravity="left"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/districtName"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="     >"
+                        android:text="丽影伊人"
                         android:textColor="@color/grey_light" />
                 </LinearLayout>
 
@@ -197,9 +153,8 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/note" />
-            <!-- 店铺地址-->
+            <!-- 街道名称-->
             <LinearLayout
-                android:id="@+id/shopAddressLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="1">
@@ -214,23 +169,24 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="店铺地址"
+                        android:text="街道地址"
                         android:textColor="@color/eggplant" />
                 </LinearLayout>
 
                 <!--右侧 -->
                 <LinearLayout
+                    android:id="@+id/addressNameLayout"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.6"
-                    android:gravity="right"
+                    android:gravity="left"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/shopAddress"
+                        android:id="@+id/addressName"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="未设置   >"
+                        android:text="丽影伊人"
                         android:textColor="@color/grey_light" />
                 </LinearLayout>
 
@@ -243,6 +199,12 @@
                 android:layout_marginTop="20dp"
                 android:background="@color/note" />
 
+            <Button
+                android:id="@+id/shopRelocationBtn"
+                android:layout_width="match_parent"
+                android:text="定位地址"
+                android:layout_height="wrap_content" />
         </LinearLayout>
+
     </ScrollView>
 </RelativeLayout>
