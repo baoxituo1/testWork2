@@ -38,4 +38,22 @@
     <string name="title_activity_shop_ground_config">店铺招牌</string>
     <string name="title_activity_shop_address_config">店铺地址</string>
 
+
+    <!-- 地图图标定义 -->
+    <string name="map_marker"></string>
+    <string name="map_anchor"></string>
+    <string name="map_list"></string>
+    <string name="map_crop"></string>
+    <string name="map_reply"></string>
+    <string name="map_paper_plane"></string>
+    <string name="map_save"></string>
+    <string name="map_search"></string>
+    <string name="map_route_car"></string>
+    <string name="map_route_bus"></string>
+    <string name="map_route_male"></string>
+    <string name="map_arrow_circle_left"></string>
+    <string name="map_arrow_circle_right"></string>
+    <string name="map_fa_rss_square"></string>
+    <string name="map_confirm">确定</string>
+    <string name="map_back">返回</string>
 </resources>

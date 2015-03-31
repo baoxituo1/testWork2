@@ -27,6 +27,7 @@
     <color name="pocket_color_1">#85edb9</color>
     <color name="pocket_color_2">#34bdb7</color>
     <color name="gplus_color_1">#3e802f</color>
+    <color name="demo_card_background_color4">#33B4E4</color>
     <integer-array name="custom_theme">
         <item>@color/collect_green</item> <!-- a bit darker color of your main color -->
         <item>@color/pocket_color_1</item> <!-- main color of your theme -->

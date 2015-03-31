@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
+
+    <ImageView    android:src="@drawable/location_mark" android:layout_width="wrap_content" android:layout_height="wrap_content" android:contentDescription="@null" android:layout_centerInParent="true"/>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/map_set_back"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:padding="5dp"
+        fancy:borderColor="#FFFFFF"
+        fancy:borderWidth="1dp"
+        fancy:defaultColor="@color/demo_card_background_color4"
+        fancy:focusColor="#5577bd"
+        fancy:fontIconResource="@string/map_reply"
+        fancy:fontIconSize="10sp"
+        fancy:iconPosition="left"
+        fancy:radius="5dp"
+        fancy:text="@string/map_back"
+        fancy:textColor="#FFFFFF"/>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/map_set_save"
+        android:layout_width="100dp"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:padding="5dp"
+        fancy:borderColor="#FFFFFF"
+        fancy:borderWidth="1dp"
+        fancy:defaultColor="@color/demo_card_background_color4"
+        fancy:focusColor="#5577bd"
+        fancy:fontIconResource="@string/map_save"
+        fancy:fontIconSize="10sp"
+        fancy:iconPosition="left"
+        fancy:radius="5dp"
+        fancy:text="@string/map_confirm"
+        fancy:textColor="#FFFFFF"/>
+
+</RelativeLayout>
