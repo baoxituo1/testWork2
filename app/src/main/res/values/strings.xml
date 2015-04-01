@@ -1,5 +1,5 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Trad</string>
+    <string name="app_name">优商圈</string>
 
     <string name="hello_world">你好请登陆!</string>
     <string name="action_settings">Settings</string>
@@ -56,6 +56,13 @@
     <string name="map_fa_rss_square"></string>
     <string name="map_confirm">确定</string>
     <string name="map_back">返回</string>
+    <!--店铺首页图标-->
+    <string name="main_eye">&#xf06e;</string>
+    <string name="main_shar">&#xf1e0;</string>
+    <string name="main_copy_url">&#xf127;</string>
+
+
     <!--登陆-->
-    <string name="login_user_login">登 录</string>
+    <string name="login_user_login">登 录 &#xf1d8;</string>
+    <string name="title_activity_header_animator">HeaderAnimatorActivity</string>
 </resources>

@@ -128,9 +128,11 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <TextView android:id="@+id/hello_text" android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+    <Button
+        android:id="@+id/newMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="新版首页"/>
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"

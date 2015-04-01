@@ -26,7 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends ActionBarActivity {
 
     @ViewById
-    TextView hello_text,shopName;
+    TextView shopName;
     @ViewById
     CircleImageView shop_logo_image;
     @App
@@ -91,12 +91,17 @@ public class MainActivity extends ActionBarActivity {
     void addProduct(){
         NewProductActivity_.intent(this).start();
     }
+    @Click(R.id.newMain)
+    void newMainClick(){
+        //Intent intent=new Intent(this,HeaderAnimatorActivity.class);
+       // startActivity(intent);
+        HeaderAnimatorActivity_.intent(this).start();
+    }
 
 
     @OnActivityResult(12)
     void onResult(int resultCode, Intent data) {
        String name= data.getStringExtra("result");
-        hello_text.setText("欢迎:"+name);
     }
 
 
