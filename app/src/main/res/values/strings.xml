@@ -56,4 +56,6 @@
     <string name="map_fa_rss_square"></string>
     <string name="map_confirm">确定</string>
     <string name="map_back">返回</string>
+    <!--登陆-->
+    <string name="login_user_login">登 录</string>
 </resources>

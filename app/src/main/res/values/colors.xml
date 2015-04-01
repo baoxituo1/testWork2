@@ -22,6 +22,7 @@
     <color name="custom_theme_dark">#d4a14a</color>
     <color name="custom_theme_primary">#fbbf58</color>
     <color name="custom_theme_light">#fae8c8</color>
+    <color name="material_deep_teal_20">#ff80cbc4</color>
     <color name="collect_green">#4cd964</color>
     <color name="link">#1aadc0</color>
     <color name="pocket_color_1">#85edb9</color>

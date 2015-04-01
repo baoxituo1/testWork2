@@ -10,4 +10,15 @@
     <dimen name="button_text_size">16sp</dimen>
     <dimen name="sample_text_size">12sp</dimen>
 
+    <dimen name="n_padding_normal">5dp</dimen>
+    <dimen name="n_padding_normal_h">10dp</dimen>
+    <dimen name="n_padding_normal_b">15dp</dimen>
+
+    <!-- 登陆页面 -->
+    <dimen name="head_top_image_height">150dp</dimen>
+    <dimen name="head_top_logo_height">80dp</dimen>
+    <dimen name="head_top_logo_weight">80dp</dimen>
+
+    <dimen name="head_top_user_height">90dp</dimen>
+
 </resources>

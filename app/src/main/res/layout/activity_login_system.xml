@@ -1,70 +1,146 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.trade.bluehole.trad.LoginSystemActivity">
+    android:background="@color/overlay_light">
 
-    <!-- Login progress -->
-    <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" android:visibility="gone" />
+    <RelativeLayout
+        android:id="@id/login_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/head_top_image_height"
+        android:background="@drawable/head_background">
 
-    <ScrollView android:id="@+id/login_form" android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/shop_logo_image"
+            android:layout_width="@dimen/head_top_logo_height"
+            android:layout_height="@dimen/head_top_logo_weight"
+            android:layout_centerInParent="true"
+            android:src="@drawable/default_user"
+            app:border_color="@color/white"
+            app:border_width="2dp" />
+    </RelativeLayout>
 
-            <Button android:id="@+id/plus_sign_in_button"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp" />
+    <LinearLayout
+        android:id="@id/login_user_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_top_layout"
+        android:layout_marginTop="@dimen/n_padding_normal_h"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/n_padding_normal_h"
+        android:weightSum="2">
 
-            <LinearLayout android:id="@+id/plus_sign_out_buttons"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:visibility="gone" android:weightSum="2">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-                <Button android:id="@+id/plus_sign_out_button" style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent" android:layout_height="match_parent"
-                    android:layout_weight="1" android:text="@string/plus_sign_out" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/n_padding_normal_b"
+                android:src="@drawable/login_zhanghao" />
 
-                <Button android:id="@+id/plus_disconnect_button"
-                    style="?android:textAppearanceSmall" android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:layout_weight="1"
-                    android:text="@string/plus_disconnect" />
-
-            </LinearLayout>
-
-            <LinearLayout android:id="@+id/account_login_form" android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:orientation="vertical">
-
-                <EditText android:id="@+id/account" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress" android:maxLines="1" android:text="baoxituo1"
-                    android:singleLine="true" />
-
-                <EditText android:id="@+id/password" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:hint="@string/prompt_password" android:text="123456"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified" android:inputType="textPassword"
-                    android:maxLines="1" android:singleLine="true" />
-
-                <Button android:id="@+id/account_sign_in_button" style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" android:text="@string/action_sign_in"
-                    android:textStyle="bold" />
-
-
-            </LinearLayout>
+            <EditText
+                android:id="@id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/n_padding_normal_b"
+                android:drawableBottom="@color/white"
+                android:background="@drawable/rounded_edittext"
+                android:text="baoxituo1"
+                android:gravity="center_vertical"
+                android:singleLine="true" />
         </LinearLayout>
-    </ScrollView>
 
-</LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="@dimen/n_padding_normal_b"
+            android:background="@color/snow_primary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/n_padding_normal_b"
+                android:src="@drawable/login_mima" />
+
+            <EditText
+                android:id="@id/userPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/n_padding_normal_b"
+                android:background="@drawable/rounded_edittext"
+                android:gravity="center_vertical"
+                android:password="true"
+                android:text="123456"
+                android:singleLine="true" />
+        </LinearLayout>
+    </LinearLayout>
+    <!--登陆按钮-->
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/login_user_login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_user_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="40dp"
+        android:padding="@dimen/n_padding_normal_b"
+        fancy:borderColor="#FFFFFF"
+        fancy:borderWidth="1dp"
+        fancy:defaultColor="@color/saffron"
+        fancy:focusColor="#5577bd"
+        fancy:fontIconSize="20sp"
+        fancy:radius="10dp"
+        fancy:text="@string/login_user_login"
+        fancy:textColor="#FFFFFF" />
+
+
+    <RelativeLayout
+        android:id="@id/login_reg_layout"
+        android:layout_below="@id/login_user_login_btn"
+        android:layout_width="match_parent"
+        android:padding="@dimen/n_padding_normal"
+        android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/n_padding_normal"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_margin="@dimen/n_padding_normal"
+                    android:layout_width="wrap_content"
+                    android:text="注册账号"
+                    android:textColor="@color/demo_card_background_color4"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:background="@color/demo_card_background_color4" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_margin="@dimen/n_padding_normal"
+                    android:text="忘记密码"
+                    android:textColor="@color/demo_card_background_color4"
+                    android:layout_height="wrap_content"
+                     />
+            </LinearLayout>
+     </RelativeLayout>
+
+
+</RelativeLayout>
 
 
 
