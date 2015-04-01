@@ -7,4 +7,11 @@
     <item type="id" name="login_other_layout" />
     <item type="id" name="userName" />
     <item type="id" name="userPassword" />
+    <!-- 商品列表项 -->
+    <item type="id" name="pro_image" />
+    <item type="id" name="pro_name" />
+    <item type="id" name="pro_price" />
+    <item type="id" name="pro_number" />
+    <item type="id" name="pro_date" />
+    <item type="id" name="pro_hot" />
 </resources>
