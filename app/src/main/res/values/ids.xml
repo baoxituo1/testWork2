@@ -19,5 +19,7 @@
     <item type="id" name="main_sale_ing_btn" />
     <item type="id" name="main_sale_out_btn" />
     <item type="id" name="main_sale_cover_btn" />
+    <item type="id" name="main_cover_name" />
+    <item type="id" name="main_cover_number" />
 
 </resources>

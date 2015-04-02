@@ -18,14 +18,17 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.trade.bluehole.trad.adaptor.ProductGridviewAdaptor;
+import com.trade.bluehole.trad.adaptor.pro.ProductCoverNumberAdapter;
 import com.trade.bluehole.trad.adaptor.pro.ProductListViewAdaptor;
 import com.trade.bluehole.trad.animator.IO2014HeaderAnimator;
 import com.trade.bluehole.trad.entity.ProductIndexVO;
 import com.trade.bluehole.trad.entity.User;
+import com.trade.bluehole.trad.entity.pro.ProductCoverRelVO;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.Result;
+import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 
 import org.androidannotations.annotations.AfterViews;
@@ -41,6 +44,7 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 @EActivity(R.layout.activity_header_animator)
 public class HeaderAnimatorActivity extends ActionBarActivity {
@@ -51,15 +55,19 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
     TextView shopName;
     @ViewById
     CircleImageView shop_logo_image;
+    @ViewById
+    FancyButton main_sale_ing_btn,main_sale_out_btn,main_sale_cover_btn;
     @App
     MyApplication myApplication;
     ProductListViewAdaptor adaptor;
+    ProductCoverNumberAdapter coverNumberAdapter;
     AsyncHttpClient client = new AsyncHttpClient();
     Gson gson = new Gson();
     List<ProductIndexVO> mList=new ArrayList<ProductIndexVO>();
     //页面进度条
     SweetAlertDialog pDialog;
     private String searchType="1";
+    private String serverName= DataUrlContents.load_pro_all_list;
     /**
      * 登陆信息
      */
@@ -79,6 +87,7 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         user=myApplication.getUser();
         shop=myApplication.getShop();
         adaptor=new ProductListViewAdaptor(this);
+        coverNumberAdapter=new ProductCoverNumberAdapter(this);
         if(shop!=null){
             shopName.setText(shop.getTitle());
             if(null!=shop.getShopLogo()){
@@ -97,6 +106,7 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         pDialog.setTitleText("Loading");
         pDialog.setCancelable(false);
         populateListView();
+        //loadCoverListView();
     }
 
     /**
@@ -110,7 +120,7 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
             params.put("userCode",user.getUserCode());
             params.put("type",searchType);
             params.put("pageSize",500);
-            client.get("http://192.168.1.161:8080/qqt_up/shopjson/findUserProList.do", params, new BaseJsonHttpResponseHandler<Result<ProductIndexVO, String>>() {
+            client.get(DataUrlContents.SERVER_HOST+DataUrlContents.load_pro_all_list, params, new BaseJsonHttpResponseHandler<Result<ProductIndexVO, String>>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ProductIndexVO, String> response) {
@@ -143,6 +153,49 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
             });
         }
     }
+    /**
+     * load数据
+     */
+    private void loadCoverListView() {
+        User user= myApplication.getUser();
+        if(user!=null&&user.getUserCode()!=null){
+            pDialog.show();
+            RequestParams params=new RequestParams();
+            params.put("userCode",user.getUserCode());
+            params.put("shopCode",user.getShopCode());
+            params.put("pageSize",500);
+            serverName=DataUrlContents.load_pro_covers_number_list;
+            client.get(DataUrlContents.SERVER_HOST+serverName, params, new BaseJsonHttpResponseHandler<Result<ProductCoverRelVO, String>>() {
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ProductCoverRelVO, String> response) {
+                    pDialog.hide();
+                    if (null != response) {
+                        if (response.isSuccess()) {
+                            //Toast.makeText(HeaderAnimatorActivity.this, "获取数据成功", Toast.LENGTH_SHORT).show();
+                            //把数据添加到全局
+                            coverNumberAdapter.setLists(response.getList());
+                            listview.setAdapter(coverNumberAdapter);
+                            coverNumberAdapter.notifyDataSetChanged();
+                        } else {
+                            Toast.makeText(HeaderAnimatorActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<ProductCoverRelVO, String> errorResponse) {
+
+                }
+
+                @Override
+                protected Result<ProductCoverRelVO, String> parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                    // return new ObjectMapper().readValues(new JsonFactory().createParser(rawJsonData), Result.class).next();
+                    return gson.fromJson(rawJsonData, new TypeToken<Result<ProductCoverRelVO,String>>(){}.getType());
+                }
+            });
+        }
+    }
 
     /**
      * 点击销售中
@@ -150,6 +203,9 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
     @Click(R.id.main_sale_ing_btn)
     void onSaleIngClick(){
         searchType="1";
+        main_sale_ing_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
+        main_sale_out_btn.setTextColor(getResources().getColor(R.color.white));
+        main_sale_cover_btn.setTextColor(getResources().getColor(R.color.white));
         populateListView();
     }
     /**
@@ -158,7 +214,21 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
     @Click(R.id.main_sale_out_btn)
     void onSaleOutClick(){
         searchType="0";
+        main_sale_out_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
+        main_sale_ing_btn.setTextColor(getResources().getColor(R.color.white));
+        main_sale_cover_btn.setTextColor(getResources().getColor(R.color.white));
         populateListView();
+    }
+    /**
+     * 点击分类
+     */
+    @Click(R.id.main_sale_cover_btn)
+    void onCoverOutClick(){
+        searchType="2";
+        main_sale_cover_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
+        main_sale_ing_btn.setTextColor(getResources().getColor(R.color.white));
+        main_sale_out_btn.setTextColor(getResources().getColor(R.color.white));
+        loadCoverListView();
     }
     @Override
     public void onDestroy(){

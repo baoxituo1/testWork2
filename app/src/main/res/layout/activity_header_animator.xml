@@ -198,7 +198,7 @@
                         fancy:focusColor="@color/text_normal"
                         fancy:text="@string/main_list_label_sale"
                         fancy:textSize="8sp"
-                        fancy:textColor="#FFFFFF"/>
+                        fancy:textColor="@color/red_btn_bg_color"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_weight="1"

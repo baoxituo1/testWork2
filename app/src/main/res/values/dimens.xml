@@ -17,9 +17,11 @@
     <dimen name="small_text_size">14sp</dimen>
     <dimen name="sample_text_size">12sp</dimen>
 
+    <dimen name="n_padding_normal_s">3dp</dimen>
     <dimen name="n_padding_normal">5dp</dimen>
     <dimen name="n_padding_normal_h">10dp</dimen>
     <dimen name="n_padding_normal_b">15dp</dimen>
+    <dimen name="n_padding_normal_h_b">20dp</dimen>
 
     <!-- 登陆页面 -->
     <dimen name="head_top_image_height">150dp</dimen>
