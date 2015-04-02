@@ -187,37 +187,50 @@
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
-                    <TextView
-                        android:layout_centerInParent="true"
-                        android:text="销售中"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
+
+                    <mehdi.sakout.fancybuttons.FancyButton
+                        android:id="@id/main_sale_ing_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        fancy:borderWidth="2dp"
+                        fancy:defaultColor="@android:color/holo_green_light"
+                        fancy:focusColor="@color/text_normal"
+                        fancy:text="@string/main_list_label_sale"
+                        fancy:textSize="8sp"
+                        fancy:textColor="#FFFFFF"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
-                    <TextView
-                        android:layout_centerInParent="true"
-                        android:text="已下架"
-                        android:textSize="18sp"
-                        android:textColor="@color/white"
+                    <mehdi.sakout.fancybuttons.FancyButton
+                        android:id="@id/main_sale_out_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        fancy:borderWidth="2dp"
+                        fancy:defaultColor="@android:color/holo_green_light"
+                        fancy:focusColor="@color/text_normal"
+                        fancy:text="@string/main_list_label_out"
+                        fancy:textSize="8sp"
+                        fancy:textColor="#FFFFFF"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
-                    <TextView
-                        android:layout_centerInParent="true"
-                        android:text="分类"
-                        android:textSize="18sp"
-                        android:textColor="@color/white"
+                    <mehdi.sakout.fancybuttons.FancyButton
+                        android:id="@id/main_sale_cover_btn"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        fancy:borderWidth="2dp"
+                        fancy:defaultColor="@android:color/holo_green_light"
+                        fancy:focusColor="@color/text_normal"
+                        fancy:text="@string/main_list_label_cover"
+                        fancy:textSize="8sp"
+                        fancy:textColor="#FFFFFF"/>
                 </RelativeLayout>
 
                 </LinearLayout>

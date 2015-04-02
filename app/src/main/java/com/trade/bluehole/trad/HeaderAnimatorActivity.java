@@ -1,5 +1,6 @@
 package com.trade.bluehole.trad;
 
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,7 @@ import com.trade.bluehole.trad.util.Result;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
@@ -36,6 +38,7 @@ import org.apache.http.Header;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 
@@ -54,6 +57,9 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
     AsyncHttpClient client = new AsyncHttpClient();
     Gson gson = new Gson();
     List<ProductIndexVO> mList=new ArrayList<ProductIndexVO>();
+    //页面进度条
+    SweetAlertDialog pDialog;
+    private String searchType="1";
     /**
      * 登陆信息
      */
@@ -72,6 +78,7 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
     void initData(){
         user=myApplication.getUser();
         shop=myApplication.getShop();
+        adaptor=new ProductListViewAdaptor(this);
         if(shop!=null){
             shopName.setText(shop.getTitle());
             if(null!=shop.getShopLogo()){
@@ -84,6 +91,11 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
                 .minHeightHeaderDim(R.dimen.min_height_header_materiallike)
                 .animator(animator)
                 .build();
+        //初始化等待dialog
+        pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
         populateListView();
     }
 
@@ -91,23 +103,25 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
      * load数据
      */
     private void populateListView() {
-
-        adaptor=new ProductListViewAdaptor(this);
         User user= myApplication.getUser();
         if(user!=null&&user.getUserCode()!=null){
+           pDialog.show();
             RequestParams params=new RequestParams();
             params.put("userCode",user.getUserCode());
+            params.put("type",searchType);
             params.put("pageSize",500);
             client.get("http://192.168.1.161:8080/qqt_up/shopjson/findUserProList.do", params, new BaseJsonHttpResponseHandler<Result<ProductIndexVO, String>>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ProductIndexVO, String> response) {
+                    pDialog.hide();
                     if (null != response) {
                         if (response.isSuccess()) {
-                            Toast.makeText(HeaderAnimatorActivity.this, "获取数据成功", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(HeaderAnimatorActivity.this, "获取数据成功", Toast.LENGTH_SHORT).show();
                             //把数据添加到全局
+                            mList.clear();
                             mList.addAll(response.getAaData());
-                            adaptor.setLists(response.getAaData());
+                            adaptor.setLists(mList);
                             listview.setAdapter(adaptor);
                             adaptor.notifyDataSetChanged();
                         } else {
@@ -130,5 +144,25 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         }
     }
 
-
+    /**
+     * 点击销售中
+     */
+    @Click(R.id.main_sale_ing_btn)
+    void onSaleIngClick(){
+        searchType="1";
+        populateListView();
+    }
+    /**
+     * 点击已下架
+     */
+    @Click(R.id.main_sale_out_btn)
+    void onSaleOutClick(){
+        searchType="0";
+        populateListView();
+    }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        pDialog.dismiss();
+    }
 }

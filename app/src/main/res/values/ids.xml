@@ -14,4 +14,10 @@
     <item type="id" name="pro_number" />
     <item type="id" name="pro_date" />
     <item type="id" name="pro_hot" />
+
+
+    <item type="id" name="main_sale_ing_btn" />
+    <item type="id" name="main_sale_out_btn" />
+    <item type="id" name="main_sale_cover_btn" />
+
 </resources>

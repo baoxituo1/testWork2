@@ -60,9 +60,14 @@
     <string name="main_eye">&#xf06e;</string>
     <string name="main_shar">&#xf1e0;</string>
     <string name="main_copy_url">&#xf127;</string>
+    <!--主界面-->
+    <string name="main_list_label_sale">销售中</string>
+    <string name="main_list_label_out">已下架</string>
+    <string name="main_list_label_cover">分类</string>
 
 
     <!--登陆-->
     <string name="login_user_login">登 录 &#xf1d8;</string>
     <string name="title_activity_header_animator">HeaderAnimatorActivity</string>
+
 </resources>
