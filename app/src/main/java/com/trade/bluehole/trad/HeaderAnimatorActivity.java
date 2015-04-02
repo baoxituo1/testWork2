@@ -87,7 +87,6 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         populateListView();
     }
 
-
     /**
      * load数据
      */
