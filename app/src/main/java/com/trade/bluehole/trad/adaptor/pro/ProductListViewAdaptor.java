@@ -108,7 +108,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
                     });
             viewHolder.product_name.setText(lists.get(position).getProductName());
             viewHolder.product_price.setText("￥"+lists.get(position).getProductPrice());
-            viewHolder.product_number.setText("库存量100件");
+            viewHolder.product_number.setText("库存量10件");
         }
         return view;
     }
