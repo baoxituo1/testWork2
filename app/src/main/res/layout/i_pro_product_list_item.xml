@@ -93,7 +93,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-             <mehdi.sakout.fancybuttons.FancyButton
+            <!-- <mehdi.sakout.fancybuttons.FancyButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -103,7 +103,7 @@
                 fancy:fontIconResource="@string/main_eye"
                 fancy:fontIconSize="10sp"
                 fancy:iconPosition="top"
-                fancy:textColor="#FFFFFF"/>
+                fancy:textColor="#FFFFFF"/>-->
             </RelativeLayout>
 
         <View
@@ -116,7 +116,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-            <mehdi.sakout.fancybuttons.FancyButton
+           <!-- <mehdi.sakout.fancybuttons.FancyButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -126,7 +126,7 @@
                 fancy:fontIconResource="@string/main_copy_url"
                 fancy:fontIconSize="10sp"
                 fancy:iconPosition="top"
-                fancy:textColor="#FFFFFF"/>
+                fancy:textColor="#FFFFFF"/>-->
         </RelativeLayout>
         <View
             android:layout_width="1dp"
@@ -138,7 +138,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-            <mehdi.sakout.fancybuttons.FancyButton
+           <!-- <mehdi.sakout.fancybuttons.FancyButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -148,7 +148,7 @@
                 fancy:fontIconResource="@string/main_shar"
                 fancy:fontIconSize="10sp"
                 fancy:iconPosition="top"
-                fancy:textColor="#FFFFFF"/>
+                fancy:textColor="#FFFFFF"/>-->
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

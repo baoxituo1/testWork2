@@ -77,9 +77,10 @@
                 android:padding="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/min_height_header_materiallike"
                 android:background="#b0000000"
-                android:weightSum="12">
+                android:weightSum="12"
+                android:baselineAligned="false">
                 <RelativeLayout
                     android:layout_weight="4"
                     android:layout_width="0dp"
@@ -198,7 +199,7 @@
                         fancy:focusColor="@color/text_normal"
                         fancy:text="@string/main_list_label_sale"
                         fancy:textSize="8sp"
-                        fancy:textColor="@color/red_btn_bg_color"/>
+                        fancy:textColor="#DD6B55"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_weight="1"

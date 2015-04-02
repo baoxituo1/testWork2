@@ -1,12 +1,15 @@
 package com.trade.bluehole.trad;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +38,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
 
@@ -64,6 +68,7 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
     AsyncHttpClient client = new AsyncHttpClient();
     Gson gson = new Gson();
     List<ProductIndexVO> mList=new ArrayList<ProductIndexVO>();
+    List<ProductCoverRelVO> coverList=new ArrayList<ProductCoverRelVO>();
     //页面进度条
     SweetAlertDialog pDialog;
     private String searchType="1";
@@ -107,6 +112,26 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         pDialog.setCancelable(false);
         populateListView();
         //loadCoverListView();
+    }
+
+    /**
+     * 当视图的选项被点击
+     * @param position
+     */
+    @ItemClick(R.id.listview)
+    public void gridViewItemClicked(int position){
+        //分类被点击
+        if("2".equals(searchType)){
+
+        }else{//商品被点击
+            ProductIndexVO pr= mList.get(position);
+            Intent intent=NewProductActivity_.intent(this).get();
+            intent.putExtra(NewProductActivity.PRODUCT_CODE_EXTRA,pr.getProductCode());
+            intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA,pr.getShopCode());
+            startActivity(intent);
+
+        }
+
     }
 
     /**
@@ -174,7 +199,9 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
                         if (response.isSuccess()) {
                             //Toast.makeText(HeaderAnimatorActivity.this, "获取数据成功", Toast.LENGTH_SHORT).show();
                             //把数据添加到全局
-                            coverNumberAdapter.setLists(response.getList());
+                            coverList.clear();
+                            coverList.addAll(response.getList());
+                            coverNumberAdapter.setLists(coverList);
                             listview.setAdapter(coverNumberAdapter);
                             coverNumberAdapter.notifyDataSetChanged();
                         } else {
