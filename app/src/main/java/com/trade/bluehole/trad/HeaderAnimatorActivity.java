@@ -2,6 +2,7 @@ package com.trade.bluehole.trad;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,9 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.soundcloud.android.crop.Crop;
+import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity;
+import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity_;
 import com.trade.bluehole.trad.adaptor.ProductGridviewAdaptor;
 import com.trade.bluehole.trad.adaptor.pro.ProductCoverNumberAdapter;
 import com.trade.bluehole.trad.adaptor.pro.ProductListViewAdaptor;
@@ -42,6 +46,7 @@ import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,9 +127,17 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
     public void gridViewItemClicked(int position){
         //分类被点击
         if("2".equals(searchType)){
+            ProductCoverRelVO pcr= coverList.get(position-1);
+            Intent intent=ProductClassifyActivity_.intent(this).get();
+            intent.putExtra(ProductClassifyActivity.SHOP_CODE_EXTRA,user.getShopCode());
+            intent.putExtra(ProductClassifyActivity.USER_CODE_EXTRA,user.getUserCode());
+            intent.putExtra(ProductClassifyActivity.COVER_CODE_EXTRA,pcr.getCoverCode());
+            intent.putExtra(ProductClassifyActivity.COVER_NAME_EXTRA,pcr.getCoverName());
+            startActivity(intent);
+
 
         }else{//商品被点击
-            ProductIndexVO pr= mList.get(position);
+            ProductIndexVO pr= mList.get(position-1);
             Intent intent=NewProductActivity_.intent(this).get();
             intent.putExtra(NewProductActivity.PRODUCT_CODE_EXTRA,pr.getProductCode());
             intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA,pr.getShopCode());
@@ -262,4 +275,35 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         super.onDestroy();
         pDialog.dismiss();
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_header_animator, menu);
+        return true;
+    }
+
+    /**
+     * 点击完成按钮 开始上传图片和信息
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if (id == R.id.new_product)
+        {
+            NewProductActivity_.intent(this).start();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void beginCrop(Uri source) {
+        Uri outputUri = Uri.fromFile(new File(getCacheDir(), "cropped"));
+        new Crop(source).output(outputUri).asSquare().start(this);
+    }
+
 }

@@ -39,18 +39,18 @@ public class MainAdapter extends MyBaseAdapter<Photo>
         ObjectHold oh;
         Photo p=mList.get(position);
         View view=convertView;
-        if (view == null)
-        {
+       // if (view == null)
+       // {
             oh =new ObjectHold();
             view = mInflater.inflate(R.layout.i_photo_main_grid, parent, false);
             oh.imageView=(ImageView)view.findViewById(R.id.grid_view_img);
             oh.clearBtn=(ImageView)view.findViewById(R.id.clear_btn);
             view.setTag(oh);
-        }else{
+       // }else{
             oh=(ObjectHold)view.getTag();
-        }
+       // }
         if(null==p.imgPath||"".equals(p.imgPath)){//后面放个加号增加图片
-            oh.imageView.setImageResource(R.drawable.onekey_number_add);
+            oh.imageView.setImageResource(R.drawable.add_image);
         }else{
             if("1".equals(p.dataType)){
                 ImageManager.imageLoader.displayImage("http://125.oss-cn-beijing.aliyuncs.com/" + mList.get(position).imgPath, oh.imageView, ImageManager.options);

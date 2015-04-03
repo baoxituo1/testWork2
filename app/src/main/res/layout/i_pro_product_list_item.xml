@@ -104,6 +104,11 @@
                 fancy:fontIconSize="10sp"
                 fancy:iconPosition="top"
                 fancy:textColor="#FFFFFF"/>-->
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:src="@drawable/eye"
+                   android:layout_centerInParent="true"
+                   android:layout_height="wrap_content" />
             </RelativeLayout>
 
         <View
@@ -116,17 +121,11 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-           <!-- <mehdi.sakout.fancybuttons.FancyButton
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:src="@drawable/link"
                 android:layout_centerInParent="true"
-                fancy:borderWidth="2dp"
-                fancy:defaultColor="@color/saffron"
-                fancy:focusColor="#8cc9f8"
-                fancy:fontIconResource="@string/main_copy_url"
-                fancy:fontIconSize="10sp"
-                fancy:iconPosition="top"
-                fancy:textColor="#FFFFFF"/>-->
+                android:layout_height="wrap_content" />
         </RelativeLayout>
         <View
             android:layout_width="1dp"
@@ -138,17 +137,11 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
-           <!-- <mehdi.sakout.fancybuttons.FancyButton
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:src="@drawable/share2"
                 android:layout_centerInParent="true"
-                fancy:borderWidth="2dp"
-                fancy:defaultColor="@color/saffron"
-                fancy:focusColor="#8cc9f8"
-                fancy:fontIconResource="@string/main_shar"
-                fancy:fontIconSize="10sp"
-                fancy:iconPosition="top"
-                fancy:textColor="#FFFFFF"/>-->
+                android:layout_height="wrap_content" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

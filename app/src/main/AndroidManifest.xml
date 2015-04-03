@@ -128,6 +128,10 @@
             android:name=".HeaderAnimatorActivity_"
             android:label="@string/title_activity_header_animator" >
         </activity>
+        <activity
+            android:name=".activity.shop.ProductClassifyActivity_"
+            android:label="@string/title_activity_product_classify" >
+        </activity>
     </application>
 
 </manifest>
