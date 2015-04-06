@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -212,6 +213,9 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
      */
     @Click(R.id.main_sale_ing_btn)
     void onSaleIngClick() {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)listview.getLayoutParams();
+        params.bottomMargin=0;
+        listview.setLayoutParams(params);
         searchType = "1";
         btn_cover_layout.setVisibility(View.GONE);
         main_sale_ing_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
@@ -227,6 +231,10 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
      */
     @Click(R.id.main_sale_out_btn)
     void onSaleOutClick() {
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)listview.getLayoutParams();
+        params.bottomMargin=0;
+        listview.setLayoutParams(params);
+
         searchType = "0";
         showCoverManager = false;//非可编辑状态
         btn_cover_layout.setVisibility(View.GONE);
@@ -243,6 +251,11 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
      */
     @Click(R.id.main_sale_cover_btn)
     void onCoverOutClick() {
+        //设置list距离底部
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)listview.getLayoutParams();
+        params.bottomMargin=100;
+        listview.setLayoutParams(params);
+
         searchType = "2";
         showCoverManager = false;//非可编辑状态
         btn_cover_layout.setVisibility(View.VISIBLE);
@@ -275,6 +288,7 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
      */
     @Click(R.id.btn_cover_ok)
     void onEditCoversOkClick() {
+
         //如果是显示状态隐藏  否则显示
         showCoverManager = false;//可编辑状态
         //列表显示编辑
