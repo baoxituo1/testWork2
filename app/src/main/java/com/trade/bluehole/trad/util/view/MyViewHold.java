@@ -9,7 +9,7 @@ import com.orhanobut.dialogplus.Holder;
 import com.orhanobut.dialogplus.ViewHolder;
 
 /**
- * 自定义弹出窗口实现类
+ * 鑷畾涔夊脊鍑虹獥鍙ｅ疄鐜扮被
  * Created by Administrator on 2015-04-06.
  */
 public class MyViewHold implements Holder {
