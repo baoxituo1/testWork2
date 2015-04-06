@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/n_padding_normal">
+    <EditText
+        android:id="@id/main_cover_item_add"
+        android:layout_width="match_parent"
+        android:hint="@string/main_covers_new_title"
+        android:layout_height="wrap_content" />
+</LinearLayout>

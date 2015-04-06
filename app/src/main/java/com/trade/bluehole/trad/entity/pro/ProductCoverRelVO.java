@@ -9,6 +9,9 @@ public class ProductCoverRelVO implements java.io.Serializable {
     private String coverName;
     private Integer proNumber;
 
+    public ProductCoverRelVO(){
+
+    }
     public ProductCoverRelVO(String shopCode, String coverCode, String coverName, Integer proNumber) {
         super();
         this.shopCode = shopCode;

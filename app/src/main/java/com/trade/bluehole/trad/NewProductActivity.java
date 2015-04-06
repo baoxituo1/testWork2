@@ -58,6 +58,7 @@ import com.trade.bluehole.trad.entity.pro.ProductLabelRelVO;
 import com.trade.bluehole.trad.entity.pro.ProductResultVO;
 import com.trade.bluehole.trad.entity.pro.ShopCoverType;
 import com.trade.bluehole.trad.util.MyApplication;
+import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -405,9 +406,9 @@ public class NewProductActivity extends ActionBarActivity {
     void uploadProImg(){
         RequestParams params=new RequestParams();
         //如果商品编码不是空 调用更新方法
-        String methodName="saveProductJson.do";
+        String methodName=DataUrlContents.save_all_cshop;
         if(null!=proCode&&!"".equals(proCode)){
-            methodName="updateProductJson.do";
+            methodName=DataUrlContents.update_all_cshop;
             params.put("productCode",proCode);
             params.put("shopCode",shopCode);
             params.put("coverCodes",coverValue);
@@ -423,7 +424,7 @@ public class NewProductActivity extends ActionBarActivity {
         params.put("productNumber",product_number.getText());
         params.put("imageUrls",imageUrls);
         Log.e("NewProductActivity", "imageUrls:"+imageUrls);
-        client.post("http://192.168.1.161:8080/qqt_up/shopjson/" + methodName, params, new BaseJsonHttpResponseHandler<String>() {
+        client.post(DataUrlContents.SERVER_HOST + methodName, params, new BaseJsonHttpResponseHandler<String>() {
 
 
             @Override
@@ -454,7 +455,7 @@ public class NewProductActivity extends ActionBarActivity {
         params.put("productCode",proCode);
         params.put("shopCode",shopCode);
         Log.e("NewProductActivity", "imageUrls:"+imageUrls);
-        client.get("http://192.168.1.161:8080/qqt_up/shopjson/loadProductJson.do", params, new BaseJsonHttpResponseHandler<ProductResultVO>() {
+        client.get(DataUrlContents.SERVER_HOST+DataUrlContents.load_pro_info, params, new BaseJsonHttpResponseHandler<ProductResultVO>() {
 
 
             @Override

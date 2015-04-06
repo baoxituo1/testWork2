@@ -39,7 +39,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 @EActivity(R.layout.activity_product_classify)
 public class ProductClassifyActivity extends ActionBarActivity {
 
-    //ÉÌÆ·ºÍµêÆÌ±àÂë±êÖ¾
+    //å•†å“å’Œåº—é“ºç¼–ç æ ‡å¿—
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String USER_CODE_EXTRA = "userCode";
     public static final String COVER_CODE_EXTRA = "coverCode";
@@ -61,7 +61,7 @@ public class ProductClassifyActivity extends ActionBarActivity {
     AsyncHttpClient client = new AsyncHttpClient();
     Gson gson = new Gson();
     List<ProductIndexVO> mList=new ArrayList<ProductIndexVO>();
-    //Ò³Ãæ½ø¶ÈÌõ
+    //é¡µé¢è¿›åº¦æ¡
     SweetAlertDialog pDialog;
    /* @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class ProductClassifyActivity extends ActionBarActivity {
 
 
     /**
-     * µ±ÊÓÍ¼µÄÑ¡Ïî±»µã»÷
+     * å½“è§†å›¾çš„é€‰é¡¹è¢«ç‚¹å‡»
      * @param position
      */
     @ItemClick(R.id.listview)
@@ -102,7 +102,7 @@ public class ProductClassifyActivity extends ActionBarActivity {
 
 
     /**
-     * loadÊı¾İ
+     * loadæ•°æ®
      */
     private void populateListView() {
         if(shopCode!=null&&userCode!=null){
@@ -120,7 +120,7 @@ public class ProductClassifyActivity extends ActionBarActivity {
                     if (null != response) {
                         if (response.isSuccess()) {
                             // Toast.makeText(ProductClassifyActivity.this, R.string.load_data_success, Toast.LENGTH_SHORT).show();
-                            //°ÑÊı¾İÌí¼Óµ½È«¾Ö
+                            //æŠŠæ•°æ®æ·»åŠ åˆ°å…¨å±€
                             mList.clear();
                             mList.addAll(response.getAaData());
                             adaptor.setLists(mList);

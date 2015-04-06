@@ -17,6 +17,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListe
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.entity.ProductIndexVO;
+import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +85,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
         }
         if(!lists.isEmpty()&&lists.size()>position){
             ImageLoader.getInstance()
-                    .displayImage("http://125.oss-cn-beijing.aliyuncs.com/"+lists.get(position).getCoverMiddleImage(), viewHolder.product_cover_image, options, new SimpleImageLoadingListener() {
+                    .displayImage(DataUrlContents.IMAGE_HOST+lists.get(position).getCoverMiddleImage(), viewHolder.product_cover_image, options, new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String imageUri, View view) {
                             viewHolder.progressBar.setProgress(0);

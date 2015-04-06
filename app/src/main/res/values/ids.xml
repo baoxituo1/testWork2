@@ -21,5 +21,14 @@
     <item type="id" name="main_sale_cover_btn" />
     <item type="id" name="main_cover_name" />
     <item type="id" name="main_cover_number" />
+    <item type="id" name="main_cover_item_edit" />
+    <item type="id" name="main_cover_item_del" />
+    <item type="id" name="main_cover_item_add" />
+
+    <item type="id" name="btn_cover_add" />
+    <item type="id" name="btn_cover_edit" />
+    <item type="id" name="btn_cover_ok" />
+    <item type="id" name="btn_cover_layout" />
+    <item type="id" name="btn_cover_ok_layout" />
 
 </resources>

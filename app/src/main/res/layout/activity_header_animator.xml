@@ -177,7 +177,7 @@
             android:id="@+id/header_text_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/min_height_textheader_materiallike"
-            android:background="@android:color/holo_green_light"
+            android:background="@android:color/holo_orange_light"
             android:layout_gravity="bottom">
             <LinearLayout
                 android:orientation="horizontal"
@@ -195,7 +195,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         fancy:borderWidth="2dp"
-                        fancy:defaultColor="@android:color/holo_green_light"
+                        fancy:defaultColor="@android:color/holo_orange_light"
                         fancy:focusColor="@color/text_normal"
                         fancy:text="@string/main_list_label_sale"
                         fancy:textSize="8sp"
@@ -211,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         fancy:borderWidth="2dp"
-                        fancy:defaultColor="@android:color/holo_green_light"
+                        fancy:defaultColor="@android:color/holo_orange_light"
                         fancy:focusColor="@color/text_normal"
                         fancy:text="@string/main_list_label_out"
                         fancy:textSize="8sp"
@@ -227,7 +227,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         fancy:borderWidth="2dp"
-                        fancy:defaultColor="@android:color/holo_green_light"
+                        fancy:defaultColor="@android:color/holo_orange_light"
                         fancy:focusColor="@color/text_normal"
                         fancy:text="@string/main_list_label_cover"
                         fancy:textSize="8sp"
@@ -239,4 +239,89 @@
 
     </FrameLayout>
 
+    <!--编辑分类-->
+    <LinearLayout
+        android:id="@id/btn_cover_layout"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:weightSum="2"
+        android:visibility="gone"
+        android:layout_height="@dimen/min_cover_bottom_height">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_height="match_parent">
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/btn_cover_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="#FFFFFF"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="#ff5f69"
+                fancy:focusColor="#ff838b"
+                fancy:fontIconResource="@string/main_cover_add"
+                fancy:iconPosition="left"
+                fancy:radius="30dp"
+                fancy:text="新建分类"
+                fancy:textColor="#FFFFFF" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_height="match_parent">
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/btn_cover_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="#FFFFFF"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="#ff5f69"
+                fancy:focusColor="#ff838b"
+                fancy:fontIconResource="@string/main_cover_edit"
+                fancy:iconPosition="left"
+                fancy:radius="30dp"
+                fancy:text="编辑分类"
+                fancy:textColor="#FFFFFF" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--确认完成-->
+    <LinearLayout
+        android:id="@id/btn_cover_ok_layout"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_height="@dimen/min_cover_bottom_height">
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/btn_cover_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="#FFFFFF"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="#ff5f69"
+                fancy:focusColor="#ff838b"
+                fancy:fontIconResource="@string/main_cover_ok"
+                fancy:iconPosition="left"
+                fancy:radius="30dp"
+                fancy:text="完成"
+                fancy:textColor="#FFFFFF" />
+    </LinearLayout>
 </FrameLayout>

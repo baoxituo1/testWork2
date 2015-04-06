@@ -24,6 +24,8 @@
     <string name="google_maps_title">Maps</string>
     <string name="google_messenger_title">Messenger</string>
     <string name="dialogHeader_header_title">分类至</string>
+    <string name="dialogHeader_new_header_title">新建商品分类</string>
+    <string name="dialogHeader_modify_header_title">修改商品分类</string>
     <string name="dialogHeader_header_sample">方便顾客在店铺筛选</string>
     <string name="dialogLabel_header_title">设置标签</string>
     <string name="dialogLabel_header_sample">使顾客快速了解商品特征</string>
@@ -62,10 +64,16 @@
     <string name="main_eye">&#xf06e;</string>
     <string name="main_shar">&#xf1e0;</string>
     <string name="main_copy_url">&#xf127;</string>
+    <string name="main_cover_add">&#xf0ee;</string>
+    <string name="main_cover_edit">&#xf044;</string>
+    <string name="main_cover_ok">&#xf00c;</string>
     <!--主界面-->
     <string name="main_list_label_sale">销售中</string>
     <string name="main_list_label_out">已下架</string>
     <string name="main_list_label_cover">分类</string>
+
+    <!--主界面-分类 修改-->
+    <string name="main_covers_new_title">请输入分类名称</string>
 
 
     <!--登陆-->
