@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -73,6 +74,8 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
     @ViewById
     CircleImageView shop_logo_image;
     @ViewById
+    ImageView header_image;
+    @ViewById
     FancyButton main_sale_ing_btn, main_sale_out_btn, main_sale_cover_btn;
     @ViewById
     LinearLayout btn_cover_layout, btn_cover_ok_layout;
@@ -120,8 +123,11 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         if (shop != null) {
             shopName.setText(shop.getTitle());
             if (null != shop.getShopLogo()) {
-                ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + shop.getShopLogo(), shop_logo_image, ImageManager.options);
+                ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + shop.getShopLogo()+DataUrlContents.img_logo_img, shop_logo_image, ImageManager.options);
             }
+            /*if(null!=shop.getShopBackground()){
+                ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + shop.getShopBackground(), header_image, ImageManager.options);
+            }*/
         }
         IO2014HeaderAnimator animator = new IO2014HeaderAnimator(this);
         StikkyHeaderBuilder.stickTo(listview)
@@ -325,6 +331,16 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         }
         modifyCoverDialog.show();
     }
+
+    /**
+     * 点击店铺详情查看店铺详细设置
+     */
+    @Click(R.id.main_head_shop)
+    void onSopHeadClick(){
+        ShopConfigActivity_.intent(this).start();
+    }
+
+
 
     /**
      * 弹出框按钮点击事件

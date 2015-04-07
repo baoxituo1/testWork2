@@ -14,6 +14,7 @@ import com.trade.bluehole.trad.adaptor.MyBaseAdapter;
 import com.trade.bluehole.trad.entity.photo.Photo;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
+import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class MainAdapter extends MyBaseAdapter<Photo>
             oh.imageView.setImageResource(R.drawable.add_image);
         }else{
             if("1".equals(p.dataType)){
-                ImageManager.imageLoader.displayImage("http://125.oss-cn-beijing.aliyuncs.com/" + mList.get(position).imgPath, oh.imageView, ImageManager.options);
+                ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + mList.get(position).imgPath+DataUrlContents.img_list_head_img, oh.imageView, ImageManager.options);
             }else {
                 ImageManager.imageLoader.displayImage("file:///" + mList.get(position).imgPath, oh.imageView, ImageManager.options);
             }

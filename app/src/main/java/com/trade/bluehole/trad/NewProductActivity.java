@@ -29,6 +29,7 @@ import com.loopj.android.http.RequestParams;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.OnItemClickListener;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.soundcloud.android.crop.Crop;
 
 import org.androidannotations.annotations.AfterViews;
@@ -65,6 +66,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+
+import mehdi.sakout.fancybuttons.FancyButton;
 
 @EActivity(R.layout.activity_product_add)
 public class NewProductActivity extends ActionBarActivity {
@@ -106,7 +109,9 @@ public class NewProductActivity extends ActionBarActivity {
     ProductLabelAdapter labelAdapter;//标签设置适配器
     DialogPlus coverDialog;//商品自定义分类弹出框
     DialogPlus labelDialog;//商品自定义标签弹出框
+    DialogPlus confirmDialog;//确认操作
     String imageUrls="";//新增商品 待添加商品列表
+    private Integer delFlag;//商品删除标志
     static {
         OSSClient.setGlobalDefaultTokenGenerator(new TokenGenerator() { // 设置全局默认加签器
             @Override
@@ -136,6 +141,13 @@ public class NewProductActivity extends ActionBarActivity {
     TextView product_name,product_price,product_number,product_cover_name,product_label_name;
     @ViewById
     FlatToggleButton toggle_checked_hot;
+    @ViewById //商品底部删除上下架按钮
+    LinearLayout pro_update_btn_layout;
+    @ViewById //商品类别设置
+    LinearLayout pro_cover_info_layout;
+    @ViewById
+    FancyButton btn_pro_up_down,btn_pro_del;
+
     @Extra(PRODUCT_CODE_EXTRA)
     String proCode;
     @Extra(SHOP_CODE_EXTRA)
@@ -160,6 +172,8 @@ public class NewProductActivity extends ActionBarActivity {
         if(null!=proCode&&null!=shopCode&&!"".equals(proCode)&&!"".equals(shopCode)){
             //异步加载数据
             loadServerData();
+            pro_update_btn_layout.setVisibility(View.VISIBLE);//展示商品底部更新
+            pro_cover_info_layout.setVisibility(View.VISIBLE);//展示底部类别设置
         }else{//如果是新增
             mList.add(new Photo());
         }
@@ -204,6 +218,13 @@ public class NewProductActivity extends ActionBarActivity {
                 .setOnClickListener(labelClickListener)
                         // .setOnItemClickListener(itemClickListener)
                 .create();
+        confirmDialog = new DialogPlus.Builder(this)
+                .setContentHolder(new ViewHolder(R.layout.dialog_confirm_content))
+                //.setHeader(R.layout.dialog_label_header)
+                .setFooter(R.layout.dialog_footer)
+                .setGravity(DialogPlus.Gravity.BOTTOM)
+                .setOnClickListener(delClickListener)
+                .create();
     }
     /**
      * 当设置推荐按钮点击
@@ -237,6 +258,24 @@ public class NewProductActivity extends ActionBarActivity {
                 case R.id.footer_confirm_button:
                     //记录商品变化
                     saveProCoverChecked();
+                   // Toast.makeText(NewProductActivity.this, "Confirm button clicked", Toast.LENGTH_LONG).show();
+                    break;
+                case R.id.footer_close_button:
+                    break;
+            }
+            dialog.dismiss();
+        }
+    };
+    /**
+     * 删除弹出框按钮点击事件
+     */
+    OnClickListener delClickListener = new OnClickListener() {
+        @Override
+        public void onClick(DialogPlus dialog, View view) {
+            switch (view.getId()) {
+                case R.id.footer_confirm_button:
+                    //删除商品
+                    updateProductStateData("2", 0);
                    // Toast.makeText(NewProductActivity.this, "Confirm button clicked", Toast.LENGTH_LONG).show();
                     break;
                 case R.id.footer_close_button:
@@ -285,7 +324,20 @@ public class NewProductActivity extends ActionBarActivity {
         Crop.pickImage(this);
     }*/
 
-
+    /**
+     * 当商品上下架按钮被点击
+     */
+    @Click(R.id.btn_pro_up_down)
+    void onUpDownProductBtnOnClick(){
+        updateProductStateData("1",delFlag);
+    }
+    /**
+     * 当商品删除按钮被点击
+     */
+    @Click(R.id.btn_pro_del)
+    void onDeleteProductBtnOnClick(){
+        confirmDialog.show();
+    }
     /**
      * 记录商品类别选择变化
      */
@@ -386,13 +438,14 @@ public class NewProductActivity extends ActionBarActivity {
 
             @Override
             public void onProgress(String objectKey, int byteCount, int totalSize) {
-                Log.e("NewProductActivity","objectKey:"+objectKey+",byteCount:"+byteCount+",totalSize:"+totalSize);
+                Log.e("NewProductActivity", "objectKey:" + objectKey + ",byteCount:" + byteCount + ",totalSize:" + totalSize);
             }
 
             @Override
             public void onFailure(String arg0, OSSException arg1) {
-                Log.e("NewProductActivity",arg1.toString());
+                Log.e("NewProductActivity", arg1.toString());
             }
+
             @Override
             public void onSuccess(String arg0) {
                 Log.e("NewProductActivity", "上传成功");
@@ -423,7 +476,7 @@ public class NewProductActivity extends ActionBarActivity {
         params.put("productPrice",product_price.getText());
         params.put("productNumber",product_number.getText());
         params.put("imageUrls",imageUrls);
-        Log.e("NewProductActivity", "imageUrls:"+imageUrls);
+        Log.e("NewProductActivity", "imageUrls:" + imageUrls);
         client.post(DataUrlContents.SERVER_HOST + methodName, params, new BaseJsonHttpResponseHandler<String>() {
 
 
@@ -431,8 +484,9 @@ public class NewProductActivity extends ActionBarActivity {
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
                 Log.d(NewProductActivity.class.getName(), statusCode + "");
                 if (null != response) {
-                    Toast.makeText(NewProductActivity.this, response, Toast.LENGTH_SHORT).show();
-                    ProductManagerActivity_.intent(NewProductActivity.this).start();
+                    // Toast.makeText(NewProductActivity.this, response, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewProductActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+                    HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
                 }
             }
 
@@ -454,8 +508,8 @@ public class NewProductActivity extends ActionBarActivity {
         RequestParams params=new RequestParams();
         params.put("productCode",proCode);
         params.put("shopCode",shopCode);
-        Log.e("NewProductActivity", "imageUrls:"+imageUrls);
-        client.get(DataUrlContents.SERVER_HOST+DataUrlContents.load_pro_info, params, new BaseJsonHttpResponseHandler<ProductResultVO>() {
+        Log.e("NewProductActivity", "imageUrls:" + imageUrls);
+        client.get(DataUrlContents.SERVER_HOST + DataUrlContents.load_pro_info, params, new BaseJsonHttpResponseHandler<ProductResultVO>() {
 
 
             @Override
@@ -472,7 +526,39 @@ public class NewProductActivity extends ActionBarActivity {
 
             @Override
             protected ProductResultVO parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
-                return gson.fromJson(rawJsonData,ProductResultVO.class);
+                return gson.fromJson(rawJsonData, ProductResultVO.class);
+            }
+        });
+    }
+
+
+    /**
+     * 更新商品状态 上架、下架、删除
+     */
+    void updateProductStateData(String type,Integer state){
+        RequestParams params=new RequestParams();
+        params.put("productCode", proCode);
+        params.put("state", state == 1 ? 0 : 1);
+        String methodName=DataUrlContents.update_product_state;
+        if("2".equals(type)){//删除操作
+            methodName=DataUrlContents.del_product_bycode;
+        }
+        client.get(DataUrlContents.SERVER_HOST +methodName, params, new BaseJsonHttpResponseHandler<String>() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
+                Log.d(NewProductActivity.class.getName(), response.toString());
+                if (null != response) {
+                    doInProUiThread(response);
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
+            }
+
+            @Override
+            protected String parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                return gson.fromJson(rawJsonData, String.class);
             }
         });
     }
@@ -485,6 +571,14 @@ public class NewProductActivity extends ActionBarActivity {
     void doInUiThread(ProductResultVO obj) {
         Product pro=obj.getPro();
         ProductBase base=obj.getProBase();
+        //设置当前商品状态 并且设置按钮文字
+        delFlag=pro.getDelFlag();
+        if(delFlag.intValue()==1){//设置为下架商品
+            btn_pro_up_down.setText(getResources().getString(R.string.pro_out_sale));
+        }else{
+            btn_pro_up_down.setText(getResources().getString(R.string.pro_inner_sale));
+        }
+
         List<ProductImage> images= obj.getImages();
         product_name.setText(pro.getProductName());
         product_price.setText(pro.getProductPrice() + "");
@@ -520,12 +614,12 @@ public class NewProductActivity extends ActionBarActivity {
         //组装标签
         List<ProductLabelRelVO> muLabels=obj.getMuLabels();
         if(null!=muLabels&&!muLabels.isEmpty()){
-            String lables="";
+            String labels="";
             for(ProductLabelRelVO ls:muLabels){
-                lables+=ls.getLabelName()+",";
+                labels+=ls.getLabelName()+",";
                 myCheckLabels.add(ls.getLabelCode());
             }
-            product_label_name.setText(lables);
+            product_label_name.setText(labels);
         }
         //是否热销
         if(obj.getHotState().intValue()>0){
@@ -537,6 +631,27 @@ public class NewProductActivity extends ActionBarActivity {
         //装载全部自定义标签
         labelAdapter.setLabels(obj.getLabels(),myCheckLabels);
         labelAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 后台线程实例化组件 更新商品状态
+     * @param obj
+     */
+    @UiThread
+    void doInProUiThread(String obj) {
+        if ("2".equals(obj)) {
+            Toast.makeText(NewProductActivity.this, "商品已删除", Toast.LENGTH_SHORT).show();
+            HeaderAnimatorActivity_.intent(this).start();
+            finish();
+        } else {
+            if (delFlag.intValue() == 1) {
+                Toast.makeText(NewProductActivity.this, "商品已下架", Toast.LENGTH_SHORT).show();
+                btn_pro_up_down.setText(getResources().getString(R.string.pro_inner_sale));
+            } else if (delFlag.intValue() == 0) {
+                Toast.makeText(NewProductActivity.this, "商品已上架", Toast.LENGTH_SHORT).show();
+                btn_pro_up_down.setText(getResources().getString(R.string.pro_out_sale));
+            }
+         }
     }
 
     @Override

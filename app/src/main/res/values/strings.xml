@@ -29,6 +29,9 @@
     <string name="dialogHeader_header_sample">方便顾客在店铺筛选</string>
     <string name="dialogLabel_header_title">设置标签</string>
     <string name="dialogLabel_header_sample">使顾客快速了解商品特征</string>
+    <string name="pro_out_sale">下架商品</string>
+    <string name="pro_inner_sale">上架商品</string>
+    <string name="pro_del_pro">删除商品</string>
 
     <string name="footer_button_close">取消</string>
     <string name="footer_button_confirm">确定</string>
@@ -67,6 +70,7 @@
     <string name="main_cover_add">&#xf0ee;</string>
     <string name="main_cover_edit">&#xf044;</string>
     <string name="main_cover_ok">&#xf00c;</string>
+    <string name="main_cover_del">&#xf014;</string>
     <!--主界面-->
     <string name="main_list_label_sale">销售中</string>
     <string name="main_list_label_out">已下架</string>

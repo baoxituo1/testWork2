@@ -14,6 +14,8 @@
     <item type="id" name="pro_number" />
     <item type="id" name="pro_date" />
     <item type="id" name="pro_hot" />
+    <item type="id" name="btn_pro_up_down" />
+    <item type="id" name="btn_pro_del" />
 
 
     <item type="id" name="main_sale_ing_btn" />
@@ -24,11 +26,13 @@
     <item type="id" name="main_cover_item_edit" />
     <item type="id" name="main_cover_item_del" />
     <item type="id" name="main_cover_item_add" />
-
+    <item type="id" name="main_head_shop"/>
     <item type="id" name="btn_cover_add" />
     <item type="id" name="btn_cover_edit" />
     <item type="id" name="btn_cover_ok" />
     <item type="id" name="btn_cover_layout" />
     <item type="id" name="btn_cover_ok_layout" />
+    <item type="id" name="pro_cover_info_layout" />
+    <item type="id" name="pro_update_btn_layout" />
 
 </resources>

@@ -85,7 +85,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
         }
         if(!lists.isEmpty()&&lists.size()>position){
             ImageLoader.getInstance()
-                    .displayImage(DataUrlContents.IMAGE_HOST+lists.get(position).getCoverMiddleImage(), viewHolder.product_cover_image, options, new SimpleImageLoadingListener() {
+                    .displayImage(DataUrlContents.IMAGE_HOST+lists.get(position).getCoverMiddleImage()+DataUrlContents.img_list_head_img, viewHolder.product_cover_image, options, new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String imageUri, View view) {
                             viewHolder.progressBar.setProgress(0);

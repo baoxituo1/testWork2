@@ -5,6 +5,15 @@ package com.trade.bluehole.trad.util.data;
  */
 public class DataUrlContents {
     /**
+     * 列表头部图片
+     */
+    public final static String img_list_head_img="@!p-l-h-e-280";
+    /**
+     * logo 300*300 无水印
+     */
+    public final static String img_logo_img="@!p-l-h-e-280-n";
+
+    /**
      * 服务器地址
      */
     public final  static String SERVER_HOST="http://192.168.1.161:8080/qqt_up/";
@@ -40,4 +49,17 @@ public class DataUrlContents {
      * 更新店铺信息
      */
     public final  static String update_all_cshop="shopjson/updateProductJson.do";
+    /**
+     * 更改店铺设置
+     */
+    public final  static String update_shop_config="shopjson/editShop.do";
+
+    /**
+     * 商品上下架操作
+     */
+    public final  static String update_product_state="shopjson/saleOutProduct.do";
+    /**
+     * 商品删除操作
+     */
+    public final  static String del_product_bycode="shopjson/deleteProduct.do";
 }

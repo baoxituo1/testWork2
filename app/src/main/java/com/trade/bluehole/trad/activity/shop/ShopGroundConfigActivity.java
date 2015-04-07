@@ -31,6 +31,7 @@ import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.StreamUtil;
+import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -116,7 +117,7 @@ public class ShopGroundConfigActivity extends ActionBarActivity {
     void doInUiThread(String backGroundUrl) {
         //加载店铺logo
         if(null!=backGroundUrl){
-            ImageManager.imageLoader.displayImage("http://125.oss-cn-beijing.aliyuncs.com/" + backGroundUrl,shopBackGround,ImageManager.options);
+            ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + backGroundUrl,shopBackGround,ImageManager.options);
             pDialog.hide();
         }
     }
@@ -235,7 +236,7 @@ public class ShopGroundConfigActivity extends ActionBarActivity {
                 params.put("shopBackground", fileName);
             }
         }
-        client.post("http://192.168.1.161:8080/qqt_up/shopjson/editShop.do", params, new BaseJsonHttpResponseHandler<String>() {
+        client.post(DataUrlContents.SERVER_HOST+DataUrlContents.update_shop_config, params, new BaseJsonHttpResponseHandler<String>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {

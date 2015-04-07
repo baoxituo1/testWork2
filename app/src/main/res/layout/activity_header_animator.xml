@@ -46,6 +46,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@id/main_head_shop"
                 android:padding="10dp"
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
