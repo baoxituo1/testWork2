@@ -381,7 +381,10 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.new_product) {
-            NewProductActivity_.intent(this).start();
+            //NewProductActivity_.intent(this).start();
+            Intent intent=NewProductActivity_.intent(this).get();
+            intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA,user.getShopCode());
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);

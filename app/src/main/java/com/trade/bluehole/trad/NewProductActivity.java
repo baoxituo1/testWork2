@@ -410,7 +410,6 @@ public class NewProductActivity extends ActionBarActivity {
         if(null!=proCode&&!"".equals(proCode)){
             methodName=DataUrlContents.update_all_cshop;
             params.put("productCode",proCode);
-            params.put("shopCode",shopCode);
             params.put("coverCodes",coverValue);
             params.put("labelCodes",labelValue);
             params.put("hot",toggle_checked_hot.isChecked());
@@ -418,6 +417,7 @@ public class NewProductActivity extends ActionBarActivity {
             params.put("wait_insert_images",imageUrls);
 
         }
+        params.put("shopCode",shopCode);
         params.put("userCode",user.getUserCode());
         params.put("productName",product_name.getText());
         params.put("productPrice",product_price.getText());
