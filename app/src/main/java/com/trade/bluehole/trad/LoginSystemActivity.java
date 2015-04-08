@@ -112,6 +112,10 @@ public class LoginSystemActivity extends ActionBarActivity {
     }
 
 
+    @Click(R.id.register_user_account)
+    void registerAccountOnClick(){
+        RegisterManageActivity_.intent(this).start();
+    }
 
     protected final void debugResponse(String TAG, String response) {
         if (response != null) {

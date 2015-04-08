@@ -43,6 +43,7 @@ import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.StreamUtil;
+import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -138,7 +139,7 @@ public class ShopConfigActivity extends ActionBarActivity {
     void loadServerData(){
         RequestParams params=new RequestParams();
         params.put("userCode", user.getUserCode());
-        client.get("http://192.168.1.161:8080/qqt_up/shopjson/loadShopCommonInfo.do", params, new BaseJsonHttpResponseHandler<ShopCommonInfo>() {
+        client.get(DataUrlContents.SERVER_HOST+DataUrlContents.load_user_shop_info, params, new BaseJsonHttpResponseHandler<ShopCommonInfo>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, ShopCommonInfo response) {
@@ -169,7 +170,7 @@ public class ShopConfigActivity extends ActionBarActivity {
             shopInfo=obj;
             //加载店铺logo
             if(null!=obj.getShopLogo()){
-                ImageManager.imageLoader.displayImage("http://125.oss-cn-beijing.aliyuncs.com/" + obj.getShopLogo(),shopLogoImage,ImageManager.options);
+                ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + obj.getShopLogo()+DataUrlContents.img_logo_img,shopLogoImage,ImageManager.options);
                 shopLogoFleName=obj.getShopLogo();
             }
             shopName.setText(obj.getTitle());
@@ -350,7 +351,7 @@ public class ShopConfigActivity extends ActionBarActivity {
                 params.put("slogan", obj.getSlogan());
             }
         }
-        client.post("http://192.168.1.161:8080/qqt_up/shopjson/editShop.do", params, new BaseJsonHttpResponseHandler<String>() {
+        client.post(DataUrlContents.SERVER_HOST+DataUrlContents.update_shop_config, params, new BaseJsonHttpResponseHandler<String>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {

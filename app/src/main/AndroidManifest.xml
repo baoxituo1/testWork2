@@ -132,6 +132,26 @@
             android:name=".activity.shop.ProductClassifyActivity_"
             android:label="@string/title_activity_product_classify" >
         </activity>
+        <activity
+            android:name=".RegisterManageActivity_"
+            android:label="@string/title_activity_register_manage"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name=".activity.reg.RegisterStep2Activity_"
+            android:label="@string/title_activity_register_step2"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name=".activity.reg.RegisterStepPwdActivity_"
+            android:label="@string/title_activity_register_step_pwd"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name=".activity.reg.RegisterShopCreateActivity_"
+            android:label="@string/title_activity_register_shop_create"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
     </application>
 
 </manifest>

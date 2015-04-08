@@ -2,6 +2,28 @@
     <string name="app_name">优商圈</string>
 
     <string name="hello_world">你好请登陆!</string>
+
+    <string name="register_title">请输入您的手机号</string>
+    <string name="register_title_edit">手机号码</string>
+    <string name="register_title_yzm">验证码</string>
+    <string name="register_title_yzm_no">收不到验证码?</string>
+    <string name="register_title_pwd">请设置密码</string>
+    <string name="register_get_yzm_reload">重新获取验证码</string>
+    <string name="register_pwd_1">请输入6~16位密码</string>
+    <string name="register_pwd_2">请再重复输入密码</string>
+    <string name="register_shop_name">请输入您的店铺名称</string>
+    <string name="register_shop_address">您的店铺地址</string>
+    <string name="register_notice_something1">已经阅读并注意</string>
+    <string name="register_notice_something2">注册使用协议</string>
+    <string name="register_notice_something3">和</string>
+    <string name="register_notice_something4">禁售商品管理</string>
+    <string name="register_step_next">下一步</string>
+    <string name="register_step_previous">上一步</string>
+    <string name="register_step_done">完成</string>
+    <string name="register_step2_notice_something1">我们已发送</string>
+    <string name="register_step2_notice_something2">验证码短信</string>
+    <string name="register_step2_notice_something3">到这个号码</string>
+
     <string name="load_data_success">数据加载成功!</string>
     <string name="load_data_error">数据加载失败!</string>
     <string name="action_settings">Settings</string>
@@ -84,5 +106,11 @@
     <string name="login_user_login">登 录 &#xf1d8;</string>
     <string name="title_activity_header_animator">我的店铺</string>
     <string name="title_activity_product_classify">未分类</string>
+    <string name="title_activity_register_manage">注册</string>
+    <string name="title_activity_register_step2">请填写验证码</string>
+    <string name="title_activity_register_step_pwd">设置密码</string>
+    <string name="title_activity_register_shop_create">创建店铺</string>
+
+
 
 </resources>

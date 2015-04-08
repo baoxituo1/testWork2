@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/gainsboro"
+    tools:context="com.trade.bluehole.trad.activity.reg.RegisterStepPwdActivity">
+
+    <TextView
+        android:id="@+id/reg_pwd_header"
+        android:text="@string/register_title_pwd"
+        android:layout_margin="@dimen/n_padding_normal"
+        android:textSize="@dimen/button_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@id/reg_pwd"
+        android:layout_below="@id/reg_pwd_header"
+        android:layout_width="match_parent"
+        android:padding="@dimen/n_padding_normal"
+        android:background="@color/white"
+        android:layout_height="@dimen/reg_input_layout_height">
+        <EditText
+            android:id="@id/reg_input_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/n_padding_normal_b"
+            android:password="true"
+            android:drawableBottom="@color/white"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/register_pwd_1"
+            android:gravity="center_vertical"
+            android:singleLine="true" />
+    </LinearLayout>
+    <View
+        android:id="@+id/cut_off_rule"
+        android:layout_below="@id/reg_pwd"
+        android:layout_width="match_parent"
+        android:background="@color/gainsboro"
+        android:layout_height="1dp"/>
+    <LinearLayout
+        android:id="@id/reg_pwd_repeated"
+        android:layout_below="@id/cut_off_rule"
+        android:layout_width="match_parent"
+        android:padding="@dimen/n_padding_normal"
+        android:background="@color/white"
+        android:layout_height="@dimen/reg_input_layout_height">
+        <EditText
+            android:id="@id/reg_input_pwd_repeated"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/n_padding_normal_b"
+            android:password="true"
+            android:drawableBottom="@color/white"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/register_pwd_2"
+            android:gravity="center_vertical"
+            android:singleLine="true" />
+    </LinearLayout>
+
+</RelativeLayout>

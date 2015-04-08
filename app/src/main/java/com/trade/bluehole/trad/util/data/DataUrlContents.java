@@ -62,4 +62,12 @@ public class DataUrlContents {
      * 商品删除操作
      */
     public final  static String del_product_bycode="shopjson/deleteProduct.do";
+    /**
+     * 注册用户和商铺
+     */
+    public final  static String add_user_shop="shopjson/registerUser.do";
+    /**
+     * 读取店铺数据
+     */
+    public final  static String load_user_shop_info="shopjson/loadShopCommonInfo.do";
 }

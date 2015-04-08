@@ -35,4 +35,20 @@
     <item type="id" name="pro_cover_info_layout" />
     <item type="id" name="pro_update_btn_layout" />
 
+
+
+    <item type="id" name="register_user_account" />
+    <item type="id" name="reg_phone_number_notice" />
+    <item type="id" name="reg_phone_number" />
+    <item type="id" name="reg_rsend_yzm" />
+    <item type="id" name="reg_pwd" />
+    <item type="id" name="reg_yzm" />
+    <item type="id" name="reg_pwd_repeated" />
+    <item type="id" name="reg_phone_number_layout" />
+    <item type="id" name="reg_input_pwd" />
+    <item type="id" name="reg_input_pwd_repeated" />
+    <item type="id" name="reg_shop_name" />
+    <item type="id" name="reg_shop_address" />
+
+
 </resources>

@@ -1,0 +1,110 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/gainsboro"
+    tools:context="com.trade.bluehole.trad.activity.reg.RegisterStep2Activity">
+
+    <LinearLayout
+        android:id="@+id/header_notice"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/n_padding_normal_h"
+        android:padding="@dimen/n_padding_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/register_step2_notice_something1"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/limegreen"
+            android:text="@string/register_step2_notice_something2"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/register_step2_notice_something3"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/header_notice_phone"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/header_notice"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/n_padding_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@id/reg_phone_number_notice"
+            android:layout_width="wrap_content"
+            android:text="+15910795576"
+            android:textSize="@dimen/title_text_size"
+            android:textColor="@color/eggplant"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/reg_yzm_number"
+        android:layout_below="@id/header_notice_phone"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/n_padding_normal"
+        android:padding="@dimen/n_padding_normal"
+        android:minWidth="@dimen/reg_input_yzm_min_weight"
+        android:background="@color/white"
+        android:layout_height="@dimen/reg_input_layout_height">
+
+        <EditText
+            android:id="@id/reg_yzm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/n_padding_normal_b"
+            android:drawableBottom="@color/white"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/register_title_yzm"
+            android:inputType="number"
+            android:gravity="center_vertical"
+            android:singleLine="true" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@id/reg_rsend_yzm"
+        android:layout_below="@id/reg_yzm_number"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/n_padding_normal_h"
+        android:layout_height="@dimen/reg_input_layout_height">
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@id/btn_pro_del"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/n_padding_normal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
+            fancy:borderColor="#FFFFFF"
+            fancy:borderWidth="1dp"
+            fancy:defaultColor="@color/primary"
+            fancy:focusColor="@color/gray"
+            fancy:radius="5dp"
+            fancy:text="@string/register_get_yzm_reload"
+            fancy:textColor="@color/white" />
+    </LinearLayout>
+    <TextView
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/reg_rsend_yzm"
+        android:layout_width="wrap_content"
+        android:text="@string/register_title_yzm_no"
+        android:textColor="@color/dodgerblue"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

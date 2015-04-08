@@ -31,6 +31,7 @@
     <dimen name="head_top_logo_weight">80dp</dimen>
 
     <dimen name="head_top_user_height">90dp</dimen>
-
-
+    <!-- 注册页面 -->
+    <dimen name="reg_input_layout_height">55dp</dimen>
+    <dimen name="reg_input_yzm_min_weight">150dp</dimen>
 </resources>
