@@ -40,12 +40,14 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.soundcloud.android.crop.Crop;
+import com.trade.bluehole.trad.MainActivity_;
 import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.RegisterManageActivity;
 import com.trade.bluehole.trad.activity.shop.ShopLocationActivity;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.Shop;
+import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.Result;
 import com.trade.bluehole.trad.util.StreamUtil;
@@ -259,8 +261,8 @@ public class RegisterShopCreateActivity extends ActionBarActivity implements OnG
                     pDialog.hide();
                     Log.d(NewProductActivity.class.getName(), response.toString());
                     if (null != response) {
-
-                        Toast.makeText(RegisterShopCreateActivity.this, "数据提交成功：" + response, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterShopCreateActivity.this, "数据提交成功：转到登录主界面", Toast.LENGTH_SHORT).show();
+                        loginMain();
                     }
                 }
 
@@ -282,6 +284,45 @@ public class RegisterShopCreateActivity extends ActionBarActivity implements OnG
         }
 
     }
+
+    /**
+     * 注册成功登录到主界面
+     */
+    void loginMain(){
+        RequestParams params=new RequestParams();
+        params.put("account",phoneNumber);
+        params.put("password", passWord);
+        client.get(DataUrlContents.SERVER_HOST+DataUrlContents.user_login, params, new BaseJsonHttpResponseHandler<Result<User, ShopCommonInfo>>() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<User, ShopCommonInfo> response) {
+                Log.d(RegisterShopCreateActivity.class.getName(), statusCode + "");
+                if (null != response) {
+                    if (response.isSuccess()) {
+                        //Toast.makeText(RegisterShopCreateActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                        myapplication.setUser(response.getBzseObj());
+                        myapplication.setShop(response.getObj());
+
+                        MainActivity_.intent(RegisterShopCreateActivity.this).start();
+                    } else {
+                       // Toast.makeText(RegisterShopCreateActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<User, ShopCommonInfo> errorResponse) {
+                Toast.makeText(RegisterShopCreateActivity.this, "服务器繁忙", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            protected Result<User, ShopCommonInfo> parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                return gson.fromJson(rawJsonData, new TypeToken<Result<User, ShopCommonInfo>>() {
+                }.getType());
+            }
+        });
+    }
+
+
     /**
      * 接受Activity结果
      *

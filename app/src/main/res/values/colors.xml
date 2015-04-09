@@ -186,4 +186,6 @@
         <item>@color/custom_theme_light</item> <!-- really much lighter color of main color -->
     </integer-array>
 
+    <color name="black_overlay">#66000000</color>
+
 </resources>

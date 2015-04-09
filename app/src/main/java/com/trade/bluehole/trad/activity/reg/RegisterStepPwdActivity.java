@@ -42,17 +42,21 @@ public class RegisterStepPwdActivity extends ActionBarActivity {
         int id = item.getItemId();
         if (id == R.id.action_next) {
             if(null!=pwd&&!"".equals(pwd.getText().toString())){
-                if(null!=pwdRepeat&&!"".equals(pwdRepeat.getText().toString())){
-                    if(pwd.getText().toString().equals(pwdRepeat.getText().toString())){//如果相同
-                        Intent intent= RegisterShopCreateActivity_.intent(this).get();
-                        intent.putExtra(RegisterStep2Activity.user_phone_number,phoneNumber);
-                        intent.putExtra(RegisterStep2Activity.user_pwd_number,pwd.getText().toString());
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(RegisterStepPwdActivity.this, "两次密码输入不一致", Toast.LENGTH_SHORT).show();
+                if(pwd.getText().toString().length()<4){
+                    Toast.makeText(RegisterStepPwdActivity.this, "密码长度不能小于4位", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (null != pwdRepeat && !"".equals(pwdRepeat.getText().toString())) {
+                        if (pwd.getText().toString().equals(pwdRepeat.getText().toString())) {//如果相同
+                            Intent intent = RegisterShopCreateActivity_.intent(this).get();
+                            intent.putExtra(RegisterStep2Activity.user_phone_number, phoneNumber);
+                            intent.putExtra(RegisterStep2Activity.user_pwd_number, pwd.getText().toString());
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(RegisterStepPwdActivity.this, "两次密码输入不一致", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(RegisterStepPwdActivity.this, "请重复输入密码", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(RegisterStepPwdActivity.this, "请重复输入密码", Toast.LENGTH_SHORT).show();
                 }
             }else{
                 Toast.makeText(RegisterStepPwdActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();

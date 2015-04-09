@@ -10,14 +10,14 @@
         android:id="@id/login_top_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/head_top_image_height"
-        android:background="@drawable/head_background">
+        android:background="@drawable/logo_icon_bg">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/shop_logo_image"
             android:layout_width="@dimen/head_top_logo_height"
             android:layout_height="@dimen/head_top_logo_weight"
             android:layout_centerInParent="true"
-            android:src="@drawable/default_user"
+            android:src="@drawable/logo_icon"
             app:border_color="@color/white"
             app:border_width="2dp" />
     </RelativeLayout>
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/n_padding_normal_b"
-                android:src="@drawable/login_zhanghao" />
+                android:src="@drawable/logo_username" />
 
             <EditText
                 android:id="@id/userName"
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/n_padding_normal_b"
-                android:src="@drawable/login_mima" />
+                android:src="@drawable/logo_pwd" />
 
             <EditText
                 android:id="@id/userPassword"

@@ -81,6 +81,7 @@
                 android:layout_height="@dimen/min_height_header_materiallike"
                 android:background="#b0000000"
                 android:weightSum="12"
+                android:visibility="gone"
                 android:baselineAligned="false">
                 <RelativeLayout
                     android:layout_weight="4"
@@ -101,7 +102,6 @@
                             fancy:fontIconSize="8sp"
                             fancy:iconPosition="top"
                             fancy:text="预览"
-                            fancy:textSize="6sp"
                             fancy:textColor="#FFFFFF"/>
                     </LinearLayout>
                     <View
@@ -132,7 +132,6 @@
                             fancy:fontIconSize="8sp"
                             fancy:iconPosition="top"
                             fancy:text="复制链接"
-                            fancy:textSize="6sp"
                             fancy:textColor="#FFFFFF"/>
                     </LinearLayout>
                     <View
@@ -162,7 +161,6 @@
                             fancy:fontIconSize="8sp"
                             fancy:iconPosition="top"
                             fancy:text="分享"
-                            fancy:textSize="6sp"
                             fancy:textColor="#FFFFFF"/>
                     </LinearLayout>
                     <View
@@ -199,7 +197,6 @@
                         fancy:defaultColor="@android:color/holo_orange_light"
                         fancy:focusColor="@color/text_normal"
                         fancy:text="@string/main_list_label_sale"
-                        fancy:textSize="8sp"
                         fancy:textColor="#DD6B55"/>
                 </RelativeLayout>
                 <RelativeLayout
@@ -215,7 +212,7 @@
                         fancy:defaultColor="@android:color/holo_orange_light"
                         fancy:focusColor="@color/text_normal"
                         fancy:text="@string/main_list_label_out"
-                        fancy:textSize="8sp"
+
                         fancy:textColor="#FFFFFF"/>
                 </RelativeLayout>
                 <RelativeLayout
@@ -231,7 +228,7 @@
                         fancy:defaultColor="@android:color/holo_orange_light"
                         fancy:focusColor="@color/text_normal"
                         fancy:text="@string/main_list_label_cover"
-                        fancy:textSize="8sp"
+
                         fancy:textColor="#FFFFFF"/>
                 </RelativeLayout>
 

@@ -22,6 +22,10 @@ public class DataUrlContents {
      */
     public final  static String IMAGE_HOST="http://ossimg.178tb.com/";
     /**
+     * 用户登录
+     */
+    public final  static String user_login="shopjson/userLogin.do";
+    /**
      * 读取店铺自定义分类商品数量集合
      */
     public final  static String load_pro_covers_number_list="shopjson/searchProCovers.do";
@@ -70,4 +74,12 @@ public class DataUrlContents {
      * 读取店铺数据
      */
     public final  static String load_user_shop_info="shopjson/loadShopCommonInfo.do";
+    /**
+     * 获取手机注册验证码
+     */
+    public final  static String send_phone_yzm="shopjson/getPhoneAuthCode.do";
+    /**
+     * 获取手机验证码倒计时
+     */
+    public final  static String load_send_yzm_time="shopjson/checkCodeTime.do";
 }

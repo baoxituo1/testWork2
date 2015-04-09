@@ -22,6 +22,7 @@ import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.Result;
+import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
@@ -68,29 +69,30 @@ public class LoginSystemActivity extends ActionBarActivity {
         RequestParams params=new RequestParams();
         params.put("account",account.getText());
         params.put("password",password.getText());
-        client.get("http://192.168.1.161:8080/qqt_up/shopjson/userLogin.do", params, new BaseJsonHttpResponseHandler<Result<User,ShopCommonInfo>>() {
+        client.get(DataUrlContents.SERVER_HOST+DataUrlContents.user_login, params, new BaseJsonHttpResponseHandler<Result<User, ShopCommonInfo>>() {
 
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<User,ShopCommonInfo> response) {
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<User, ShopCommonInfo> response) {
                 Log.d(LoginSystemActivity.class.getName(), statusCode + "");
                 if (null != response) {
                     if (response.isSuccess()) {
                         Toast.makeText(LoginSystemActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
-                       // HashMap u= (HashMap)response.getObj();
-                       // User user=new User();
+                        // HashMap u= (HashMap)response.getObj();
+                        // User user=new User();
                         //user.setAccount(u.get("account").toString());
-                       // user.setUserCode(u.get("userCode").toString());
+                        // user.setUserCode(u.get("userCode").toString());
                         myapplication.setUser(response.getBzseObj());
                         myapplication.setShop(response.getObj());
                         //数据是使用Intent返回
-                       // Intent intent = new Intent(this,MainActivity_);
+                        // Intent intent = new Intent(this,MainActivity_);
                         // 把返回数据存入Intent
                         //intent.putExtra("result",response.getObj().getAccount());
                         // 设置返回数据
                         //LoginSystemActivity.this.setResult(RESULT_OK, intent);
                         // 关闭Activity
-                       // LoginSystemActivity.this.finish();
+                        // LoginSystemActivity.this.finish();
+
                         MainActivity_.intent(LoginSystemActivity.this).start();
                     } else {
                         Toast.makeText(LoginSystemActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
@@ -99,14 +101,15 @@ public class LoginSystemActivity extends ActionBarActivity {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<User,ShopCommonInfo> errorResponse) {
-
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<User, ShopCommonInfo> errorResponse) {
+                Toast.makeText(LoginSystemActivity.this, "服务器繁忙", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            protected Result<User,ShopCommonInfo> parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
-               // return new ObjectMapper().readValues(new JsonFactory().createParser(rawJsonData), Result.class).next();
-                return gson.fromJson(rawJsonData, new TypeToken<Result<User,ShopCommonInfo>>(){}.getType());
+            protected Result<User, ShopCommonInfo> parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                // return new ObjectMapper().readValues(new JsonFactory().createParser(rawJsonData), Result.class).next();
+                return gson.fromJson(rawJsonData, new TypeToken<Result<User, ShopCommonInfo>>() {
+                }.getType());
             }
         });
     }
@@ -115,13 +118,6 @@ public class LoginSystemActivity extends ActionBarActivity {
     @Click(R.id.register_user_account)
     void registerAccountOnClick(){
         RegisterManageActivity_.intent(this).start();
-    }
-
-    protected final void debugResponse(String TAG, String response) {
-        if (response != null) {
-            Log.d(TAG, "Response data:");
-            Log.d(TAG, response);
-        }
     }
 }
 

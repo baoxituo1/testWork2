@@ -103,13 +103,17 @@
 
 
     <!--登陆-->
-    <string name="login_user_login">登 录 &#xf1d8;</string>
+    <string name="login_user_login">优商圈</string>
     <string name="title_activity_header_animator">我的店铺</string>
     <string name="title_activity_product_classify">未分类</string>
     <string name="title_activity_register_manage">注册</string>
     <string name="title_activity_register_step2">请填写验证码</string>
     <string name="title_activity_register_step_pwd">设置密码</string>
     <string name="title_activity_register_shop_create">创建店铺</string>
+
+    <string name="title_activity_first_user_open">欢迎使用</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
 
