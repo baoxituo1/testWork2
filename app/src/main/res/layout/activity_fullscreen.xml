@@ -1,0 +1,90 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.example.administrator.test3.FullscreenActivity">
+    <ImageView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:background="@drawable/super_luncher_index"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:weightSum="2"
+        android:layout_gravity="bottom"
+        android:padding="@dimen/n_padding_normal_h"
+        android:layout_height="@dimen/lunch_bottom_height">
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_height="match_parent">
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/go_to_login"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/n_padding_normal_b"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="@color/grey_line"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="@color/white"
+                fancy:focusColor="@color/gray"
+                fancy:radius="5dp"
+                fancy:text="@string/lunch_login"
+                fancy:textColor="#0099cc" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_height="match_parent">
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/go_to_register"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/n_padding_normal_b"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="#FFFFFF"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="#0099cc"
+                fancy:focusColor="@color/gray"
+                fancy:radius="5dp"
+                fancy:text="@string/lunch_sign"
+                fancy:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+    <FrameLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout android:id="@+id/fullscreen_content_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <Button android:id="@+id/dummy_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dummy_button" />
+
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>

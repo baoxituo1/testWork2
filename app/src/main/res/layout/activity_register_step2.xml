@@ -84,7 +84,7 @@
         android:layout_margin="@dimen/n_padding_normal_h"
         android:layout_height="@dimen/reg_input_layout_height">
         <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@id/btn_pro_del"
+            android:id="@id/btn_r_send_yzm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/n_padding_normal"

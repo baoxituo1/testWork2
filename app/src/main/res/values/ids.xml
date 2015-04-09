@@ -16,6 +16,7 @@
     <item type="id" name="pro_hot" />
     <item type="id" name="btn_pro_up_down" />
     <item type="id" name="btn_pro_del" />
+    <item type="id" name="btn_r_send_yzm" />
 
 
     <item type="id" name="main_sale_ing_btn" />
@@ -50,5 +51,9 @@
     <item type="id" name="reg_shop_name" />
     <item type="id" name="reg_shop_address" />
 
+
+    <!--super_lunch-->
+    <item type="id" name="go_to_login" />
+    <item type="id" name="go_to_register" />
 
 </resources>

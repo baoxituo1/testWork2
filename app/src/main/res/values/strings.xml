@@ -1,6 +1,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">优商圈</string>
 
+    <string name="lunch_login">登录</string>
+    <string name="lunch_sign">新用户</string>
     <string name="hello_world">你好请登陆!</string>
 
     <string name="register_title">请输入您的手机号</string>
@@ -103,7 +105,7 @@
 
 
     <!--登陆-->
-    <string name="login_user_login">优商圈</string>
+    <string name="login_user_login">登录</string>
     <string name="title_activity_header_animator">我的店铺</string>
     <string name="title_activity_product_classify">未分类</string>
     <string name="title_activity_register_manage">注册</string>
@@ -112,6 +114,7 @@
     <string name="title_activity_register_shop_create">创建店铺</string>
 
     <string name="title_activity_first_user_open">欢迎使用</string>
+    <string name="title_activity_fullscreen">欢迎使用</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
