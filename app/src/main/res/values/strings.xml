@@ -117,7 +117,36 @@
     <string name="title_activity_fullscreen">欢迎使用</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_super_main">优商圈</string>
 
+    <!--超首 -->
+    <string name="app_description">Android drawer icon with material design animation</string>
+    <string name="drawer_open">drawer_open</string>
+    <string name="drawer_close">drawer_close</string>
+    <string name="main_user_name">郑立奥</string>
+    <string name="main_user_accound">zhengliaots@gmail.com</string>
+    <string name="main_user_product">我的商品</string>
+    <string name="main_user_cover_type">我的商品类别</string>
+    <string name="main_user_message">消息</string>
+    <string name="main_shop_index">店铺首页</string>
+    <string name="main_get_scoce">兑换</string>
+    <string name="main_user_setting">设置</string>
+    <string name="main_user_give_back">反馈</string>
+    <string name="main_user_get_help">帮助</string>
 
+    <!--购物车-->
+    <string name="icon_gou_wu_che">&#xf07a;</string>
+    <!--卡车-->
+    <string name="icon_truck">&#xf0d1;</string>
+    <!--卡车-->
+    <string name="icon_tag">&#xf02c;</string>
+    <!--礼包-->
+    <string name="icon_gift">&#xf06b;</string>
+    <!--人民币-->
+    <string name="icon_qian">&#xf157;</string>
+    <!--音量++-->
+    <string name="icon_volume_up">&#xf028;</string>
+    <!--钟表-->
+    <string name="icon_clock">&#xf017;</string>
 
 </resources>

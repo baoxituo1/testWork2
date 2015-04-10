@@ -105,6 +105,7 @@
     <orderEntry type="library" exported="" name="baidumapapi_v3_3_0" level="project" />
     <orderEntry type="library" exported="" name="core-0.0.2-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="androidannotations-api-3.2" level="project" />
+    <orderEntry type="library" exported="" name="ldrawer-0.1" level="project" />
     <orderEntry type="library" exported="" name="androidannotations-3.2" level="project" />
     <orderEntry type="library" exported="" name="circleimageview-1.2.2" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />

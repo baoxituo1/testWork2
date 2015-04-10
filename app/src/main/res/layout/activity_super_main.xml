@@ -1,0 +1,160 @@
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="@dimen/n_padding_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--第一组-->
+        <LinearLayout
+            android:layout_marginTop="@dimen/n_padding_normal"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:weightSum="2"
+            android:layout_height="@dimen/main_menu_layout_height">
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/btn_cover_ok"
+                android:layout_marginRight="@dimen/n_padding_normal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="#FFFFFF"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="@color/mediumseagreen"
+                fancy:focusColor="@color/darkslategray"
+                fancy:fontIconResource="@string/icon_truck"
+                fancy:iconPosition="left"
+                fancy:radius="3dp"
+                fancy:text="店铺"
+                fancy:textColor="#FFFFFF" />
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/btn_cover_ok"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/n_padding_normal"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="#FFFFFF"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="@color/mediumseagreen"
+                fancy:focusColor="@color/darkslategray"
+                fancy:fontIconResource="@string/icon_gou_wu_che"
+                fancy:iconPosition="left"
+                fancy:radius="3dp"
+                fancy:text="商品"
+                fancy:textColor="#FFFFFF" />
+        </LinearLayout>
+        <!--第二组-->
+        <LinearLayout
+            android:layout_marginTop="@dimen/n_padding_normal"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:weightSum="2"
+            android:layout_height="@dimen/main_menu_layout_height">
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/btn_cover_ok"
+                android:layout_marginRight="@dimen/n_padding_normal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="#FFFFFF"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="@color/orangered"
+                fancy:focusColor="@color/darkslategray"
+                fancy:fontIconResource="@string/icon_tag"
+                fancy:iconPosition="left"
+                fancy:radius="3dp"
+                fancy:text="分类"
+                fancy:textColor="#FFFFFF" />
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/btn_cover_ok"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/n_padding_normal"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="#FFFFFF"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="@color/darkorange"
+                fancy:focusColor="@color/darkslategray"
+                fancy:fontIconResource="@string/icon_gift"
+                fancy:iconPosition="left"
+                fancy:radius="3dp"
+                fancy:text="活动"
+                fancy:textColor="#FFFFFF" />
+        </LinearLayout>
+        <!--第三组-->
+        <LinearLayout
+            android:layout_marginTop="@dimen/n_padding_normal"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:weightSum="2"
+            android:layout_height="@dimen/main_menu_layout_height">
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/btn_cover_ok"
+                android:layout_marginRight="@dimen/n_padding_normal"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="#FFFFFF"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="@color/dodgerblue"
+                fancy:focusColor="@color/darkslategray"
+                fancy:fontIconResource="@string/icon_volume_up"
+                fancy:iconPosition="left"
+                fancy:radius="3dp"
+                fancy:text="推送"
+                fancy:textColor="#FFFFFF" />
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/btn_cover_ok"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/n_padding_normal"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="#FFFFFF"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="@color/royalblue"
+                fancy:focusColor="@color/darkslategray"
+                fancy:fontIconResource="@string/icon_qian"
+                fancy:iconPosition="left"
+                fancy:radius="3dp"
+                fancy:text="打折"
+                fancy:textColor="#FFFFFF" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--left menu-->
+    <include layout="@layout/activity_super_sub_main"></include>
+
+
+</android.support.v4.widget.DrawerLayout>
+

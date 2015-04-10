@@ -40,7 +40,7 @@
             android:layout_centerInParent="true"
             android:src="@drawable/lib_icon"
             app:border_width="2dp"
-            app:border_color="#FF000000"/>
+            app:border_color="@color/deeppink"/>
 
         <TextView
             android:id="@+id/shopName"
@@ -132,12 +132,17 @@
         android:id="@+id/newMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="新版首页"/>
+        android:text="新版店铺商品"/>
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="登录后台"/>
+    <Button
+        android:id="@+id/shopMainButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="新版主页"/>
     <Button
         android:id="@+id/shopConfigButton"
         android:layout_width="match_parent"

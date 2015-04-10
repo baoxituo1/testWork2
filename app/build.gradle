@@ -48,6 +48,8 @@ dependencies {
     compile 'com.github.carlonzo.stikkyheader:core:0.0.2-SNAPSHOT'
     //Context-Menu
    // compile 'com.yalantis:contextmenu:1.0.2'
+    //left menu
+    compile 'com.ikimuhendis:ldrawer:0.1'
 }
 
 apt {

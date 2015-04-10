@@ -35,4 +35,11 @@
     <!-- 注册页面 -->
     <dimen name="reg_input_layout_height">55dp</dimen>
     <dimen name="reg_input_yzm_min_weight">150dp</dimen>
+
+    <!-- 超首 -->
+    <dimen name="navdrawer_width">300dp</dimen>
+    <dimen name="left_menu_item_width">70dp</dimen>
+    <dimen name="left_menu_item_sub_width">45dp</dimen>
+    <dimen name="left_menu_shop_logo_width_height">40dp</dimen>
+    <dimen name="main_menu_layout_height">45dp</dimen>
 </resources>

@@ -172,6 +172,8 @@
     <color name="gray_cc">#cccccc</color><!--灰色cc -->
     <color name="gray_8f">#8f8f8f</color><!--灰色8f -->
 
+    <color name="actionbar_color">#bf360c</color>
+    <color name="drawer_arrow_second_color">#303f9f</color>
 
     <integer-array name="custom_theme">
         <item>@color/collect_green</item> <!-- a bit darker color of your main color -->

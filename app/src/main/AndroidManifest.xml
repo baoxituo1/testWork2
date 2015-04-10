@@ -60,21 +60,24 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
             android:theme="@style/FullscreenTheme" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".LoginSystemActivity_"
-            android:label="@string/title_activity_login_system"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
            <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".LoginSystemActivity_"
+            android:label="@string/title_activity_login_system"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".ProductManagerActivity_"
@@ -162,6 +165,16 @@
             android:name=".activity.reg.RegisterShopCreateActivity_"
             android:label="@string/title_activity_register_shop_create"
             android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name=".SuperMainActivity"
+            android:theme="@style/AppThemeBar"
+            android:label="@string/title_activity_super_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
