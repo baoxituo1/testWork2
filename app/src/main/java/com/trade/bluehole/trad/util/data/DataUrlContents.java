@@ -82,4 +82,8 @@ public class DataUrlContents {
      * 获取手机验证码倒计时
      */
     public final  static String load_send_yzm_time="shopjson/checkCodeTime.do";
+    /**
+     * 查询 店铺统计信息
+     */
+    public final  static String load_shop_statistical_info="shopjson/loadIndexInfo.do";
 }

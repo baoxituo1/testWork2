@@ -42,4 +42,10 @@
     <dimen name="left_menu_item_sub_width">45dp</dimen>
     <dimen name="left_menu_shop_logo_width_height">40dp</dimen>
     <dimen name="main_menu_layout_height">45dp</dimen>
+    <dimen name="main_menu_all_width_height">80dp</dimen>
+    <dimen name="main_menu_all_plug_bottom">10dp</dimen>
+    <dimen name="main_menu_all_plug_right">5dp</dimen>
+    <dimen name="main_menu_all_plug_width">22dp</dimen>
+    <dimen name="main_menu_all_plug_height">18dp</dimen>
+    <dimen name="main_notice_item_width_height">40dp</dimen>
 </resources>

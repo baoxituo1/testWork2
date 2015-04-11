@@ -337,7 +337,8 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
      */
     @Click(R.id.main_head_shop)
     void onSopHeadClick(){
-        ShopConfigActivity_.intent(this).start();
+        //暂时注释掉
+        //ShopConfigActivity_.intent(this).start();
     }
 
 

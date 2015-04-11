@@ -134,6 +134,7 @@
         android:layout_height="wrap_content"
         android:text="新版店铺商品"/>
     <Button
+        android:visibility="gone"
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -159,6 +160,7 @@
         android:layout_height="wrap_content"
         android:text="个人信息"/>
     <Button
+        android:visibility="gone"
         android:id="@+id/addProductButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

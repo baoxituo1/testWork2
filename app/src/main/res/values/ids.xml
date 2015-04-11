@@ -55,5 +55,17 @@
     <!--super_lunch-->
     <item type="id" name="go_to_login" />
     <item type="id" name="go_to_register" />
+    <item type="id" name="all_pro_number" />
+    <item type="id" name="all_view_number" />
+    <item type="id" name="all_shop_collect_number" />
+    <item type="id" name="all_pro_collect_number" />
+
+    <item type="id" name="main_btn_add_pro" />
+    <item type="id" name="main_btn_manage_pro" />
+    <item type="id" name="main_btn_shop_config" />
+    <item type="id" name="main_btn_manage_activity" />
+    <item type="id" name="main_btn_manage_send" />
+    <item type="id" name="main_btn_manage_sale" />
+
 
 </resources>

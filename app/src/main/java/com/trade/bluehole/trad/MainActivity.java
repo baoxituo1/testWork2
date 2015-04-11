@@ -89,9 +89,9 @@ public class MainActivity extends ActionBarActivity {
 
     @Click(R.id.shopMainButton)
     void shopMainButton(){
-        Intent intent=new Intent(this,SuperMainActivity.class);
-        startActivity(intent);
-        //UserInfoActivity_.intent(this).start();
+       /* Intent intent=new Intent(this,SuperMainActivity.class);
+        startActivity(intent);*/
+        SuperMainActivity_.intent(this).start();
     }
 
     @Click(R.id.addProductButton)
