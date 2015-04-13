@@ -149,4 +149,9 @@
     <!--钟表-->
     <string name="icon_clock">&#xf017;</string>
 
+
+    <!--活动 -->
+    <string name="title_activity_add_activity_shop">新增活动</string>
+    <string name="title_activity_add_done">完成</string>
+
 </resources>

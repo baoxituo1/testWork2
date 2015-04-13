@@ -55,6 +55,8 @@ dependencies {
     compile 'com.ikimuhendis:ldrawer:0.1'
     //TextDrawable
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    //MaterialEditText 标题提示
+    compile 'com.rengwuxian.materialedittext:library:2.0.3'
 }
 
 apt {

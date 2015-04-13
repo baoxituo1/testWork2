@@ -86,4 +86,8 @@ public class DataUrlContents {
      * 查询 店铺统计信息
      */
     public final  static String load_shop_statistical_info="shopjson/loadIndexInfo.do";
+    /**
+     * 保存更新活动信息
+     */
+    public final  static String save_or_update_activity="shopjson/saveActivity.do";
 }

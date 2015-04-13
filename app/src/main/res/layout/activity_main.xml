@@ -145,6 +145,11 @@
         android:layout_height="wrap_content"
         android:text="新版主页"/>
     <Button
+        android:id="@+id/addActivityButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="新增活动"/>
+    <Button
         android:id="@+id/shopConfigButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

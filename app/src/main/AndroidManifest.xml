@@ -60,17 +60,19 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
             android:theme="@style/FullscreenTheme" >
-           <!-- <intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".LoginSystemActivity_"
             android:label="@string/title_activity_login_system"
             android:windowSoftInputMode="adjustResize|stateHidden" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -166,8 +168,13 @@
         </activity>
         <activity
             android:name=".SuperMainActivity_"
-            android:theme="@style/AppThemeBar"
-            android:label="@string/title_activity_super_main" >
+            android:label="@string/title_activity_super_main"
+            android:theme="@style/AppThemeBar" >
+        </activity>
+        <activity
+            android:name=".AddActivityShopActivity_"
+            android:label="@string/title_activity_add_activity_shop"
+            android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
     </application>
 
