@@ -327,6 +327,8 @@ public class NewActivityShopActivity extends ActionBarActivity {
                                 .setTitleText("同步成功!")
                                 .setContentText("活动提交成功")
                                 .show();
+                        ActivityManageActivity_.intent(NewActivityShopActivity.this).start();
+                        finish();
                     }
                     //Toast.makeText(ShopConfigActivity.this, "数据提交：" + response, Toast.LENGTH_SHORT).show();
                 }
