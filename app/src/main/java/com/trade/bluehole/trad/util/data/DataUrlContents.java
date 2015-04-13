@@ -12,6 +12,10 @@ public class DataUrlContents {
      * logo 300*300 无水印
      */
     public final static String img_logo_img="@!p-l-h-e-280-n";
+    /**
+     * 手机端-活动-头部-900*450-无水印
+     */
+    public final static String activity_logo_img="@!p-a-h-w900-h450";
 
     /**
      * 服务器地址
@@ -90,4 +94,20 @@ public class DataUrlContents {
      * 保存更新活动信息
      */
     public final  static String save_or_update_activity="shopjson/saveActivity.do";
+    /**
+     * 读取活动列表信息
+     */
+    public final  static String load_shop_activity="shopjson/loadShopActivity.do";
+    /**
+     * 读取活动详细信息
+     */
+    public final  static String load_activity_detail="shopjson/loadActivityInfo.do";
+    /**
+     * 更新活动
+     */
+    public final  static String update_activity_state="shopjson/updateActivityStatus.do";
+    /**
+     * 删除活动
+     */
+    public final  static String delete_activity="shopjson/deleteActivity.do";
 }

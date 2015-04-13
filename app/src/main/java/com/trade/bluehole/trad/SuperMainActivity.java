@@ -125,6 +125,14 @@ public class SuperMainActivity extends Activity {
         ShopConfigActivity_.intent(this).start();
     }
 
+    /**
+     * 点击店铺管理
+     */
+    @Click(R.id.main_btn_manage_activity)
+    void onClickManageActivity(){
+        ActivityManageActivity_.intent(this).start();
+    }
+
 
     /**
      * 读取数据

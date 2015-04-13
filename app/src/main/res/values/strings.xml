@@ -153,5 +153,11 @@
     <!--活动 -->
     <string name="title_activity_add_activity_shop">新增活动</string>
     <string name="title_activity_add_done">完成</string>
+    <string name="title_activity_add">+添加</string>
+    <string name="title_activity_activity_manage">活动管理</string>
+    <string name="title_activity_new_activity_shop">添加活动</string>
+    <string name="title_activity_start_activity_shop">开始活动</string>
+    <string name="title_activity_end_activity_shop">结束活动</string>
+    <string name="title_activity_delete_activity_shop">删除活动</string>
 
 </resources>

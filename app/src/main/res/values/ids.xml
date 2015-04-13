@@ -68,6 +68,7 @@
     <item type="id" name="main_btn_manage_sale" />
 
     <!--活动-->
+    <item type="id" name="activity_menu_add" />
     <item type="id" name="activity_menu_done" />
     <item type="id" name="activity_input_name" />
     <item type="id" name="activity_input_profile" />
@@ -75,4 +76,7 @@
     <item type="id" name="activity_input_details" />
     <item type="id" name="activity_input_rules" />
     <item type="id" name="activity_input_address" />
+    <item type="id" name="activity_update_btn_layout" />
+    <item type="id" name="btn_activity_up_down" />
+    <item type="id" name="btn_activity_del" />
 </resources>

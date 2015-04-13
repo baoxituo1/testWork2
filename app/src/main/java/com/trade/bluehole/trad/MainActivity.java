@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.trade.bluehole.trad.activity.actity.NewActivityShopActivity_;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
@@ -78,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
     }
     @Click(R.id.addActivityButton)
     void onAddActivityButton(){
-        AddActivityShopActivity_.intent(this).start();
+        NewActivityShopActivity_.intent(this).start();
     }
 
     @Click(R.id.shopConfigButton)

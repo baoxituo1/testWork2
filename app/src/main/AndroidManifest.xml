@@ -171,9 +171,18 @@
             android:label="@string/title_activity_super_main"
             android:theme="@style/AppThemeBar" >
         </activity>
-        <activity
+       <!-- <activity
             android:name=".AddActivityShopActivity_"
             android:label="@string/title_activity_add_activity_shop"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>-->
+        <activity
+            android:name=".ActivityManageActivity_"
+            android:label="@string/title_activity_activity_manage" >
+        </activity>
+        <activity
+            android:name=".activity.actity.NewActivityShopActivity_"
+            android:label="@string/title_activity_new_activity_shop"
             android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
     </application>

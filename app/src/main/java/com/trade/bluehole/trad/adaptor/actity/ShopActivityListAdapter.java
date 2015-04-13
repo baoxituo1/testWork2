@@ -1,4 +1,4 @@
-package com.trade.bluehole.trad.adaptor.main;
+package com.trade.bluehole.trad.adaptor.actity;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -12,33 +12,37 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.entity.actity.ShopActivity;
 import com.trade.bluehole.trad.entity.msg.IndexProCommentVO;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
 /**
- * Created by Administrator on 2015-04-11.
+ * Created by Administrator on 2015-04-13.
  */
-public class MainNoticeAdapter extends BaseAdapter {
-    List<IndexProCommentVO> lists;
+public class ShopActivityListAdapter extends BaseAdapter {
+    List<ShopActivity> lists;
     private final ColorGenerator mGenerator;
 
 
     Context ctx;
-    public MainNoticeAdapter(Context ctx,List<IndexProCommentVO> lists){
-        this.lists=lists;
-        this.ctx=ctx;
+
+    public ShopActivityListAdapter(Context ctx, List<ShopActivity> lists) {
+        this.lists = lists;
+        this.ctx = ctx;
         mGenerator = ColorGenerator.DEFAULT;
     }
 
     @Override
     public int getCount() {
-        return lists==null?0:lists.size();
+        return lists == null ? 0 : lists.size();
     }
 
     @Override
-    public IndexProCommentVO getItem(int position) {
-        return lists==null?null:lists.get(position);
+    public ShopActivity getItem(int position) {
+        return lists == null ? null : lists.get(position);
     }
 
     @Override
@@ -50,35 +54,35 @@ public class MainNoticeAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = View.inflate(ctx, R.layout.i_super_notice_list_item, null);
+            convertView = View.inflate(ctx, R.layout.i_activity_list_item, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        IndexProCommentVO item = getItem(position);
+        ShopActivity item = getItem(position);
 
         //final Drawable drawable = item.getDrawable();
-        String title=item.getTitle();
-        String header="信";
-        if(null!=title&&title.length()>2){
-             header= title.substring(0,1);
+        String title = item.getActivityName();
+        String header = "活";
+        if (null != title && title.length() > 2) {
+            header = title.substring(0, 1);
         }
         final TextDrawable drawable = TextDrawable.builder().buildRoundRect(header, mGenerator.getColor(header), toPx(10));
         holder.imageView.setImageDrawable(drawable);
-        holder.textView.setText(item.getTitle());
+        holder.textView.setText(item.getActivityName());
 
         // if navigation is supported, show the ">" navigation icon
-        /*if (item.getNavigationInfo() != DataSource.NO_NAVIGATION) {
-            holder.textView.setCompoundDrawablesWithIntrinsicBounds(null,
-                    null,
-                    getResources().getDrawable(R.drawable.ic_action_next_item),
-                    null);
-        }
-        else {*/
-            holder.textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null,null);
-       // }
+        //if (item.getNavigationInfo() != DataSource.NO_NAVIGATION) {
+        holder.textView.setCompoundDrawablesWithIntrinsicBounds(null,
+                null,
+                ctx.getResources().getDrawable(R.drawable.ic_action_next_item),
+                null);
+        //}
+        //else {
+        //holder.textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+        //}
 
         // fix for animation not playing for some below 4.4 devices
        /* if (drawable instanceof AnimationDrawable) {
@@ -106,7 +110,7 @@ public class MainNoticeAdapter extends BaseAdapter {
         }
     }
 
-    public void setLists(List<IndexProCommentVO> lists) {
+    public void setLists(List<ShopActivity> lists) {
         this.lists = lists;
     }
 
