@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingBottom="@dimen/n_padding_normal"
+    android:paddingTop="@dimen/n_padding_normal"
+    android:background="@color/gainsboro"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:padding="@dimen/n_padding_normal"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@id/sale_image"
+                    android:src="@drawable/head_background"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:scaleType="centerCrop"/>
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:layout_gravity="bottom"
+                    style="@style/ProgressBarStyle" />
+            </RelativeLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:padding="@dimen/n_padding_normal"
+                android:weightSum="3"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@id/sale_name"
+                    android:layout_margin="@dimen/n_padding_normal"
+                    android:layout_width="match_parent"
+                    android:text="美丽的商品还是我的最爱"
+                    android:lines="2"
+                    android:textColor="@color/eggplant"
+                    android:textSize="@dimen/button_text_size"
+                    android:layout_weight="1"
+                    android:layout_height="0dp" />
+                <LinearLayout
+                    android:weightSum="3"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@id/sale_price"
+                        android:layout_width="0dp"
+                        android:layout_marginLeft="@dimen/n_padding_normal"
+                        android:textSize="@dimen/button_text_size"
+                        android:text="$0.00"
+                        android:textColor="@color/primary"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@id/sale_old_price"
+                        android:layout_width="0dp"
+                        android:visibility="gone"
+                        android:layout_marginLeft="@dimen/n_padding_normal"
+                        android:textSize="@dimen/small_text_size"
+                        android:text="$0.00"
+                        android:textColor="@color/grey_light"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
+                    <RelativeLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@id/sale_sale_num"
+                            android:visibility="gone"
+                            android:layout_alignParentRight="false"
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="@dimen/n_padding_normal"
+                            android:textSize="@dimen/button_text_size"
+                            android:text="0.0折"
+                            android:background="@color/primary"
+                            android:textColor="@color/white"
+                            android:layout_height="wrap_content" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

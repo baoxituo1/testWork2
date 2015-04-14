@@ -74,15 +74,14 @@ public class ShopActivityListAdapter extends BaseAdapter {
         holder.textView.setText(item.getActivityName());
 
         // if navigation is supported, show the ">" navigation icon
-        //if (item.getNavigationInfo() != DataSource.NO_NAVIGATION) {
+        if (item.getDelFlag().intValue()==1) {
         holder.textView.setCompoundDrawablesWithIntrinsicBounds(null,
                 null,
-                ctx.getResources().getDrawable(R.drawable.ic_action_next_item),
+                ctx.getResources().getDrawable(R.drawable.ing),
                 null);
-        //}
-        //else {
-        //holder.textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-        //}
+        }else {
+            holder.textView.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+        }
 
         // fix for animation not playing for some below 4.4 devices
        /* if (drawable instanceof AnimationDrawable) {

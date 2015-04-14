@@ -79,4 +79,19 @@
     <item type="id" name="activity_update_btn_layout" />
     <item type="id" name="btn_activity_up_down" />
     <item type="id" name="btn_activity_del" />
+
+    <!--促销折扣-->
+    <item type="id" name="dy_menu_add" />
+    <item type="id" name="dy_image" />
+    <item type="id" name="dy_name" />
+    <item type="id" name="dy_price" />
+    <item type="id" name="dy_old_price" />
+    <item type="id" name="dy_sale_num" />
+    <item type="id" name="dy_date" />
+    <!--选择促销商品-->
+    <item type="id" name="sale_image" />
+    <item type="id" name="sale_name" />
+    <item type="id" name="sale_price" />
+    <item type="id" name="sale_old_price" />
+    <item type="id" name="sale_sale_num" />
 </resources>

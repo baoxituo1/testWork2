@@ -142,7 +142,7 @@
                 fancy:fontIconResource="@string/icon_qian"
                 fancy:iconPosition="left"
                 fancy:radius="3dp"
-                fancy:text="促销"
+                fancy:text="折扣"
                 fancy:textColor="#FFFFFF" />
         </LinearLayout>
         <!--分割线-->

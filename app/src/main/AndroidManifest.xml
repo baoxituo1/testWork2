@@ -171,11 +171,13 @@
             android:label="@string/title_activity_super_main"
             android:theme="@style/AppThemeBar" >
         </activity>
-       <!-- <activity
+        <!--
+        <activity
             android:name=".AddActivityShopActivity_"
             android:label="@string/title_activity_add_activity_shop"
             android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>-->
+        </activity>
+        -->
         <activity
             android:name=".ActivityManageActivity_"
             android:label="@string/title_activity_activity_manage" >
@@ -183,7 +185,15 @@
         <activity
             android:name=".activity.actity.NewActivityShopActivity_"
             android:label="@string/title_activity_new_activity_shop"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name=".DynamicManageActivity_"
+            android:label="@string/title_activity_dynamic_manage2" >
+        </activity>
+        <activity
+            android:name=".activity.sale.SelectSaleProductActivity_"
+            android:label="@string/title_activity_select_sale_product" >
         </activity>
     </application>
 

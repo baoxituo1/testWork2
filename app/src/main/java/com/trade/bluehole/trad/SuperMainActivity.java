@@ -105,7 +105,7 @@ public class SuperMainActivity extends Activity {
      * 点击新增商品
      */
     @Click(R.id.main_btn_add_pro)
-    void onClickAddPro(){
+    void onClickAddProBtn(){
         Intent intent=NewProductActivity_.intent(this).get();
         intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA,user.getShopCode());
         startActivity(intent);
@@ -114,23 +114,30 @@ public class SuperMainActivity extends Activity {
      * 点击管理商品
      */
     @Click(R.id.main_btn_manage_pro)
-    void onClickManagePro(){
+    void onClickManageProBtn(){
         HeaderAnimatorActivity_.intent(this).start();
     }
     /**
      * 点击店铺管理
      */
     @Click(R.id.main_btn_shop_config)
-    void onClickManageShop(){
+    void onClickManageShopBtn(){
         ShopConfigActivity_.intent(this).start();
     }
 
     /**
-     * 点击店铺管理
+     * 点击动态管理
      */
     @Click(R.id.main_btn_manage_activity)
-    void onClickManageActivity(){
+    void onClickManageActivityBtn(){
         ActivityManageActivity_.intent(this).start();
+    }
+    /**
+     * 点击折扣管理
+     */
+    @Click(R.id.main_btn_manage_sale)
+    void onClickManageDynamicBtn(){
+        DynamicManageActivity_.intent(this).start();
     }
 
 

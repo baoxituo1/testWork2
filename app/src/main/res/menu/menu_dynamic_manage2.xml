@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.trade.bluehole.trad.DynamicManageActivity">
+    <item android:id="@+id/dy_menu_add" android:title="@string/title_dynamic_add"
+        android:orderInCategory="100" app:showAsAction="always" />
+</menu>

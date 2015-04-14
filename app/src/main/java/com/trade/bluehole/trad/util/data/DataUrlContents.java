@@ -110,4 +110,12 @@ public class DataUrlContents {
      * 删除活动
      */
     public final  static String delete_activity="shopjson/deleteActivity.do";
+    /**
+     * 读取打折促销列表
+     */
+    public final  static String load_dynamic_sale_detail="shopjson/loadShopDynamic.do";
+    /**
+     * 读取所有商品的打折状态列表
+     */
+    public final  static String load_product_sale_detail="shopjson/loadShopProductSale.do";
 }

@@ -159,5 +159,8 @@
     <string name="title_activity_start_activity_shop">开始活动</string>
     <string name="title_activity_end_activity_shop">结束活动</string>
     <string name="title_activity_delete_activity_shop">删除活动</string>
-
+    <string name="title_activity_dynamic_manage2">折扣管理</string>
+    <!--活动 -->
+    <string name="title_dynamic_add">+添加</string>
+    <string name="title_activity_select_sale_product">选择折扣商品</string>
 </resources>
