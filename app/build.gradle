@@ -57,6 +57,8 @@ dependencies {
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     //MaterialEditText 标题提示
     compile 'com.rengwuxian.materialedittext:library:2.0.3'
+    //dateTimePicker
+    compile 'com.github.flavienlaurent.datetimepicker:library:0.0.2'
 }
 
 apt {

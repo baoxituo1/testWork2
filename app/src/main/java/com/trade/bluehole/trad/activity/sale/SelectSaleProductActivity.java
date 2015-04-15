@@ -63,10 +63,15 @@ public class SelectSaleProductActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ProductSaleVO obj=lists.get(position);
-                if(null!=obj){
-                    Intent intent= NewActivityShopActivity_.intent(SelectSaleProductActivity.this).get();
-                    intent.putExtra(NewActivityShopActivity.ACTIVITY_CODE_EXTRA,obj.getDynamicCode());
+                if(null==obj.getDynamicCode()||"".equals(obj.getDynamicCode())){
+                    Intent intent= AddProductSaleActivity_.intent(SelectSaleProductActivity.this).get();
+                    intent.putExtra(AddProductSaleActivity.PRO_SALE_IMAGE,obj.getProductImage());
+                    intent.putExtra(AddProductSaleActivity.PRO_SALE_NAME,obj.getProductName());
+                    intent.putExtra(AddProductSaleActivity.PRO_SALE_PRICE,obj.getOldPrice());
+                    intent.putExtra(AddProductSaleActivity.PRO_SALE_CODE,obj.getProductCode());
                     startActivity(intent);
+                }else{
+                    Toast.makeText(SelectSaleProductActivity.this, "该商品正在打折中", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -108,7 +113,7 @@ public class SelectSaleProductActivity extends ActionBarActivity {
         });
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_select_sale_product, menu);
         return true;
@@ -123,5 +128,5 @@ public class SelectSaleProductActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

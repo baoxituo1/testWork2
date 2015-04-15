@@ -89,9 +89,15 @@
     <item type="id" name="dy_sale_num" />
     <item type="id" name="dy_date" />
     <!--选择促销商品-->
+    <item type="id" name="sale_menu_done" />
     <item type="id" name="sale_image" />
     <item type="id" name="sale_name" />
     <item type="id" name="sale_price" />
     <item type="id" name="sale_old_price" />
     <item type="id" name="sale_sale_num" />
+    <item type="id" name="sale_layout_start" />
+    <item type="id" name="sale_layout_end" />
+    <item type="id" name="sale_start_date" />
+    <item type="id" name="sale_end_date" />
+    <item type="id" name="sale_pro_image" />
 </resources>

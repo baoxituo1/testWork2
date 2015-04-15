@@ -52,4 +52,7 @@
     <!-- 新增活动 -->
     <dimen name="activity_header_image_height">200dp</dimen>
     <dimen name="activity_header_notice_height">30dp</dimen>
+    <dimen name="add_sale_line_height">100dp</dimen>
+    <dimen name="add_sale_line_sub_height">60dp</dimen>
+
 </resources>
