@@ -16,7 +16,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_margin="@dimen/n_padding_normal_h"
-                android:id="@+id/shop_logo_image"
+                android:id="@id/shop_logo_image"
                 android:layout_width="@dimen/left_menu_shop_logo_width_height"
                 android:layout_height="@dimen/left_menu_shop_logo_width_height"
                 android:src="@drawable/lib_icon"
@@ -29,11 +29,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@id/reg_shop_name"
                     android:layout_width="wrap_content"
                     android:text="@string/main_user_name"
                     android:textColor="@color/white"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:id="@id/account"
                     android:layout_marginTop="@dimen/n_padding_normal"
                     android:layout_width="wrap_content"
                     android:textColor="@color/white"
@@ -73,6 +75,7 @@
         </LinearLayout>
         <!--我的商品-->
         <LinearLayout
+            android:id="@id/main_left_user_layout"
             android:layout_width="match_parent"
             android:weightSum="4"
             android:layout_height="@dimen/left_menu_item_sub_width">
@@ -96,7 +99,7 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:text="@string/main_user_product"
+                    android:text="@string/main_user_info"
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>

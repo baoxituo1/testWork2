@@ -24,15 +24,15 @@ import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.trade.bluehole.trad.activity.user.AccountUserManageActivity;
+import com.trade.bluehole.trad.activity.user.AccountUserManageActivity_;
 import com.trade.bluehole.trad.adaptor.main.MainNoticeAdapter;
 import com.trade.bluehole.trad.entity.User;
-import com.trade.bluehole.trad.entity.UserBase;
 import com.trade.bluehole.trad.entity.msg.IndexVO;
+import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
+import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
-import com.trade.bluehole.trad.util.Result;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
-import com.yalantis.phoenix.PullToRefreshView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -40,6 +40,8 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 @EActivity(R.layout.activity_super_main)
 public class SuperMainActivity extends Activity {
@@ -54,51 +56,62 @@ public class SuperMainActivity extends Activity {
     @App
     MyApplication myApplication;
     User user;
+    ShopCommonInfo shop;
     MainNoticeAdapter adapter;//站内通知适配器
     @ViewById
     ListView listView;
+    @ViewById //商品数 浏览量 收藏量 商品收藏 店铺名 账号信息
+    TextView all_pro_number,all_view_number,all_shop_collect_number,all_pro_collect_number,reg_shop_name,account;
     @ViewById
-    TextView all_pro_number,all_view_number,all_shop_collect_number,all_pro_collect_number;
-   /* @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_super_main);
-    }*/
+    CircleImageView shop_logo_image;//左侧边栏logo
+
+
 
     @AfterViews
     void initData(){
         user=myApplication.getUser();
-        ActionBar ab = getActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeButtonEnabled(true);
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (LinearLayout) findViewById(R.id.navdrawer);
-
-        drawerArrow = new DrawerArrowDrawable(this) {
-            @Override
-            public boolean isLayoutRtl() {
-                return false;
+        shop=myApplication.getShop();
+        //是否有登陆信息
+        if(null!=user&&null!=shop){
+            reg_shop_name.setText(shop.getTitle());
+            account.setText(user.getAccount());
+            if(null!=shop.getShopLogo()){
+                ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + shop.getShopLogo()+DataUrlContents.img_logo_img,shop_logo_image,ImageManager.options);
             }
-        };
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, drawerArrow, R.string.drawer_open, R.string.drawer_close) {
+            ActionBar ab = getActionBar();
+            ab.setDisplayHomeAsUpEnabled(true);
+            ab.setHomeButtonEnabled(true);
 
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                invalidateOptionsMenu();
-            }
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            mDrawerList = (LinearLayout) findViewById(R.id.navdrawer);
 
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                invalidateOptionsMenu();
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
-        //实例化adapter
-        adapter=new MainNoticeAdapter(this,null);
-        //装载数据
-        loadData();
+            drawerArrow = new DrawerArrowDrawable(this) {
+                @Override
+                public boolean isLayoutRtl() {
+                    return false;
+                }
+            };
+            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, drawerArrow, R.string.drawer_open, R.string.drawer_close) {
+
+                public void onDrawerClosed(View view) {
+                    super.onDrawerClosed(view);
+                    invalidateOptionsMenu();
+                }
+
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    invalidateOptionsMenu();
+                }
+            };
+            mDrawerLayout.setDrawerListener(mDrawerToggle);
+            mDrawerToggle.syncState();
+            //实例化adapter
+            adapter=new MainNoticeAdapter(this,null);
+            //装载数据
+            loadData();
+        }else{
+            Toast.makeText(SuperMainActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -138,6 +151,17 @@ public class SuperMainActivity extends Activity {
     @Click(R.id.main_btn_manage_sale)
     void onClickManageDynamicBtn(){
         DynamicManageActivity_.intent(this).start();
+    }
+
+
+    /**
+     * 点击账号信息管理
+     */
+    @Click(R.id.main_left_user_layout)
+    void onClickManageUserInfoBtn(){
+        /*Intent intent=new Intent(this, AccountUserManageActivity.class);
+        startActivity(intent);*/
+       AccountUserManageActivity_.intent(this).start();
     }
 
 

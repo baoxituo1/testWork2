@@ -93,7 +93,8 @@ public class LoginSystemActivity extends ActionBarActivity {
                         // 关闭Activity
                         // LoginSystemActivity.this.finish();
 
-                        MainActivity_.intent(LoginSystemActivity.this).start();
+                       // MainActivity_.intent(LoginSystemActivity.this).start();
+                        SuperMainActivity_.intent(LoginSystemActivity.this).start();
                     } else {
                         Toast.makeText(LoginSystemActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
                     }

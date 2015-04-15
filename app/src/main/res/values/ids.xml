@@ -67,6 +67,9 @@
     <item type="id" name="main_btn_manage_send" />
     <item type="id" name="main_btn_manage_sale" />
 
+    <item type="id" name="main_left_user_layout" />
+    <item type="id" name="account" />
+
     <!--活动-->
     <item type="id" name="activity_menu_add" />
     <item type="id" name="activity_menu_done" />

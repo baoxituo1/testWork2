@@ -38,6 +38,7 @@
     <application
         android:name=".util.MyApplication_"
         android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
@@ -199,6 +200,11 @@
         <activity
             android:name=".activity.sale.AddProductSaleActivity_"
             android:label="@string/title_activity_add_product_sale" >
+        </activity>
+        <activity
+            android:name=".activity.user.AccountUserManageActivity_"
+            android:theme="@style/AppTheme3.TranslucentActionBar"
+            android:label="@string/title_activity_account_user_manage" >
         </activity>
     </application>
 

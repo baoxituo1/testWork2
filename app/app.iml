@@ -93,6 +93,7 @@
     <orderEntry type="library" exported="" name="library-0.0.2" level="project" />
     <orderEntry type="library" exported="" name="materialish-progress-1.0" level="project" />
     <orderEntry type="library" exported="" name="phoenix-1.1.0" level="project" />
+    <orderEntry type="library" exported="" name="fadingactionbar-3.1.2" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.0.0" level="project" />
     <orderEntry type="library" exported="" name="core-0.0.2-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="ldrawer-0.1" level="project" />
@@ -107,6 +108,7 @@
     <orderEntry type="library" exported="" name="locSDK_5.0" level="project" />
     <orderEntry type="library" exported="" name="fancybuttons-1.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.0.0" level="project" />
+    <orderEntry type="library" exported="" name="fadingactionbar-abc-3.1.2" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="android-async-http-1.4.6" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3.1" level="project" />

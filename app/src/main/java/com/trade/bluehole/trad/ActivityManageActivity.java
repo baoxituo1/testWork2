@@ -22,7 +22,6 @@ import com.trade.bluehole.trad.activity.actity.NewActivityShopActivity_;
 import com.trade.bluehole.trad.adaptor.actity.ShopActivityListAdapter;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.actity.ShopActivity;
-import com.trade.bluehole.trad.entity.msg.IndexVO;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.Result;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
