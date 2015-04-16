@@ -20,6 +20,7 @@ public class MyViewHold implements Holder {
     private ViewGroup footerContainer;
     private View.OnKeyListener keyListener;
     public View contentView;
+    public View headView;
     private int viewResourceId = -1;
 
     public MyViewHold(int viewResourceId) {
@@ -32,6 +33,7 @@ public class MyViewHold implements Holder {
 
     public void addHeader(View view) {
         if(view != null) {
+            headView=view;
             this.headerContainer.addView(view);
         }
     }

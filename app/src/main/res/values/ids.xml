@@ -103,4 +103,33 @@
     <item type="id" name="sale_start_date" />
     <item type="id" name="sale_end_date" />
     <item type="id" name="sale_pro_image" />
+    <!--账户信息-->
+    <item type="id" name="user_nick_layout" />
+    <item type="id" name="user_name_layout" />
+    <item type="id" name="user_phone_layout" />
+    <item type="id" name="user_email_layout" />
+    <item type="id" name="user_qq_layout" />
+    <item type="id" name="user_sina_layout" />
+    <item type="id" name="user_sex_layout" />
+    <item type="id" name="user_age_layout" />
+
+    <item type="id" name="user_account_label" />
+    <item type="id" name="user_nick_label" />
+    <item type="id" name="user_name_label" />
+    <item type="id" name="user_phone_label" />
+    <item type="id" name="user_email_label" />
+    <item type="id" name="user_qq_label" />
+    <item type="id" name="user_sina_label" />
+    <item type="id" name="user_sex_label" />
+    <item type="id" name="user_age_label" />
+
+    <item type="id" name="user_account_text" />
+    <item type="id" name="user_nick_text" />
+    <item type="id" name="user_name_text" />
+    <item type="id" name="user_phone_text" />
+    <item type="id" name="user_email_text" />
+    <item type="id" name="user_qq_text" />
+    <item type="id" name="user_sina_text" />
+    <item type="id" name="user_sex_text" />
+    <item type="id" name="user_age_text" />
 </resources>

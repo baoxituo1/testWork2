@@ -55,4 +55,6 @@
     <dimen name="add_sale_line_height">100dp</dimen>
     <dimen name="add_sale_line_sub_height">60dp</dimen>
 
+    <!--账号信息-->
+    <dimen name="user_edit_ioc_height_width">17dp</dimen>
 </resources>

@@ -118,4 +118,12 @@ public class DataUrlContents {
      * 读取所有商品的打折状态列表
      */
     public final  static String load_product_sale_detail="shopjson/loadShopProductSale.do";
+    /**
+     * 读取用户基础信息
+     */
+    public final  static String load_user_base="shopjson/loadUserBase.do";
+    /**
+     * 更新用户基础信息
+     */
+    public final  static String update_user_base="shopjson/updateUserBase.do";
 }

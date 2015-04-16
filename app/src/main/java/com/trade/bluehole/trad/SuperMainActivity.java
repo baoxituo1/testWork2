@@ -161,6 +161,7 @@ public class SuperMainActivity extends Activity {
     void onClickManageUserInfoBtn(){
         /*Intent intent=new Intent(this, AccountUserManageActivity.class);
         startActivity(intent);*/
+        mDrawerLayout.closeDrawers();
        AccountUserManageActivity_.intent(this).start();
     }
 
