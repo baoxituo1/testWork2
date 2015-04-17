@@ -16,6 +16,9 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnClickListener;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.trade.bluehole.trad.activity.actity.NewActivityShopActivity;
 import com.trade.bluehole.trad.activity.actity.NewActivityShopActivity_;
 import com.trade.bluehole.trad.activity.sale.SelectSaleProductActivity_;
@@ -37,7 +40,9 @@ import org.apache.http.Header;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 店铺打折动态
+ */
 @EActivity(R.layout.activity_dynamic_manage)
 public class DynamicManageActivity extends ActionBarActivity {
     AsyncHttpClient client = new AsyncHttpClient();
@@ -49,8 +54,9 @@ public class DynamicManageActivity extends ActionBarActivity {
 
     User user;
     List<DynaicInfoVO> lists=new ArrayList<DynaicInfoVO>();//活动数据集
-    ProductSaleDynamicAdapter adapter;
-
+    ProductSaleDynamicAdapter adapter;//适配器
+    DialogPlus confirmDialog;//确认操作
+    String tempProCode;//临时code
 
     @AfterViews
     void initData(){
@@ -68,9 +74,39 @@ public class DynamicManageActivity extends ActionBarActivity {
                 }
             }
         });
+        initDialog();
         loadData();//装载数据
     }
 
+    /**
+     * 删除弹出框按钮点击事件
+     */
+    OnClickListener delClickListener = new OnClickListener() {
+        @Override
+        public void onClick(DialogPlus dialog, View view) {
+            switch (view.getId()) {
+                case R.id.footer_confirm_button:
+                    //删除商品
+                    delSaleDynamic(tempProCode);
+                    break;
+                case R.id.footer_close_button:
+                    break;
+            }
+            dialog.dismiss();
+        }
+    };
+    /**
+     * 实例化弹出窗口
+     */
+    void initDialog(){
+        confirmDialog = new DialogPlus.Builder(this)
+                .setContentHolder(new ViewHolder(R.layout.dialog_confirm_content))
+                        //.setHeader(R.layout.dialog_label_header)
+                .setFooter(R.layout.dialog_footer)
+                .setGravity(DialogPlus.Gravity.BOTTOM)
+                .setOnClickListener(delClickListener)
+                .create();
+    }
 
     /**
      * 读取数据
@@ -106,6 +142,44 @@ public class DynamicManageActivity extends ActionBarActivity {
         });
     }
 
+    /**
+     * 展示删除动态的确认按钮
+     * @param proCode
+     */
+    public void showDelConfirm(String proCode){
+        tempProCode=proCode;
+        confirmDialog.show();
+    }
+
+
+    /**
+     * 删除动态
+     * @param proCode
+     */
+    void delSaleDynamic(String proCode){
+        RequestParams params=new RequestParams();
+        params.put("productCode",proCode);
+        params.put("salePrice", 0);
+        client.get(DataUrlContents.SERVER_HOST + DataUrlContents.update_product_sale_detail, params, new BaseJsonHttpResponseHandler<String>() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String obj) {
+                Log.d(LoginSystemActivity.class.getName(), statusCode + "");
+                if (null != obj) {
+                   loadData();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
+                Toast.makeText(DynamicManageActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            protected String parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                return gson.fromJson(rawJsonData, String.class);
+            }
+        });
+    }
 
 
     @Override

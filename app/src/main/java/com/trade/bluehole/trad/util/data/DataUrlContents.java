@@ -119,6 +119,10 @@ public class DataUrlContents {
      */
     public final  static String load_product_sale_detail="shopjson/loadShopProductSale.do";
     /**
+     * 更新打折信息
+     */
+    public final  static String update_product_sale_detail="shopjson/updateProductForSale.do";
+    /**
      * 读取用户基础信息
      */
     public final  static String load_user_base="shopjson/loadUserBase.do";

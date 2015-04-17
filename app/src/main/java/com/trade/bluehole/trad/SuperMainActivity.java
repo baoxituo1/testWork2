@@ -64,6 +64,8 @@ public class SuperMainActivity extends Activity {
     TextView all_pro_number,all_view_number,all_shop_collect_number,all_pro_collect_number,reg_shop_name,account;
     @ViewById
     CircleImageView shop_logo_image;//左侧边栏logo
+    @ViewById
+    LinearLayout main_left_home_layout,main_left_user_layout,main_left_cover_layout,main_left_message_layout;
 
 
 
@@ -153,6 +155,20 @@ public class SuperMainActivity extends Activity {
         DynamicManageActivity_.intent(this).start();
     }
 
+    /*****************
+     *               *
+     *  以下是侧边栏   *
+     *               *
+     *****************/
+
+    /**
+     * 点击返回主页管理
+     */
+    @Click(R.id.main_left_home_layout)
+    void onClickHomeBtn() {
+        //main_left_home_layout.setFocusable(true);
+        // main_left_home_layout.setFocusableInTouchMode(true);
+    }
 
     /**
      * 点击账号信息管理
@@ -161,8 +177,25 @@ public class SuperMainActivity extends Activity {
     void onClickManageUserInfoBtn(){
         /*Intent intent=new Intent(this, AccountUserManageActivity.class);
         startActivity(intent);*/
+        AccountUserManageActivity_.intent(this).start();
         mDrawerLayout.closeDrawers();
-       AccountUserManageActivity_.intent(this).start();
+       // main_left_user_layout.setFocusable(true);
+    }
+    /**
+     * 点击信息管理
+     */
+    @Click(R.id.main_left_message_layout)
+    void onClickMessageInfoBtn(){
+        //main_left_message_layout.setFocusable(true);
+    }
+    /**
+     * 点击商品分类管理
+     */
+    @Click(R.id.main_left_cover_layout)
+    void onClickCoverManageInfoBtn() {
+       // main_left_cover_layout.setFocusable(true);
+        //main_left_cover_layout.setFocusableInTouchMode(true);
+
     }
 
 

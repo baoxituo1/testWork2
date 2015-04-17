@@ -69,6 +69,7 @@
         <!--昵称-->
         <RelativeLayout
             android:id="@id/user_nick_layout"
+            android:background="@drawable/main_menu_layout"
             android:layout_marginTop="@dimen/n_padding_normal"
             android:layout_width="match_parent"
             android:padding="@dimen/n_padding_normal"
@@ -104,6 +105,7 @@
         <!--真实姓名-->
         <RelativeLayout
             android:id="@id/user_name_layout"
+            android:background="@drawable/main_menu_layout"
             android:layout_marginTop="@dimen/n_padding_normal"
             android:layout_width="match_parent"
             android:padding="@dimen/n_padding_normal"
@@ -169,6 +171,7 @@
         <!--手机号-->
         <RelativeLayout
             android:id="@id/user_phone_layout"
+            android:background="@drawable/main_menu_layout"
             android:layout_marginTop="@dimen/n_padding_normal_b"
             android:layout_width="match_parent"
             android:padding="@dimen/n_padding_normal"
@@ -204,6 +207,7 @@
         <!--邮箱-->
         <RelativeLayout
             android:id="@id/user_email_layout"
+            android:background="@drawable/main_menu_layout"
             android:layout_marginTop="@dimen/n_padding_normal"
             android:layout_width="match_parent"
             android:padding="@dimen/n_padding_normal"
@@ -239,6 +243,7 @@
         <!--QQ-->
         <RelativeLayout
             android:id="@id/user_qq_layout"
+            android:background="@drawable/main_menu_layout"
             android:layout_marginTop="@dimen/n_padding_normal"
             android:layout_width="match_parent"
             android:padding="@dimen/n_padding_normal"
@@ -274,6 +279,7 @@
         <!--新浪微博-->
         <RelativeLayout
             android:id="@id/user_sina_layout"
+            android:background="@drawable/main_menu_layout"
             android:layout_marginTop="@dimen/n_padding_normal"
             android:layout_width="match_parent"
             android:padding="@dimen/n_padding_normal"
@@ -338,6 +344,7 @@
         <!--性别-->
         <RelativeLayout
             android:id="@id/user_sex_layout"
+            android:background="@drawable/main_menu_layout"
             android:layout_marginTop="@dimen/n_padding_normal_b"
             android:layout_width="match_parent"
             android:padding="@dimen/n_padding_normal"
@@ -373,6 +380,7 @@
         <!--年龄-->
         <RelativeLayout
             android:id="@id/user_age_layout"
+            android:background="@drawable/main_menu_layout"
             android:layout_marginTop="@dimen/n_padding_normal"
             android:layout_width="match_parent"
             android:padding="@dimen/n_padding_normal"

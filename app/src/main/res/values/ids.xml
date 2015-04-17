@@ -67,7 +67,11 @@
     <item type="id" name="main_btn_manage_send" />
     <item type="id" name="main_btn_manage_sale" />
 
+    <!--left menu-->
+    <item type="id" name="main_left_home_layout" />
     <item type="id" name="main_left_user_layout" />
+    <item type="id" name="main_left_cover_layout" />
+    <item type="id" name="main_left_message_layout" />
     <item type="id" name="account" />
 
     <!--活动-->
@@ -91,6 +95,7 @@
     <item type="id" name="dy_old_price" />
     <item type="id" name="dy_sale_num" />
     <item type="id" name="dy_date" />
+    <item type="id" name="dy_del_data" />
     <!--选择促销商品-->
     <item type="id" name="sale_menu_done" />
     <item type="id" name="sale_image" />
@@ -132,4 +137,6 @@
     <item type="id" name="user_sina_text" />
     <item type="id" name="user_sex_text" />
     <item type="id" name="user_age_text" />
+
+
 </resources>

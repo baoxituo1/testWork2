@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -16,10 +17,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.trade.bluehole.trad.DynamicManageActivity;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.entity.dynamic.DynaicInfoVO;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +30,10 @@ import java.util.List;
  * Created by Administrator on 2015-04-13.
  */
 public class ProductSaleDynamicAdapter extends BaseAdapter {
-    private Context context;
+    private DynamicManageActivity context;
     LayoutInflater inflater;
     DisplayImageOptions options;
-
+    DecimalFormat df   = new DecimalFormat("######0.0");
     public List<DynaicInfoVO> getLists() {
         return lists;
     }
@@ -41,7 +44,7 @@ public class ProductSaleDynamicAdapter extends BaseAdapter {
 
     private List<DynaicInfoVO> lists = new ArrayList<DynaicInfoVO>();
 
-    public ProductSaleDynamicAdapter(Context ctx) {
+    public ProductSaleDynamicAdapter(DynamicManageActivity ctx) {
         context = ctx;
         inflater = LayoutInflater.from(context);
         options = new DisplayImageOptions.Builder()
@@ -74,7 +77,7 @@ public class ProductSaleDynamicAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         final HoldObject viewHolder;
-        DynaicInfoVO obj = lists.get(position);
+        final DynaicInfoVO obj = lists.get(position);
         if (null == view) {
             view = inflater.inflate(R.layout.i_dynamic_index_list_item, parent, false);
             viewHolder = new HoldObject();
@@ -85,6 +88,7 @@ public class ProductSaleDynamicAdapter extends BaseAdapter {
             viewHolder.dy_sale_num = (TextView) view.findViewById(R.id.dy_sale_num);
             viewHolder.dy_date = (TextView) view.findViewById(R.id.dy_date);
             viewHolder.progressBar = (ProgressBar) view.findViewById(R.id.progress);
+            viewHolder.dy_del_data = (RelativeLayout) view.findViewById(R.id.dy_del_data);
             view.setTag(viewHolder);
         } else {
             viewHolder = (HoldObject) convertView.getTag();
@@ -117,14 +121,22 @@ public class ProductSaleDynamicAdapter extends BaseAdapter {
             viewHolder.dy_price.setText("￥" + obj.getSalePrice());
             viewHolder.dy_old_price.setText("￥" + obj.getOldPrice());
             viewHolder.dy_old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//添加删除线
-            viewHolder.dy_sale_num.setText((obj.getSalePrice()/obj.getOldPrice())*10+" 折");
-            viewHolder.dy_date.setText(obj.getSaleStartDate()+" 至 "+obj.getSaleEndDate());
+            viewHolder.dy_sale_num.setText(df.format((obj.getSalePrice()/obj.getOldPrice())*10)+" 折");
+            viewHolder.dy_date.setText(obj.getSaleStartDate() + " 至 " + obj.getSaleEndDate());
+            //点击删除状态
+            viewHolder.dy_del_data.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.showDelConfirm(obj.getProductCode());
+                }
+            });
         }
         return view;
     }
 
     static class HoldObject {
         ProgressBar progressBar;
+        RelativeLayout dy_del_data;
         ImageView dy_image;
         TextView dy_name;
         TextView dy_price;

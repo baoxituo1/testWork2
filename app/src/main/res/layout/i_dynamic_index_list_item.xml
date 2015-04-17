@@ -121,6 +121,7 @@
         android:weightSum="3"
         android:layout_height="20dp">
         <RelativeLayout
+            android:id="@id/dy_del_data"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
