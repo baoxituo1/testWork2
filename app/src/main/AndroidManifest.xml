@@ -210,7 +210,12 @@
             android:name=".CoverManageActivity_"
             android:label="@string/title_activity_cover_manage"
             android:theme="@style/AppTheme3.TranslucentActionBar"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name=".activity.webview.WebViewActivity_"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_web_view" >
         </activity>
     </application>
 

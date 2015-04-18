@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,8 +26,11 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.trade.bluehole.trad.activity.user.AccountUserManageActivity_;
+import com.trade.bluehole.trad.activity.webview.WebViewActivity;
+import com.trade.bluehole.trad.activity.webview.WebViewActivity_;
 import com.trade.bluehole.trad.adaptor.main.MainNoticeAdapter;
 import com.trade.bluehole.trad.entity.User;
+import com.trade.bluehole.trad.entity.msg.IndexProCommentVO;
 import com.trade.bluehole.trad.entity.msg.IndexVO;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
@@ -39,6 +43,8 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -58,14 +64,15 @@ public class SuperMainActivity extends Activity {
     ShopCommonInfo shop;
     MainNoticeAdapter adapter;//站内通知适配器
     @ViewById
-    ListView listView;
+    ListView listView;//站内信和新闻公告
     @ViewById //商品数 浏览量 收藏量 商品收藏 店铺名 账号信息
     TextView all_pro_number,all_view_number,all_shop_collect_number,all_pro_collect_number,reg_shop_name,account;
     @ViewById
     CircleImageView shop_logo_image;//左侧边栏logo
     @ViewById
     LinearLayout main_left_home_layout,main_left_user_layout,main_left_message_layout;
-
+    //站内信集合列表
+    List<IndexProCommentVO> noticeList;
 
 
     @AfterViews
@@ -108,6 +115,16 @@ public class SuperMainActivity extends Activity {
             mDrawerToggle.syncState();
             //实例化adapter
             adapter=new MainNoticeAdapter(this,null);
+            //当站内信列表被点击
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent=WebViewActivity_.intent(SuperMainActivity.this).get();
+                    intent.putExtra(WebViewActivity.NOTICE_TYPE,noticeList.get(position).getState());
+                    intent.putExtra(WebViewActivity.NOTICE_CODE,noticeList.get(position).getMessAgeCode());
+                    startActivity(intent);
+                }
+            });
             //装载数据
             loadData();
         }else{
@@ -238,7 +255,8 @@ public class SuperMainActivity extends Activity {
                         all_pro_collect_number.setText(obj.getAllshopcollectNum()+"");
                     }
 
-                    adapter.setLists(obj.getMessAge());
+                    noticeList=obj.getMessAge();
+                    adapter.setLists(noticeList);
                     listView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }

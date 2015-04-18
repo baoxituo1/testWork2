@@ -130,4 +130,12 @@ public class DataUrlContents {
      * 更新用户基础信息
      */
     public final  static String update_user_base="shopjson/updateUserBase.do";
+    /**
+     *读取新闻信息通过webview
+     */
+    public final  static String load_notice_for_web_view="shopjson/showNotice.do?newCode=";
+    /**
+     *读取通知信息通过webview
+     */
+    public final  static String load_letter_for_web_view="shopjson/showLetter.do?letterCode=";
 }
