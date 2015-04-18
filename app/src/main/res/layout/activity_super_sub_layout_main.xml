@@ -26,9 +26,9 @@
                 android:paddingTop="5dp"
                 fancy:borderColor="#FFFFFF"
                 fancy:borderWidth="1dp"
-                fancy:defaultColor="@color/my_color_5"
+                fancy:defaultColor="@color/base_color_green_2"
                 fancy:focusColor="@color/darkslategray"
-                fancy:fontIconResource="@string/icon_tag"
+                fancy:fontIconResource="@string/icon_square_1"
                 fancy:iconPosition="left"
                 fancy:radius="3dp"
                 fancy:text="新增"
@@ -45,7 +45,7 @@
                 android:paddingTop="5dp"
                 fancy:borderColor="#FFFFFF"
                 fancy:borderWidth="1dp"
-                fancy:defaultColor="@color/my_color_5"
+                fancy:defaultColor="@color/base_color_green_2"
                 fancy:focusColor="@color/darkslategray"
                 fancy:fontIconResource="@string/icon_gou_wu_che"
                 fancy:iconPosition="left"
@@ -107,7 +107,7 @@
             android:weightSum="2"
             android:layout_height="@dimen/main_menu_layout_height">
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@id/main_btn_manage_send"
+                android:id="@id/main_btn_manage_cover"
                 android:layout_marginRight="@dimen/n_padding_normal"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -120,10 +120,10 @@
                 fancy:borderWidth="1dp"
                 fancy:defaultColor="@color/dodgerblue"
                 fancy:focusColor="@color/darkslategray"
-                fancy:fontIconResource="@string/icon_volume_up"
+                fancy:fontIconResource="@string/icon_tag"
                 fancy:iconPosition="left"
                 fancy:radius="3dp"
-                fancy:text="推送"
+                fancy:text="分类"
                 fancy:textColor="#FFFFFF" />
             <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@id/main_btn_manage_sale"

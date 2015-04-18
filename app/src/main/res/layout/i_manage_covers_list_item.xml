@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:padding="@dimen/n_padding_normal_s"
+    android:layout_width="match_parent"
+    android:weightSum="5"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_marginRight="16dp"
+        android:layout_width="@dimen/cover_manage_item_width_height"
+        android:layout_height="@dimen/cover_manage_item_width_height">
+
+        <ImageView
+            android:layout_width="@dimen/cover_manage_item_width_height"
+            android:layout_height="@dimen/cover_manage_item_width_height"
+            android:id="@+id/imageView"/>
+
+    </FrameLayout>
+    <LinearLayout
+        android:layout_weight="3"
+        android:orientation="vertical"
+        android:weightSum="5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:textColor="@color/eggplant"
+            android:textSize="@dimen/button_text_size"
+            android:text="类别名称"
+            android:gravity="center_vertical"
+            android:id="@+id/textView"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/small_text_size"
+            android:text="商品数量 0 件"
+            android:id="@id/pro_number"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@id/btn_cover_layout"
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:weightSum="2"
+        android:visibility="visible"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@id/main_cover_item_edit"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="@dimen/user_edit_ioc_height_width"
+                android:src="@drawable/modify_pencil"
+                android:layout_height="@dimen/user_edit_ioc_height_width" />
+        </LinearLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_marginTop="@dimen/n_padding_normal_b"
+            android:layout_marginBottom="@dimen/n_padding_normal_b"
+            android:layout_marginLeft="@dimen/n_padding_normal_s"
+            android:layout_marginRight="@dimen/n_padding_normal_s"
+            android:background="@color/gray"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:id="@id/main_cover_item_del"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="@dimen/user_edit_ioc_height_width"
+                android:src="@drawable/delete_bin"
+                android:layout_height="@dimen/user_edit_ioc_height_width" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

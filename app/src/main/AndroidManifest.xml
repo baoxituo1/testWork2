@@ -203,8 +203,14 @@
         </activity>
         <activity
             android:name=".activity.user.AccountUserManageActivity_"
+            android:label="@string/title_activity_account_user_manage"
+            android:theme="@style/AppTheme3.TranslucentActionBar" >
+        </activity>
+        <activity
+            android:name=".CoverManageActivity_"
+            android:label="@string/title_activity_cover_manage"
             android:theme="@style/AppTheme3.TranslucentActionBar"
-            android:label="@string/title_activity_account_user_manage" >
+            android:windowSoftInputMode="adjustResize|stateHidden">
         </activity>
     </application>
 

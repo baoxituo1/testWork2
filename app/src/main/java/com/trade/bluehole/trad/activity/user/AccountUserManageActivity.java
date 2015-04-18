@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -25,12 +23,9 @@ import com.orhanobut.dialogplus.OnClickListener;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.UserBase;
-import com.trade.bluehole.trad.entity.pro.ProductCoverRelVO;
-import com.trade.bluehole.trad.entity.pro.ShopCoverType;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
-import com.trade.bluehole.trad.util.Result;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.trade.bluehole.trad.util.view.MyViewHold;
 
@@ -84,7 +79,7 @@ public class AccountUserManageActivity  extends ActionBarActivity {
         //自动收缩actionbar
         FadingActionBarHelper helper = new FadingActionBarHelper()
                 .actionBarBackground(R.drawable.ab_background)
-                .headerLayout(R.layout.header)
+                .headerLayout(R.layout.action_bar_user_header)
                 .contentLayout(R.layout.activity_account_user_manage);
         setContentView(helper.createView(this));
         helper.initActionBar(this);

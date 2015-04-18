@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
-        <!--我的商品类别-->
+        <!--&lt;!&ndash;我的商品类别&ndash;&gt;
         <LinearLayout
             android:id="@id/main_left_cover_layout"
             android:layout_width="match_parent"
@@ -135,7 +135,7 @@
                     android:text="@string/main_user_cover_type"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-        </LinearLayout>
+        </LinearLayout>-->
         <!--消息-->
         <LinearLayout
             android:id="@id/main_left_message_layout"

@@ -24,7 +24,6 @@ import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.trade.bluehole.trad.activity.user.AccountUserManageActivity;
 import com.trade.bluehole.trad.activity.user.AccountUserManageActivity_;
 import com.trade.bluehole.trad.adaptor.main.MainNoticeAdapter;
 import com.trade.bluehole.trad.entity.User;
@@ -65,7 +64,7 @@ public class SuperMainActivity extends Activity {
     @ViewById
     CircleImageView shop_logo_image;//左侧边栏logo
     @ViewById
-    LinearLayout main_left_home_layout,main_left_user_layout,main_left_cover_layout,main_left_message_layout;
+    LinearLayout main_left_home_layout,main_left_user_layout,main_left_message_layout;
 
 
 
@@ -154,6 +153,15 @@ public class SuperMainActivity extends Activity {
     void onClickManageDynamicBtn(){
         DynamicManageActivity_.intent(this).start();
     }
+    /**
+     * 点击分类管理
+     */
+    @Click(R.id.main_btn_manage_cover)
+    void onClickManageCoverBtn(){
+       // Intent intent=new Intent(this,CoverManageActivity.class);
+        CoverManageActivity_.intent(this).start();
+       // startActivity(intent);
+    }
 
     /*****************
      *               *
@@ -190,13 +198,13 @@ public class SuperMainActivity extends Activity {
     }
     /**
      * 点击商品分类管理
-     */
+     *//*
     @Click(R.id.main_left_cover_layout)
     void onClickCoverManageInfoBtn() {
        // main_left_cover_layout.setFocusable(true);
         //main_left_cover_layout.setFocusableInTouchMode(true);
 
-    }
+    }*/
 
 
     /**

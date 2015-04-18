@@ -15,6 +15,18 @@
     <color name="secondary">#B71C1C</color>
     <color name="overlay_light">#F8F8F8</color>
 
+    <!--基础色 蓝 紫色 绿色 橙色 红色-->
+    <color name="base_color_blue_1">#33B5E5</color>
+    <color name="base_color_blue_2">#0099CC</color>
+    <color name="base_color_purple_1">#AA66CC</color>
+    <color name="base_color_purple_2">#9933CC</color>
+    <color name="base_color_green_1">#99CC00</color>
+    <color name="base_color_green_2">#669900</color>
+    <color name="base_color_orange_1">#FFBB33</color>
+    <color name="base_color_orange_2">#FF8800</color>
+    <color name="base_color_red_1">#FF4444</color>
+    <color name="base_color_red_2">#CC0000</color>
+
     <!-- CREATE A COLOR ARRAY IN COLORS XML -->
     <color name="custom_theme_darker">#ad843d</color>
     <color name="custom_theme_dark">#d4a14a</color>
