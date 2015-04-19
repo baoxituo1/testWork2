@@ -11,14 +11,14 @@
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
-            android:text="*添加商品分类,可以方便顾客更好的进行筛选."
+            android:text="*添加分类,以便顾客更好的筛选"
             android:textColor="@color/white"
             android:layout_height="wrap_content" />
         <TextView
             android:layout_marginTop="@dimen/n_padding_normal_h"
             android:layout_width="wrap_content"
             android:textColor="@color/white"
-            android:text="*删除分类,分类下商品不会被删除."
+            android:text="*删除分类,商品不会被删除"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <View

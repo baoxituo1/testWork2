@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/msg_notice_layout"
+    android:orientation="horizontal"
+    android:padding="@dimen/n_padding_normal_s"
+    android:layout_width="match_parent"
+    android:weightSum="5"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_marginRight="16dp"
+        android:layout_width="@dimen/message_item_width_height"
+        android:layout_height="@dimen/message_item_width_height">
+
+        <ImageView
+            android:layout_width="@dimen/message_item_width_height"
+            android:layout_height="@dimen/message_item_width_height"
+            android:id="@+id/imageView"/>
+
+    </FrameLayout>
+    <LinearLayout
+        android:layout_weight="5"
+        android:orientation="vertical"
+        android:weightSum="5"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:textColor="@color/eggplant"
+            android:textSize="@dimen/button_text_size"
+            android:text=""
+            android:gravity="center_vertical"
+            android:id="@+id/textView"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/small_text_size"
+            android:text=""
+            android:id="@+id/create_date"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -214,8 +214,16 @@
         </activity>
         <activity
             android:name=".activity.webview.WebViewActivity_"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_web_view" >
+            android:label="@string/title_activity_web_view"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activity.msg.MessageAllActivity_"
+            android:label="@string/title_activity_message_all" >
+        </activity>
+        <activity
+            android:name=".activity.msg.MessagePageviewActivity_"
+            android:label="@string/title_activity_message_pageview" >
         </activity>
     </application>
 

@@ -25,6 +25,8 @@ import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.trade.bluehole.trad.activity.msg.MessageAllActivity_;
+import com.trade.bluehole.trad.activity.msg.MessagePageviewActivity_;
 import com.trade.bluehole.trad.activity.user.AccountUserManageActivity_;
 import com.trade.bluehole.trad.activity.webview.WebViewActivity;
 import com.trade.bluehole.trad.activity.webview.WebViewActivity_;
@@ -211,7 +213,8 @@ public class SuperMainActivity extends Activity {
      */
     @Click(R.id.main_left_message_layout)
     void onClickMessageInfoBtn(){
-        //main_left_message_layout.setFocusable(true);
+       /// MessageAllActivity_.intent(this).start();
+        MessagePageviewActivity_.intent(this).start();
     }
     /**
      * 点击商品分类管理

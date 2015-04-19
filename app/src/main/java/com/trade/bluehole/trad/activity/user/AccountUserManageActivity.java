@@ -394,7 +394,6 @@ public class AccountUserManageActivity  extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Toast.makeText(AccountUserManageActivity.this, "后退按钮点击:"+android.R.id.home, Toast.LENGTH_SHORT).show();
         if (id == R.id.action_settings) {
             return true;
         }else if(id==android.R.id.home){

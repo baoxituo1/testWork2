@@ -1,0 +1,14 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/n_padding_normal_s"
+    android:paddingRight="@dimen/n_padding_normal_s"
+    android:paddingTop="@dimen/n_padding_normal_s"
+    android:paddingBottom="@dimen/n_padding_normal_s"
+    tools:context="com.trade.bluehole.trad.activity.msg.MessagePageviewActivity">
+
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@id/msg_page_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

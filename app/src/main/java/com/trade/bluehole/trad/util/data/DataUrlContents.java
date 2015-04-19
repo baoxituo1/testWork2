@@ -138,4 +138,12 @@ public class DataUrlContents {
      *读取通知信息通过webview
      */
     public final  static String load_letter_for_web_view="shopjson/showLetter.do?letterCode=";
+    /**
+     *读取新闻列表
+     */
+    public final  static String load_news_all_list="shopjson/loadNoticeList.do";
+    /**
+     *读取通知详细列表
+     */
+    public final  static String load_letter_all_list="shopjson/loadLetterList.do";
 }

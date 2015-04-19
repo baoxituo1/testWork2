@@ -140,4 +140,8 @@
 
     <!--分类管理-->
     <item type="id" name="menu_add_cover" />
+    <!--消息列表-->
+    <item type="id" name="msg_page_view" />
+    <item type="id" name="msg_notice_layout" />
+    <item type="id" name="msg_letter_layout" />
 </resources>
