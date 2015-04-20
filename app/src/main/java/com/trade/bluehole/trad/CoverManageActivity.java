@@ -19,6 +19,7 @@ import com.loopj.android.http.RequestParams;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.adaptor.cover.CoverManageListAdapter;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.pro.ProductCoverRelVO;
@@ -43,15 +44,13 @@ import java.util.List;
  */
 
 @EActivity
-public class CoverManageActivity extends ActionBarActivity {
+public class CoverManageActivity extends BaseActionBarActivity {
     @App
     MyApplication myApplication;
     ListView listview;
     @ViewById
     RelativeLayout empty_view;
     CoverManageListAdapter adapter;//商品分类适配器
-    AsyncHttpClient client = new AsyncHttpClient();
-    Gson gson = new Gson();
     ShopCommonInfo shop;
     User user;
     List<ProductCoverRelVO> coverList = new ArrayList<ProductCoverRelVO>();
@@ -196,7 +195,7 @@ public class CoverManageActivity extends ActionBarActivity {
             params.put("userCode", user.getUserCode());
             params.put("shopCode", user.getShopCode());
             params.put("pageSize", 500);
-            client.get(DataUrlContents.SERVER_HOST + DataUrlContents.load_pro_covers_number_list, params, new BaseJsonHttpResponseHandler<Result<ProductCoverRelVO, String>>() {
+            getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.load_pro_covers_number_list, params, new BaseJsonHttpResponseHandler<Result<ProductCoverRelVO, String>>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ProductCoverRelVO, String> response) {
@@ -244,7 +243,7 @@ public class CoverManageActivity extends ActionBarActivity {
             if(null!=coverTypeCode){
                 params.put("coverTypeCode", coverTypeCode);
             }
-            client.get(DataUrlContents.SERVER_HOST + DataUrlContents.save_shop_cover, params, new BaseJsonHttpResponseHandler<Result<ShopCoverType, String>>() {
+            getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.save_shop_cover, params, new BaseJsonHttpResponseHandler<Result<ShopCoverType, String>>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ShopCoverType, String> response) {

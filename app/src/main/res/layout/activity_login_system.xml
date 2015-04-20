@@ -52,7 +52,7 @@
                 android:layout_marginLeft="@dimen/n_padding_normal_b"
                 android:drawableBottom="@color/white"
                 android:background="@drawable/rounded_edittext"
-                android:text="15910795576"
+                android:text="baoxituo1"
                 android:gravity="center_vertical"
                 android:singleLine="true" />
         </LinearLayout>
@@ -83,7 +83,7 @@
                 android:background="@drawable/rounded_edittext"
                 android:gravity="center_vertical"
                 android:password="true"
-                android:text="1234"
+                android:text="123456"
                 android:singleLine="true" />
         </LinearLayout>
     </LinearLayout>

@@ -44,6 +44,7 @@ import com.trade.bluehole.trad.MainActivity_;
 import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.RegisterManageActivity;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.shop.ShopLocationActivity;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.Shop;
@@ -68,7 +69,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 @EActivity(R.layout.activity_register_shop_create)
-public class RegisterShopCreateActivity extends ActionBarActivity implements OnGetGeoCoderResultListener {
+public class RegisterShopCreateActivity extends BaseActionBarActivity implements OnGetGeoCoderResultListener {
 
    /* @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +85,6 @@ public class RegisterShopCreateActivity extends ActionBarActivity implements OnG
 
 
 
-    //json 转换
-    Gson gson = new Gson();
-    //网络请求
-    AsyncHttpClient client = new AsyncHttpClient();
 
     @Extra(RegisterStep2Activity.user_phone_number)
     String phoneNumber;
@@ -254,7 +251,7 @@ public class RegisterShopCreateActivity extends ActionBarActivity implements OnG
                 if(null!=shopLogoImage&&!"".equals(shopLogoImage)){
                     params.put("shopLogo",  shopLogoImage);
                 }
-             client.post(DataUrlContents.SERVER_HOST+DataUrlContents.add_user_shop, params, new BaseJsonHttpResponseHandler<Result<User, Shop>>() {
+             getClient().post(DataUrlContents.SERVER_HOST+DataUrlContents.add_user_shop, params, new BaseJsonHttpResponseHandler<Result<User, Shop>>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<User, Shop> response) {
@@ -292,7 +289,7 @@ public class RegisterShopCreateActivity extends ActionBarActivity implements OnG
         RequestParams params=new RequestParams();
         params.put("account",phoneNumber);
         params.put("password", passWord);
-        client.get(DataUrlContents.SERVER_HOST+DataUrlContents.user_login, params, new BaseJsonHttpResponseHandler<Result<User, ShopCommonInfo>>() {
+        getClient().get(DataUrlContents.SERVER_HOST+DataUrlContents.user_login, params, new BaseJsonHttpResponseHandler<Result<User, ShopCommonInfo>>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<User, ShopCommonInfo> response) {
                 Log.d(RegisterShopCreateActivity.class.getName(), statusCode + "");

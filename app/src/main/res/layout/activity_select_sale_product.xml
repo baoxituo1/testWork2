@@ -3,7 +3,33 @@
     android:layout_height="match_parent"
     android:background="@color/gainsboro"
     tools:context="com.trade.bluehole.trad.activity.sale.SelectSaleProductActivity">
-
+    <!--无数据视图-->
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:id="@id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pro_list_height">
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@id/no_item_add"
+                android:src="@drawable/new_add_2"
+                android:scaleType="fitCenter"
+                android:layout_width="@dimen/pro_list_empty_width_height"
+                android:layout_height="@dimen/pro_list_empty_width_height" />
+            <TextView
+                android:id="@id/no_item_text"
+                android:layout_marginLeft="@dimen/n_padding_normal_h"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/button_text_size"
+                android:text="还没有商品,先去添加商品吧~"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"

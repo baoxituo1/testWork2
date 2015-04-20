@@ -9,13 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_register_step_pwd)
-public class RegisterStepPwdActivity extends ActionBarActivity {
+public class RegisterStepPwdActivity extends BaseActionBarActivity {
 
    /* @Override
     protected void onCreate(Bundle savedInstanceState) {

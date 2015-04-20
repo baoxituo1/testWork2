@@ -28,6 +28,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.soundcloud.android.crop.Crop;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.shop.ShopAddressConfigActivity;
 import com.trade.bluehole.trad.activity.shop.ShopAddressConfigActivity_;
 import com.trade.bluehole.trad.activity.shop.ShopGroundConfigActivity;
@@ -67,12 +68,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * 店铺设置
  */
 @EActivity(R.layout.activity_shop_config)
-public class ShopConfigActivity extends ActionBarActivity {
+public class ShopConfigActivity extends BaseActionBarActivity {
     public OSSBucket sampleBucket;
-    //json 转换
-    Gson gson = new Gson();
-    //网络请求
-    AsyncHttpClient client = new AsyncHttpClient();
     //店铺信息
     String shopLogoFleName=null;
     ShopCommonInfo shopInfo=null;
@@ -139,7 +136,7 @@ public class ShopConfigActivity extends ActionBarActivity {
     void loadServerData(){
         RequestParams params=new RequestParams();
         params.put("userCode", user.getUserCode());
-        client.get(DataUrlContents.SERVER_HOST+DataUrlContents.load_user_shop_info, params, new BaseJsonHttpResponseHandler<ShopCommonInfo>() {
+        getClient().get(DataUrlContents.SERVER_HOST+DataUrlContents.load_user_shop_info, params, new BaseJsonHttpResponseHandler<ShopCommonInfo>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, ShopCommonInfo response) {
@@ -351,7 +348,7 @@ public class ShopConfigActivity extends ActionBarActivity {
                 params.put("slogan", obj.getSlogan());
             }
         }
-        client.post(DataUrlContents.SERVER_HOST+DataUrlContents.update_shop_config, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().post(DataUrlContents.SERVER_HOST+DataUrlContents.update_shop_config, params, new BaseJsonHttpResponseHandler<String>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {

@@ -27,6 +27,7 @@ import com.loopj.android.http.RequestParams;
 import com.soundcloud.android.crop.Crop;
 import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
@@ -47,16 +48,12 @@ import java.util.UUID;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 @EActivity(R.layout.activity_shop_ground_config)
-public class ShopGroundConfigActivity extends ActionBarActivity {
+public class ShopGroundConfigActivity extends BaseActionBarActivity {
     //商品和店铺编码标志
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String SHOP_GROUND_EXTRA = "shopBackGround";
     public static final String SHOP_USER_EXTRA = "userCode";
     public OSSBucket sampleBucket;
-    //json 转换
-    Gson gson = new Gson();
-    //网络请求
-    AsyncHttpClient client = new AsyncHttpClient();
     //页面进度条
     SweetAlertDialog pDialog;
 
@@ -236,7 +233,7 @@ public class ShopGroundConfigActivity extends ActionBarActivity {
                 params.put("shopBackground", fileName);
             }
         }
-        client.post(DataUrlContents.SERVER_HOST+DataUrlContents.update_shop_config, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().post(DataUrlContents.SERVER_HOST+DataUrlContents.update_shop_config, params, new BaseJsonHttpResponseHandler<String>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {

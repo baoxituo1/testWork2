@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.trade.bluehole.trad.DynamicManageActivity_;
 import com.trade.bluehole.trad.LoginSystemActivity;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.entity.sale.ProductSaleVO;
 import com.trade.bluehole.trad.util.DateProcess;
 import com.trade.bluehole.trad.util.ImageManager;
@@ -35,7 +36,7 @@ import org.apache.http.Header;
 import java.util.Calendar;
 
 @EActivity(R.layout.activity_add_product_sale)
-public class AddProductSaleActivity extends ActionBarActivity implements DatePickerDialog.OnDateSetListener {
+public class AddProductSaleActivity extends BaseActionBarActivity implements DatePickerDialog.OnDateSetListener {
     public static final String DATEPICKER_START_TAG = "start_date";
     public static final String DATEPICKER_END_TAG = "end_date";
     public static final String PRO_SALE_IMAGE = "proImage";
@@ -46,8 +47,6 @@ public class AddProductSaleActivity extends ActionBarActivity implements DatePic
     DatePickerDialog datePickerDialog=null;
     DatePickerDialog endDatePickerDialog=null;
 
-    AsyncHttpClient client = new AsyncHttpClient();
-    Gson gson = new Gson();
 
     @ViewById
     ImageView sale_pro_image;
@@ -125,7 +124,7 @@ public class AddProductSaleActivity extends ActionBarActivity implements DatePic
         params.put("salePrice",price);
         params.put("startDate",sale_start_date.getText().toString());
         params.put("endDate", sale_end_date.getText().toString());
-        client.get(DataUrlContents.SERVER_HOST + DataUrlContents.update_product_sale_detail, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.update_product_sale_detail, params, new BaseJsonHttpResponseHandler<String>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String obj) {
                 if (null != obj) {

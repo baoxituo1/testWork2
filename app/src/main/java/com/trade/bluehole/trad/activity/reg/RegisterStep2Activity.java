@@ -20,6 +20,7 @@ import com.loopj.android.http.RequestParams;
 import com.trade.bluehole.trad.LoginSystemActivity_;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.RegisterManageActivity;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.entity.JsonResult;
 import com.trade.bluehole.trad.util.RegisterCodeTimer;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
@@ -35,16 +36,14 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 @EActivity(R.layout.activity_register_step2)
-public class RegisterStep2Activity extends ActionBarActivity {
+public class RegisterStep2Activity extends BaseActionBarActivity {
 
     public final static String user_phone_number="userPhoneNumber";
     public final static String user_yzm_number="userYzmNumber";
     public final static String user_pwd_number="userPwdNumber";
 
-    Gson gson = new Gson();
     //弹出框
     SweetAlertDialog pDialog;
-    AsyncHttpClient client = new AsyncHttpClient();
    /*  @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +121,7 @@ public class RegisterStep2Activity extends ActionBarActivity {
     void sendYzm(String phoneCode){
         RequestParams params=new RequestParams();
         params.put("phoneCode", phoneCode);
-        client.get(DataUrlContents.SERVER_HOST+DataUrlContents.send_phone_yzm, params, new BaseJsonHttpResponseHandler<JsonResult>() {
+        getClient().get(DataUrlContents.SERVER_HOST+DataUrlContents.send_phone_yzm, params, new BaseJsonHttpResponseHandler<JsonResult>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, JsonResult response) {
                 if (null != response) {

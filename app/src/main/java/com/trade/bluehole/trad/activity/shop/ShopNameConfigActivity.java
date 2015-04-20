@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -16,7 +17,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_shop_name_config)
-public class ShopNameConfigActivity extends ActionBarActivity {
+public class ShopNameConfigActivity extends BaseActionBarActivity {
     //商品和店铺编码标志
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String SHOP_NAME_EXTRA = "shopName";

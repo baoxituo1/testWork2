@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -18,7 +19,10 @@ import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.trade.bluehole.trad.DynamicManageActivity;
 import com.trade.bluehole.trad.LoginSystemActivity;
+import com.trade.bluehole.trad.NewProductActivity;
+import com.trade.bluehole.trad.NewProductActivity_;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.actity.NewActivityShopActivity;
 import com.trade.bluehole.trad.activity.actity.NewActivityShopActivity_;
 import com.trade.bluehole.trad.adaptor.dynamic.ProductSaleDynamicAdapter;
@@ -32,6 +36,7 @@ import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
@@ -40,14 +45,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EActivity(R.layout.activity_select_sale_product)
-public class SelectSaleProductActivity extends ActionBarActivity {
+public class SelectSaleProductActivity extends BaseActionBarActivity {
 
-    AsyncHttpClient client = new AsyncHttpClient();
-    Gson gson = new Gson();
     @App
     MyApplication myApplication;
     @ViewById
     ListView listView;
+    @ViewById
+    RelativeLayout empty_view;
 
     User user;
     List<ProductSaleVO> lists=new ArrayList<>();//活动数据集
@@ -58,6 +63,7 @@ public class SelectSaleProductActivity extends ActionBarActivity {
     void initData(){
         user=myApplication.getUser();//获取用户数据
         adapter=new SelectProductSaleAdapter(this);
+        listView.setEmptyView(empty_view);
         //list 点击事件
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -80,13 +86,23 @@ public class SelectSaleProductActivity extends ActionBarActivity {
 
 
     /**
+     * 没有商品可选择，先添加商品
+     */
+    @Click(R.id.empty_view)
+    void onClickAddPro(){
+        Intent intent= NewProductActivity_.intent(this).get();
+        intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA,user.getShopCode());
+        startActivity(intent);
+    }
+
+    /**
      * 读取数据
      */
     private void loadData(){
         RequestParams params=new RequestParams();
         params.put("shopCode",user.getShopCode());
         params.put("pageSize", 500);
-        client.get(DataUrlContents.SERVER_HOST + DataUrlContents.load_product_sale_detail, params, new BaseJsonHttpResponseHandler<Result<ProductSaleVO,String>>() {
+        getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.load_product_sale_detail, params, new BaseJsonHttpResponseHandler<Result<ProductSaleVO, String>>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ProductSaleVO, String> obj) {
                 Log.d(LoginSystemActivity.class.getName(), statusCode + "");

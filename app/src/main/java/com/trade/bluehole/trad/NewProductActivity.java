@@ -43,6 +43,7 @@ import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
 
 import com.aliyun.mbaas.oss.storage.OSSBucket;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.photo.ImageDirActivity;
 import com.trade.bluehole.trad.adaptor.pro.ProductCoverAdapter;
 import com.trade.bluehole.trad.adaptor.photo.MainAdapter;
@@ -70,7 +71,7 @@ import java.util.UUID;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 @EActivity(R.layout.activity_product_add)
-public class NewProductActivity extends ActionBarActivity {
+public class NewProductActivity extends BaseActionBarActivity {
     //商品和店铺编码标志
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String PRODUCT_CODE_EXTRA = "productCode";
@@ -90,9 +91,7 @@ public class NewProductActivity extends ActionBarActivity {
     String wait_to_addImages="";
     @App
     MyApplication myapplication;
-    Gson gson = new Gson();
     User user=null;
-    AsyncHttpClient client = new AsyncHttpClient();
     static final String accessKey = "ictZeAtTIlkEXGta"; // 测试代码没有考虑AK/SK的安全性
     static final String screctKey = "8CQkQa7IytCb73hvk12EUazS0hUPw2";
     public OSSBucket sampleBucket;
@@ -477,7 +476,7 @@ public class NewProductActivity extends ActionBarActivity {
         params.put("productNumber",product_number.getText());
         params.put("imageUrls",imageUrls);
         Log.e("NewProductActivity", "imageUrls:" + imageUrls);
-        client.post(DataUrlContents.SERVER_HOST + methodName, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().post(DataUrlContents.SERVER_HOST + methodName, params, new BaseJsonHttpResponseHandler<String>() {
 
 
             @Override
@@ -509,7 +508,7 @@ public class NewProductActivity extends ActionBarActivity {
         params.put("productCode",proCode);
         params.put("shopCode",shopCode);
         Log.e("NewProductActivity", "imageUrls:" + imageUrls);
-        client.get(DataUrlContents.SERVER_HOST + DataUrlContents.load_pro_info, params, new BaseJsonHttpResponseHandler<ProductResultVO>() {
+        getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.load_pro_info, params, new BaseJsonHttpResponseHandler<ProductResultVO>() {
 
 
             @Override
@@ -543,7 +542,7 @@ public class NewProductActivity extends ActionBarActivity {
         if("2".equals(type)){//删除操作
             methodName=DataUrlContents.del_product_bycode;
         }
-        client.get(DataUrlContents.SERVER_HOST +methodName, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().get(DataUrlContents.SERVER_HOST +methodName, params, new BaseJsonHttpResponseHandler<String>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
                 Log.d(NewProductActivity.class.getName(), response.toString());

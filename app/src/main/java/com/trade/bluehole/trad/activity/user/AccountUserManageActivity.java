@@ -21,6 +21,7 @@ import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarH
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.UserBase;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
@@ -39,7 +40,7 @@ import org.apache.http.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 @EActivity
-public class AccountUserManageActivity  extends ActionBarActivity {
+public class AccountUserManageActivity  extends BaseActionBarActivity {
 
     @ViewById
     CircleImageView shop_logo_image;
@@ -50,8 +51,6 @@ public class AccountUserManageActivity  extends ActionBarActivity {
     @ViewById
     RelativeLayout user_nick_layout,user_name_layout,user_phone_layout,user_email_layout,user_qq_layout,user_sina_layout,user_sex_layout,user_age_layout;
 
-    AsyncHttpClient client = new AsyncHttpClient();
-    Gson gson = new Gson();
     @App
     MyApplication myApplication;
     User user;
@@ -255,7 +254,7 @@ public class AccountUserManageActivity  extends ActionBarActivity {
     private void loadData(){
         RequestParams params=new RequestParams();
         params.put("userCode", user.getUserCode());
-        client.get(DataUrlContents.SERVER_HOST + DataUrlContents.load_user_base, params, new BaseJsonHttpResponseHandler<UserBase>() {
+        getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.load_user_base, params, new BaseJsonHttpResponseHandler<UserBase>() {
 
 
             @Override
@@ -358,7 +357,7 @@ public class AccountUserManageActivity  extends ActionBarActivity {
                 params.put("age", val);
             }
 
-            client.get(DataUrlContents.SERVER_HOST + DataUrlContents.update_user_base, params, new BaseJsonHttpResponseHandler<UserBase>() {
+            getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.update_user_base, params, new BaseJsonHttpResponseHandler<UserBase>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, UserBase response) {

@@ -25,14 +25,13 @@
                 android:layout_marginLeft="@dimen/n_padding_normal_h"
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/button_text_size"
-                android:text="还没有分类,现在添加~"
+                android:text="还没有活动,现在添加~"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </RelativeLayout>
     <ListView
         android:id="@android:id/list"
         android:cacheColorHint="@android:color/transparent"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>

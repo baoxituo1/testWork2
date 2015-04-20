@@ -36,6 +36,7 @@ import com.trade.bluehole.trad.ActivityManageActivity;
 import com.trade.bluehole.trad.ActivityManageActivity_;
 import com.trade.bluehole.trad.LoginSystemActivity;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.entity.actity.ShopActivity;
 import com.trade.bluehole.trad.entity.actity.ShopActivityBase;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
@@ -60,7 +61,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 @EActivity(R.layout.activity_new_activity_shop)
-public class NewActivityShopActivity extends ActionBarActivity {
+public class NewActivityShopActivity extends BaseActionBarActivity {
 
         //商品和店铺编码标志
         public static final String SHOP_CODE_EXTRA = "shopCode";
@@ -83,10 +84,6 @@ public class NewActivityShopActivity extends ActionBarActivity {
 
         private ShopCommonInfo shop;
 
-        //json 转换
-        Gson gson = new Gson();
-        //网络请求
-        AsyncHttpClient client = new AsyncHttpClient();
         //页面进度条
         SweetAlertDialog pDialog;
         //图片名称
@@ -316,7 +313,7 @@ public class NewActivityShopActivity extends ActionBarActivity {
                 params.put("shopBackground", fileName);
             }
         }
-        client.post(DataUrlContents.SERVER_HOST + DataUrlContents.save_or_update_activity, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().post(DataUrlContents.SERVER_HOST + DataUrlContents.save_or_update_activity, params, new BaseJsonHttpResponseHandler<String>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
@@ -352,7 +349,7 @@ public class NewActivityShopActivity extends ActionBarActivity {
     private void loadDetailData(){
         RequestParams params=new RequestParams();
         params.put("activityCode",activityCode);
-        client.get(DataUrlContents.SERVER_HOST + DataUrlContents.load_activity_detail, params, new BaseJsonHttpResponseHandler<ShopActivityBase>() {
+        getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.load_activity_detail, params, new BaseJsonHttpResponseHandler<ShopActivityBase>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, ShopActivityBase obj) {
                 Log.d(LoginSystemActivity.class.getName(), statusCode + "");
@@ -400,7 +397,7 @@ public class NewActivityShopActivity extends ActionBarActivity {
         if("del".equals(type)){
             method=DataUrlContents.delete_activity;
         }
-        client.get(DataUrlContents.SERVER_HOST + method, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().get(DataUrlContents.SERVER_HOST + method, params, new BaseJsonHttpResponseHandler<String>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String obj) {
                 Log.d(LoginSystemActivity.class.getName(), statusCode + "");

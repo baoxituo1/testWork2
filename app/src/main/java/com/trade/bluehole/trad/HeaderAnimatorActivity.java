@@ -3,17 +3,11 @@ package com.trade.bluehole.trad;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -21,14 +15,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.soundcloud.android.crop.Crop;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity;
 import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity_;
 import com.trade.bluehole.trad.adaptor.pro.ProductCoverNumberAdapter;
@@ -64,7 +57,7 @@ import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 @EActivity(R.layout.activity_header_animator)
-public class HeaderAnimatorActivity extends ActionBarActivity {
+public class HeaderAnimatorActivity extends BaseActionBarActivity {
 
     @ViewById(R.id.listview)
     ListView listview;
@@ -84,8 +77,6 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
     MyApplication myApplication;
     ProductListViewAdaptor adaptor;
     ProductCoverNumberAdapter coverNumberAdapter;
-    AsyncHttpClient client = new AsyncHttpClient();
-    Gson gson = new Gson();
     List<ProductIndexVO> mList = new ArrayList<ProductIndexVO>();
     List<ProductCoverRelVO> coverList = new ArrayList<ProductCoverRelVO>();
     //页面进度条
@@ -463,7 +454,7 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
             params.put("userCode", user.getUserCode());
             params.put("type", searchType);
             params.put("pageSize", 500);
-            client.get(DataUrlContents.SERVER_HOST + DataUrlContents.load_pro_all_list, params, new BaseJsonHttpResponseHandler<Result<ProductIndexVO, String>>() {
+            getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.load_pro_all_list, params, new BaseJsonHttpResponseHandler<Result<ProductIndexVO, String>>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ProductIndexVO, String> response) {
@@ -512,7 +503,7 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
             params.put("shopCode", user.getShopCode());
             params.put("pageSize", 500);
             serverName = DataUrlContents.load_pro_covers_number_list;
-            client.get(DataUrlContents.SERVER_HOST + serverName, params, new BaseJsonHttpResponseHandler<Result<ProductCoverRelVO, String>>() {
+            getClient().get(DataUrlContents.SERVER_HOST + serverName, params, new BaseJsonHttpResponseHandler<Result<ProductCoverRelVO, String>>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ProductCoverRelVO, String> response) {
@@ -564,7 +555,7 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
             if(null!=coverTypeCode){
                 params.put("coverTypeCode", coverTypeCode);
             }
-            client.get(DataUrlContents.SERVER_HOST + DataUrlContents.save_shop_cover, params, new BaseJsonHttpResponseHandler<Result<ShopCoverType, String>>() {
+            getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.save_shop_cover, params, new BaseJsonHttpResponseHandler<Result<ShopCoverType, String>>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ShopCoverType, String> response) {

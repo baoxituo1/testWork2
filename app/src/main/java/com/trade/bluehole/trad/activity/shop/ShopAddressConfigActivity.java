@@ -16,6 +16,7 @@ import com.loopj.android.http.RequestParams;
 import com.soundcloud.android.crop.Crop;
 import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.MyApplication;
@@ -35,7 +36,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * 店铺地址设置
  */
 @EActivity(R.layout.activity_shop_address_config)
-public class ShopAddressConfigActivity extends ActionBarActivity {
+public class ShopAddressConfigActivity extends BaseActionBarActivity {
     //商品和店铺编码标志
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String SHOP_latitude_EXTRA = "latitude";
@@ -44,10 +45,6 @@ public class ShopAddressConfigActivity extends ActionBarActivity {
     public static final String SHOP_cityNameName_EXTRA = "cityNameNameExr";
     public static final String SHOP_districtName_EXTRA = "districtNameExr";
     public static final String SHOP_address_EXTRA = "addressNameExr";
-    //json 转换
-    Gson gson = new Gson();
-    //网络请求
-    AsyncHttpClient client = new AsyncHttpClient();
     User user=null;
     //页面进度条
     SweetAlertDialog pDialog;
@@ -151,7 +148,7 @@ public class ShopAddressConfigActivity extends ActionBarActivity {
         if(null!="addressNameExr"&&!"".equals(addressNameExr)){
                 params.put("address", addressNameExr);
         }
-        client.post("http://192.168.1.161:8080/qqt_up/shopjson/editShop.do", params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().post("http://192.168.1.161:8080/qqt_up/shopjson/editShop.do", params, new BaseJsonHttpResponseHandler<String>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {

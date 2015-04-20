@@ -12,12 +12,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.actity.NewActivityShopActivity;
 import com.trade.bluehole.trad.activity.actity.NewActivityShopActivity_;
 import com.trade.bluehole.trad.adaptor.actity.ShopActivityListAdapter;
@@ -38,9 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EActivity(R.layout.activity_activity_manage)
-public class ActivityManageActivity extends ActionBarActivity {
-    AsyncHttpClient client = new AsyncHttpClient();
-    Gson gson = new Gson();
+public class ActivityManageActivity extends BaseActionBarActivity {
     @App
     MyApplication myApplication;
     @ViewById
@@ -88,7 +85,7 @@ public class ActivityManageActivity extends ActionBarActivity {
         RequestParams params=new RequestParams();
         params.put("shopCode",user.getShopCode());
         params.put("pageSize",500);
-        client.get(DataUrlContents.SERVER_HOST+DataUrlContents.load_shop_activity, params, new BaseJsonHttpResponseHandler<Result<ShopActivity,String>>() {
+        getClient().get(DataUrlContents.SERVER_HOST+DataUrlContents.load_shop_activity, params, new BaseJsonHttpResponseHandler<Result<ShopActivity,String>>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ShopActivity,String> obj) {
                 Log.d(LoginSystemActivity.class.getName(), statusCode + "");

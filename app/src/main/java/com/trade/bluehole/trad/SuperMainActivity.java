@@ -25,6 +25,7 @@ import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.msg.MessageAllActivity_;
 import com.trade.bluehole.trad.activity.msg.MessagePageviewActivity_;
 import com.trade.bluehole.trad.activity.user.AccountUserManageActivity_;
@@ -58,7 +59,7 @@ public class SuperMainActivity extends Activity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerArrowDrawable drawerArrow;
     private boolean drawerArrowColor;
-    AsyncHttpClient client = new AsyncHttpClient();
+    AsyncHttpClient client = BaseActionBarActivity.getClient();
     Gson gson = new Gson();
     @App
     MyApplication myApplication;

@@ -18,6 +18,7 @@ import com.loopj.android.http.RequestParams;
 import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.NewProductActivity_;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.adaptor.pro.ProductListViewAdaptor;
 import com.trade.bluehole.trad.entity.ProductIndexVO;
 import com.trade.bluehole.trad.entity.User;
@@ -37,7 +38,7 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 @EActivity(R.layout.activity_product_classify)
-public class ProductClassifyActivity extends ActionBarActivity {
+public class ProductClassifyActivity extends BaseActionBarActivity {
 
     //商品和店铺编码标志
     public static final String SHOP_CODE_EXTRA = "shopCode";
@@ -58,8 +59,6 @@ public class ProductClassifyActivity extends ActionBarActivity {
     @ViewById(R.id.listview)
     ListView listview;
     ProductListViewAdaptor adaptor;
-    AsyncHttpClient client = new AsyncHttpClient();
-    Gson gson = new Gson();
     List<ProductIndexVO> mList=new ArrayList<ProductIndexVO>();
     //页面进度条
     SweetAlertDialog pDialog;
@@ -112,7 +111,7 @@ public class ProductClassifyActivity extends ActionBarActivity {
             params.put("shopCode",shopCode);
             params.put("coverCode",coverCode);
             params.put("pageSize",500);
-            client.get(DataUrlContents.SERVER_HOST+DataUrlContents.load_pro_all_list, params, new BaseJsonHttpResponseHandler<Result<ProductIndexVO, String>>() {
+            getClient().get(DataUrlContents.SERVER_HOST+DataUrlContents.load_pro_all_list, params, new BaseJsonHttpResponseHandler<Result<ProductIndexVO, String>>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ProductIndexVO, String> response) {

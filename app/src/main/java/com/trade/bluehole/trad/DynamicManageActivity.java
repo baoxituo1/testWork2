@@ -20,6 +20,7 @@ import com.loopj.android.http.RequestParams;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.actity.NewActivityShopActivity;
 import com.trade.bluehole.trad.activity.actity.NewActivityShopActivity_;
 import com.trade.bluehole.trad.activity.sale.SelectSaleProductActivity_;
@@ -46,9 +47,7 @@ import java.util.List;
  * 店铺打折动态
  */
 @EActivity(R.layout.activity_dynamic_manage)
-public class DynamicManageActivity extends ActionBarActivity {
-    AsyncHttpClient client = new AsyncHttpClient();
-    Gson gson = new Gson();
+public class DynamicManageActivity extends BaseActionBarActivity {
     @App
     MyApplication myApplication;
     @ViewById
@@ -130,7 +129,7 @@ public class DynamicManageActivity extends ActionBarActivity {
         RequestParams params=new RequestParams();
         params.put("shopCode",user.getShopCode());
         params.put("pageSize", 500);
-        client.get(DataUrlContents.SERVER_HOST + DataUrlContents.load_dynamic_sale_detail, params, new BaseJsonHttpResponseHandler<Result<DynaicInfoVO,String>>() {
+        getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.load_dynamic_sale_detail, params, new BaseJsonHttpResponseHandler<Result<DynaicInfoVO, String>>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<DynaicInfoVO, String> obj) {
                 Log.d(LoginSystemActivity.class.getName(), statusCode + "");
@@ -175,7 +174,7 @@ public class DynamicManageActivity extends ActionBarActivity {
         RequestParams params=new RequestParams();
         params.put("productCode",proCode);
         params.put("salePrice", 0);
-        client.get(DataUrlContents.SERVER_HOST + DataUrlContents.update_product_sale_detail, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.update_product_sale_detail, params, new BaseJsonHttpResponseHandler<String>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String obj) {
                 Log.d(LoginSystemActivity.class.getName(), statusCode + "");

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.*;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.MyApplication;
@@ -48,14 +49,12 @@ import java.util.List;
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
 @EActivity(R.layout.activity_login_system)
-public class LoginSystemActivity extends ActionBarActivity {
+public class LoginSystemActivity extends BaseActionBarActivity {
 
-    Gson gson = new Gson();
 
     @App
     MyApplication myapplication;
 
-    AsyncHttpClient client = new AsyncHttpClient();
 
     @ViewById(R.id.userName)
     EditText account;
@@ -69,7 +68,7 @@ public class LoginSystemActivity extends ActionBarActivity {
         RequestParams params=new RequestParams();
         params.put("account",account.getText());
         params.put("password",password.getText());
-        client.get(DataUrlContents.SERVER_HOST+DataUrlContents.user_login, params, new BaseJsonHttpResponseHandler<Result<User, ShopCommonInfo>>() {
+        getClient().get(DataUrlContents.SERVER_HOST+DataUrlContents.user_login, params, new BaseJsonHttpResponseHandler<Result<User, ShopCommonInfo>>() {
 
 
             @Override
