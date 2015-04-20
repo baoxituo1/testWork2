@@ -12,7 +12,7 @@
 
     <ImageView    android:src="@drawable/location_mark" android:layout_width="wrap_content" android:layout_height="wrap_content" android:contentDescription="@null" android:layout_centerInParent="true"/>
 
-    <mehdi.sakout.fancybuttons.FancyButton
+   <!-- <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/map_set_back"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -48,6 +48,6 @@
         fancy:iconPosition="left"
         fancy:radius="5dp"
         fancy:text="@string/map_confirm"
-        fancy:textColor="#FFFFFF"/>
+        fancy:textColor="#FFFFFF"/>-->
 
 </RelativeLayout>

@@ -25,6 +25,7 @@ import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.Result;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -61,6 +62,12 @@ public class LoginSystemActivity extends BaseActionBarActivity {
 
     @ViewById(R.id.userPassword)
     EditText password;
+
+    @AfterViews
+    void initData(){
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setHomeButtonEnabled(false);
+    }
 
     @Click(R.id.login_user_login_btn)
     void loginButtonClick(){

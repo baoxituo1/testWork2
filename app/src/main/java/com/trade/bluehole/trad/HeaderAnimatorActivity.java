@@ -110,6 +110,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     void initData() {
         user = myApplication.getUser();
         shop = myApplication.getShop();
+        initDialog();
         adaptor = new ProductListViewAdaptor(this);
         coverNumberAdapter = new ProductCoverNumberAdapter(this);
         if (shop != null) {
@@ -117,9 +118,6 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
             if (null != shop.getShopLogo()) {
                 ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + shop.getShopLogo()+DataUrlContents.img_logo_img, shop_logo_image, ImageManager.options);
             }
-            /*if(null!=shop.getShopBackground()){
-                ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + shop.getShopBackground(), header_image, ImageManager.options);
-            }*/
         }
         IO2014HeaderAnimator animator = new IO2014HeaderAnimator(this);
         StikkyHeaderBuilder.stickTo(listview)
@@ -127,16 +125,9 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
                 .minHeightHeaderDim(R.dimen.min_height_header_materiallike)
                 .animator(animator)
                 .build();
-        //初始化等待dialog
-        pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
         //家在列表数据
         populateListView();
-        //loadCoverListView();
         //初始化弹出框
-        initDialog();
         listview.setEmptyView(empty_view);
     }
 
@@ -145,6 +136,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
      * 实例化弹出窗口 新增
      */
     void initDialog(){
+        pDialog=getDialog(this);//获取进度实例化
         myViewHold=new MyViewHold(R.layout.i_pro_cover_edit_item);
         modifyViewHold=new MyViewHold(R.layout.i_pro_cover_edit_item);
         //自定义类别 新增
@@ -433,6 +425,8 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
             intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA,user.getShopCode());
             startActivity(intent);
             return true;
+        }else if(id==android.R.id.home){
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -564,12 +558,12 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
                         if (response.isSuccess()) {
                             //Toast.makeText(HeaderAnimatorActivity.this, "获取数据成功", Toast.LENGTH_SHORT).show();
                             //把数据添加到全局
-                            ProductCoverRelVO obj=new ProductCoverRelVO();
-                            if(_position!=null){
+                            ProductCoverRelVO obj = new ProductCoverRelVO();
+                            if (_position != null) {
                                 coverList.get(_position).setCoverName(response.getBzseObj().getCoverTypeName());
                                 //coverList.set(_position,response.getBzseObj());
-                            }else{
-                                ShopCoverType cover=response.getBzseObj();
+                            } else {
+                                ShopCoverType cover = response.getBzseObj();
                                 obj.setCoverName(cover.getCoverTypeName());
                                 obj.setCoverCode(cover.getCoverTypeCode());
                                 obj.setShopCode(cover.getShopCode());

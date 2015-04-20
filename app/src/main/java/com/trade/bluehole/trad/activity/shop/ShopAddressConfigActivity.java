@@ -92,7 +92,7 @@ public class ShopAddressConfigActivity extends BaseActionBarActivity {
     @Click(R.id.shopRelocationBtn)
     void onRelocationClick(){
         Intent intent=new Intent(this,ShopLocationActivity.class);
-        this.startActivityForResult(intent,171);
+        this.startActivityForResult(intent, 171);
     }
 
     /**
@@ -180,5 +180,16 @@ public class ShopAddressConfigActivity extends BaseActionBarActivity {
     public void onDestroy(){
         super.onDestroy();
         pDialog.dismiss();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }else if(id==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

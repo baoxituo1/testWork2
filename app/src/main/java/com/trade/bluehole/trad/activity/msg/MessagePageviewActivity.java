@@ -33,9 +33,6 @@ public class MessagePageviewActivity extends BaseActionBarActivity {
 
     @AfterViews
     void initdata(){
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         msgPageAdapter =new MessagePageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.msg_page_view);

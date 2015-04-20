@@ -39,6 +39,8 @@ import org.apache.http.Header;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * 商品分类管理
  */
@@ -55,6 +57,8 @@ public class CoverManageActivity extends BaseActionBarActivity {
     User user;
     List<ProductCoverRelVO> coverList = new ArrayList<ProductCoverRelVO>();
 
+    //页面进度条
+    SweetAlertDialog pDialog;
     DialogPlus coverDialog;//商品自定义分类弹出框
     DialogPlus modifyCoverDialog;//修改商品自定义分类弹出框
     MyViewHold myViewHold;//自定义弹出框展示
@@ -83,9 +87,9 @@ public class CoverManageActivity extends BaseActionBarActivity {
         listview = (ListView) findViewById(android.R.id.list);
         adapter=new CoverManageListAdapter(this);
         listview.setAdapter(adapter);
-        loadCoverListView();
         //初始化弹出
         initDialog();
+        loadCoverListView();
     }
 
 
@@ -104,6 +108,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
      * 实例化弹出窗口 新增
      */
     void initDialog(){
+        pDialog=getDialog(this);//获取进度实例化
         listview.setEmptyView(empty_view);
         myViewHold=new MyViewHold(R.layout.i_pro_cover_edit_item);
         modifyViewHold=new MyViewHold(R.layout.i_pro_cover_edit_item);
@@ -189,6 +194,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
      * load数据
      */
     private void loadCoverListView() {
+        pDialog.show();
         User user = myApplication.getUser();
         if (user != null && user.getUserCode() != null) {
             RequestParams params = new RequestParams();
@@ -200,6 +206,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ProductCoverRelVO, String> response) {
                     if (null != response) {
+                        pDialog.hide();
                         if (response.isSuccess()) {
                             //Toast.makeText(HeaderAnimatorActivity.this, "获取数据成功", Toast.LENGTH_SHORT).show();
                             //把数据添加到全局
@@ -216,6 +223,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<ProductCoverRelVO, String> errorResponse) {
                     Toast.makeText(CoverManageActivity.this, R.string.load_data_error, Toast.LENGTH_SHORT).show();
+                    pDialog.hide();
                 }
 
                 @Override
@@ -233,6 +241,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
      * 更新分类信息
      */
     private void saveOrUpdateCovers(String coverTypeName,String coverTypeCode) {
+        pDialog.show();
         final Integer _position=temp_position;
         User user = myApplication.getUser();
         if (user != null && user.getUserCode() != null) {
@@ -248,6 +257,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ShopCoverType, String> response) {
                     if (null != response) {
+                        pDialog.hide();
                         if (response.isSuccess()) {
                             //Toast.makeText(HeaderAnimatorActivity.this, "获取数据成功", Toast.LENGTH_SHORT).show();
                             //把数据添加到全局
@@ -274,6 +284,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<ShopCoverType, String> errorResponse) {
                     Toast.makeText(CoverManageActivity.this, R.string.load_data_error, Toast.LENGTH_SHORT).show();
+                    pDialog.hide();
                 }
 
                 @Override
@@ -306,5 +317,11 @@ public class CoverManageActivity extends BaseActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        pDialog.dismiss();
     }
 }

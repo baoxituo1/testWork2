@@ -178,6 +178,8 @@ public class AddProductSaleActivity extends BaseActionBarActivity implements Dat
                 }
             }
             return true;
+        }else if(id==android.R.id.home){
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

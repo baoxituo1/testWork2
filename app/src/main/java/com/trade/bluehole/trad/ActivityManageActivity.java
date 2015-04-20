@@ -36,6 +36,8 @@ import org.apache.http.Header;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 @EActivity(R.layout.activity_activity_manage)
 public class ActivityManageActivity extends BaseActionBarActivity {
     @App
@@ -44,7 +46,8 @@ public class ActivityManageActivity extends BaseActionBarActivity {
     ListView listView;
     @ViewById
     RelativeLayout empty_view;
-
+    //页面进度条
+    SweetAlertDialog pDialog;
     ShopActivityListAdapter adapter=new ShopActivityListAdapter(this,null);
     User user;
     List<ShopActivity> lists=new ArrayList<ShopActivity>();//活动数据集
@@ -53,7 +56,7 @@ public class ActivityManageActivity extends BaseActionBarActivity {
     @AfterViews
     void initData(){
         user=myApplication.getUser();//获取用户数据
-
+        pDialog=getDialog(this);//获取进度实例化
         listView.setEmptyView(empty_view);
         //list 点击事件
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,14 +85,15 @@ public class ActivityManageActivity extends BaseActionBarActivity {
      * 读取数据
      */
     private void loadData(){
+        pDialog.show();
         RequestParams params=new RequestParams();
         params.put("shopCode",user.getShopCode());
         params.put("pageSize",500);
-        getClient().get(DataUrlContents.SERVER_HOST+DataUrlContents.load_shop_activity, params, new BaseJsonHttpResponseHandler<Result<ShopActivity,String>>() {
+        getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.load_shop_activity, params, new BaseJsonHttpResponseHandler<Result<ShopActivity, String>>() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ShopActivity,String> obj) {
-                Log.d(LoginSystemActivity.class.getName(), statusCode + "");
-                if (null != obj&&obj.success) {
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ShopActivity, String> obj) {
+                pDialog.hide();
+                if (null != obj && obj.success) {
 
                     lists.clear();
                     lists.addAll(obj.getList());
@@ -100,13 +104,15 @@ public class ActivityManageActivity extends BaseActionBarActivity {
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<ShopActivity,String> errorResponse) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<ShopActivity, String> errorResponse) {
+                pDialog.hide();
                 Toast.makeText(ActivityManageActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            protected Result<ShopActivity,String> parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
-                return gson.fromJson(rawJsonData,  new TypeToken<Result<ShopActivity,String>>(){}.getType());
+            protected Result<ShopActivity, String> parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                return gson.fromJson(rawJsonData, new TypeToken<Result<ShopActivity, String>>() {
+                }.getType());
             }
         });
     }
@@ -126,8 +132,16 @@ public class ActivityManageActivity extends BaseActionBarActivity {
         if (id == R.id.activity_menu_add) {
             NewActivityShopActivity_.intent(this).start();
             return true;
+        }else if(id==android.R.id.home){
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        pDialog.dismiss();
     }
 }

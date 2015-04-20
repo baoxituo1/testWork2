@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -34,6 +36,7 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 
 import org.androidannotations.annotations.Click;
 
@@ -44,7 +47,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
  * 此demo用来展示如何结合定位SDK实现定位，并使用MyLocationOverlay绘制定位位置 同时展示如何使用自定义图标绘制并点击时弹出泡泡
  */
 
-public class ShopLocationActivity extends Activity implements OnClickListener, OnGetGeoCoderResultListener {
+public class ShopLocationActivity extends BaseActionBarActivity implements OnClickListener, OnGetGeoCoderResultListener {
     private static final String LTAG = ShopLocationActivity.class.getSimpleName();
     // 定位相关
     LocationClient mLocClient;
@@ -88,8 +91,8 @@ public class ShopLocationActivity extends Activity implements OnClickListener, O
         option.setScanSpan(1000);
         mLocClient.setLocOption(option);
         mLocClient.start();
-        FancyButton saveBtn=(FancyButton)this.findViewById(R.id.map_set_save);
-        saveBtn.setOnClickListener(this);
+        //FancyButton saveBtn=(FancyButton)this.findViewById(R.id.map_set_save);
+        //saveBtn.setOnClickListener(this);
         initMapListener();
     }
 
@@ -212,13 +215,13 @@ public class ShopLocationActivity extends Activity implements OnClickListener, O
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+       /* switch (v.getId()) {
             case R.id.map_set_save:// 保存位置
                 onSaveLocationClick();
                 break;
             default:
                 break;
-        }
+        }*/
 
     }
 
@@ -249,8 +252,30 @@ public class ShopLocationActivity extends Activity implements OnClickListener, O
         mBaiduMap.setMyLocationEnabled(false);
         mMapView.onDestroy();
         mMapView = null;
-        pDialog.dismiss();
+        if(null!=pDialog){
+            pDialog.dismiss();
+        }
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_location_shop, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.map_set_save) {
+            onSaveLocationClick();
+            return true;
+        }else if(id==android.R.id.home){
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

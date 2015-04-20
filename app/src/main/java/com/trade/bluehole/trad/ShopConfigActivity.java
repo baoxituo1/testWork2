@@ -348,20 +348,20 @@ public class ShopConfigActivity extends BaseActionBarActivity {
                 params.put("slogan", obj.getSlogan());
             }
         }
-        getClient().post(DataUrlContents.SERVER_HOST+DataUrlContents.update_shop_config, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().post(DataUrlContents.SERVER_HOST + DataUrlContents.update_shop_config, params, new BaseJsonHttpResponseHandler<String>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
                 pDialog.hide();
                 Log.d(NewProductActivity.class.getName(), response.toString());
                 if (null != response) {
-                    if("success".equals(response)){
-                        String message="";
-                        if(null!=obj.getTitle()&&!"".equals(obj.getTitle())){
-                            message="修改店铺名称!";
+                    if ("success".equals(response)) {
+                        String message = "";
+                        if (null != obj.getTitle() && !"".equals(obj.getTitle())) {
+                            message = "修改店铺名称!";
                             shopName.setText(obj.getTitle());
-                        }else if(null!=obj.getSlogan()&&!"".equals(obj.getSlogan())){
-                            message="修改店铺公告!";
+                        } else if (null != obj.getSlogan() && !"".equals(obj.getSlogan())) {
+                            message = "修改店铺公告!";
                             shopSlogan.setText(obj.getSlogan());
                         }
                         new SweetAlertDialog(ShopConfigActivity.this, SweetAlertDialog.SUCCESS_TYPE)
@@ -389,5 +389,16 @@ public class ShopConfigActivity extends BaseActionBarActivity {
     public void onDestroy(){
         super.onDestroy();
         pDialog.dismiss();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }else if(id==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

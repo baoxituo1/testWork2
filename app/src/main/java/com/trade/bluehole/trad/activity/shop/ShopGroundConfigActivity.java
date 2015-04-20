@@ -233,13 +233,13 @@ public class ShopGroundConfigActivity extends BaseActionBarActivity {
                 params.put("shopBackground", fileName);
             }
         }
-        getClient().post(DataUrlContents.SERVER_HOST+DataUrlContents.update_shop_config, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().post(DataUrlContents.SERVER_HOST + DataUrlContents.update_shop_config, params, new BaseJsonHttpResponseHandler<String>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
                 pDialog.hide();
                 if (null != response) {
-                    if("success".equals(response)){
+                    if ("success".equals(response)) {
                         new SweetAlertDialog(ShopGroundConfigActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                                 .setTitleText("同步成功!")
                                 .setContentText("更新店铺招牌")
@@ -266,5 +266,16 @@ public class ShopGroundConfigActivity extends BaseActionBarActivity {
         if(null!=pDialog){
             pDialog.dismiss();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }else if(id==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

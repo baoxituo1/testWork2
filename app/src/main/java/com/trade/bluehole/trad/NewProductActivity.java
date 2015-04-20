@@ -542,7 +542,7 @@ public class NewProductActivity extends BaseActionBarActivity {
         if("2".equals(type)){//删除操作
             methodName=DataUrlContents.del_product_bycode;
         }
-        getClient().get(DataUrlContents.SERVER_HOST +methodName, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().get(DataUrlContents.SERVER_HOST + methodName, params, new BaseJsonHttpResponseHandler<String>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
                 Log.d(NewProductActivity.class.getName(), response.toString());
@@ -713,6 +713,8 @@ public class NewProductActivity extends BaseActionBarActivity {
         {
             uploadProImageClick();
             return true;
+        }else if(id==android.R.id.home){
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

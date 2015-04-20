@@ -129,7 +129,7 @@ public class SelectSaleProductActivity extends BaseActionBarActivity {
         });
     }
 
-   /* @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_select_sale_product, menu);
         return true;
@@ -141,8 +141,10 @@ public class SelectSaleProductActivity extends BaseActionBarActivity {
 
         if (id == R.id.action_settings) {
             return true;
+        }else if(id==android.R.id.home){
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 }

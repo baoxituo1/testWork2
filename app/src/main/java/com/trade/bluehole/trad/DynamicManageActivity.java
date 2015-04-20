@@ -43,6 +43,8 @@ import org.apache.http.Header;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 /**
  * 店铺打折动态
  */
@@ -55,6 +57,8 @@ public class DynamicManageActivity extends BaseActionBarActivity {
     @ViewById
     RelativeLayout empty_view;
 
+    //页面进度条
+    SweetAlertDialog pDialog;
     User user;
     List<DynaicInfoVO> lists=new ArrayList<DynaicInfoVO>();//活动数据集
     ProductSaleDynamicAdapter adapter;//适配器
@@ -113,6 +117,7 @@ public class DynamicManageActivity extends BaseActionBarActivity {
      * 实例化弹出窗口
      */
     void initDialog(){
+        pDialog=getDialog(this);//获取进度实例化
         confirmDialog = new DialogPlus.Builder(this)
                 .setContentHolder(new ViewHolder(R.layout.dialog_confirm_content))
                         //.setHeader(R.layout.dialog_label_header)
@@ -126,13 +131,14 @@ public class DynamicManageActivity extends BaseActionBarActivity {
      * 读取数据
      */
     private void loadData(){
+        pDialog.show();
         RequestParams params=new RequestParams();
         params.put("shopCode",user.getShopCode());
         params.put("pageSize", 500);
         getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.load_dynamic_sale_detail, params, new BaseJsonHttpResponseHandler<Result<DynaicInfoVO, String>>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<DynaicInfoVO, String> obj) {
-                Log.d(LoginSystemActivity.class.getName(), statusCode + "");
+                pDialog.hide();
                 if (null != obj && obj.success) {
 
                     lists.clear();
@@ -146,6 +152,7 @@ public class DynamicManageActivity extends BaseActionBarActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<DynaicInfoVO, String> errorResponse) {
                 Toast.makeText(DynamicManageActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
+                pDialog.hide();
             }
 
             @Override
@@ -179,7 +186,7 @@ public class DynamicManageActivity extends BaseActionBarActivity {
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String obj) {
                 Log.d(LoginSystemActivity.class.getName(), statusCode + "");
                 if (null != obj) {
-                   loadData();
+                    loadData();
                 }
             }
 
@@ -208,8 +215,16 @@ public class DynamicManageActivity extends BaseActionBarActivity {
         if (id == R.id.dy_menu_add) {
             SelectSaleProductActivity_.intent(this).start();
             return true;
+        }else if(id==android.R.id.home){
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        pDialog.dismiss();
     }
 }
