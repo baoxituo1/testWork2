@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,9 @@ public class NoticeFragment extends Fragment {
     MyApplication myApplication;
     @ViewById(R.id.msg_recycler_view)
     RecyclerView mRecyclerView;
+    @ViewById
+    RelativeLayout empty_view;
+
     AsyncHttpClient client = new AsyncHttpClient();
     Gson gson = new Gson();
     private Integer state=0;//加载类型
@@ -65,6 +69,7 @@ public class NoticeFragment extends Fragment {
 
     @AfterViews
     void inintData(){
+
         mRecyclerView.setHasFixedSize(true);//内容变化不影响布局开启
         mLayoutManager=new LinearLayoutManager(getActivity());//设置线性布局管理
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -96,9 +101,16 @@ public class NoticeFragment extends Fragment {
                     if (null != response) {
                         if (response.isSuccess()) {
                             //Toast.makeText(HeaderAnimatorActivity.this, "获取数据成功", Toast.LENGTH_SHORT).show();
-                            //把数据添加到全局
-                            mAdapter.setmDataset(response.getList());
-                            mAdapter.notifyDataSetChanged();
+                            if(response.getList().isEmpty()){
+                                empty_view.setVisibility(View.VISIBLE);
+                                mRecyclerView.setVisibility(View.GONE);
+                            }else{
+                                mRecyclerView.setVisibility(View.VISIBLE);
+                                empty_view.setVisibility(View.GONE);
+                                //把数据添加到全局
+                                mAdapter.setmDataset(response.getList());
+                                mAdapter.notifyDataSetChanged();
+                            }
                         } else {
                             Toast.makeText(getActivity(), "获取数据失败", Toast.LENGTH_SHORT).show();
                         }
@@ -135,9 +147,16 @@ public class NoticeFragment extends Fragment {
                     if (null != response) {
                         if (response.isSuccess()) {
                             //Toast.makeText(HeaderAnimatorActivity.this, "获取数据成功", Toast.LENGTH_SHORT).show();
-                            //把数据添加到全局
-                            letterAdapter.setmDataset(response.getList());
-                            letterAdapter.notifyDataSetChanged();
+                            if(response.getList().isEmpty()){
+                                empty_view.setVisibility(View.VISIBLE);
+                                mRecyclerView.setVisibility(View.GONE);
+                            }else {
+                                mRecyclerView.setVisibility(View.VISIBLE);
+                                empty_view.setVisibility(View.GONE);
+                                //把数据添加到全局
+                                letterAdapter.setmDataset(response.getList());
+                                letterAdapter.notifyDataSetChanged();
+                            }
                         } else {
                             Toast.makeText(getActivity(), "获取数据失败", Toast.LENGTH_SHORT).show();
                         }

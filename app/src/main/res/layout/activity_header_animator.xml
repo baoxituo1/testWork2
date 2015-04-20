@@ -3,13 +3,41 @@
     xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:id="@+id/layout_container">
 
+    <!--无数据视图-->
+    <RelativeLayout
+        android:layout_gravity="bottom"
+        android:id="@id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pro_list_height">
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@id/no_item_add"
+                android:src="@drawable/new_add_2"
+                android:scaleType="fitCenter"
+                android:layout_width="@dimen/pro_list_empty_width_height"
+                android:layout_height="@dimen/pro_list_empty_width_height" />
+            <TextView
+                android:id="@id/no_item_text"
+                android:layout_marginLeft="@dimen/n_padding_normal_h"
+                android:layout_width="wrap_content"
+                android:text="还没有商品,赶快去添加~"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
     <ListView
+        android:visibility="visible"
         android:id="@+id/listview"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
     <FrameLayout
         android:id="@+id/header"
         android:orientation="vertical"

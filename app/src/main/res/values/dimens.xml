@@ -62,4 +62,9 @@
     <dimen name="cover_manage_item_width_height">48dp</dimen>
     <!--消息head距离顶部-->
     <dimen name="message_item_width_height">55dp</dimen>
+
+
+    <!--商品空页面-->
+    <dimen name="pro_list_height">200dp</dimen>
+    <dimen name="pro_list_empty_width_height">48dp</dimen>
 </resources>

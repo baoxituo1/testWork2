@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -28,6 +29,7 @@ import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
@@ -43,6 +45,8 @@ public class ActivityManageActivity extends ActionBarActivity {
     MyApplication myApplication;
     @ViewById
     ListView listView;
+    @ViewById
+    RelativeLayout empty_view;
 
     ShopActivityListAdapter adapter=new ShopActivityListAdapter(this,null);
     User user;
@@ -52,6 +56,8 @@ public class ActivityManageActivity extends ActionBarActivity {
     @AfterViews
     void initData(){
         user=myApplication.getUser();//获取用户数据
+
+        listView.setEmptyView(empty_view);
         //list 点击事件
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -67,7 +73,13 @@ public class ActivityManageActivity extends ActionBarActivity {
         loadData();//装载数据
     }
 
-
+    /**
+     * 点击列表为空的快速添加
+     */
+    @Click(R.id.empty_view)
+    void onClickQuickAdd(){
+        NewActivityShopActivity_.intent(this).start();
+    }
 
     /**
      * 读取数据

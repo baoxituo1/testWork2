@@ -7,6 +7,9 @@
     <item type="id" name="login_other_layout" />
     <item type="id" name="userName" />
     <item type="id" name="userPassword" />
+    <item type="id" name="empty_view" />
+    <item type="id" name="no_item_add" />
+    <item type="id" name="no_item_text" />
     <!-- 商品列表项 -->
     <item type="id" name="pro_image" />
     <item type="id" name="pro_name" />

@@ -63,6 +63,8 @@ dependencies {
     //compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar:3.1.2'
     // Use the following if your project uses ActionBarCompat
     compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar-abc:3.1.2'
+    //error view
+    compile 'com.github.xiprox.errorview:library:2.0.0'
 }
 
 apt {

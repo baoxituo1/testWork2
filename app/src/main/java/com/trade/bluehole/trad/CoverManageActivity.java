@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -29,6 +30,7 @@ import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.trade.bluehole.trad.util.view.MyViewHold;
 
 import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
@@ -45,7 +47,8 @@ public class CoverManageActivity extends ActionBarActivity {
     @App
     MyApplication myApplication;
     ListView listview;
-
+    @ViewById
+    RelativeLayout empty_view;
     CoverManageListAdapter adapter;//商品分类适配器
     AsyncHttpClient client = new AsyncHttpClient();
     Gson gson = new Gson();
@@ -87,11 +90,22 @@ public class CoverManageActivity extends ActionBarActivity {
     }
 
 
+    /**
+     * 点击列表为空的快速添加
+     */
+    @Click(R.id.empty_view)
+    void onClickQuickAdd(){
+        //清空便用code
+        temp_coverCode=null;
+        temp_position=null;
+        coverDialog.show();
+    }
 
     /**
      * 实例化弹出窗口 新增
      */
     void initDialog(){
+        listview.setEmptyView(empty_view);
         myViewHold=new MyViewHold(R.layout.i_pro_cover_edit_item);
         modifyViewHold=new MyViewHold(R.layout.i_pro_cover_edit_item);
         //自定义类别 新增

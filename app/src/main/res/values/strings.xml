@@ -48,7 +48,7 @@
     <string name="google_maps_title">Maps</string>
     <string name="google_messenger_title">Messenger</string>
     <string name="dialogHeader_header_title">分类至</string>
-    <string name="dialogHeader_new_header_title">新建商品分类</string>
+    <string name="dialogHeader_new_header_title">新增商品分类</string>
     <string name="dialogHeader_modify_header_title">修改商品分类</string>
     <string name="dialogHeader_header_sample">方便顾客在店铺筛选</string>
     <string name="dialogLabel_header_title">设置标签</string>
@@ -180,4 +180,10 @@
     <string name="title_activity_web_view">浏览</string>
     <string name="title_activity_message_all">消息</string>
     <string name="title_activity_message_pageview">消息</string>
+
+
+    <!--错误提示-->
+    <string name="error_title_damn">很遗憾</string>
+    <string name="error_subtitle_failed_one_more_time">请求失败</string>
+    <string name="info_retrying">重试</string>
 </resources>

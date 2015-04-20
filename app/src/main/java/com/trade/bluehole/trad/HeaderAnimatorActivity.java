@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,15 +69,17 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
     @ViewById(R.id.listview)
     ListView listview;
     @ViewById
-    TextView shopName;
+    TextView shopName,no_item_text;
     @ViewById
     CircleImageView shop_logo_image;
     @ViewById
-    ImageView header_image;
+    ImageView header_image,no_item_add;
     @ViewById
     FancyButton main_sale_ing_btn, main_sale_out_btn, main_sale_cover_btn;
     @ViewById
     LinearLayout btn_cover_layout, btn_cover_ok_layout;
+    @ViewById
+    RelativeLayout empty_view;
     @App
     MyApplication myApplication;
     ProductListViewAdaptor adaptor;
@@ -143,6 +146,7 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         //loadCoverListView();
         //初始化弹出框
         initDialog();
+        listview.setEmptyView(empty_view);
     }
 
 
@@ -225,6 +229,11 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         main_sale_ing_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
         main_sale_out_btn.setTextColor(getResources().getColor(R.color.white));
         main_sale_cover_btn.setTextColor(getResources().getColor(R.color.white));
+        //设置无数据时候
+        no_item_text.setText("还没有商品,赶快去添加~");
+        if(no_item_add.getVisibility()==View.GONE){
+            no_item_add.setVisibility(View.VISIBLE);
+        }
         //隐藏完成按钮界面
         btn_cover_ok_layout.setVisibility(View.GONE);
         populateListView();
@@ -245,6 +254,11 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         main_sale_out_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
         main_sale_ing_btn.setTextColor(getResources().getColor(R.color.white));
         main_sale_cover_btn.setTextColor(getResources().getColor(R.color.white));
+        //设置无数据时候
+        no_item_text.setText("还没有下架的商品~");
+        if(no_item_add.getVisibility()==View.VISIBLE){
+            no_item_add.setVisibility(View.GONE);
+        }
         //隐藏完成按钮界面
         btn_cover_ok_layout.setVisibility(View.GONE);
         populateListView();
@@ -266,8 +280,35 @@ public class HeaderAnimatorActivity extends ActionBarActivity {
         main_sale_cover_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
         main_sale_ing_btn.setTextColor(getResources().getColor(R.color.white));
         main_sale_out_btn.setTextColor(getResources().getColor(R.color.white));
+        //设置无数据时候
+        no_item_text.setText("还没有分类,赶快添加~");
+        if(no_item_add.getVisibility()==View.VISIBLE){
+            no_item_add.setVisibility(View.GONE);
+        }
         loadCoverListView();
     }
+
+    /**
+     * 点击列表为空的快速添加
+     */
+    @Click(R.id.empty_view)
+    void onClickQuickAdd(){
+        if("1".equals(searchType)){
+            Intent intent=NewProductActivity_.intent(this).get();
+            intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA,user.getShopCode());
+            startActivity(intent);
+        }else if("2".equals(searchType)){
+            temp_coverCode=null;
+            temp_position=null;
+            coverDialog.show();
+        }
+    }
+
+
+    /***********************
+     * 以下分类标签点击功能
+     *
+     **********************/
 
     /**
      * 当编辑分类按钮被点击
