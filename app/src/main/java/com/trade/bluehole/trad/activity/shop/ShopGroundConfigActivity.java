@@ -35,6 +35,7 @@ import com.trade.bluehole.trad.util.StreamUtil;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
@@ -53,9 +54,11 @@ public class ShopGroundConfigActivity extends BaseActionBarActivity {
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String SHOP_GROUND_EXTRA = "shopBackGround";
     public static final String SHOP_USER_EXTRA = "userCode";
-    public OSSBucket sampleBucket;
     //页面进度条
     SweetAlertDialog pDialog;
+
+    @App
+    MyApplication myApplication;
 
     @Extra(SHOP_CODE_EXTRA)
     String shopCode;
@@ -64,21 +67,6 @@ public class ShopGroundConfigActivity extends BaseActionBarActivity {
     @Extra(SHOP_USER_EXTRA)
     String userCode;
 
-    static {
-        OSSClient.setGlobalDefaultTokenGenerator(new TokenGenerator() { // 设置全局默认加签器
-            @Override
-            public String generateToken(String httpMethod, String md5, String type, String date,
-                                        String ossHeaders, String resource) {
-
-                String content = httpMethod + "\n" + md5 + "\n" + type + "\n" + date + "\n" + ossHeaders
-                        + resource;
-
-                return OSSToolKit.generateToken(MyApplication.accessKey, MyApplication.screctKey, content);
-            }
-        });
-        // OSSClient.setGlobalDefaultACL(AccessControlList.PUBLIC_READ_WRITE); // 设置全局默认bucket访问权限
-        OSSClient.setGlobalDefaultHostId("oss-cn-beijing.aliyuncs.com"); // 指明你的bucket是放在北京数据中心
-    }
     /**
      * 背景图片
      */
@@ -91,9 +79,6 @@ public class ShopGroundConfigActivity extends BaseActionBarActivity {
         //阿里云
         OSSLog.enableLog(true);
         OSSClient.setApplicationContext(getApplicationContext()); // 传入应用程序context
-        // 开始单个Bucket的设置
-        sampleBucket = new OSSBucket("125");
-        sampleBucket.setBucketHostId("oss-cn-beijing.aliyuncs.com"); // 可以在这里设置数据中心域名或者cname域名
         //初始化等待dialog
         pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -146,12 +131,6 @@ public class ShopGroundConfigActivity extends BaseActionBarActivity {
     }
 
 
-
-
-
-
-
-
     /**
      * 开始裁剪
      *
@@ -197,7 +176,7 @@ public class ShopGroundConfigActivity extends BaseActionBarActivity {
             fileName= "shop_background/"+"ground_"+ UUID.randomUUID()+".jpg";
         }
         final String  _backGroundUrl=fileName;
-        OSSData ossData = new OSSData(sampleBucket, fileName);
+        OSSData ossData = new OSSData(myApplication.getOssBucket(), fileName);
         ossData.setData(data, "raw"); // 指定需要上传的数据和它的类型
         ossData.enableUploadCheckMd5sum(); // 开启上传MD5校验
         ossData.uploadInBackground(new SaveCallback() {

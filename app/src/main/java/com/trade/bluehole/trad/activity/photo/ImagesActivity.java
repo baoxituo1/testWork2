@@ -28,7 +28,7 @@ import java.util.ArrayList;
 /**
  * 浏览某一个目录下的所有图片。<br/>
  * <br/>
- * Created by yanglw on 2014/8/17.
+ *
  */
 public class ImagesActivity extends ImageBaseActivity implements LoaderManager.LoaderCallbacks<Cursor>
 {
@@ -140,7 +140,8 @@ public class ImagesActivity extends ImageBaseActivity implements LoaderManager.L
 
         if (mIsEnable)
         {
-            menu.findItem(R.id.num).setTitle(String.valueOf(checkList.size()));
+           // menu.findItem(R.id.num).setTitle(String.valueOf(checkList.size()));
+            menu.findItem(R.id.num).setTitle("确定["+String.valueOf(checkList.size())+"]");
         }
 
         menu.findItem(R.id.num).setVisible(mIsEnable);

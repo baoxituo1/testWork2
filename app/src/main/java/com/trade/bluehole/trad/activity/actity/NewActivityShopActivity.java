@@ -2,10 +2,7 @@ package com.trade.bluehole.trad.activity.actity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,17 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.aliyun.mbaas.oss.OSSClient;
 import com.aliyun.mbaas.oss.callback.SaveCallback;
 import com.aliyun.mbaas.oss.model.OSSException;
-import com.aliyun.mbaas.oss.model.TokenGenerator;
-import com.aliyun.mbaas.oss.storage.OSSBucket;
 import com.aliyun.mbaas.oss.storage.OSSData;
-import com.aliyun.mbaas.oss.util.OSSLog;
-import com.aliyun.mbaas.oss.util.OSSToolKit;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -32,17 +21,14 @@ import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.soundcloud.android.crop.Crop;
-import com.trade.bluehole.trad.ActivityManageActivity;
 import com.trade.bluehole.trad.ActivityManageActivity_;
 import com.trade.bluehole.trad.LoginSystemActivity;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
-import com.trade.bluehole.trad.entity.actity.ShopActivity;
 import com.trade.bluehole.trad.entity.actity.ShopActivityBase;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
-import com.trade.bluehole.trad.util.Result;
 import com.trade.bluehole.trad.util.StreamUtil;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 
@@ -62,12 +48,9 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 @EActivity(R.layout.activity_new_activity_shop)
 public class NewActivityShopActivity extends BaseActionBarActivity {
-
         //商品和店铺编码标志
         public static final String SHOP_CODE_EXTRA = "shopCode";
         public static final String ACTIVITY_CODE_EXTRA = "activityCode";
-
-        public OSSBucket sampleBucket;
 
         @ViewById
         ImageView addImage;
@@ -91,22 +74,6 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
         DialogPlus confirmDialog;//确认操作
         Integer delFlag=0;
 
-        static {
-        OSSClient.setGlobalDefaultTokenGenerator(new TokenGenerator() { // 设置全局默认加签器
-            @Override
-            public String generateToken(String httpMethod, String md5, String type, String date,
-                                        String ossHeaders, String resource) {
-
-                String content = httpMethod + "\n" + md5 + "\n" + type + "\n" + date + "\n" + ossHeaders
-                        + resource;
-
-                return OSSToolKit.generateToken(MyApplication.accessKey, MyApplication.screctKey, content);
-            }
-        });
-        // OSSClient.setGlobalDefaultACL(AccessControlList.PUBLIC_READ_WRITE); // 设置全局默认bucket访问权限
-        OSSClient.setGlobalDefaultHostId("oss-cn-beijing.aliyuncs.com"); // 指明你的bucket是放在北京数据中心
-    }
-
 
         @AfterViews
         void initData() {
@@ -119,17 +86,8 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
                 activity_update_btn_layout.setVisibility(View.VISIBLE);
                 loadDetailData();
             }
-            //阿里云
-            OSSLog.enableLog(true);
-            OSSClient.setApplicationContext(getApplicationContext()); // 传入应用程序context
-            // 开始单个Bucket的设置
-            sampleBucket = new OSSBucket("125");
-            sampleBucket.setBucketHostId("oss-cn-beijing.aliyuncs.com"); // 可以在这里设置数据中心域名或者cname域名
             //初始化等待dialog
-            pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-            pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-            pDialog.setTitleText("Loading");
-            pDialog.setCancelable(false);
+            pDialog = getDialog(this);
             //pDialog.show();
 
             //实例化弹出窗口
@@ -184,7 +142,7 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
          */
         @Click(R.id.btn_activity_up_down)
         void onClickUpDownBtn(){
-            if(delFlag.intValue()==1){
+            if(delFlag ==1){
                 updateDetailData("update",0);
             }else{
                 updateDetailData("update",1);
@@ -268,7 +226,7 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
             fileName=afileName;
         }
         //final String  _backGroundUrl=fileName;
-        OSSData ossData = new OSSData(sampleBucket, fileName);
+        OSSData ossData = new OSSData(myApplication.getOssBucket(), fileName);
         ossData.setData(data, "raw"); // 指定需要上传的数据和它的类型
         ossData.enableUploadCheckMd5sum(); // 开启上传MD5校验
         ossData.uploadInBackground(new SaveCallback() {
@@ -308,10 +266,8 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
         params.put("activityProfile", activity_input_details.getText().toString());//活动简介
         params.put("activityDetails", activity_input_details.getText().toString());//活动详情
         params.put("activityRules", activity_input_rules.getText().toString());//活动规则
-        if(null!=fileName){
-            if(null!=fileName&&!"".equals(fileName)){
+        if(null!=fileName&&!"".equals(fileName)){
                 params.put("shopBackground", fileName);
-            }
         }
         getClient().post(DataUrlContents.SERVER_HOST + DataUrlContents.save_or_update_activity, params, new BaseJsonHttpResponseHandler<String>() {
 
@@ -364,7 +320,7 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
                     activity_input_details.setText(obj.getActivityDetails());
                     activity_input_rules.setText(obj.getActivityRules());
                     delFlag = obj.getDelFlag();
-                    if (delFlag.intValue() == 1) {//如果是开始状态，变更按钮为停止
+                    if (delFlag == 1) {//如果是开始状态，变更按钮为停止
                         btn_activity_up_down.setText(getResources().getString(R.string.title_activity_end_activity_shop));
                     } else {
                         btn_activity_up_down.setText(getResources().getString(R.string.title_activity_start_activity_shop));
@@ -408,7 +364,7 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
                         finish();
                     }else{
                         delFlag=aDelFlag;//变更主状态
-                        if(aDelFlag.intValue()==1){//如果是开始状态，变更按钮为停止
+                        if(aDelFlag ==1){//如果是开始状态，变更按钮为停止
                             btn_activity_up_down.setText(getResources().getString(R.string.title_activity_end_activity_shop));
                         }else{
                             btn_activity_up_down.setText(getResources().getString(R.string.title_activity_start_activity_shop));

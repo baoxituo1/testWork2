@@ -92,9 +92,6 @@ public class NewProductActivity extends BaseActionBarActivity {
     @App
     MyApplication myapplication;
     User user=null;
-    static final String accessKey = "ictZeAtTIlkEXGta"; // 测试代码没有考虑AK/SK的安全性
-    static final String screctKey = "8CQkQa7IytCb73hvk12EUazS0hUPw2";
-    public OSSBucket sampleBucket;
     //grid展示图片容器
     private ArrayList<Photo> mList = new ArrayList<Photo>();
     //服务器加载回的商品图片
@@ -110,25 +107,8 @@ public class NewProductActivity extends BaseActionBarActivity {
     DialogPlus labelDialog;//商品自定义标签弹出框
     DialogPlus confirmDialog;//确认操作
     String imageUrls="";//新增商品 待添加商品列表
+    boolean gridViewDraw=false;//选择图片表是否已经重画过
     private Integer delFlag;//商品删除标志
-    static {
-        OSSClient.setGlobalDefaultTokenGenerator(new TokenGenerator() { // 设置全局默认加签器
-            @Override
-            public String generateToken(String httpMethod, String md5, String type, String date,
-                                        String ossHeaders, String resource) {
-
-                String content = httpMethod + "\n" + md5 + "\n" + type + "\n" + date + "\n" + ossHeaders
-                        + resource;
-
-                return OSSToolKit.generateToken(accessKey, screctKey, content);
-            }
-        });
-       // OSSClient.setGlobalDefaultACL(AccessControlList.PUBLIC_READ_WRITE); // 设置全局默认bucket访问权限
-        OSSClient.setGlobalDefaultHostId("oss-cn-beijing.aliyuncs.com"); // 指明你的bucket是放在北京数据中心
-    }
-
-
-
 
     @ViewById(R.id.result_image)
     ImageView resultView;
@@ -161,12 +141,6 @@ public class NewProductActivity extends BaseActionBarActivity {
         coverAdapter = new ProductCoverAdapter(this, false);
         //实例化标签适配器
         labelAdapter = new ProductLabelAdapter(this, false);
-        OSSLog.enableLog(true);
-        OSSClient.setApplicationContext(getApplicationContext()); // 传入应用程序context
-        // 开始单个Bucket的设置
-        sampleBucket = new OSSBucket("125");
-        sampleBucket.setBucketHostId("oss-cn-beijing.aliyuncs.com"); // 可以在这里设置数据中心域名或者cname域名
-       // sampleBucket.setBucketACL(AccessControlList.PUBLIC_READ_WRITE);
         //如果是修改
         if(null!=proCode&&null!=shopCode&&!"".equals(proCode)&&!"".equals(shopCode)){
             //异步加载数据
@@ -236,9 +210,9 @@ public class NewProductActivity extends BaseActionBarActivity {
     }
 
 
-    /**
+   /* *//**
      * 弹出框点击事件
-     */
+     *//*
     OnItemClickListener itemClickListener = new OnItemClickListener() {
         @Override
         public void onItemClick(DialogPlus dialog, Object item, View view,final int position) {
@@ -246,7 +220,7 @@ public class NewProductActivity extends BaseActionBarActivity {
             String clickedAppName = textView.getText().toString();
             Toast.makeText(NewProductActivity.this, clickedAppName + " clicked", Toast.LENGTH_LONG).show();
         }
-    };
+    };*/
     /**
      * 弹出框按钮点击事件
      */
@@ -346,14 +320,14 @@ public class NewProductActivity extends BaseActionBarActivity {
         if(coverAdapter.state2.size()>0){
             System.out.println(coverAdapter.state2);
             HashMap<Integer, Boolean> state =coverAdapter.state2;
-            String options="选择的项是:";
+            //String options="选择的项是:";
             for(int j=0;j<coverAdapter.getCount();j++){
                 System.out.println("state.get("+j+")=="+state.get(j));
                 if(state.get(j)!=null){
                     ShopCoverType coverType=(ShopCoverType)coverAdapter.getItem(j);
-                    String username=coverType.getCoverTypeName();
-                    String id=coverType.getCoverTypeCode();
-                    options+="\n"+id+"."+username;
+                    //String username=coverType.getCoverTypeName();
+                    //String id=coverType.getCoverTypeCode();
+                    //options+="\n"+id+"."+username;
                     coverName+=coverType.getCoverTypeName()+",";
                     coverValue+=coverType.getCoverTypeCode()+",";
                     //先设置成选择后的分类等点完成的时候再一起同步到数据库
@@ -379,14 +353,14 @@ public class NewProductActivity extends BaseActionBarActivity {
         if(labelAdapter.state.size()>0) {
             System.out.println(labelAdapter.state);
             HashMap<Integer, Boolean> state = labelAdapter.state;
-            String options = "选择的项是:";
+            //String options = "选择的项是:";
             for (int j = 0; j < labelAdapter.getCount(); j++) {
                 System.out.println("state.get(" + j + ")==" + state.get(j));
                 if (state.get(j) != null) {
                     ProductLabel obj = (ProductLabel) labelAdapter.getItem(j);
                     String username = obj.getLabelName();
                     String id = obj.getLabelCode();
-                    options += "\n" + id + "." + username;
+                 //   options += "\n" + id + "." + username;
                     labelName += obj.getLabelName() + ",";
                     labelValue += obj.getLabelCode() + ",";
                     //先设置成选择后的分类等点完成的时候再一起同步到数据库
@@ -431,7 +405,7 @@ public class NewProductActivity extends BaseActionBarActivity {
 
     public void doUploadFile(String formUrl,String fileName) throws Exception {
 
-        OSSFile ossFile = new OSSFile(sampleBucket, fileName);
+        OSSFile ossFile = new OSSFile(myapplication.getOssBucket(), fileName);
         ossFile.setUploadFilePath(formUrl, "image/jpg");
         ossFile.uploadInBackground(new SaveCallback() {
 
@@ -481,7 +455,7 @@ public class NewProductActivity extends BaseActionBarActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
-                Log.d(NewProductActivity.class.getName(), statusCode + "");
+               // Log.d(NewProductActivity.class.getName(), statusCode + "");
                 if (null != response) {
                     // Toast.makeText(NewProductActivity.this, response, Toast.LENGTH_SHORT).show();
                     Toast.makeText(NewProductActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
@@ -514,9 +488,7 @@ public class NewProductActivity extends BaseActionBarActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, ProductResultVO response) {
                 Log.d(NewProductActivity.class.getName(), response.toString());
-                if (null != response) {
                     doInUiThread(response);
-                }
             }
 
             @Override
@@ -546,9 +518,7 @@ public class NewProductActivity extends BaseActionBarActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
                 Log.d(NewProductActivity.class.getName(), response.toString());
-                if (null != response) {
                     doInProUiThread(response);
-                }
             }
 
             @Override
@@ -572,7 +542,7 @@ public class NewProductActivity extends BaseActionBarActivity {
         ProductBase base=obj.getProBase();
         //设置当前商品状态 并且设置按钮文字
         delFlag=pro.getDelFlag();
-        if(delFlag.intValue()==1){//设置为下架商品
+        if(delFlag==1){//设置为下架商品
             btn_pro_up_down.setText(getResources().getString(R.string.pro_out_sale));
         }else{
             btn_pro_up_down.setText(getResources().getString(R.string.pro_inner_sale));
@@ -599,6 +569,10 @@ public class NewProductActivity extends BaseActionBarActivity {
             reDrawGridLayout();
             mAdapter.setmList(mList);
             mAdapter.notifyDataSetChanged();
+            //图片区域是否需要重新计算
+            if(dataList.size()>5){
+                gridViewDraw=true;
+            }
         }
         //组装类别
         List<ProductCoverRelVO> myCovers=obj.getMyCovers();
@@ -643,10 +617,10 @@ public class NewProductActivity extends BaseActionBarActivity {
             HeaderAnimatorActivity_.intent(this).start();
             finish();
         } else {
-            if (delFlag.intValue() == 1) {
+            if (delFlag == 1) {
                 Toast.makeText(NewProductActivity.this, "商品已下架", Toast.LENGTH_SHORT).show();
                 btn_pro_up_down.setText(getResources().getString(R.string.pro_inner_sale));
-            } else if (delFlag.intValue() == 0) {
+            } else if (delFlag == 0) {
                 Toast.makeText(NewProductActivity.this, "商品已上架", Toast.LENGTH_SHORT).show();
                 btn_pro_up_down.setText(getResources().getString(R.string.pro_out_sale));
             }
@@ -686,10 +660,11 @@ public class NewProductActivity extends BaseActionBarActivity {
      * 重构gridView
      */
     void reDrawGridLayout(){
-        if(null!=mList&&mList.size()>5){
+        if(null!=mList&&mList.size()>5&&!gridViewDraw){
             LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridView.getLayoutParams(); // 取控件mGrid当前的布局参数
             linearParams.height=gridView.getHeight()*2+10;
             gridView.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件mGrid2
+            gridViewDraw=true;
         }
     }
 

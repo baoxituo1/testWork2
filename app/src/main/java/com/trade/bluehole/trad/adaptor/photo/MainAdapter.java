@@ -51,7 +51,7 @@ public class MainAdapter extends MyBaseAdapter<Photo>
             oh=(ObjectHold)view.getTag();
        // }
         if(null==p.imgPath||"".equals(p.imgPath)){//后面放个加号增加图片
-            oh.imageView.setImageResource(R.drawable.add_image);
+            oh.imageView.setImageResource(R.drawable.new_add_2);
         }else{
             if("1".equals(p.dataType)){
                 ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + mList.get(position).imgPath+DataUrlContents.img_list_head_img, oh.imageView, ImageManager.options);
