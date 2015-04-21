@@ -186,11 +186,11 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
 
 
         } else {//商品被点击
-            ProductIndexVO pr = mList.get(position - 1);
+           /* ProductIndexVO pr = mList.get(position - 1);
             Intent intent = NewProductActivity_.intent(this).get();
             intent.putExtra(NewProductActivity.PRODUCT_CODE_EXTRA, pr.getProductCode());
             intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA, pr.getShopCode());
-            startActivity(intent);
+            startActivity(intent);*/
 
         }
 

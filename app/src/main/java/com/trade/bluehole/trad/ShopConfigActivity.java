@@ -91,11 +91,7 @@ public class ShopConfigActivity extends BaseActionBarActivity {
         //获取用户
         user=myapplication.getUser();
         //初始化等待dialog
-        pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-            pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-            pDialog.setTitleText("Loading");
-            pDialog.setCancelable(false);
-            pDialog.show();
+        pDialog = getDialog(this);
         //加载数据
         if(null!=user){
             loadServerData();
@@ -354,6 +350,8 @@ public class ShopConfigActivity extends BaseActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
+                pDialog.hide();
+                Toast.makeText(ShopConfigActivity.this, "服务器繁忙", Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -40,6 +40,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 
 /**
  * A login screen that offers login via email/password and via Google+ sign in.
@@ -63,25 +65,32 @@ public class LoginSystemActivity extends BaseActionBarActivity {
     @ViewById(R.id.userPassword)
     EditText password;
 
+    //页面进度条
+    SweetAlertDialog pDialog;
+
     @AfterViews
     void initData(){
+        //初始化等待dialog
+        pDialog = getDialog(this);
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setHomeButtonEnabled(false);
     }
 
     @Click(R.id.login_user_login_btn)
     void loginButtonClick(){
+        pDialog.show();
        // Toast.makeText(this,"account:"+account.getText()+",password:"+password.getText(),Toast.LENGTH_SHORT).show();
         RequestParams params=new RequestParams();
         params.put("account",account.getText());
-        params.put("password",password.getText());
-        getClient().get(DataUrlContents.SERVER_HOST+DataUrlContents.user_login, params, new BaseJsonHttpResponseHandler<Result<User, ShopCommonInfo>>() {
+        params.put("password", password.getText());
+        getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.user_login, params, new BaseJsonHttpResponseHandler<Result<User, ShopCommonInfo>>() {
 
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<User, ShopCommonInfo> response) {
                 Log.d(LoginSystemActivity.class.getName(), statusCode + "");
                 if (null != response) {
+                    pDialog.hide();
                     if (response.isSuccess()) {
                         Toast.makeText(LoginSystemActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                         // HashMap u= (HashMap)response.getObj();
@@ -99,7 +108,7 @@ public class LoginSystemActivity extends BaseActionBarActivity {
                         // 关闭Activity
                         // LoginSystemActivity.this.finish();
 
-                       // MainActivity_.intent(LoginSystemActivity.this).start();
+                        // MainActivity_.intent(LoginSystemActivity.this).start();
                         SuperMainActivity_.intent(LoginSystemActivity.this).start();
                     } else {
                         Toast.makeText(LoginSystemActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
@@ -110,6 +119,7 @@ public class LoginSystemActivity extends BaseActionBarActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<User, ShopCommonInfo> errorResponse) {
                 Toast.makeText(LoginSystemActivity.this, "服务器繁忙", Toast.LENGTH_SHORT).show();
+                pDialog.hide();
             }
 
             @Override
@@ -121,6 +131,12 @@ public class LoginSystemActivity extends BaseActionBarActivity {
         });
     }
 
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        pDialog.dismiss();
+    }
 
     @Click(R.id.register_user_account)
     void registerAccountOnClick(){

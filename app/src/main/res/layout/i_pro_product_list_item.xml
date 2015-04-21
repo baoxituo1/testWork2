@@ -7,7 +7,9 @@
     android:background="@color/white"
     android:layout_height="match_parent">
     <LinearLayout
+        android:id="@id/pro_edit_layout"
         android:orientation="horizontal"
+        android:background="@drawable/main_menu_layout"
         android:layout_width="match_parent"
         android:padding="@dimen/n_padding_normal"
         android:layout_height="wrap_content">
@@ -88,27 +90,18 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:weightSum="3"
-        android:layout_height="20dp">
+        android:layout_height="@dimen/pro_list_bottom">
         <RelativeLayout
+            android:id="@id/pro_view_btn"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:background="@drawable/main_menu_layout"
             android:layout_height="match_parent">
-            <!-- <mehdi.sakout.fancybuttons.FancyButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                fancy:borderWidth="2dp"
-                fancy:defaultColor="@color/saffron"
-                fancy:focusColor="#8cc9f8"
-                fancy:fontIconResource="@string/main_eye"
-                fancy:fontIconSize="10sp"
-                fancy:iconPosition="top"
-                fancy:textColor="#FFFFFF"/>-->
                <ImageView
-                   android:layout_width="wrap_content"
+                   android:layout_width="@dimen/user_edit_ioc_height_width"
                    android:src="@drawable/eye"
                    android:layout_centerInParent="true"
-                   android:layout_height="wrap_content" />
+                   android:layout_height="@dimen/user_edit_ioc_height_width" />
             </RelativeLayout>
 
         <View
@@ -118,14 +111,16 @@
             android:background="@color/note"
             />
         <RelativeLayout
+            android:id="@id/pro_copy_btn"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:background="@drawable/main_menu_layout"
             android:layout_height="match_parent">
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/user_edit_ioc_height_width"
                 android:src="@drawable/link"
                 android:layout_centerInParent="true"
-                android:layout_height="wrap_content" />
+                android:layout_height="@dimen/user_edit_ioc_height_width" />
         </RelativeLayout>
         <View
             android:layout_width="1dp"
@@ -134,14 +129,16 @@
             android:background="@color/note"
             />
         <RelativeLayout
+            android:id="@id/pro_share_btn"
+            android:background="@drawable/main_menu_layout"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/user_edit_ioc_height_width"
                 android:src="@drawable/share2"
                 android:layout_centerInParent="true"
-                android:layout_height="wrap_content" />
+                android:layout_height="@dimen/user_edit_ioc_height_width" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

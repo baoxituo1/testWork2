@@ -146,4 +146,8 @@ public class DataUrlContents {
      *读取通知详细列表
      */
     public final  static String load_letter_all_list="shopjson/loadLetterList.do";
+    /**
+     *预览商品
+     */
+    public final  static String show_view_pro_web="detailPage/selectDetailProduct.htm";
 }

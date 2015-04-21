@@ -20,6 +20,10 @@
     <item type="id" name="btn_pro_up_down" />
     <item type="id" name="btn_pro_del" />
     <item type="id" name="btn_r_send_yzm" />
+    <item type="id" name="pro_edit_layout" />
+    <item type="id" name="pro_view_btn" />
+    <item type="id" name="pro_copy_btn" />
+    <item type="id" name="pro_share_btn" />
 
 
     <item type="id" name="main_sale_ing_btn" />

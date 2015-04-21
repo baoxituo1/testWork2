@@ -225,6 +225,10 @@
             android:name=".activity.msg.MessagePageviewActivity_"
             android:label="@string/title_activity_message_pageview" >
         </activity>
+        <activity
+            android:name=".activity.webview.ProductWebViewActivity_"
+            android:label="@string/title_activity_images_preview" >
+        </activity>
     </application>
 
 </manifest>

@@ -3,7 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="page_body_text_size">14dp</dimen>
-
+    <!--商品-->
+    <dimen name="pro_list_bottom">25dp</dimen>
     <!-- action_bar_user_header animator-->
     <dimen name="min_height_textheader_materiallike">42dp</dimen>
     <dimen name="min_height_header_materiallike">60dp</dimen>
