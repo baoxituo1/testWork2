@@ -741,6 +741,7 @@ public class NewProductActivity extends BaseActionBarActivity {
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.cancel();
                             finish();
                         }
                     })
@@ -787,6 +788,7 @@ public class NewProductActivity extends BaseActionBarActivity {
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.cancel();
                             finish();
                         }
                     })
