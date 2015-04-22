@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,6 +46,7 @@ import org.apache.http.Header;
 import com.aliyun.mbaas.oss.storage.OSSBucket;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.photo.ImageDirActivity;
+import com.trade.bluehole.trad.activity.photo.PhotoDesignActivity;
 import com.trade.bluehole.trad.adaptor.pro.ProductCoverAdapter;
 import com.trade.bluehole.trad.adaptor.photo.MainAdapter;
 import com.trade.bluehole.trad.adaptor.pro.ProductLabelAdapter;
@@ -68,6 +70,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 @EActivity(R.layout.activity_product_add)
@@ -75,6 +78,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     //商品和店铺编码标志
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String PRODUCT_CODE_EXTRA = "productCode";
+    public static final int PRODUCT_DESIGN_PHOTO = 15;
     //选中的类别
     public HashMap<Integer, Boolean> state = new HashMap<Integer, Boolean>();
     //需要提交的类型名称
@@ -109,7 +113,9 @@ public class NewProductActivity extends BaseActionBarActivity {
     String imageUrls="";//新增商品 待添加商品列表
     boolean gridViewDraw=false;//选择图片表是否已经重画过
     private Integer delFlag;//商品删除标志
-
+    //页面进度条
+    SweetAlertDialog pDialog;
+    int allUploadImgNum=0;//待上传图片数
     @ViewById(R.id.result_image)
     ImageView resultView;
     @ViewById(R.id.tv)
@@ -135,7 +141,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     @AfterViews
     void initData(){
         Log.e("NewProductActivity", "proCode:" + proCode + ",shopCode:" + shopCode);
-
+        pDialog=getDialog(this);
         user=myapplication.getUser();
         //实例化分类适配器
         coverAdapter = new ProductCoverAdapter(this, false);
@@ -302,7 +308,7 @@ public class NewProductActivity extends BaseActionBarActivity {
      */
     @Click(R.id.btn_pro_up_down)
     void onUpDownProductBtnOnClick(){
-        updateProductStateData("1",delFlag);
+        updateProductStateData("1", delFlag);
     }
     /**
      * 当商品删除按钮被点击
@@ -391,6 +397,7 @@ public class NewProductActivity extends BaseActionBarActivity {
                         String fileName= "pro/"+"image_"+UUID.randomUUID()+".jpg";
                         doUploadFile(ls.imgPath,fileName);
                         imageUrls+=fileName+",";
+                        allUploadImgNum++;//上传图片总数
                     }
                     //Log.e("NewProductActivity", "oss-file-name:"+ls.fileName);
                 } catch (Exception e) {
@@ -422,14 +429,26 @@ public class NewProductActivity extends BaseActionBarActivity {
             @Override
             public void onSuccess(String arg0) {
                 Log.e("NewProductActivity", "上传成功");
+                uploadImageCallBack();
             }
         });
+    }
+
+    @UiThread
+    void uploadImageCallBack(){
+        --allUploadImgNum;
+        if(allUploadImgNum<=0){
+            Toast.makeText(NewProductActivity.this, "图片全部上传成功", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(NewProductActivity.this, "上传成功,剩余"+allUploadImgNum+"张", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
      * 提交数据
      */
     void uploadProImg(){
+        pDialog.show();
         RequestParams params=new RequestParams();
         //如果商品编码不是空 调用更新方法
         String methodName=DataUrlContents.save_all_cshop;
@@ -455,16 +474,19 @@ public class NewProductActivity extends BaseActionBarActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
-               // Log.d(NewProductActivity.class.getName(), statusCode + "");
+                pDialog.hide();
                 if (null != response) {
                     // Toast.makeText(NewProductActivity.this, response, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(NewProductActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(NewProductActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewProductActivity.this, "图片后台处理中,稍后刷新查看", Toast.LENGTH_SHORT).show();
                     HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
+                Toast.makeText(NewProductActivity.this, "请求失败:"+statusCode, Toast.LENGTH_SHORT).show();
+                pDialog.hide();
             }
 
             @Override
@@ -478,6 +500,7 @@ public class NewProductActivity extends BaseActionBarActivity {
      * 装载数据根据商品编码和商铺编码
      */
     void loadServerData(){
+        pDialog.show();
         RequestParams params=new RequestParams();
         params.put("productCode",proCode);
         params.put("shopCode",shopCode);
@@ -487,12 +510,15 @@ public class NewProductActivity extends BaseActionBarActivity {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, ProductResultVO response) {
-                Log.d(NewProductActivity.class.getName(), response.toString());
-                    doInUiThread(response);
+                //Log.d(NewProductActivity.class.getName(), response.toString());
+                pDialog.hide();
+                doInUiThread(response);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, ProductResultVO errorResponse) {
+                Toast.makeText(NewProductActivity.this, "请求失败:" + statusCode, Toast.LENGTH_SHORT).show();
+                pDialog.hide();
             }
 
             @Override
@@ -507,6 +533,7 @@ public class NewProductActivity extends BaseActionBarActivity {
      * 更新商品状态 上架、下架、删除
      */
     void updateProductStateData(String type,Integer state){
+        pDialog.show();
         RequestParams params=new RequestParams();
         params.put("productCode", proCode);
         params.put("state", state == 1 ? 0 : 1);
@@ -517,12 +544,15 @@ public class NewProductActivity extends BaseActionBarActivity {
         getClient().get(DataUrlContents.SERVER_HOST + methodName, params, new BaseJsonHttpResponseHandler<String>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
-                Log.d(NewProductActivity.class.getName(), response.toString());
-                    doInProUiThread(response);
+                //Log.d(NewProductActivity.class.getName(), response.toString());
+                pDialog.hide();
+                doInProUiThread(response);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
+                Toast.makeText(NewProductActivity.this, "请求失败"+statusCode, Toast.LENGTH_SHORT).show();
+                pDialog.hide();
             }
 
             @Override
@@ -653,6 +683,21 @@ public class NewProductActivity extends BaseActionBarActivity {
                 mTextView.setText(getString(R.string.check_length, mAdapter.getCount()));
                 reDrawGridLayout();
             }
+        }else if(requestCode==PRODUCT_DESIGN_PHOTO&&resultCode == RESULT_OK){//图片优化修改后返回结果
+            Integer position= result.getIntExtra(PhotoDesignActivity.IMAGE_URI_POSITION,-1);
+            String uri=result.getStringExtra(PhotoDesignActivity.IMAGE_URI);
+            if(position<0||uri==null){
+                Toast.makeText(NewProductActivity.this, "参数错误", Toast.LENGTH_SHORT).show();
+            }else{
+                //更改list中图片，并通知适配器重新加载
+                mList.get(position).imgPath=uri;
+                mList.get(position).dataType="3";
+                //加入待删除列表图片id
+                del_image_ids+=mList.get(position).id+",";
+                mAdapter.notifyDataSetChanged();
+                //Toast.makeText(NewProductActivity.this, "重载成功", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 
@@ -689,7 +734,25 @@ public class NewProductActivity extends BaseActionBarActivity {
             uploadProImageClick();
             return true;
         }else if(id==android.R.id.home){
-            finish();
+            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("确定要退出?")
+                    .setContentText("编辑的内容不会被保存!")
+                    .setConfirmText("是的,退出!")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            finish();
+                        }
+                    })
+                    .setCancelText("不退出!")
+                    .showCancelButton(true)
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.cancel();
+                        }
+                    })
+                    .show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -705,5 +768,44 @@ public class NewProductActivity extends BaseActionBarActivity {
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * 处理后退事件
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(keyCode == KeyEvent.KEYCODE_BACK ){
+            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("确定退出?")
+                    .setContentText("要放弃此次编辑么!")
+                    .setConfirmText("是的,退出!")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            finish();
+                        }
+                    })
+                    .setCancelText("不退出!")
+                    .showCancelButton(true)
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.cancel();
+                        }
+                    })
+                    .show();
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        pDialog.dismiss();
     }
 }

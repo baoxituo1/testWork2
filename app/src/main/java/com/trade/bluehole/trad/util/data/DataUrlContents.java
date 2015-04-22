@@ -150,4 +150,8 @@ public class DataUrlContents {
      *预览商品
      */
     public final  static String show_view_pro_web="detailPage/selectDetailProduct.htm";
+    /**
+     *预览商品
+     */
+    public final  static String edit_shop="shopjson/editShop.do";
 }

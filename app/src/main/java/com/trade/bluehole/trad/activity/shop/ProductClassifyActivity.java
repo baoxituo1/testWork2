@@ -75,10 +75,7 @@ public class ProductClassifyActivity extends BaseActionBarActivity {
 
         adaptor=new ProductListViewAdaptor(this);
 
-        pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
+        pDialog = getDialog(this);
         if(null==coverCode||"".equals(coverCode)){
             coverCode="no_cover";
         }

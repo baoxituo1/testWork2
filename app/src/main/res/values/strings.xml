@@ -187,4 +187,10 @@
     <string name="error_title_damn">很遗憾</string>
     <string name="error_subtitle_failed_one_more_time">请求失败</string>
     <string name="info_retrying">重试</string>
+    <string name="title_activity_photo_design">图片优化</string>
+
+    <!--图片美化-->
+    <string name="photo_done">完成</string>
+    <string name="photo_choose_filter">选择效果</string>
+    <string name="photo_save">完成</string>
 </resources>

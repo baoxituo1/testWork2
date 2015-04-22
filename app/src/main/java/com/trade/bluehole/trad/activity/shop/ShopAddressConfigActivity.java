@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -20,6 +21,7 @@ import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.MyApplication;
+import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -78,10 +80,7 @@ public class ShopAddressConfigActivity extends BaseActionBarActivity {
         //获取用户
         user=myapplication.getUser();
         //初始化等待dialog
-        pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText("Loading");
-        pDialog.setCancelable(false);
+        pDialog = getDialog(this);
        // pDialog.show();
         provinceShopName.setText(provinceNameExr);
         cityName.setText(cityNameNameExr);
@@ -148,7 +147,7 @@ public class ShopAddressConfigActivity extends BaseActionBarActivity {
         if(null!="addressNameExr"&&!"".equals(addressNameExr)){
                 params.put("address", addressNameExr);
         }
-        getClient().post("http://192.168.1.161:8080/qqt_up/shopjson/editShop.do", params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().post(DataUrlContents.SERVER_HOST+DataUrlContents.edit_shop, params, new BaseJsonHttpResponseHandler<String>() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
@@ -167,6 +166,8 @@ public class ShopAddressConfigActivity extends BaseActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
+                pDialog.hide();
+                Toast.makeText(ShopAddressConfigActivity.this, "请求失败："+statusCode , Toast.LENGTH_SHORT).show();
             }
 
             @Override
