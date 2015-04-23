@@ -43,6 +43,6 @@ public class Photo extends Bean
     @Override
     public int hashCode()
     {
-        return imgPath.hashCode();
+        return null!=imgPath?imgPath.hashCode():0;
     }
 }

@@ -47,7 +47,7 @@ public class MyApplication extends Application {
     public static final int RESULT_CHANGE = 10010;
 
     /** 最多能够选择的图片个数 */
-    public static final int MAX_SIZE = 10;
+    public static final int MAX_SIZE = 15;
 
 
     /**

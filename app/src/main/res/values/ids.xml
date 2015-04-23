@@ -163,4 +163,11 @@
     <item type="id" name="photo_filter_text" />
     <item type="id" name="photo_filter_layout" />
     <item type="id" name="filter_recycler_view" />
+
+    <!--新增商品-->
+    <item type="id" name="new_drag_layout" />
+    <item type="id" name="new_add_button" />
+
+    <!--商品排序-->
+    <item type="id" name="photo_order_done" />
 </resources>

@@ -2,7 +2,6 @@ package com.trade.bluehole.trad;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -15,21 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aliyun.mbaas.oss.OSSClient;
 import com.aliyun.mbaas.oss.callback.SaveCallback;
 import com.aliyun.mbaas.oss.model.OSSException;
-import com.aliyun.mbaas.oss.model.TokenGenerator;
 import com.aliyun.mbaas.oss.storage.OSSFile;
-import com.aliyun.mbaas.oss.util.OSSLog;
-import com.aliyun.mbaas.oss.util.OSSToolKit;
 import com.cengalabs.flatui.views.FlatToggleButton;
-import com.google.gson.Gson;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
-import com.orhanobut.dialogplus.OnItemClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.soundcloud.android.crop.Crop;
 
@@ -42,17 +34,17 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
+import org.askerov.dynamicgrid.DynamicGridView;
 
-import com.aliyun.mbaas.oss.storage.OSSBucket;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.photo.ImageDirActivity;
+import com.trade.bluehole.trad.activity.photo.ImageOrderChangeActivity_;
 import com.trade.bluehole.trad.activity.photo.PhotoDesignActivity;
 import com.trade.bluehole.trad.adaptor.pro.ProductCoverAdapter;
 import com.trade.bluehole.trad.adaptor.photo.MainAdapter;
 import com.trade.bluehole.trad.adaptor.pro.ProductLabelAdapter;
 import com.trade.bluehole.trad.entity.Product;
 import com.trade.bluehole.trad.entity.ProductBase;
-import com.trade.bluehole.trad.entity.ProductIndexVO;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.photo.Photo;
 import com.trade.bluehole.trad.entity.pro.ProductCoverRelVO;
@@ -78,7 +70,9 @@ public class NewProductActivity extends BaseActionBarActivity {
     //商品和店铺编码标志
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String PRODUCT_CODE_EXTRA = "productCode";
-    public static final int PRODUCT_DESIGN_PHOTO = 15;
+    public static final int GIRD_VIEW_SIZE = 15;//grid最大图片数量
+    public static final int PRODUCT_DESIGN_PHOTO = 15;//优化图片返回结果
+    public static final int PRODUCT_ORDER_PHOTO = 16;//优化图片排序
     //选中的类别
     public HashMap<Integer, Boolean> state = new HashMap<Integer, Boolean>();
     //需要提交的类型名称
@@ -97,7 +91,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     MyApplication myapplication;
     User user=null;
     //grid展示图片容器
-    private ArrayList<Photo> mList = new ArrayList<Photo>();
+    public static ArrayList<Photo> mList = new ArrayList<Photo>();
     //服务器加载回的商品图片
     private ArrayList<Photo> dataList = new ArrayList<Photo>();
     //已经选中的自定义编码为复现checkbox
@@ -175,36 +169,24 @@ public class NewProductActivity extends BaseActionBarActivity {
         initDialog();
     }
 
-    /**
-     * 实例化弹出窗口
-     */
-    void initDialog(){
-        //自定义类别
-         coverDialog  = new DialogPlus.Builder(this)
-                    .setAdapter(coverAdapter)
-                    .setHeader(R.layout.dialog_cover_header)
-                    .setFooter(R.layout.dialog_footer)
-                    .setGravity(DialogPlus.Gravity.BOTTOM)
-                    .setOnClickListener(clickListener)
-                            // .setOnItemClickListener(itemClickListener)
-                    .create();
 
-        labelDialog = new DialogPlus.Builder(this)
-                .setAdapter(labelAdapter)
-                .setHeader(R.layout.dialog_label_header)
-                .setFooter(R.layout.dialog_footer)
-                .setGravity(DialogPlus.Gravity.BOTTOM)
-                .setOnClickListener(labelClickListener)
-                        // .setOnItemClickListener(itemClickListener)
-                .create();
-        confirmDialog = new DialogPlus.Builder(this)
-                .setContentHolder(new ViewHolder(R.layout.dialog_confirm_content))
-                //.setHeader(R.layout.dialog_label_header)
-                .setFooter(R.layout.dialog_footer)
-                .setGravity(DialogPlus.Gravity.BOTTOM)
-                .setOnClickListener(delClickListener)
-                .create();
+    /**
+     * 点击处理图片位置调整
+     */
+    @Click(R.id.change_image_index)
+    void onCLickImageIndex(){
+        if(mList.size()>1){
+            Intent intent= ImageOrderChangeActivity_.intent(this).get();
+            startActivityForResult(intent,PRODUCT_ORDER_PHOTO);
+        }else{
+            Toast.makeText(NewProductActivity.this, "请先选择图片", Toast.LENGTH_SHORT).show();
+        }
     }
+
+
+
+
+
     /**
      * 当设置推荐按钮点击
      */
@@ -465,7 +447,7 @@ public class NewProductActivity extends BaseActionBarActivity {
         params.put("shopCode",shopCode);
         params.put("userCode",user.getUserCode());
         params.put("productName",product_name.getText());
-        params.put("productPrice",product_price.getText());
+        params.put("productPrice", product_price.getText());
         params.put("productNumber",product_number.getText());
         params.put("imageUrls",imageUrls);
         Log.e("NewProductActivity", "imageUrls:" + imageUrls);
@@ -485,7 +467,7 @@ public class NewProductActivity extends BaseActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
-                Toast.makeText(NewProductActivity.this, "请求失败:"+statusCode, Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewProductActivity.this, "请求失败:" + statusCode, Toast.LENGTH_SHORT).show();
                 pDialog.hide();
             }
 
@@ -592,7 +574,7 @@ public class NewProductActivity extends BaseActionBarActivity {
                 photo.id=ls.getId()+"";
                 dataList.add(photo);
             }
-            if(dataList.size()<10){
+            if(dataList.size()<GIRD_VIEW_SIZE){
                 dataList.add(new Photo());
             }
             mList.addAll(dataList);
@@ -600,7 +582,7 @@ public class NewProductActivity extends BaseActionBarActivity {
             mAdapter.setmList(mList);
             mAdapter.notifyDataSetChanged();
             //图片区域是否需要重新计算
-            if(dataList.size()>5){
+            if(dataList.size()>4){
                 gridViewDraw=true;
             }
         }
@@ -674,7 +656,7 @@ public class NewProductActivity extends BaseActionBarActivity {
                 {
                     mList.addAll(list);
                 }
-                if(mList.size()<10){
+                if(mList.size()<GIRD_VIEW_SIZE){
                     Photo p=new Photo();
                     p.id="99911111";
                     mList.add(p);
@@ -698,6 +680,9 @@ public class NewProductActivity extends BaseActionBarActivity {
                 //Toast.makeText(NewProductActivity.this, "重载成功", Toast.LENGTH_SHORT).show();
             }
 
+        }else if(requestCode==PRODUCT_ORDER_PHOTO&&resultCode == RESULT_OK){//图片排序后返回结果
+            mAdapter.setmList(mList);
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -705,12 +690,44 @@ public class NewProductActivity extends BaseActionBarActivity {
      * 重构gridView
      */
     void reDrawGridLayout(){
-        if(null!=mList&&mList.size()>5&&!gridViewDraw){
+        if(null!=mList&&mList.size()>4&&!gridViewDraw){
             LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridView.getLayoutParams(); // 取控件mGrid当前的布局参数
             linearParams.height=gridView.getHeight()*2+10;
             gridView.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件mGrid2
             gridViewDraw=true;
         }
+    }
+
+
+    /**
+     * 实例化弹出窗口
+     */
+    void initDialog(){
+        //自定义类别
+        coverDialog  = new DialogPlus.Builder(this)
+                .setAdapter(coverAdapter)
+                .setHeader(R.layout.dialog_cover_header)
+                .setFooter(R.layout.dialog_footer)
+                .setGravity(DialogPlus.Gravity.BOTTOM)
+                .setOnClickListener(clickListener)
+                        // .setOnItemClickListener(itemClickListener)
+                .create();
+
+        labelDialog = new DialogPlus.Builder(this)
+                .setAdapter(labelAdapter)
+                .setHeader(R.layout.dialog_label_header)
+                .setFooter(R.layout.dialog_footer)
+                .setGravity(DialogPlus.Gravity.BOTTOM)
+                .setOnClickListener(labelClickListener)
+                        // .setOnItemClickListener(itemClickListener)
+                .create();
+        confirmDialog = new DialogPlus.Builder(this)
+                .setContentHolder(new ViewHolder(R.layout.dialog_confirm_content))
+                        //.setHeader(R.layout.dialog_label_header)
+                .setFooter(R.layout.dialog_footer)
+                .setGravity(DialogPlus.Gravity.BOTTOM)
+                .setOnClickListener(delClickListener)
+                .create();
     }
 
     @Override

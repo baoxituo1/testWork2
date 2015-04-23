@@ -237,6 +237,10 @@
             android:name=".activity.photo.PhotoDesignActivity_"
             android:label="@string/title_activity_photo_design" >
         </activity>
+        <activity
+            android:name=".activity.photo.ImageOrderChangeActivity_"
+            android:label="@string/title_activity_image_order_change" >
+        </activity>
     </application>
 
 </manifest>

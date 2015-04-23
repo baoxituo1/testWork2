@@ -44,6 +44,7 @@
     <string name="check_dir">选择目录</string>
     <string name="check_length">已经选择<xliff:g id="anystring_you_like">%1$d</xliff:g>张图片</string>
     <string name="tip_max_size">最多只能选择<xliff:g id="anystring_you_like">%1$d</xliff:g>张图片</string>
+    <string name="new_add_image">新增</string>
     <!--选择商品分类 -->
     <string name="google_plus_title">Google Plus</string>
     <string name="google_maps_title">Maps</string>
@@ -195,4 +196,8 @@
     <string name="photo_choose_filter">选择效果</string>
     <string name="photo_save">完成</string>
     <string name="photo_bar_set">调整</string>
+    <string name="title_activity_image_order_change">图片展示顺序</string>
+
+    <!--图片排序-->
+    <string name="photo_order_done">完成</string>
 </resources>

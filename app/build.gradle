@@ -21,7 +21,7 @@ apply plugin: 'android-apt'
 def AAVersion = '3.2'
 
 dependencies {
-
+    compile project(':dynamicgrid')
     compile fileTree(dir: 'libs', include: '*.jar')
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.android.support:support-v4:22.0.0'

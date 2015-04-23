@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -29,44 +30,50 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerInside" />
+
                 <LinearLayout
                     android:layout_marginLeft="@dimen/n_padding_normal"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
+
                     <TextView
                         android:id="@+id/tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textSize="14sp"
-                        android:text="商品图片"
-                        />
+                        android:text="商品图片" />
+
                     <TextView
                         android:layout_marginLeft="@dimen/n_padding_normal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/grey_light"
                         android:textSize="12sp"
-                        android:text="点击图片可优化"
-                        />
+                        android:text="点击图片可优化" />
                 </LinearLayout>
 
                 <GridView
                     android:id="@+id/gridview"
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
+                    android:layout_height="70dp"
                     android:layout_below="@id/tv"
-                    android:numColumns="5"
+                    android:numColumns="4"
                     android:stretchMode="columnWidth"
-                    android:layout_margin="5dp"
-                    android:horizontalSpacing="4dp"
-                    android:verticalSpacing="4dp" />
+                    android:layout_margin="@dimen/n_padding_normal"
+                    android:horizontalSpacing="@dimen/n_padding_normal_s"
+                    android:verticalSpacing="@dimen/n_padding_normal" />
+                <Button
+                    android:id="@+id/change_image_index"
+                    android:layout_width="wrap_content"
+                    android:text="调整顺序"
+                    android:layout_height="@dimen/common_height" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/user_info_layout3"
-                android:layout_below="@id/user_info_layout2"
+                android:layout_below="@id/new_drag_layout"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -331,11 +338,13 @@
                 android:orientation="horizontal"
                 android:background="@color/whitesmoke"
                 android:layout_height="70dp">
+
                 <LinearLayout
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:gravity="center_vertical|center_horizontal"
                     android:layout_height="match_parent">
+
                     <mehdi.sakout.fancybuttons.FancyButton
                         android:id="@id/btn_pro_up_down"
                         android:layout_width="wrap_content"
@@ -355,11 +364,13 @@
                         fancy:text="@string/pro_out_sale"
                         fancy:textColor="@color/secondary" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:gravity="center_vertical|center_horizontal"
                     android:layout_height="match_parent">
+
                     <mehdi.sakout.fancybuttons.FancyButton
                         android:id="@id/btn_pro_del"
                         android:layout_width="wrap_content"
@@ -380,6 +391,6 @@
                         fancy:textColor="@color/primary" />
                 </LinearLayout>
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 </RelativeLayout>
