@@ -191,6 +191,8 @@
 
     <!--图片美化-->
     <string name="photo_done">完成</string>
+    <string name="photo_advance">更多效果</string>
     <string name="photo_choose_filter">选择效果</string>
     <string name="photo_save">完成</string>
+    <string name="photo_bar_set">调整</string>
 </resources>

@@ -152,10 +152,15 @@
     <item type="id" name="msg_notice_layout" />
     <item type="id" name="msg_letter_layout" />
 
-    <!--消息列表-->
+    <!--图片优化-->
+    <item type="id" name="photo_menu_advance" />
     <item type="id" name="photo_menu_done" />
     <item type="id" name="photo_choose_filter" />
     <item type="id" name="photo_save" />
     <item type="id" name="photo_seekBar" />
     <item type="id" name="photo_gpu_image" />
+    <item type="id" name="photo_filter_image" />
+    <item type="id" name="photo_filter_text" />
+    <item type="id" name="photo_filter_layout" />
+    <item type="id" name="filter_recycler_view" />
 </resources>

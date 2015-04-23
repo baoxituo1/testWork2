@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/photo_filter_layout"
+    android:layout_width="@dimen/photo_filter_list_width"
+    android:background="@drawable/main_menu_layout"
+    android:padding="@dimen/n_padding_normal_h"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@id/photo_filter_text"
+        android:layout_marginBottom="@dimen/n_padding_normal"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="白平衡"
+        android:textSize="@dimen/sample_text_size"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_below="@id/photo_filter_text"
+        android:layout_centerHorizontal="true"
+        android:id="@id/photo_filter_image"
+        android:src="@drawable/logo_flickr"
+        android:layout_width="@dimen/common_height"
+        android:layout_height="@dimen/common_height" />
+</RelativeLayout>

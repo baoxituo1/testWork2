@@ -102,9 +102,9 @@ import jp.co.cyberagent.android.gpuimage.GPUImageWeakPixelInclusionFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageWhiteBalanceFilter;
 
 public class GPUImageFilterTools {
-    public static void showDialog(final Context context,
-                                  final OnGpuImageFilterChosenListener listener) {
-        final FilterList filters = new FilterList();
+    public final static FilterList filters = new FilterList();
+    public static void showDialog(final Context context,final OnGpuImageFilterChosenListener listener) {
+
         filters.addFilter("对比度", FilterType.CONTRAST);
         filters.addFilter("反色", FilterType.INVERT);
         filters.addFilter("像素化", FilterType.PIXELATION);
@@ -187,14 +187,13 @@ public class GPUImageFilterTools {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int item) {
-                        listener.onGpuImageFilterChosenListener(
-                                createFilterForType(context, filters.filters.get(item)));
+                        listener.onGpuImageFilterChosenListener(createFilterForType(context, filters.filters.get(item)));
                     }
                 });
         builder.create().show();
     }
 
-    private static GPUImageFilter createFilterForType(final Context context, final FilterType type) {
+    public static GPUImageFilter createFilterForType(final Context context, final FilterType type) {
         switch (type) {
             case CONTRAST:
                 return new GPUImageContrastFilter(2.0f);
@@ -383,7 +382,7 @@ public class GPUImageFilterTools {
         void onGpuImageFilterChosenListener(GPUImageFilter filter);
     }
 
-    private enum FilterType {
+    public enum FilterType {
         CONTRAST, GRAYSCALE, SHARPEN, SEPIA, SOBEL_EDGE_DETECTION, THREE_X_THREE_CONVOLUTION, FILTER_GROUP, EMBOSS, POSTERIZE, GAMMA, BRIGHTNESS, INVERT, HUE, PIXELATION,
         SATURATION, EXPOSURE, HIGHLIGHT_SHADOW, MONOCHROME, OPACITY, RGB, WHITE_BALANCE, VIGNETTE, TONE_CURVE, BLEND_COLOR_BURN, BLEND_COLOR_DODGE, BLEND_DARKEN, BLEND_DIFFERENCE,
         BLEND_DISSOLVE, BLEND_EXCLUSION, BLEND_SOURCE_OVER, BLEND_HARD_LIGHT, BLEND_LIGHTEN, BLEND_ADD, BLEND_DIVIDE, BLEND_MULTIPLY, BLEND_OVERLAY, BLEND_SCREEN, BLEND_ALPHA,
@@ -392,7 +391,7 @@ public class GPUImageFilterTools {
         SPHERE_REFRACTION, SWIRL, WEAK_PIXEL_INCLUSION, FALSE_COLOR, COLOR_BALANCE, LEVELS_FILTER_MIN
     }
 
-    private static class FilterList {
+    public static class FilterList {
         public List<String> names = new LinkedList<String>();
         public List<FilterType> filters = new LinkedList<FilterType>();
 

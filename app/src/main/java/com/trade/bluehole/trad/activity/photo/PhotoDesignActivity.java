@@ -7,19 +7,18 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.trade.bluehole.trad.R;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
@@ -27,6 +26,7 @@ import org.androidannotations.annotations.ViewById;
 import jp.co.cyberagent.android.gpuimage.GPUImageFilter;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
 
+import com.trade.bluehole.trad.adaptor.photo.PhotoDesignFilterAdapter;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.photo.GPUImageFilterTools;
 import com.trade.bluehole.trad.util.photo.GPUImageFilterTools.FilterAdjuster;
@@ -44,6 +44,9 @@ public class PhotoDesignActivity extends ActionBarActivity implements SeekBar.On
     @ViewById(R.id.photo_gpu_image)
      GPUImageView mGPUImageView;//优化视图
 
+    @ViewById(R.id.filter_recycler_view)//优化效果列表
+    RecyclerView mRecyclerView;
+
     @Extra(IMAGE_URI)
     String uri;//图片路径
     @Extra(IMAGE_URI_POSITION)
@@ -51,6 +54,9 @@ public class PhotoDesignActivity extends ActionBarActivity implements SeekBar.On
 
     @ViewById(R.id.photo_seekBar)
     SeekBar seekBar;//强度拖动条
+
+    PhotoDesignFilterAdapter filterAdapter;//效果适配器
+    private LinearLayoutManager  mLayoutManager;//创建线性布局管理器
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +72,11 @@ public class PhotoDesignActivity extends ActionBarActivity implements SeekBar.On
             ImageManager.imageLoader.loadImage(uri, new MyImageLoadingListener());
         }
         seekBar.setOnSeekBarChangeListener(this);
+        //处理顶部过滤效果
+        mRecyclerView.setHasFixedSize(true);//内容变化不影响布局开启
+        mLayoutManager=new LinearLayoutManager(this);//设置线性布局管理
+        mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
     /**
@@ -84,6 +95,9 @@ public class PhotoDesignActivity extends ActionBarActivity implements SeekBar.On
         @Override
         public void onLoadingComplete(String s, View view, Bitmap bitmap) {
             mGPUImageView.setImage(bitmap);
+            filterAdapter=new PhotoDesignFilterAdapter(PhotoDesignActivity.this);
+            mRecyclerView.setAdapter(filterAdapter);//设置适配器
+            filterAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -93,36 +107,13 @@ public class PhotoDesignActivity extends ActionBarActivity implements SeekBar.On
     }
 
 
-    /**
-     * 当选择过滤器点击
-     */
-    @Click(R.id.photo_choose_filter)
-    void onChooseFilterClick(){
-        GPUImageFilterTools.showDialog(this, new GPUImageFilterTools.OnGpuImageFilterChosenListener() {
-            @Override
-            public void onGpuImageFilterChosenListener(final GPUImageFilter filter) {
-                switchFilterTo(filter);
-                mGPUImageView.requestRender();
-            }
-
-        });
-    }
 
     /**
-     * 当点击保存图片
-     */
-    @Click(R.id.photo_save)
-    void onSavePhotoClick(){
-        saveImage();
-    }
-
-    /**
-     * 选择过滤器
+     * 选择过滤器,并实例化到图片
      * @param filter
      */
     private void switchFilterTo(final GPUImageFilter filter) {
-        if (mFilter == null
-                || (filter != null && !mFilter.getClass().equals(filter.getClass()))) {
+        if (mFilter == null || (filter != null && !mFilter.getClass().equals(filter.getClass()))) {
             mFilter = filter;
             mGPUImageView.setFilter(mFilter);
             mFilterAdjuster = new FilterAdjuster(mFilter);
@@ -169,6 +160,15 @@ public class PhotoDesignActivity extends ActionBarActivity implements SeekBar.On
         mGPUImageView.requestRender();
     }
 
+    /**
+     * 选择图片效果
+     * @param type
+     */
+    public void chooseFilter(GPUImageFilterTools.FilterType type){
+        switchFilterTo(GPUImageFilterTools.createFilterForType(this, type));
+        mGPUImageView.requestRender();
+    }
+
 
     @Override
     public void onStartTrackingTouch(final SeekBar seekBar) {
@@ -194,6 +194,17 @@ public class PhotoDesignActivity extends ActionBarActivity implements SeekBar.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.photo_menu_done) {
+            saveImage();
+            return true;
+        }else if(id == R.id.photo_menu_advance){
+            GPUImageFilterTools.showDialog(this, new GPUImageFilterTools.OnGpuImageFilterChosenListener() {
+                @Override
+                public void onGpuImageFilterChosenListener(final GPUImageFilter filter) {
+                    switchFilterTo(filter);
+                    mGPUImageView.requestRender();
+                }
+
+            });
             return true;
         }
 

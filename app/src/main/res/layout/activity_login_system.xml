@@ -83,7 +83,7 @@
                 android:background="@drawable/rounded_edittext"
                 android:gravity="center_vertical"
                 android:password="true"
-                android:text="123456"
+                android:text="qqqqqq"
                 android:singleLine="true" />
         </LinearLayout>
     </LinearLayout>
