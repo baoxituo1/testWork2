@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="@dimen/n_padding_normal_s"
+    android:paddingBottom="@dimen/n_padding_normal_s"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <!--商品参数  开始-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10">
+        <RelativeLayout
+            android:id="@+id/pro_inner_remove"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:background="@drawable/back_ground_click_layout"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/delete_bin"
+                android:layout_centerInParent="true"
+                android:layout_width="@dimen/user_edit_ioc_height_width"
+                android:layout_height="@dimen/user_edit_ioc_height_width" />
+        </RelativeLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_weight="8"
+            android:layout_width="0dp"
+            android:paddingLeft="@dimen/n_padding_normal_h"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--<EditText
+                    android:id="@+id/product_attr_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_edittext"
+                    android:hint="输入型号"
+                    android:textSize="@dimen/page_body_text_size"
+                    android:maxLines="1"
+                    android:singleLine="true" />-->
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/product_attr_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:singleLine="true"
+                    android:gravity="bottom"
+                    android:textSize="@dimen/page_body_text_size"
+                    app:met_floatingLabel="highlight"
+                    app:met_hideUnderline="true"
+                    app:met_floatingLabelText="商品型号"
+                    android:hint="输入型号"/>
+            </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_margin="@dimen/n_padding_normal_s"
+                android:layout_height="1dp"
+                android:background="@color/note" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--<EditText
+                    android:id="@+id/product_attr_val"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_edittext"
+                    android:hint="输入参数"
+                    android:textSize="@dimen/page_body_text_size"
+                    android:maxLines="1"
+                    android:singleLine="true" />-->
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/product_attr_val"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:singleLine="true"
+                    android:gravity="bottom"
+                    android:textSize="@dimen/page_body_text_size"
+                    app:met_floatingLabel="highlight"
+                    app:met_hideUnderline="true"
+                    app:met_floatingLabelText="商品参数"
+                    android:hint="输入内容"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+ </RelativeLayout>
+    <!--商品参数  结束-->

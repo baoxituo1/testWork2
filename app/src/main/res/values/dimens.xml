@@ -76,4 +76,7 @@
     <!--图片美化-->
     <dimen name="photo_filter_list_height">70dp</dimen>
     <dimen name="photo_filter_list_width">75dp</dimen>
+
+    <!--新增商品-->
+    <dimen name="pro_inout_text_height">50dp</dimen>
 </resources>

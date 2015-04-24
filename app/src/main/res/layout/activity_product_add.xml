@@ -8,6 +8,7 @@
     tools:context="com.trade.bluehole.trad.NewProductActivity">
 
     <ScrollView
+        android:id="@id/pro_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -64,6 +65,7 @@
                     android:layout_margin="@dimen/n_padding_normal"
                     android:horizontalSpacing="@dimen/n_padding_normal_s"
                     android:verticalSpacing="@dimen/n_padding_normal" />
+
                 <Button
                     android:id="@+id/change_image_index"
                     android:layout_width="wrap_content"
@@ -111,35 +113,35 @@
                     android:lines="5"
                     android:maxLines="6" />
             </LinearLayout>
-
+            <!--商品价格库存  开始-->
             <LinearLayout
                 android:id="@+id/user_info_layout5"
                 android:layout_below="@id/user_info_layout4"
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/n_padding_normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
+                android:paddingLeft="@dimen/n_padding_normal_h"
                 android:background="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/n_padding_normal_h"
                     android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_weight="0.3"
                         android:layout_width="0dp"
                         android:gravity="center_vertical"
-                        android:text="商品价格"
-                        android:layout_height="20dp" />
+                        android:text="商品价格:"
+                        android:layout_height="@dimen/pro_inout_text_height" />
 
                     <EditText
                         android:id="@+id/product_price"
                         android:layout_weight="0.7"
                         android:layout_width="0dp"
                         android:numeric="decimal"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/pro_inout_text_height"
                         android:hint="请输入商品价格"
                         android:background="@drawable/rounded_edittext"
                         android:textSize="@dimen/page_body_text_size"
@@ -151,28 +153,28 @@
 
                 <View
                     android:layout_width="fill_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/n_padding_normal_s"
                     android:layout_height="1dp"
                     android:background="@color/note" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/n_padding_normal_h"
                     android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_weight="0.3"
                         android:layout_width="0dp"
                         android:gravity="center_vertical"
-                        android:text="商品库存"
-                        android:layout_height="20dp" />
+                        android:text="商品库存:"
+                        android:layout_height="@dimen/pro_inout_text_height" />
 
                     <EditText
                         android:id="@+id/product_number"
                         android:layout_weight="0.7"
                         android:layout_width="0dp"
                         android:numeric="integer"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/pro_inout_text_height"
                         android:background="@drawable/rounded_edittext"
                         android:hint="请输入商品库存"
                         android:textSize="@dimen/page_body_text_size"
@@ -183,16 +185,62 @@
                 </LinearLayout>
 
             </LinearLayout>
+            <!--商品价格库存  结束-->
 
+            <!--商品参数  开始-->
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@id/pro_attr_root_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@id/product_add_attr_layout"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/back_ground_click_layout"
+                android:weightSum="10">
+
+                <RelativeLayout
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:src="@drawable/add_plus"
+                        android:layout_centerInParent="true"
+                        android:layout_width="@dimen/user_edit_ioc_height_width"
+                        android:layout_height="@dimen/user_edit_ioc_height_width" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:background="@drawable/back_ground_click_layout"
+                    android:layout_height="@dimen/pro_inout_text_height">
+
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:text="添加商品参数"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--商品参数  结束-->
+
+            <!--商品分类属性  开始-->
             <LinearLayout
                 android:id="@id/pro_cover_info_layout"
                 android:layout_below="@id/user_info_layout5"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:orientation="vertical"
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
+                android:paddingLeft="@dimen/n_padding_normal_h"
                 android:background="@color/white">
                 <!-- 商品分类 -->
                 <LinearLayout
@@ -328,7 +376,8 @@
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
-
+            <!--商品分类属性  结束-->
+            <!--商品上架 删除  开始-->
             <LinearLayout
                 android:id="@id/pro_update_btn_layout"
                 android:visibility="gone"
@@ -391,6 +440,7 @@
                         fancy:textColor="@color/primary" />
                 </LinearLayout>
             </LinearLayout>
+            <!--商品上架 删除  结束-->
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

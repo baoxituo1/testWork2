@@ -4,13 +4,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +28,7 @@ import com.loopj.android.http.RequestParams;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.soundcloud.android.crop.Crop;
 
 import org.androidannotations.annotations.AfterViews;
@@ -47,6 +53,7 @@ import com.trade.bluehole.trad.entity.Product;
 import com.trade.bluehole.trad.entity.ProductBase;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.photo.Photo;
+import com.trade.bluehole.trad.entity.pro.ProductAttribute;
 import com.trade.bluehole.trad.entity.pro.ProductCoverRelVO;
 import com.trade.bluehole.trad.entity.pro.ProductImage;
 import com.trade.bluehole.trad.entity.pro.ProductLabel;
@@ -111,6 +118,8 @@ public class NewProductActivity extends BaseActionBarActivity {
     boolean shrinkViewDraw_2=false;//选择图片表是否已经重画过 缩小
     int common_height;//gridView高度
     private Integer delFlag;//商品删除标志
+    LayoutInflater inflater;
+    List<View>allAttrView=new ArrayList<>();//所有添加的参数子视图
     //页面进度条
     SweetAlertDialog pDialog;
     int allUploadImgNum=0;//待上传图片数
@@ -128,8 +137,12 @@ public class NewProductActivity extends BaseActionBarActivity {
     LinearLayout pro_update_btn_layout;
     @ViewById //商品类别设置
     LinearLayout pro_cover_info_layout;
+    @ViewById //商品属性根视图
+    LinearLayout pro_attr_root_layout;
     @ViewById
     FancyButton btn_pro_up_down,btn_pro_del;
+    @ViewById
+    ScrollView pro_scroll;
 
     @Extra(PRODUCT_CODE_EXTRA)
     String proCode;
@@ -138,7 +151,8 @@ public class NewProductActivity extends BaseActionBarActivity {
 
     @AfterViews
     void initData(){
-        Log.e("NewProductActivity", "proCode:" + proCode + ",shopCode:" + shopCode);
+        Log.d("NewProductActivity", "proCode:" + proCode + ",shopCode:" + shopCode);
+        inflater=getLayoutInflater();
         pDialog=getDialog(this);
         user=myapplication.getUser();
         //实例化分类适配器
@@ -153,6 +167,7 @@ public class NewProductActivity extends BaseActionBarActivity {
             pro_cover_info_layout.setVisibility(View.VISIBLE);//展示底部类别设置
         }else{//如果是新增
             mList.add(new Photo());
+            onClickAddProAttr();//增加一个参数先
         }
         mAdapter = new MainAdapter(this, mList);
         gridView.setAdapter(mAdapter);
@@ -173,6 +188,35 @@ public class NewProductActivity extends BaseActionBarActivity {
         initDialog();
     }
 
+    /**
+     * 点击新增商品参数
+     */
+    @Click(R.id.product_add_attr_layout)
+    void onClickAddProAttr(){
+        //Toast.makeText(getApplicationContext(), "点击新增商品参数", Toast.LENGTH_SHORT).show();
+        //实例化视图
+        final View attrView=inflater.inflate(R.layout.inner_dynamic_pro_attr,null);
+        RelativeLayout removeLayout=(RelativeLayout) attrView.findViewById(R.id.pro_inner_remove);
+        removeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pro_attr_root_layout.removeView(attrView);
+                allAttrView.remove(attrView);
+            }
+        });
+        //添加
+        pro_attr_root_layout.addView(attrView);
+        allAttrView.add(attrView);//添加到容器 用来取值
+        scrollToBottom();
+    }
+
+    /**
+     * 滚动到底部
+     */
+    @UiThread(delay = 300)
+    void scrollToBottom(){
+        pro_scroll.fullScroll(View.FOCUS_DOWN);//滚动到底部
+    }
 
     /**
      * 点击处理图片位置调整
@@ -441,9 +485,41 @@ public class NewProductActivity extends BaseActionBarActivity {
     /**
      * 提交数据到服务器
      */
-    void uploadProImg(){
-        pDialog.show();
+    boolean uploadProImg(){
         RequestParams params=new RequestParams();
+        //组织扩展参数
+        String names="";
+        String values="";
+        for(View ls:allAttrView){
+            MaterialEditText _name=(MaterialEditText)ls.findViewById(R.id.product_attr_name);
+            MaterialEditText _value=(MaterialEditText)ls.findViewById(R.id.product_attr_val);
+            //如果有值为空
+            if("".equals(_name.getText().toString())||"".equals(_value.getText().toString())){
+                ls.setBackgroundColor(getResources().getColor(R.color.base_color_red_1));
+                Toast.makeText(getApplicationContext(), "参数不能为空", Toast.LENGTH_SHORT).show();
+                break;
+            }else{
+                ls.setBackgroundColor(getResources().getColor(R.color.whitesmoke));
+                names+=_name.getText().toString()+",";
+                values+=_value.getText().toString()+",";
+            }
+        }
+        //如果选了参数 却没有值
+        if(allAttrView.size()>0&&("".equals(names)||"".equals(values))){
+           // Toast.makeText(getApplicationContext(), "参数不能为空", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        //如果添加了参数扩展传递它
+        if(!"".equals(names)&&!"".equals(values)){
+            params.put("attrNames",names);
+            params.put("attrValues",values);
+        }
+        //Toast.makeText(getApplicationContext(), names, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), values, Toast.LENGTH_SHORT).show();
+
+
+        //开始保存
+        pDialog.show();
         //如果商品编码不是空 调用更新方法
         String methodName=DataUrlContents.save_all_cshop;
         if(null!=proCode&&!"".equals(proCode)){
@@ -482,7 +558,7 @@ public class NewProductActivity extends BaseActionBarActivity {
                 if (null != response) {
                     // Toast.makeText(NewProductActivity.this, response, Toast.LENGTH_SHORT).show();
                     //Toast.makeText(NewProductActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(NewProductActivity.this, "图片后台处理中,稍后刷新查看", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "图片后台处理中,稍后刷新查看", Toast.LENGTH_SHORT).show();
                     HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
                 }
             }
@@ -498,6 +574,8 @@ public class NewProductActivity extends BaseActionBarActivity {
                 return rawJsonData;
             }
         });
+
+        return true;
     }
 
     /**
@@ -611,6 +689,11 @@ public class NewProductActivity extends BaseActionBarActivity {
                 }
             }*/
         }
+        //组装扩展标签
+        inflaterProAttr(obj.getAttrs());
+
+
+
         //组装类别
         List<ProductCoverRelVO> myCovers=obj.getMyCovers();
         if(null!=myCovers&&!myCovers.isEmpty()){
@@ -642,6 +725,31 @@ public class NewProductActivity extends BaseActionBarActivity {
         labelAdapter.setLabels(obj.getLabels(),myCheckLabels);
         labelAdapter.notifyDataSetChanged();
     }
+
+    /**
+     * 实例化已存在标签
+     */
+    void inflaterProAttr(List<ProductAttribute>attrs){
+        for(ProductAttribute ls:attrs){
+            final View attrView=inflater.inflate(R.layout.inner_dynamic_pro_attr,null);
+            MaterialEditText _name=(MaterialEditText)attrView.findViewById(R.id.product_attr_name);
+            MaterialEditText _value=(MaterialEditText)attrView.findViewById(R.id.product_attr_val);
+            _name.setText(ls.getAttributeName());//赋值
+            _value.setText(ls.getAttributeContent());//赋值
+            RelativeLayout removeLayout=(RelativeLayout) attrView.findViewById(R.id.pro_inner_remove);//设置点击删除事件
+            removeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pro_attr_root_layout.removeView(attrView);
+                    allAttrView.remove(attrView);
+                }
+            });
+            //添加
+            pro_attr_root_layout.addView(attrView);
+            allAttrView.add(attrView);//添加到容器 用来取值
+        }
+    }
+
 
     /**
      * 后台线程实例化组件 更新商品状态

@@ -14,6 +14,11 @@ public class ProductResultVO implements java.io.Serializable{
 	private List<ProductImage> images;
 	private Integer hotState;
 	/**
+	 * 商品扩展参数
+	 * @return
+	 */
+	private List<ProductAttribute> attrs;
+	/**
 	 * 商品关联的类别
 	 */
 	private List<ProductCoverRelVO> myCovers;
@@ -97,4 +102,11 @@ public class ProductResultVO implements java.io.Serializable{
         this.hotState = hotState;
     }
 
+	public List<ProductAttribute> getAttrs() {
+		return attrs;
+	}
+
+	public void setAttrs(List<ProductAttribute> attrs) {
+		this.attrs = attrs;
+	}
 }

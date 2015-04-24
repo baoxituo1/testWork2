@@ -170,4 +170,10 @@
 
     <!--商品排序-->
     <item type="id" name="photo_order_done" />
+    <!--商品新增参数-->
+    <item type="id" name="product_attr_name" />
+    <item type="id" name="product_attr_val" />
+    <item type="id" name="product_add_attr_layout" />
+    <item type="id" name="pro_attr_root_layout" />
+    <item type="id" name="pro_scroll" />
 </resources>
