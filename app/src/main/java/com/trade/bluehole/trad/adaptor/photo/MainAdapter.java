@@ -85,12 +85,13 @@ public class MainAdapter extends MyBaseAdapter<Photo>
             oh.clearBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(ctx,"clear_clean click",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ctx,"clear_clean click",Toast.LENGTH_SHORT).show();
                     //添加到activity的待删除列表
                     if(null!=mList.get(index).id!="".equals(mList.get(index).id)){
                         ctx.del_image_ids+=mList.get(index).id+",";
                     }
                     mList.remove(index);
+                    ctx.shrinkDrawGridLayout();
                     MainAdapter.this.notifyDataSetChanged();
                 }
             });

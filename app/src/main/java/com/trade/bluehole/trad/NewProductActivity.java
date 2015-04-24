@@ -70,7 +70,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     //商品和店铺编码标志
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String PRODUCT_CODE_EXTRA = "productCode";
-    public static final int GIRD_VIEW_SIZE = 15;//grid最大图片数量
+    public static final int GIRD_VIEW_SIZE = 12;//grid最大图片数量
     public static final int PRODUCT_DESIGN_PHOTO = 15;//优化图片返回结果
     public static final int PRODUCT_ORDER_PHOTO = 16;//优化图片排序
     //选中的类别
@@ -105,7 +105,11 @@ public class NewProductActivity extends BaseActionBarActivity {
     DialogPlus labelDialog;//商品自定义标签弹出框
     DialogPlus confirmDialog;//确认操作
     String imageUrls="";//新增商品 待添加商品列表
-    boolean gridViewDraw=false;//选择图片表是否已经重画过
+    boolean gridViewDraw_1=false;//选择图片表是否已经重画过
+    boolean gridViewDraw_2=false;//选择图片表是否已经重画过
+    boolean shrinkViewDraw_1=false;//选择图片表是否已经重画过 缩小
+    boolean shrinkViewDraw_2=false;//选择图片表是否已经重画过 缩小
+    int common_height;//gridView高度
     private Integer delFlag;//商品删除标志
     //页面进度条
     SweetAlertDialog pDialog;
@@ -380,6 +384,8 @@ public class NewProductActivity extends BaseActionBarActivity {
                         doUploadFile(ls.imgPath,fileName);
                         imageUrls+=fileName+",";
                         allUploadImgNum++;//上传图片总数
+                        //设置imagePath为新的生成的文件名 以备后台排序使用
+                        ls.imgPath=fileName;
                     }
                     //Log.e("NewProductActivity", "oss-file-name:"+ls.fileName);
                 } catch (Exception e) {
@@ -392,6 +398,12 @@ public class NewProductActivity extends BaseActionBarActivity {
         }
     }
 
+    /**
+     * 上传到阿里云
+     * @param formUrl
+     * @param fileName
+     * @throws Exception
+     */
     public void doUploadFile(String formUrl,String fileName) throws Exception {
 
         OSSFile ossFile = new OSSFile(myapplication.getOssBucket(), fileName);
@@ -427,7 +439,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     }
 
     /**
-     * 提交数据
+     * 提交数据到服务器
      */
     void uploadProImg(){
         pDialog.show();
@@ -450,7 +462,17 @@ public class NewProductActivity extends BaseActionBarActivity {
         params.put("productPrice", product_price.getText());
         params.put("productNumber",product_number.getText());
         params.put("imageUrls",imageUrls);
-        Log.e("NewProductActivity", "imageUrls:" + imageUrls);
+
+        //组织最新的图片名称 并插入到服务器
+        String imageNames="";
+        for(Photo p:mList){
+            if(!"99911111".equals(p.id)&&null!=p.imgPath){
+                imageNames+=p.imgPath+",";
+            }
+        }
+        params.put("imageNames",imageNames);
+
+        Log.d("NewProductActivity", "imageUrls:" + imageNames);
         getClient().post(DataUrlContents.SERVER_HOST + methodName, params, new BaseJsonHttpResponseHandler<String>() {
 
 
@@ -533,7 +555,7 @@ public class NewProductActivity extends BaseActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
-                Toast.makeText(NewProductActivity.this, "请求失败"+statusCode, Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewProductActivity.this, "请求失败" + statusCode, Toast.LENGTH_SHORT).show();
                 pDialog.hide();
             }
 
@@ -582,9 +604,12 @@ public class NewProductActivity extends BaseActionBarActivity {
             mAdapter.setmList(mList);
             mAdapter.notifyDataSetChanged();
             //图片区域是否需要重新计算
-            if(dataList.size()>4){
-                gridViewDraw=true;
-            }
+           /* if(dataList.size()>4){//2排已经增加
+                gridViewDraw_1=true;
+                if(dataList.size()>8){//已经三排不能再加
+                    gridViewDraw_2=true;
+                }
+            }*/
         }
         //组装类别
         List<ProductCoverRelVO> myCovers=obj.getMyCovers();
@@ -690,14 +715,35 @@ public class NewProductActivity extends BaseActionBarActivity {
      * 重构gridView
      */
     void reDrawGridLayout(){
-        if(null!=mList&&mList.size()>4&&!gridViewDraw){
+        if(null!=mList&&mList.size()>4&&!gridViewDraw_1){
             LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridView.getLayoutParams(); // 取控件mGrid当前的布局参数
-            linearParams.height=gridView.getHeight()*2+10;
+            common_height=gridView.getHeight();
+            linearParams.height=common_height*2+10;
             gridView.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件mGrid2
-            gridViewDraw=true;
+            gridViewDraw_1=true;
+        }
+        if(null!=mList&&mList.size()>8&&!gridViewDraw_2){
+            LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridView.getLayoutParams(); // 取控件mGrid当前的布局参数
+            linearParams.height=common_height*3+15;
+            gridView.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件mGrid2
+            gridViewDraw_2=true;
         }
     }
 
+    public void shrinkDrawGridLayout(){
+        if(null!=mList&&mList.size()<=4&&!shrinkViewDraw_1){
+            LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridView.getLayoutParams(); // 取控件mGrid当前的布局参数
+            linearParams.height-=common_height-10;
+            gridView.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件mGrid2
+            shrinkViewDraw_1=true;
+        }
+        if(null!=mList&&mList.size()<=8&&!shrinkViewDraw_2){
+            LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridView.getLayoutParams(); // 取控件mGrid当前的布局参数
+            linearParams.height-=common_height-15;
+            gridView.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件mGrid2
+            shrinkViewDraw_2=true;
+        }
+    }
 
     /**
      * 实例化弹出窗口

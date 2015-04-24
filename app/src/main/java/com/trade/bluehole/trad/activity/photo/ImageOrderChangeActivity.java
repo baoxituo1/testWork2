@@ -22,6 +22,7 @@ import org.askerov.dynamicgrid.DynamicGridView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * 修改图片展示顺序
@@ -38,8 +39,11 @@ public class ImageOrderChangeActivity extends BaseActionBarActivity {
 
     @ViewById(R.id.order_dynamic_grid)
     public DynamicGridView gridView;//gridView 显示容器
-    ArrayList<Photo> mTempList=new ArrayList<>();//临时排序列表
+    LinkedList<Photo> mTempList=new LinkedList<>();//临时排序列表
+    Photo mTempPhoto;//临时类
     ImageDynamicOrderAdapter adapter;
+    int startFlag;//移动开始位置
+    int endFlag;//移动结束位置
     /**
      * 初始化数据
      */
@@ -47,6 +51,7 @@ public class ImageOrderChangeActivity extends BaseActionBarActivity {
     void  initData(){
         mTempList.addAll(NewProductActivity.mList);
         //移除最后一个选择按钮
+        mTempPhoto=mTempList.get(mTempList.size()-1);//临时
         mTempList.remove(mTempList.size()-1);
         adapter=new ImageDynamicOrderAdapter(this, mTempList, getResources().getInteger(R.integer.column_count));
         //设置适配器
@@ -59,11 +64,13 @@ public class ImageOrderChangeActivity extends BaseActionBarActivity {
             @Override
             public void onDragStarted(int position) {
                 Log.d(TAG, "drag started at position " + position);
+                startFlag=position;
             }
 
             @Override
             public void onDragPositionsChanged(int oldPosition, int newPosition) {
                 Log.d(TAG, String.format("drag item position changed from %d to %d", oldPosition, newPosition));
+                sortAgainData(startFlag,oldPosition,newPosition);
             }
         });
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -83,6 +90,18 @@ public class ImageOrderChangeActivity extends BaseActionBarActivity {
         });
     }
 
+    /**
+     * 重新排列集合
+     */
+    void sortAgainData(int startPosition,int oldPosition, int newPosition){//6,1
+       /* Photo tem_p=mTempList.get(oldPosition);
+        mTempList.set(oldPosition,mTempList.get(newPosition));
+        mTempList.set(newPosition,tem_p);*/
+        Photo tem_p=mTempList.get(oldPosition);
+        mTempList.remove(oldPosition);
+        mTempList.add(newPosition, tem_p);
+
+    }
 
 
     @Override
@@ -99,7 +118,11 @@ public class ImageOrderChangeActivity extends BaseActionBarActivity {
             if (gridView.isEditMode()) {
                 gridView.stopEditMode();
             }
-            NewProductActivity.mList=mTempList;
+            NewProductActivity.mList.clear();
+            for(Photo p:mTempList){
+                NewProductActivity.mList.add(p);
+            }
+            NewProductActivity.mList.add(mTempPhoto);
             setResult(RESULT_OK, null);
             //mTempList.clear();
             finish();
