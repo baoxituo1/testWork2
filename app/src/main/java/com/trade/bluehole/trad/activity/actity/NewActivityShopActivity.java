@@ -407,6 +407,10 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
         if (id == R.id.activity_menu_done) {
             saveDataToServer();
             return true;
+        }else if(id==android.R.id.home){
+            //点击后退跳转到 主页
+            ActivityManageActivity_.intent(this).start();
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

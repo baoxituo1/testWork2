@@ -374,6 +374,12 @@ public class ShopConfigActivity extends BaseActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }else if(id==android.R.id.home){
+            //点击后退跳转到 主页
+            SuperMainActivity_.intent(this).get();
+            finish();
+        }else if(id==android.R.id.home){
+            //点击后退跳转到 主页
+            SuperMainActivity_.intent(this).start();
             finish();
         }
         return super.onOptionsItemSelected(item);

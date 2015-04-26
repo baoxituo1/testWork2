@@ -18,6 +18,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.trade.bluehole.trad.DynamicManageActivity;
+import com.trade.bluehole.trad.DynamicManageActivity_;
 import com.trade.bluehole.trad.LoginSystemActivity;
 import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.NewProductActivity_;
@@ -142,6 +143,7 @@ public class SelectSaleProductActivity extends BaseActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }else if(id==android.R.id.home){
+            DynamicManageActivity_.intent(this).start();
             finish();
         }
 

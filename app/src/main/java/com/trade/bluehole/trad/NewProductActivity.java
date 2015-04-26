@@ -960,6 +960,8 @@ public class NewProductActivity extends BaseActionBarActivity {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
                             sDialog.cancel();
+                            //点击后退跳转到 主页
+                            SuperMainActivity_.intent(NewProductActivity.this).start();
                             finish();
                         }
                     })

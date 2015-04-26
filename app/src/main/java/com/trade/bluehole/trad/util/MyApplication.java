@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.util.Log;
 
+import com.activeandroid.ActiveAndroid;
 import com.aliyun.mbaas.oss.OSSClient;
 import com.aliyun.mbaas.oss.model.TokenGenerator;
 import com.aliyun.mbaas.oss.storage.OSSBucket;
@@ -27,7 +28,7 @@ import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.rest.RestService;
 
 @EApplication
-public class MyApplication extends Application {
+public class MyApplication extends com.activeandroid.app.Application {
 
     @SystemService
     NotificationManager notificationManager;
@@ -78,7 +79,7 @@ public class MyApplication extends Application {
         //阿里云配置
         OSSLog.enableLog(true);
         OSSClient.setApplicationContext(getApplicationContext()); // 传入应用程序context
-
+        ActiveAndroid.initialize(this);
     }
 
 

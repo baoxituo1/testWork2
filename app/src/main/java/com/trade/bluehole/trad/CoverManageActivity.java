@@ -313,6 +313,8 @@ public class CoverManageActivity extends BaseActionBarActivity {
             coverDialog.show();
             return true;
         }else if(id==android.R.id.home){
+            //点击后退跳转到 主页
+            SuperMainActivity_.intent(this).start();
             finish();
         }
 

@@ -67,23 +67,21 @@
             android:label="@string/title_activity_fullscreen"
             android:theme="@style/FullscreenTheme" >
 
-            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
         </activity>
         <activity
             android:name=".LoginSystemActivity_"
             android:label="@string/title_activity_login_system"
             android:windowSoftInputMode="adjustResize|stateHidden" >
-            <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".ProductManagerActivity_"
@@ -241,6 +239,9 @@
             android:name=".activity.photo.ImageOrderChangeActivity_"
             android:label="@string/title_activity_image_order_change" >
         </activity>
+
+        <meta-data android:name="AA_DB_NAME" android:value="YouSQ.db" />
+        <meta-data android:name="AA_DB_VERSION" android:value="1" />
     </application>
 
 </manifest>

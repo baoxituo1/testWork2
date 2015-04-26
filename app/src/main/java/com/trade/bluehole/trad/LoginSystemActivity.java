@@ -24,6 +24,7 @@ import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.Result;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
+import com.trade.bluehole.trad.util.model.UserModel;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -93,6 +94,13 @@ public class LoginSystemActivity extends BaseActionBarActivity {
                     pDialog.hide();
                     if (response.isSuccess()) {
                         Toast.makeText(LoginSystemActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                        //缓存数据到本地数据库
+                        UserModel userModel=new UserModel();
+                        userModel.userAccount=response.getBzseObj().getAccount();
+                        userModel.passWord=response.getBzseObj().getPassword();
+                        userModel.userCode=response.getBzseObj().getUserCode();
+                        userModel.shopCode=response.getBzseObj().getShopCode();
+                        userModel.save();
                         // HashMap u= (HashMap)response.getObj();
                         // User user=new User();
                         //user.setAccount(u.get("account").toString());

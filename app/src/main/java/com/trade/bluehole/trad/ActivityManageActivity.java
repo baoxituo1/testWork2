@@ -133,6 +133,8 @@ public class ActivityManageActivity extends BaseActionBarActivity {
             NewActivityShopActivity_.intent(this).start();
             return true;
         }else if(id==android.R.id.home){
+            //点击后退跳转到 主页
+            SuperMainActivity_.intent(this).start();
             finish();
         }
 
