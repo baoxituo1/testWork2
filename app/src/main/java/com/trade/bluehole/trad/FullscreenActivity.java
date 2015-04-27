@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -32,9 +35,11 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 
 /**
@@ -75,6 +80,8 @@ public class FullscreenActivity extends Activity {
 
     @App
     MyApplication myapplication;
+    @ViewById
+    LinearLayout bottom_layout;
 
     private static AsyncHttpClient client=new AsyncHttpClient();
     public static Gson gson = new Gson();
@@ -91,7 +98,6 @@ public class FullscreenActivity extends Activity {
 
          isFirst();
          systemUiHider();
-
      }
 
      /**
@@ -113,6 +119,9 @@ public class FullscreenActivity extends Activity {
                  loginServer(user.userAccount,user.passWord);
              }else{
                  //先不做什么 也停在这
+                 Animation alphaAnimation= AnimationUtils.loadAnimation(this,R.anim.bottomitem_in);
+                 bottom_layout.setVisibility(View.VISIBLE);
+                 bottom_layout.startAnimation(alphaAnimation);
              }
          }
      }

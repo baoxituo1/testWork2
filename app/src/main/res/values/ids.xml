@@ -60,6 +60,7 @@
 
 
     <!--super_lunch-->
+    <item type="id" name="bottom_layout" />
     <item type="id" name="go_to_login" />
     <item type="id" name="go_to_register" />
     <item type="id" name="all_pro_number" />
