@@ -9,6 +9,7 @@ import android.preference.PreferenceActivity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
@@ -150,6 +151,22 @@ public class LoginSystemActivity extends BaseActionBarActivity {
     void registerAccountOnClick(){
         RegisterManageActivity_.intent(this).start();
     }
+
+    /**
+     * 处理后退事件
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(keyCode == KeyEvent.KEYCODE_BACK ) {
+            return true;
+        }
+        return false;
+    }
+
 }
 
 

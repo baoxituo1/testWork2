@@ -111,6 +111,10 @@ public class FullscreenActivity extends Activity {
              first=new FirstVisitModel();
              first.visiFlag="1";
              first.save();
+             //先不做什么 也停在这
+             Animation alphaAnimation= AnimationUtils.loadAnimation(this,R.anim.bottomitem_in);
+             bottom_layout.setVisibility(View.VISIBLE);
+             bottom_layout.startAnimation(alphaAnimation);
          }else{
              //不是首次查询时候有帐号信息
              UserModel user=new Select().from(UserModel.class).executeSingle();

@@ -253,7 +253,25 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
      * 向服务器推送数据更新店铺信息
      * @param
      */
-    void saveDataToServer(){
+    boolean saveDataToServer(){
+        //校验
+        if(null==fileName||"".equals(fileName)){
+            Toast.makeText(NewActivityShopActivity.this, "请选择活动图片" , Toast.LENGTH_SHORT).show();
+            return false;
+        }else  if("".equals(activity_input_name.getText().toString())){
+            Toast.makeText(NewActivityShopActivity.this, "活动名称不能为空" , Toast.LENGTH_SHORT).show();
+            return false;
+        }else if("".equals(activity_input_details.getText().toString())){
+            Toast.makeText(NewActivityShopActivity.this, "活动详情不能为空" , Toast.LENGTH_SHORT).show();
+            return false;
+        }else if("".equals(activity_input_rules.getText().toString())){
+            Toast.makeText(NewActivityShopActivity.this, "活动规则不能为空" , Toast.LENGTH_SHORT).show();
+            return false;
+        }else if("".equals(activity_input_address.getText().toString())){
+            Toast.makeText(NewActivityShopActivity.this, "活动地址不能为空" , Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         pDialog.show();
         RequestParams params=new RequestParams();
         params.put("shopCode", shop.getShopCode());
@@ -289,6 +307,8 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
+                pDialog.hide();
+                Toast.makeText(NewActivityShopActivity.this, "请求失败："+statusCode , Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -296,6 +316,8 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
                 return gson.fromJson(rawJsonData, String.class);
             }
         });
+
+        return true;
     }
 
 

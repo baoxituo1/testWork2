@@ -172,10 +172,12 @@
             android:layout_width="match_parent"
             android:background="@color/gainsboro"
             android:layout_height="1dp"/>
-        <!--兑换-->
+        <!--退出-->
         <LinearLayout
+            android:id="@id/main_quit_layout"
             android:layout_width="match_parent"
             android:weightSum="4"
+            android:background="@drawable/main_menu_layout"
             android:layout_height="@dimen/left_menu_item_sub_width">
             <LinearLayout
                 android:layout_weight="1"
@@ -185,7 +187,7 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:text="@string/main_get_scoce"
+                    android:text="@string/main_get_quit"
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>

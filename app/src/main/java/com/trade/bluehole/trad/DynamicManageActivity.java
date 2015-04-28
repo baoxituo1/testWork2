@@ -32,6 +32,7 @@ import com.trade.bluehole.trad.entity.dynamic.DynaicInfoVO;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.Result;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
+import com.yalantis.phoenix.PullToRefreshView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -50,12 +51,14 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 @EActivity(R.layout.activity_dynamic_manage)
 public class DynamicManageActivity extends BaseActionBarActivity {
+    public static final int REFRESH_DELAY = 1500;
     @App
     MyApplication myApplication;
     @ViewById
     ListView listView;
     @ViewById
     RelativeLayout empty_view;
+    private PullToRefreshView mPullToRefreshView;
 
     //页面进度条
     SweetAlertDialog pDialog;
@@ -68,21 +71,25 @@ public class DynamicManageActivity extends BaseActionBarActivity {
     @AfterViews
     void initData(){
         user=myApplication.getUser();//获取用户数据
+
+        mPullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_to_refresh);
+        mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+               /* mPullToRefreshView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullToRefreshView.setRefreshing(false);
+
+                    }
+                }, REFRESH_DELAY);*/
+                loadData();
+            }
+        });
+
         adapter=new ProductSaleDynamicAdapter(this);
 
         listView.setEmptyView(empty_view);
-        //list 点击事件
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DynaicInfoVO obj=lists.get(position);
-                if(null!=obj){
-                    Intent intent= NewActivityShopActivity_.intent(DynamicManageActivity.this).get();
-                    intent.putExtra(NewActivityShopActivity.ACTIVITY_CODE_EXTRA,obj.getDynamicCode());
-                    startActivity(intent);
-                }
-            }
-        });
         initDialog();
         loadData();//装载数据
     }
@@ -139,6 +146,7 @@ public class DynamicManageActivity extends BaseActionBarActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<DynaicInfoVO, String> obj) {
                 pDialog.hide();
+                mPullToRefreshView.setRefreshing(false);
                 if (null != obj && obj.success) {
 
                     lists.clear();

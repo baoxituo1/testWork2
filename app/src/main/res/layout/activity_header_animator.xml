@@ -85,13 +85,12 @@
                     android:layout_width="96dp"
                     android:layout_height="96dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/lib_icon"
                     app:border_width="2dp"
                     app:border_color="#FF000000"/>
 
                 <TextView
                     android:id="@+id/shopName"
-                    android:text="郑小天的个人店铺"
+                    android:text=""
                     android:layout_marginTop="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/shop_logo_image"
@@ -109,7 +108,7 @@
                 android:layout_height="@dimen/min_height_header_materiallike"
                 android:background="#b0000000"
                 android:weightSum="12"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:baselineAligned="false">
                 <RelativeLayout
                     android:layout_weight="4"
@@ -121,13 +120,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <mehdi.sakout.fancybuttons.FancyButton
+                            android:id="@+id/view_shop"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             fancy:borderWidth="2dp"
                             fancy:defaultColor="@color/touming"
-                            fancy:focusColor="#8cc9f8"
+                            fancy:focusColor="@color/gainsboro"
                             fancy:fontIconResource="@string/main_eye"
-                            fancy:fontIconSize="8sp"
                             fancy:iconPosition="top"
                             fancy:text="预览"
                             fancy:textColor="#FFFFFF"/>
@@ -155,9 +154,8 @@
                             android:layout_height="wrap_content"
                             fancy:borderWidth="2dp"
                             fancy:defaultColor="@color/touming"
-                            fancy:focusColor="#8cc9f8"
+                            fancy:focusColor="@color/gainsboro"
                             fancy:fontIconResource="@string/main_copy_url"
-                            fancy:fontIconSize="8sp"
                             fancy:iconPosition="top"
                             fancy:text="复制链接"
                             fancy:textColor="#FFFFFF"/>
@@ -186,7 +184,6 @@
                             fancy:defaultColor="@color/touming"
                             fancy:focusColor="#8cc9f8"
                             fancy:fontIconResource="@string/main_shar"
-                            fancy:fontIconSize="8sp"
                             fancy:iconPosition="top"
                             fancy:text="分享"
                             fancy:textColor="#FFFFFF"/>

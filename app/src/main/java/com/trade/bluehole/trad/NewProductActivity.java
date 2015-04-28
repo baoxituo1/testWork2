@@ -130,7 +130,9 @@ public class NewProductActivity extends BaseActionBarActivity {
     @ViewById(R.id.gridview)
     GridView gridView;
     @ViewById
-    TextView product_name,product_price,product_number,product_cover_name,product_label_name;
+    TextView product_price,product_number,product_cover_name,product_label_name;
+    @ViewById
+    MaterialEditText product_name;
     @ViewById
     FlatToggleButton toggle_checked_hot;
     @ViewById //商品底部删除上下架按钮
@@ -140,7 +142,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     @ViewById //商品属性根视图
     LinearLayout pro_attr_root_layout;
     @ViewById
-    FancyButton btn_pro_up_down,btn_pro_del;
+    FancyButton btn_pro_up_down,btn_pro_del,change_image_index;
     @ViewById
     ScrollView pro_scroll;
 
@@ -152,6 +154,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     @AfterViews
     void initData(){
         Log.d("NewProductActivity", "proCode:" + proCode + ",shopCode:" + shopCode);
+        mList.clear();
         inflater=getLayoutInflater();
         pDialog=getDialog(this);
         user=myapplication.getUser();
@@ -419,26 +422,66 @@ public class NewProductActivity extends BaseActionBarActivity {
      */
    // @Click(R.id.uploadProductImage)
     void uploadProImageClick(){
-        if(!mList.isEmpty()&&null!=user){
-            imageUrls="";
-            for(Photo ls:mList){
-                try {
-                    if(!"1".equals(ls.dataType)){
-                        String fileName= "pro/"+"image_"+UUID.randomUUID()+".jpg";
-                        doUploadFile(ls.imgPath,fileName);
-                        imageUrls+=fileName+",";
-                        allUploadImgNum++;//上传图片总数
-                        //设置imagePath为新的生成的文件名 以备后台排序使用
-                        ls.imgPath=fileName;
+        if(!mList.isEmpty()&&mList.size()>1){
+            //验证内容不能为空
+            if("".equals(product_name.getText().toString())){
+                Toast.makeText(getApplicationContext(), "商品描述不能为空", Toast.LENGTH_SHORT).show();
+                product_name.setFocusable(true);
+                product_name.setFocusableInTouchMode(true);
+                product_name.requestFocus();
+            }else   if("".equals(product_price.getText().toString())){
+                Toast.makeText(getApplicationContext(), "商品价格不能为空", Toast.LENGTH_SHORT).show();
+                product_price.setFocusable(true);
+                product_price.setFocusableInTouchMode(true);
+                product_price.requestFocus();
+            }else    if("".equals(product_number.getText().toString())){
+                Toast.makeText(getApplicationContext(), "商品数量不能为空", Toast.LENGTH_SHORT).show();
+                product_number.setFocusable(true);
+                product_number.setFocusableInTouchMode(true);
+                product_number.requestFocus();
+            }else{
+                //组织扩展参数
+                String names="";
+                String values="";
+                boolean boo=true;
+                for(View ls:allAttrView){
+                    MaterialEditText _name=(MaterialEditText)ls.findViewById(R.id.product_attr_name);
+                    MaterialEditText _value=(MaterialEditText)ls.findViewById(R.id.product_attr_val);
+                    //如果有值为空
+                    if("".equals(_name.getText().toString())||"".equals(_value.getText().toString())){
+                        ls.setBackgroundColor(getResources().getColor(R.color.base_color_red_1));
+                        Toast.makeText(getApplicationContext(), "参数不能为空", Toast.LENGTH_SHORT).show();
+                        boo=false;
+                        break;
+                    }else{
+                        ls.setBackgroundColor(getResources().getColor(R.color.whitesmoke));
+                        names+=_name.getText().toString()+",";
+                        values+=_value.getText().toString()+",";
                     }
-                    //Log.e("NewProductActivity", "oss-file-name:"+ls.fileName);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                }
+                //判断扩展属性是否全填
+                if(boo){
+                    imageUrls="";
+                    for(Photo ls:mList){
+                        try {
+                            if(!"1".equals(ls.dataType)){
+                                String fileName= "pro/"+"image_"+UUID.randomUUID()+".jpg";
+                                doUploadFile(ls.imgPath,fileName);
+                                imageUrls+=fileName+",";
+                                allUploadImgNum++;//上传图片总数
+                                //设置imagePath为新的生成的文件名 以备后台排序使用
+                                ls.imgPath=fileName;
+                            }
+                            //Log.e("NewProductActivity", "oss-file-name:"+ls.fileName);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    uploadProImg(names,values);
                 }
             }
-            uploadProImg();
         }else{
-            Toast.makeText(this,"上传列表为空或者未登陆",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"至少选择一张图片",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -485,25 +528,8 @@ public class NewProductActivity extends BaseActionBarActivity {
     /**
      * 提交数据到服务器
      */
-    boolean uploadProImg(){
+    boolean uploadProImg(String names, String values){
         RequestParams params=new RequestParams();
-        //组织扩展参数
-        String names="";
-        String values="";
-        for(View ls:allAttrView){
-            MaterialEditText _name=(MaterialEditText)ls.findViewById(R.id.product_attr_name);
-            MaterialEditText _value=(MaterialEditText)ls.findViewById(R.id.product_attr_val);
-            //如果有值为空
-            if("".equals(_name.getText().toString())||"".equals(_value.getText().toString())){
-                ls.setBackgroundColor(getResources().getColor(R.color.base_color_red_1));
-                Toast.makeText(getApplicationContext(), "参数不能为空", Toast.LENGTH_SHORT).show();
-                break;
-            }else{
-                ls.setBackgroundColor(getResources().getColor(R.color.whitesmoke));
-                names+=_name.getText().toString()+",";
-                values+=_value.getText().toString()+",";
-            }
-        }
         //如果选了参数 却没有值
         if(allAttrView.size()>0&&("".equals(names)||"".equals(values))){
            // Toast.makeText(getApplicationContext(), "参数不能为空", Toast.LENGTH_SHORT).show();
@@ -558,8 +584,14 @@ public class NewProductActivity extends BaseActionBarActivity {
                 if (null != response) {
                     // Toast.makeText(NewProductActivity.this, response, Toast.LENGTH_SHORT).show();
                     //Toast.makeText(NewProductActivity.this, "提交成功", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "图片后台处理中,稍后刷新查看", Toast.LENGTH_SHORT).show();
+                    if(!"".equals(imageUrls)){
+                        Toast.makeText(getApplicationContext(), "图片后台处理中,稍后刷新查看", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "提交成功", Toast.LENGTH_SHORT).show();
+                    }
                     HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
+                    mList.clear();
+                    finish();
                 }
             }
 
@@ -913,6 +945,13 @@ public class NewProductActivity extends BaseActionBarActivity {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
                             sDialog.cancel();
+                            //点击后退跳转到 主页
+                            if(proCode!=null&&!"".equals(proCode)){
+                                HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
+                            }else{
+                                SuperMainActivity_.intent(NewProductActivity.this).start();
+                            }
+                            mList.clear();
                             finish();
                         }
                     })
@@ -961,7 +1000,12 @@ public class NewProductActivity extends BaseActionBarActivity {
                         public void onClick(SweetAlertDialog sDialog) {
                             sDialog.cancel();
                             //点击后退跳转到 主页
-                            SuperMainActivity_.intent(NewProductActivity.this).start();
+                            if(proCode!=null&&!"".equals(proCode)){
+                               HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
+                            }else{
+                                SuperMainActivity_.intent(NewProductActivity.this).start();
+                            }
+                            mList.clear();
                             finish();
                         }
                     })

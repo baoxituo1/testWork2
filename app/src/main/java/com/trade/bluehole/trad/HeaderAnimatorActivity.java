@@ -24,6 +24,11 @@ import com.soundcloud.android.crop.Crop;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity;
 import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity_;
+import com.trade.bluehole.trad.activity.webview.ProductWebViewActivity;
+import com.trade.bluehole.trad.activity.webview.ProductWebViewActivity_;
+import com.trade.bluehole.trad.activity.webview.ShopWebViewActivity_;
+import com.trade.bluehole.trad.activity.webview.WebViewActivity;
+import com.trade.bluehole.trad.activity.webview.WebViewActivity_;
 import com.trade.bluehole.trad.adaptor.pro.ProductCoverNumberAdapter;
 import com.trade.bluehole.trad.adaptor.pro.ProductListViewAdaptor;
 import com.trade.bluehole.trad.animator.IO2014HeaderAnimator;
@@ -70,7 +75,9 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     @ViewById
     FancyButton main_sale_ing_btn, main_sale_out_btn, main_sale_cover_btn;
     @ViewById
-    LinearLayout btn_cover_layout, btn_cover_ok_layout;
+    FancyButton view_shop;
+    @ViewById
+    LinearLayout /*btn_cover_layout,*/ btn_cover_ok_layout;
     @ViewById
     RelativeLayout empty_view;
     @App
@@ -196,6 +203,15 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
 
     }
 
+    /**
+     * 当点击预览店铺
+     */
+    @Click(R.id.view_shop)
+    void onClickViewShopBtn(){
+        Intent intent = ShopWebViewActivity_.intent(this).get();
+        intent.putExtra(ShopWebViewActivity_.SHOP_CODE, user.getShopCode());
+        this.startActivity(intent);
+    }
 
 
 
@@ -208,7 +224,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         params.bottomMargin=0;
         listview.setLayoutParams(params);
         searchType = "1";
-        btn_cover_layout.setVisibility(View.GONE);
+        //btn_cover_layout.setVisibility(View.GONE);
         main_sale_ing_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
         main_sale_out_btn.setTextColor(getResources().getColor(R.color.white));
         main_sale_cover_btn.setTextColor(getResources().getColor(R.color.white));
@@ -233,7 +249,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
 
         searchType = "0";
         showCoverManager = false;//非可编辑状态
-        btn_cover_layout.setVisibility(View.GONE);
+        //btn_cover_layout.setVisibility(View.GONE);
         main_sale_out_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
         main_sale_ing_btn.setTextColor(getResources().getColor(R.color.white));
         main_sale_cover_btn.setTextColor(getResources().getColor(R.color.white));
@@ -259,7 +275,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
 
         searchType = "2";
         showCoverManager = false;//非可编辑状态
-        btn_cover_layout.setVisibility(View.VISIBLE);
+       // btn_cover_layout.setVisibility(View.VISIBLE);
         main_sale_cover_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
         main_sale_ing_btn.setTextColor(getResources().getColor(R.color.white));
         main_sale_out_btn.setTextColor(getResources().getColor(R.color.white));
@@ -307,7 +323,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         //显示完成按钮界面
         btn_cover_ok_layout.setVisibility(View.VISIBLE);
         //隐藏基本按钮界面
-        btn_cover_layout.setVisibility(View.GONE);
+        //btn_cover_layout.setVisibility(View.GONE);
 
     }
 
@@ -322,7 +338,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         //列表显示编辑
         coverNumberAdapter.hideCoverEdit();
         //显示基本按钮界面
-        btn_cover_layout.setVisibility(View.VISIBLE);
+        //btn_cover_layout.setVisibility(View.VISIBLE);
         //隐藏完成按钮界面
         btn_cover_ok_layout.setVisibility(View.GONE);
     }
@@ -426,6 +442,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
             startActivity(intent);
             return true;
         }else if(id==android.R.id.home){
+            SuperMainActivity_.intent(this).start();
             finish();
         }
         return super.onOptionsItemSelected(item);

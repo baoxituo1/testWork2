@@ -132,7 +132,7 @@
     <string name="main_user_cover_type">我的商品类别</string>
     <string name="main_user_message">系统消息</string>
     <string name="main_shop_index">店铺首页</string>
-    <string name="main_get_scoce">兑换</string>
+    <string name="main_get_quit">退出</string>
     <string name="main_user_setting">设置</string>
     <string name="main_user_give_back">反馈</string>
     <string name="main_user_get_help">帮助</string>
@@ -157,6 +157,8 @@
     <string name="icon_square_2">&#xf055;</string>
     <!--只有加号-->
     <string name="icon_square_3">&#xf067;</string>
+    <!--双向箭头-->
+    <string name="icon_exchange">&#xf0ec;</string>
 
 
     <!--活动 -->
@@ -200,4 +202,6 @@
 
     <!--图片排序-->
     <string name="photo_order_done">完成</string>
+    <string name="title_activity_shop_web_view">店铺预览</string>
+    <string name="order_img_index">调整顺序</string>
 </resources>

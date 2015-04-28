@@ -1,15 +1,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gainsboro"
     tools:context="com.trade.bluehole.trad.ActivityManageActivity">
-
-
+    <com.yalantis.phoenix.PullToRefreshView
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_height="match_parent"></ListView>
+    </com.yalantis.phoenix.PullToRefreshView>
     <!--无数据视图-->
     <RelativeLayout
         android:layout_centerInParent="true"
         android:id="@id/empty_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/pro_list_height">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_centerInParent="true"
             android:orientation="horizontal"
@@ -31,9 +40,4 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </RelativeLayout>
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="match_parent"></ListView>
 </RelativeLayout>

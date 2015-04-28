@@ -6,6 +6,8 @@
         <item name="android:actionMenuTextAppearance">@style/MyActionBar.MenuTextStyle</item>
         <item name="colorPrimaryDark">@color/secondary</item>
         <item name="colorPrimary">@color/primary</item>
+        <!--<item name="colorPrimaryDark">@color/base_color_green_1</item>
+        <item name="colorPrimary">@color/base_color_green_2</item>-->
     </style>
     <style parent="@android:style/Widget.ProgressBar.Horizontal" name="ProgressBarStyle"/>
 
@@ -41,7 +43,7 @@
     </style>
 
     <style name="ActionBar" parent="android:Widget.ActionBar">
-        <item name="android:background">@color/primary</item>
+        <item name="android:background">@color/base_color_green_2</item>
         <item name="android:icon">@android:color/transparent</item>
         <item name="android:titleTextStyle">@style/ActionBar.TitleText</item>
     </style>

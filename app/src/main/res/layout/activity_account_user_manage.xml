@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@id/user_name_label"
-                    android:text="真实姓名"
+                    android:text="姓名"
                     android:textColor="@color/grey_light"
                     android:textSize="@dimen/button_text_size"
                     android:layout_width="wrap_content"
@@ -343,6 +343,7 @@
         </LinearLayout>
         <!--性别-->
         <RelativeLayout
+            android:visibility="gone"
             android:id="@id/user_sex_layout"
             android:background="@drawable/main_menu_layout"
             android:layout_marginTop="@dimen/n_padding_normal_b"
@@ -400,7 +401,7 @@
                 <TextView
                     android:id="@id/user_age_text"
                     android:layout_marginTop="@dimen/n_padding_normal"
-                    android:text="输入您的年龄？"
+                    android:text="您的年龄？"
                     android:textColor="@color/grey_light"
                     android:textSize="@dimen/small_text_size"
                     android:layout_width="wrap_content"

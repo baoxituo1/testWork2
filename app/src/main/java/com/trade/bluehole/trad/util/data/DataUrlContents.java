@@ -20,9 +20,9 @@ public class DataUrlContents {
     /**
      * 服务器地址
      */
-    //public final  static String SERVER_HOST="http://192.168.1.161:8080/qqt_up/";
+    public final  static String SERVER_HOST="http://192.168.1.161:8080/qqt_up/";
     //public final  static String SERVER_HOST="http://7ri7.vicp.net:41451/qqt_up/";
-    public final  static String SERVER_HOST="http://192.168.1.108:8080/qqt_up/";
+    //public final  static String SERVER_HOST="http://192.168.1.108:8080/qqt_up/";
     /**
      * 图片服务器地址
      */
@@ -151,7 +151,11 @@ public class DataUrlContents {
     /**
      *预览商品
      */
-    public final  static String show_view_pro_web="detailPage/selectDetailProduct.htm";
+    public final  static String show_view_pro_web="mobile/detailProduct.htm";
+    /**
+     *预览店铺
+     */
+    public final  static String show_view_shop_web="Mshop/showMshop.htm";
     /**
      *预览商品
      */

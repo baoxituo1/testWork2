@@ -81,6 +81,7 @@
     <item type="id" name="main_left_cover_layout" />
     <item type="id" name="main_left_message_layout" />
     <item type="id" name="account" />
+    <item type="id" name="main_quit_layout" />
 
     <!--活动-->
     <item type="id" name="activity_menu_add" />
@@ -177,4 +178,6 @@
     <item type="id" name="product_add_attr_layout" />
     <item type="id" name="pro_attr_root_layout" />
     <item type="id" name="pro_scroll" />
+    <item type="id" name="product_name" />
+    <item type="id" name="change_image_index" />
 </resources>

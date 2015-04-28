@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.activeandroid.query.Delete;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
@@ -39,6 +40,7 @@ import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
+import com.trade.bluehole.trad.util.model.UserModel;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -49,6 +51,7 @@ import org.apache.http.Header;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 @EActivity(R.layout.activity_super_main)
@@ -218,15 +221,45 @@ public class SuperMainActivity extends Activity {
         MessagePageviewActivity_.intent(this).start();
     }
     /**
-     * 点击商品分类管理
-     *//*
-    @Click(R.id.main_left_cover_layout)
+     * 点击退出
+     */
+    @Click(R.id.main_quit_layout)
     void onClickCoverManageInfoBtn() {
-       // main_left_cover_layout.setFocusable(true);
-        //main_left_cover_layout.setFocusableInTouchMode(true);
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("确定退出")
+                .setContentText("要退出账号登录么?")
+                .setConfirmText("是的,退出!")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        userQuitClean();
+                        sDialog.cancel();
+                        LoginSystemActivity_.intent(SuperMainActivity.this).start();
+                        //点击后退跳转到 主页
+                        finish();
+                    }
+                })
+                .setCancelText("不退出!")
+                .showCancelButton(true)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
+                    }
+                })
+                .show();
 
-    }*/
+    }
 
+    /**
+     * 用户退出清空数据
+     */
+    void userQuitClean(){
+        myApplication.setUser(null);
+        myApplication.setShop(null);
+        //清除本地默认登录数据
+        new Delete().from(UserModel.class).where("UserAccount = ?", user.getAccount()).execute();
+    }
 
     /**
      * 读取数据

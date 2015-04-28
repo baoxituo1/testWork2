@@ -39,6 +39,9 @@ import org.apache.http.Header;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * 用户账户信息
+ */
 @EActivity
 public class AccountUserManageActivity  extends BaseActionBarActivity {
 

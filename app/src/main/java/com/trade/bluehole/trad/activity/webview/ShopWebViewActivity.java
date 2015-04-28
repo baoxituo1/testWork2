@@ -2,6 +2,7 @@ package com.trade.bluehole.trad.activity.webview;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
@@ -16,14 +17,11 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
-/**
- * 商品详情预览
- * Created by Administrator on 2015-04-21.
- */
-@EActivity(R.layout.product_web_view)
-public class ProductWebViewActivity extends ActionBarActivity {
+@EActivity(R.layout.activity_shop_web_view)
+public class ShopWebViewActivity extends  ActionBarActivity {
     public final static String SHOP_CODE="shopCode";
     public final static String PRO_CODE="proCode";
+
 
     @Extra(SHOP_CODE)
     String shopCode;
@@ -32,7 +30,6 @@ public class ProductWebViewActivity extends ActionBarActivity {
 
     @ViewById
     WebView webView;
-
     @AfterViews
     void initData(){
 
@@ -41,10 +38,10 @@ public class ProductWebViewActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
-       // webView.setWebViewClient(new WebViewClient());
+        // webView.setWebViewClient(new WebViewClient());
         WebSettings ws = webView.getSettings();
         ws.setJavaScriptEnabled(true);
-       // ws.setBuiltInZoomControls(true);
+        // ws.setBuiltInZoomControls(true);
         //ws.setSupportZoom(true); //支持缩放
         /**
          * 用WebView显示图片，可使用这个参数
@@ -55,13 +52,13 @@ public class ProductWebViewActivity extends ActionBarActivity {
         ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         ws.setLoadWithOverviewMode(true);
         ws.setDefaultTextEncodingName("utf-8"); //设置文本编码
-       // ws.setAppCacheEnabled(true);
-       // ws.setCacheMode(WebSettings.LOAD_DEFAULT);//设置缓存模式
+        // ws.setAppCacheEnabled(true);
+        // ws.setCacheMode(WebSettings.LOAD_DEFAULT);//设置缓存模式
 
         //添加Javascript调用java对象
-       // webView.addJavascriptInterface(this, "java2js");
+        // webView.addJavascriptInterface(this, "java2js");
         webView.setWebViewClient(new WebViewClientDemo());
-        webView.loadUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode="+proCode+"&shopCode="+shopCode);
+        webView.loadUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?code="+proCode+"&shopCode="+shopCode);
         //webView.loadUrl("http://192.168.1.169:8080/qqt_up/Mshop/showMshop.htm?shopCode=402881294c8e30b3014c8e374ea60000");
     }
 
@@ -73,19 +70,26 @@ public class ProductWebViewActivity extends ActionBarActivity {
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_web_view, menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_shop_web_view, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }else if(id==android.R.id.home){
-            finish();
         }
+
         return super.onOptionsItemSelected(item);
     }
 }
