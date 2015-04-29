@@ -1,7 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.manuelpeinado.fadingactionbar.view.ObservableWebViewWithHeader
+<!--<com.trade.bluehole.trad.util.view.ProgressWebView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/webView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent" />-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:orientation="vertical" >
 
+
+<com.trade.bluehole.trad.util.view.ProgressWebView
+    android:id="@+id/webView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" />
+
+</LinearLayout>-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ProgressBar
+        android:id="@+id/pb"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="5dip"
+        android:indeterminateOnly="false"
+        android:max="100"
+        android:progressDrawable="@drawable/progress_bar_states" >
+    </ProgressBar>
+
+    <com.manuelpeinado.fadingactionbar.view.ObservableWebViewWithHeader
+    android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

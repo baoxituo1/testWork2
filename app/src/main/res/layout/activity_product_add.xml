@@ -69,7 +69,7 @@
 
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@id/change_image_index"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/n_padding_normal_s"

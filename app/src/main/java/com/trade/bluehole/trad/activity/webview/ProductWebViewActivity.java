@@ -1,15 +1,22 @@
 package com.trade.bluehole.trad.activity.webview;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.DownloadListener;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
+import com.trade.bluehole.trad.util.view.ProgressWebView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -32,6 +39,8 @@ public class ProductWebViewActivity extends ActionBarActivity {
 
     @ViewById
     WebView webView;
+    @ViewById
+    ProgressBar pb;
 
     @AfterViews
     void initData(){
@@ -55,22 +64,37 @@ public class ProductWebViewActivity extends ActionBarActivity {
         ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         ws.setLoadWithOverviewMode(true);
         ws.setDefaultTextEncodingName("utf-8"); //设置文本编码
-       // ws.setAppCacheEnabled(true);
-       // ws.setCacheMode(WebSettings.LOAD_DEFAULT);//设置缓存模式
+        ws.setAppCacheEnabled(false);
+        ws.setCacheMode(WebSettings.LOAD_NO_CACHE);//设置缓存模式
 
         //添加Javascript调用java对象
        // webView.addJavascriptInterface(this, "java2js");
         webView.setWebViewClient(new WebViewClientDemo());
+        webView.setWebChromeClient(new WebViewClient() );
         webView.loadUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode="+proCode+"&shopCode="+shopCode);
         //webView.loadUrl("http://192.168.1.169:8080/qqt_up/Mshop/showMshop.htm?shopCode=402881294c8e30b3014c8e374ea60000");
     }
 
-    private class WebViewClientDemo extends WebViewClient {
+
+    private class WebViewClient extends WebChromeClient {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            pb.setProgress(newProgress);
+            if(newProgress==100){
+                pb.setVisibility(View.GONE);
+            }
+            super.onProgressChanged(view, newProgress);
+        }
+
+    }
+
+    private class WebViewClientDemo extends android.webkit.WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);// 当打开新链接时，使用当前的 WebView，不会使用系统其他浏览器
             return true;
         }
+
     }
 
     @Override

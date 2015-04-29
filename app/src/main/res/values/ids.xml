@@ -29,6 +29,9 @@
     <item type="id" name="main_sale_ing_btn" />
     <item type="id" name="main_sale_out_btn" />
     <item type="id" name="main_sale_cover_btn" />
+    <item type="id" name="main_sale_ing_txt" />
+    <item type="id" name="main_sale_out_txt" />
+    <item type="id" name="main_sale_cover_txt" />
     <item type="id" name="main_cover_name" />
     <item type="id" name="main_cover_number" />
     <item type="id" name="main_cover_item_edit" />
@@ -180,4 +183,8 @@
     <item type="id" name="pro_scroll" />
     <item type="id" name="product_name" />
     <item type="id" name="change_image_index" />
+    <!--商品列表-->
+    <item type="id" name="view_shop_layout" />
+    <item type="id" name="copy_shop_view_rul" />
+    <item type="id" name="share_shop_view_rul" />
 </resources>

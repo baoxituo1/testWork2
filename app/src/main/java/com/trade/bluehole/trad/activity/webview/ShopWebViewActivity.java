@@ -5,9 +5,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
@@ -30,6 +33,10 @@ public class ShopWebViewActivity extends  ActionBarActivity {
 
     @ViewById
     WebView webView;
+    @ViewById
+    ProgressBar pb;
+
+
     @AfterViews
     void initData(){
 
@@ -58,11 +65,24 @@ public class ShopWebViewActivity extends  ActionBarActivity {
         //添加Javascript调用java对象
         // webView.addJavascriptInterface(this, "java2js");
         webView.setWebViewClient(new WebViewClientDemo());
+        webView.setWebChromeClient(new WebViewClient() );
         webView.loadUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?code="+proCode+"&shopCode="+shopCode);
-        //webView.loadUrl("http://192.168.1.169:8080/qqt_up/Mshop/showMshop.htm?shopCode=402881294c8e30b3014c8e374ea60000");
+       // webView.loadUrl("http://192.168.1.169:8080/qqt_up/Mshop/showMshop.htm?shopCode=402881294c8e30b3014c8e374ea60000");
     }
 
-    private class WebViewClientDemo extends WebViewClient {
+    private class WebViewClient extends WebChromeClient {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            pb.setProgress(newProgress);
+            if(newProgress==100){
+                pb.setVisibility(View.GONE);
+            }
+            super.onProgressChanged(view, newProgress);
+        }
+
+    }
+
+    private class WebViewClientDemo extends android.webkit.WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);// 当打开新链接时，使用当前的 WebView，不会使用系统其他浏览器

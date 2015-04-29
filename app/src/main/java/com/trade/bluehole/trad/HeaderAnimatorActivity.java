@@ -1,5 +1,7 @@
 package com.trade.bluehole.trad;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -24,11 +26,7 @@ import com.soundcloud.android.crop.Crop;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity;
 import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity_;
-import com.trade.bluehole.trad.activity.webview.ProductWebViewActivity;
-import com.trade.bluehole.trad.activity.webview.ProductWebViewActivity_;
 import com.trade.bluehole.trad.activity.webview.ShopWebViewActivity_;
-import com.trade.bluehole.trad.activity.webview.WebViewActivity;
-import com.trade.bluehole.trad.activity.webview.WebViewActivity_;
 import com.trade.bluehole.trad.adaptor.pro.ProductCoverNumberAdapter;
 import com.trade.bluehole.trad.adaptor.pro.ProductListViewAdaptor;
 import com.trade.bluehole.trad.animator.IO2014HeaderAnimator;
@@ -73,9 +71,9 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     @ViewById
     ImageView header_image,no_item_add;
     @ViewById
-    FancyButton main_sale_ing_btn, main_sale_out_btn, main_sale_cover_btn;
+    RelativeLayout main_sale_ing_btn, main_sale_out_btn, main_sale_cover_btn;
     @ViewById
-    FancyButton view_shop;
+    TextView main_sale_ing_txt, main_sale_out_txt, main_sale_cover_txt;
     @ViewById
     LinearLayout /*btn_cover_layout,*/ btn_cover_ok_layout;
     @ViewById
@@ -206,11 +204,21 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     /**
      * 当点击预览店铺
      */
-    @Click(R.id.view_shop)
+    @Click(R.id.view_shop_layout)
     void onClickViewShopBtn(){
         Intent intent = ShopWebViewActivity_.intent(this).get();
         intent.putExtra(ShopWebViewActivity_.SHOP_CODE, user.getShopCode());
         this.startActivity(intent);
+    }
+    /**
+     * 当点击复制店铺地址
+     */
+    @Click(R.id.copy_shop_view_rul)
+    void onClickCopyShopUrlBtn(){
+        ClipboardManager clip = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+        clip.setText(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?&shopCode="+user.getShopCode()); // 复制
+        Toast.makeText(getApplication(), "成功复制到剪切板!", Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -225,9 +233,9 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         listview.setLayoutParams(params);
         searchType = "1";
         //btn_cover_layout.setVisibility(View.GONE);
-        main_sale_ing_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
-        main_sale_out_btn.setTextColor(getResources().getColor(R.color.white));
-        main_sale_cover_btn.setTextColor(getResources().getColor(R.color.white));
+        main_sale_ing_txt.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
+        main_sale_out_txt.setTextColor(getResources().getColor(R.color.white));
+        main_sale_cover_txt.setTextColor(getResources().getColor(R.color.white));
         //设置无数据时候
         no_item_text.setText("还没有商品,赶快去添加~");
         if(no_item_add.getVisibility()==View.GONE){
@@ -250,9 +258,9 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         searchType = "0";
         showCoverManager = false;//非可编辑状态
         //btn_cover_layout.setVisibility(View.GONE);
-        main_sale_out_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
-        main_sale_ing_btn.setTextColor(getResources().getColor(R.color.white));
-        main_sale_cover_btn.setTextColor(getResources().getColor(R.color.white));
+        main_sale_out_txt.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
+        main_sale_ing_txt.setTextColor(getResources().getColor(R.color.white));
+        main_sale_cover_txt.setTextColor(getResources().getColor(R.color.white));
         //设置无数据时候
         no_item_text.setText("还没有下架的商品~");
         if(no_item_add.getVisibility()==View.VISIBLE){
@@ -276,9 +284,9 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         searchType = "2";
         showCoverManager = false;//非可编辑状态
        // btn_cover_layout.setVisibility(View.VISIBLE);
-        main_sale_cover_btn.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
-        main_sale_ing_btn.setTextColor(getResources().getColor(R.color.white));
-        main_sale_out_btn.setTextColor(getResources().getColor(R.color.white));
+        main_sale_cover_txt.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
+        main_sale_ing_txt.setTextColor(getResources().getColor(R.color.white));
+        main_sale_out_txt.setTextColor(getResources().getColor(R.color.white));
         //设置无数据时候
         no_item_text.setText("还没有分类,赶快添加~");
         if(no_item_add.getVisibility()==View.VISIBLE){
