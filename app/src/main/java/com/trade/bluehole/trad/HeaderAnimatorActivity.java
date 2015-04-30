@@ -40,6 +40,16 @@ import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.Result;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.trade.bluehole.trad.util.view.MyViewHold;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.SinaShareContent;
+import com.umeng.socialize.media.TencentWbShareContent;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.sso.QZoneSsoHandler;
+import com.umeng.socialize.sso.SinaSsoHandler;
+import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.sso.UMSsoHandler;
 
 
 import org.androidannotations.annotations.AfterViews;
@@ -116,7 +126,8 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         user = myApplication.getUser();
         shop = myApplication.getShop();
         initDialog();
-        adaptor = new ProductListViewAdaptor(this);
+        addQZoneQQPlatform();
+        adaptor = new ProductListViewAdaptor(this,"main");
         coverNumberAdapter = new ProductCoverNumberAdapter(this);
         if (shop != null) {
             shopName.setText(shop.getTitle());
@@ -134,6 +145,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         populateListView();
         //初始化弹出框
         listview.setEmptyView(empty_view);
+
     }
 
 
@@ -216,8 +228,22 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     @Click(R.id.copy_shop_view_rul)
     void onClickCopyShopUrlBtn(){
         ClipboardManager clip = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
-        clip.setText(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?&shopCode="+user.getShopCode()); // 复制
+        clip.setText(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?&shopCode=" + user.getShopCode()); // 复制
         Toast.makeText(getApplication(), "成功复制到剪切板!", Toast.LENGTH_SHORT).show();
+
+    }
+    /**
+     * 当点击分享店铺地址
+     */
+    @Click(R.id.share_shop_view_rul)
+    void onClickShareShopUrlBtn(){
+
+        String _targetUrl=DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?&shopCode=" + user.getShopCode();
+        // 设置分享内容
+        mController.setShareContent(shop.getSlogan()+_targetUrl);
+        // 设置分享图片, 参数2为图片的url地址
+        mController.setShareMedia(new UMImage(this, DataUrlContents.IMAGE_HOST+ shop.getShopLogo()+DataUrlContents.img_logo_img));
+        mController.openShare(this, false);
 
     }
 
@@ -617,6 +643,51 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
                 }
             });
         }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /**使用SSO授权必须添加如下代码 */
+        UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode) ;
+        if(ssoHandler != null){
+            ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+        }
+
+    }
+
+    /**
+     * 支持qq分享回掉
+     */
+    private void addQZoneQQPlatform() {
+        // 添加QQ支持, 并且设置QQ分享内容的target url
+        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,  myApplication.qq_appId, myApplication.qq_appKey);
+        qqSsoHandler.setTitle(shop.getTitle());
+        qqSsoHandler.setTargetUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?shopCode="+user.getShopCode());
+        qqSsoHandler.addToSocialSDK();
+
+        // 添加QZone平台
+        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
+        qZoneSsoHandler.addToSocialSDK();
+    }
+
+    public void shareProduct(String code,String proName,String imagUrl){
+        String _targetUrl=DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode=" + code + "&shopCode=" + user.getShopCode();
+        // 设置分享内容
+        mController.setShareContent(proName+_targetUrl);
+        // 设置分享图片, 参数2为图片的url地址
+        mController.setShareMedia(new UMImage(this, imagUrl));
+        // 添加QQ支持, 并且设置QQ分享内容的target url
+        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,  myApplication.qq_appId, myApplication.qq_appKey);
+        qqSsoHandler.setTitle(shop.getTitle());
+        qqSsoHandler.setTargetUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode=" + code + "&shopCode=" + user.getShopCode());
+        qqSsoHandler.addToSocialSDK();
+        // 添加QZone平台
+        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
+        qZoneSsoHandler.addToSocialSDK();
+
+        mController.openShare(this, false);
     }
 
     @Override

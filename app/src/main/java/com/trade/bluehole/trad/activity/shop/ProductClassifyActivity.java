@@ -22,10 +22,18 @@ import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.adaptor.pro.ProductListViewAdaptor;
 import com.trade.bluehole.trad.entity.ProductIndexVO;
 import com.trade.bluehole.trad.entity.User;
+import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
+import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.Result;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.sso.QZoneSsoHandler;
+import com.umeng.socialize.sso.UMQQSsoHandler;
 
 import org.androidannotations.annotations.AfterExtras;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ItemClick;
@@ -39,12 +47,17 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 @EActivity(R.layout.activity_product_classify)
 public class ProductClassifyActivity extends BaseActionBarActivity {
-
     //商品和店铺编码标志
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String USER_CODE_EXTRA = "userCode";
     public static final String COVER_CODE_EXTRA = "coverCode";
     public static final String COVER_NAME_EXTRA = "coverName";
+
+    /**
+     * 登陆信息
+     */
+    ShopCommonInfo shop;
+    User user;
 
     @Extra(SHOP_CODE_EXTRA)
     String shopCode;
@@ -55,7 +68,8 @@ public class ProductClassifyActivity extends BaseActionBarActivity {
     @Extra(COVER_NAME_EXTRA)
     String coverName;
 
-
+    @App
+    MyApplication myApplication;
     @ViewById(R.id.listview)
     ListView listview;
     ProductListViewAdaptor adaptor;
@@ -72,8 +86,9 @@ public class ProductClassifyActivity extends BaseActionBarActivity {
     void initData(){
        // ActionBar actionBar = getActionBar();
        // actionBar.setDisplayHomeAsUpEnabled(true);
-
-        adaptor=new ProductListViewAdaptor(this);
+        user = myApplication.getUser();
+        shop = myApplication.getShop();
+        adaptor=new ProductListViewAdaptor(this,"class");
 
         pDialog = getDialog(this);
         if(null==coverCode||"".equals(coverCode)){
@@ -141,6 +156,26 @@ public class ProductClassifyActivity extends BaseActionBarActivity {
                 }
             });
         }
+    }
+
+
+
+    public void shareProduct(String code,String proName,String imagUrl){
+        String _targetUrl=DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode=" + code + "&shopCode=" + user.getShopCode();
+        // 设置分享内容
+        mController.setShareContent(proName+_targetUrl);
+        // 设置分享图片, 参数2为图片的url地址
+        mController.setShareMedia(new UMImage(this, imagUrl));
+        // 添加QQ支持, 并且设置QQ分享内容的target url
+        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,  myApplication.qq_appId, myApplication.qq_appKey);
+        qqSsoHandler.setTitle(shop.getTitle());
+        qqSsoHandler.setTargetUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode=" + code + "&shopCode=" + user.getShopCode());
+        qqSsoHandler.addToSocialSDK();
+        // 添加QZone平台
+        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
+        qZoneSsoHandler.addToSocialSDK();
+
+        mController.openShare(this, false);
     }
 
 

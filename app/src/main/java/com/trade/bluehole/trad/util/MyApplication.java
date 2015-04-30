@@ -36,6 +36,10 @@ public class MyApplication extends com.activeandroid.app.Application {
     //阿里云oss
     public static final String accessKey = "ictZeAtTIlkEXGta"; // 测试代码没有考虑AK/SK的安全性
     public static final String screctKey = "8CQkQa7IytCb73hvk12EUazS0hUPw2";
+
+    //腾讯
+    public static final String qq_appId = "1102370118"; //
+    public static final String qq_appKey = "i0yuEJzTDCyYemhM";
     public static  OSSBucket sampleBucket;//阿里云 oss
     private User user;
     private ShopCommonInfo shop;

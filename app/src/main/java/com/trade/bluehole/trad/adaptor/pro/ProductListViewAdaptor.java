@@ -1,5 +1,6 @@
 package com.trade.bluehole.trad.adaptor.pro;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,15 +13,18 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.trade.bluehole.trad.HeaderAnimatorActivity;
 import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.NewProductActivity_;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity;
 import com.trade.bluehole.trad.activity.webview.ProductWebViewActivity;
 import com.trade.bluehole.trad.activity.webview.ProductWebViewActivity_;
 import com.trade.bluehole.trad.activity.webview.WebViewActivity_;
@@ -37,6 +41,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
     private Context context;
     LayoutInflater inflater;
     DisplayImageOptions options;
+    String type;
     public List<ProductIndexVO> getLists() {
         return lists;
     }
@@ -46,8 +51,9 @@ public class ProductListViewAdaptor extends BaseAdapter {
     }
 
     private List<ProductIndexVO> lists=new ArrayList<ProductIndexVO>();
-    public ProductListViewAdaptor(Context ctx){
+    public ProductListViewAdaptor(Context ctx,String type){
         context=ctx;
+        this.type=type;
         inflater =LayoutInflater.from(context);
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.abc_cab_background_internal_bg)
@@ -90,6 +96,8 @@ public class ProductListViewAdaptor extends BaseAdapter {
             viewHolder.progressBar=(ProgressBar)view.findViewById(R.id.progress);
             viewHolder.pro_view_btn=(RelativeLayout)view.findViewById(R.id.pro_view_btn);
             viewHolder.pro_edit_layout=(LinearLayout)view.findViewById(R.id.pro_edit_layout);
+            viewHolder.pro_share_btn=(RelativeLayout)view.findViewById(R.id.pro_share_btn);
+            viewHolder.pro_copy_btn=(RelativeLayout)view.findViewById(R.id.pro_copy_btn);
             view.setTag(viewHolder);
         }else{
             viewHolder=(HoldObject) convertView.getTag();
@@ -131,6 +139,28 @@ public class ProductListViewAdaptor extends BaseAdapter {
                     context.startActivity(intent);
                 }
             });
+            //分享被点击
+            viewHolder.pro_share_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if("main".equals(type)){
+                        HeaderAnimatorActivity haa=  (HeaderAnimatorActivity)context ;
+                        haa.shareProduct(obj.getProductCode(), obj.getProductName(), DataUrlContents.IMAGE_HOST + obj.getCoverMiddleImage() + DataUrlContents.img_list_head_img);
+                    }else{
+                        ProductClassifyActivity haa=  (ProductClassifyActivity)context ;
+                        haa.shareProduct(obj.getProductCode(), obj.getProductName(), DataUrlContents.IMAGE_HOST + obj.getCoverMiddleImage() + DataUrlContents.img_list_head_img);
+                    }
+                }
+            });
+            //复制地址被点击
+            viewHolder.pro_copy_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ClipboardManager clip = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                    clip.setText(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode=" + obj.getProductCode() + "&shopCode=" + obj.getShopCode()); // 复制
+                    Toast.makeText(context, "成功复制到剪切板!", Toast.LENGTH_SHORT).show();
+                }
+            });
             //商品修改被点击
             viewHolder.pro_edit_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -152,6 +182,8 @@ public class ProductListViewAdaptor extends BaseAdapter {
         TextView product_price;
         TextView product_number;
         RelativeLayout pro_view_btn;
+        RelativeLayout pro_share_btn;
+        RelativeLayout pro_copy_btn;
         LinearLayout pro_edit_layout;
         TextView pro_hot;
     }
