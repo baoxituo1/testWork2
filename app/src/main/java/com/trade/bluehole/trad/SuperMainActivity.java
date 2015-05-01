@@ -41,6 +41,7 @@ import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.trade.bluehole.trad.util.model.UserModel;
+import com.trade.bluehole.trad.util.update.UpdateManager;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -249,6 +250,17 @@ public class SuperMainActivity extends Activity {
                 })
                 .show();
 
+    }
+
+
+    /**
+     * 当点击更新版本
+     */
+    @Click(R.id.main_update_layout)
+    void onClickUpdateVision(){
+        UpdateManager manager = new UpdateManager(SuperMainActivity.this);
+        // 检查软件更新
+        manager.checkUpdate();
     }
 
     /**

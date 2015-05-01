@@ -17,11 +17,18 @@ public class DataUrlContents {
      */
     public final static String activity_logo_img="@!p-a-h-w900-h450";
 
+
+
+    /**
+     * 更新服务器地址
+     */
+    public final  static String UPDATE_SERVER_HOST="http://miss77.vicp.net/";
+
     /**
      * 服务器地址
      */
     //public final  static String SERVER_HOST="http://192.168.1.161:8080/qqt_up/";
-    public final  static String SERVER_HOST="http://7ri7.vicp.net:41451/qqt_up/";
+    public final  static String SERVER_HOST="http://miss77.vicp.net/qqt_up/";
     //public final  static String SERVER_HOST="http://192.168.1.108:8080/qqt_up/";
     /**
      * 图片服务器地址

@@ -85,6 +85,7 @@
     <item type="id" name="main_left_message_layout" />
     <item type="id" name="account" />
     <item type="id" name="main_quit_layout" />
+    <item type="id" name="main_update_layout" />
 
     <!--活动-->
     <item type="id" name="activity_menu_add" />

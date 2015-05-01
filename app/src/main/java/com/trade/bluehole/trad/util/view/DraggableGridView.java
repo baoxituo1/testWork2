@@ -38,7 +38,7 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
     protected boolean enabled = true, touching = false;
     //anim vars
     public static int animT = 150;
-    protected ArrayList<Integer> newPositions = new ArrayList<Integer>();
+    protected ArrayList<Integer> newPositions = new ArrayList<>();
     //listeners
     protected OnRearrangeListener onRearrangeListener;
     protected OnClickListener secondaryOnClickListener;
@@ -84,7 +84,7 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
             		lastDelta = 0;
             }
             clampScroll();
-            onLayout(true, getLeft(), getTop(), getRight(), getBottom());
+            layout(getLeft(), getTop(), getRight(), getBottom());
         
             handler.postDelayed(this, 25);
         }
@@ -261,7 +261,7 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
                 	   clampScroll();
                 	   if (Math.abs(delta) > 2)
                     	   enabled = false;
-                	   onLayout(true, getLeft(), getTop(), getRight(), getBottom());
+                	   this.layout(getLeft(), getTop(), getRight(), getBottom());
                    }
                    lastX = (int) event.getX();
                    lastY = (int) event.getY();
@@ -384,7 +384,7 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
         	newPositions.set(i, -1);
             addView(children.get(i));
         }
-        onLayout(true, getLeft(), getTop(), getRight(), getBottom());
+        layout(getLeft(), getTop(), getRight(), getBottom());
     }
     public void scrollToTop()
     {

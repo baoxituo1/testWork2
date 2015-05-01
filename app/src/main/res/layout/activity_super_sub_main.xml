@@ -193,6 +193,7 @@
         </LinearLayout>
         <!--设置-->
         <LinearLayout
+            android:id="@id/main_update_layout"
             android:layout_width="match_parent"
             android:weightSum="4"
             android:layout_height="@dimen/left_menu_item_sub_width">
@@ -204,7 +205,7 @@
                 android:layout_height="match_parent">
                 <TextView
                     android:layout_width="wrap_content"
-                    android:text="@string/main_user_setting"
+                    android:text="@string/main_user_update"
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
