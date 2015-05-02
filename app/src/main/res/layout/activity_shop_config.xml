@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -19,6 +20,7 @@
 
             <!-- 店铺图标-->
             <LinearLayout
+                android:id="@+id/shopLogoLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -41,18 +43,24 @@
 
                 <!--右侧 -->
                 <LinearLayout
-                    android:id="@+id/shopLogoLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:gravity="right"
                     android:orientation="vertical">
 
-                    <ImageView
+                    <!--<ImageView
                         android:id="@+id/shopLogoImage"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/lib_icon"/>
+                        android:src="@drawable/lib_icon"/>-->
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/shopLogoImage"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_centerInParent="true"
+                        app:border_width="2dp"
+                        app:border_color="#FF000000"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -60,19 +68,21 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/n_padding_normal_h"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:background="@color/note" />
             <!-- 店铺名称-->
             <LinearLayout
+                android:id="@+id/shopNameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/common_height"
                 android:weightSum="1">
                 <!--左侧 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
+                    android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:orientation="vertical">
 
@@ -85,10 +95,10 @@
 
                 <!--右侧 -->
                 <LinearLayout
-                    android:id="@+id/shopNameLayout"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.6"
+                    android:layout_gravity="center_vertical"
                     android:gravity="right"
                     android:orientation="vertical">
 
@@ -105,19 +115,21 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/n_padding_normal_h"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:background="@color/note" />
             <!-- 店铺公告-->
             <LinearLayout
+                android:id="@+id/shopSloganLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/common_height"
                 android:weightSum="1">
                 <!--左侧 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
+                    android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:orientation="vertical">
 
@@ -130,10 +142,10 @@
 
                 <!--右侧 -->
                 <LinearLayout
-                    android:id="@+id/shopSloganLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
+                    android:layout_gravity="center_vertical"
                     android:gravity="right"
                     android:orientation="vertical">
 
@@ -150,20 +162,21 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/n_padding_normal_h"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:background="@color/note" />
             <!-- 店铺招牌-->
             <LinearLayout
                 android:id="@+id/shopGroundLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/common_height"
                 android:weightSum="1">
                 <!--左侧 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
+                    android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:orientation="vertical">
 
@@ -179,6 +192,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
+                    android:layout_gravity="center_vertical"
                     android:gravity="right"
                     android:orientation="vertical">
 
@@ -194,20 +208,21 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/n_padding_normal_h"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:background="@color/note" />
             <!-- 店铺地址-->
             <LinearLayout
                 android:id="@+id/shopAddressLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/common_height"
                 android:weightSum="1">
                 <!--左侧 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
+                    android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:orientation="vertical">
 
@@ -223,6 +238,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
+                    android:layout_gravity="center_vertical"
                     android:gravity="right"
                     android:orientation="vertical">
 

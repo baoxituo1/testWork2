@@ -5,6 +5,7 @@
     <string name="lunch_sign">新用户</string>
     <string name="hello_world">你好请登陆!</string>
     <string name="common_done">完成</string>
+    <string name="update_done">同步</string>
 
     <string name="register_title">请输入您的手机号</string>
     <string name="register_title_edit">手机号码</string>

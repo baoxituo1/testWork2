@@ -63,6 +63,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * 店铺设置
@@ -99,7 +100,7 @@ public class ShopConfigActivity extends BaseActionBarActivity {
     }
 
     @ViewById
-    ImageView shopLogoImage;
+    CircleImageView shopLogoImage;
     @ViewById
     TextView shopName,shopSlogan,shopAddress;
 

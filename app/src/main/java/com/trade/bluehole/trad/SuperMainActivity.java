@@ -260,7 +260,7 @@ public class SuperMainActivity extends Activity {
     void onClickUpdateVision(){
         UpdateManager manager = new UpdateManager(SuperMainActivity.this);
         // 检查软件更新
-        manager.checkUpdate();
+        manager.checkUpdate(0);
     }
 
     /**

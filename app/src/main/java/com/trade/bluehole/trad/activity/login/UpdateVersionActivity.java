@@ -19,7 +19,7 @@ public class UpdateVersionActivity extends Activity {
         setContentView(R.layout.activity_update_version);
         // 检查软件更新
         UpdateManager manager = new UpdateManager(this);
-        manager.checkUpdate();
+        manager.checkUpdate(1);
 
     }
 

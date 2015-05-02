@@ -188,4 +188,7 @@
     <item type="id" name="view_shop_layout" />
     <item type="id" name="copy_shop_view_rul" />
     <item type="id" name="share_shop_view_rul" />
+
+    <!--店铺地址-->
+    <item type="id" name="address_update_data" />
 </resources>

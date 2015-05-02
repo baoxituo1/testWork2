@@ -67,6 +67,9 @@ public class UpdateManager {
     private ProgressBar mProgress;
     private Dialog mDownloadDialog;
 
+    /*是否跳转*/
+    public int isGoto;
+
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -94,8 +97,9 @@ public class UpdateManager {
     /**
      * 检测软件更新
      */
-    public void checkUpdate() {
+    public void checkUpdate(int isGoto) {
         //isUpdate();
+        this.isGoto=isGoto;
         new CheckVersionTask().start();
     }
 
@@ -191,7 +195,9 @@ public class UpdateManager {
                 case NO_UPDATA_CLIENT:
                     //无需升级程序
                     //showUpdataDialog(false);
-                    LoginMain();
+                    if(isGoto==1){//需要跳转才跳转
+                        LoginMain();
+                    }
                     break;
                 case UPDATA_CLIENT:
                     //对话框通知用户升级程序
@@ -253,7 +259,9 @@ public class UpdateManager {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                LoginMain();
+                if(isGoto==1){//需要跳转才跳转
+                    LoginMain();
+                }
             }
         });
         Dialog noticeDialog = builder.create();
@@ -288,7 +296,9 @@ public class UpdateManager {
                 dialog.dismiss();
                 // 设置取消状态
                 cancelUpdate = true;
-                LoginMain();
+                if(isGoto==1){//需要跳转才跳转
+                    LoginMain();
+                }
             }
         });
         mDownloadDialog = builder.create();

@@ -6,6 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/white"
     tools:context="com.trade.bluehole.trad.ShopConfigActivity">
 
     <ScrollView
@@ -15,18 +16,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <!-- 省份名称-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/common_height"
                 android:weightSum="1">
                 <!--左侧 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
+                    android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:orientation="vertical">
 
@@ -46,12 +50,17 @@
                     android:gravity="left"
                     android:orientation="vertical">
 
-                    <TextView
+                    <EditText
                         android:id="@+id/provinceShopName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="丽影伊人"
-                        android:textColor="@color/grey_light" />
+                        android:layout_marginLeft="@dimen/n_padding_normal_b"
+                        android:drawableBottom="@color/white"
+                        android:background="@drawable/rounded_edittext"
+                        android:textSize="@dimen/small_text_size"
+                        android:hint=""
+                        android:gravity="center_vertical"
+                        android:singleLine="true" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -59,19 +68,20 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/n_padding_normal_h"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:background="@color/note" />
             <!-- 市名称-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/common_height"
                 android:weightSum="1">
                 <!--左侧 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
+                    android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:orientation="vertical">
 
@@ -91,12 +101,17 @@
                     android:gravity="left"
                     android:orientation="vertical">
 
-                    <TextView
+                    <EditText
                         android:id="@+id/cityName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="丽影伊人"
-                        android:textColor="@color/grey_light" />
+                        android:layout_marginLeft="@dimen/n_padding_normal_b"
+                        android:drawableBottom="@color/white"
+                        android:background="@drawable/rounded_edittext"
+                        android:textSize="@dimen/small_text_size"
+                        android:hint=""
+                        android:gravity="center_vertical"
+                        android:singleLine="true" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -104,20 +119,21 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/n_padding_normal_h"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:background="@color/note" />
 
             <!-- 区县名称-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/common_height"
                 android:weightSum="1">
                 <!--左侧 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
+                    android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:orientation="vertical">
 
@@ -137,12 +153,17 @@
                     android:gravity="left"
                     android:orientation="vertical">
 
-                    <TextView
+                    <EditText
                         android:id="@+id/districtName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="丽影伊人"
-                        android:textColor="@color/grey_light" />
+                        android:layout_marginLeft="@dimen/n_padding_normal_b"
+                        android:drawableBottom="@color/white"
+                        android:background="@drawable/rounded_edittext"
+                        android:textSize="@dimen/small_text_size"
+                        android:hint=""
+                        android:gravity="center_vertical"
+                        android:singleLine="true" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -150,19 +171,20 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/n_padding_normal_h"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:background="@color/note" />
             <!-- 街道名称-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/common_height"
                 android:weightSum="1">
                 <!--左侧 -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
+                    android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:orientation="vertical">
 
@@ -182,12 +204,17 @@
                     android:gravity="left"
                     android:orientation="vertical">
 
-                    <TextView
+                    <EditText
                         android:id="@+id/addressName"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="丽影伊人"
-                        android:textColor="@color/grey_light" />
+                        android:layout_marginLeft="@dimen/n_padding_normal_b"
+                        android:drawableBottom="@color/white"
+                        android:background="@drawable/rounded_edittext"
+                        android:textSize="@dimen/small_text_size"
+                        android:hint="填写详细地址"
+                        android:gravity="center_vertical"
+                        android:singleLine="true" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -195,8 +222,8 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/n_padding_normal_h"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:background="@color/note" />
 
             <Button

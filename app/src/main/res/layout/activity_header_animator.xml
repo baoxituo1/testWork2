@@ -45,6 +45,7 @@
         android:layout_height="@dimen/max_height_header">
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/header_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -58,7 +59,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical"
-                android:background="@color/gray"
+                android:background="@color/gainsboro"
                 android:padding="5dp"
                 android:layout_margin="10dp"
                 android:layout_height="wrap_content">
@@ -94,8 +95,8 @@
                     android:layout_marginTop="50dp"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@id/shop_logo_image"
-                    android:textSize="18sp"
-                    android:textColor="@color/white"
+                    android:textSize="@dimen/title_text_size"
+                    android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -106,7 +107,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/min_height_header_materiallike"
-                android:background="#b0000000"
+                android:background="@color/white"
                 android:weightSum="12"
                 android:visibility="visible"
                 android:baselineAligned="false">
@@ -121,10 +122,18 @@
                         android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="@dimen/user_edit_ioc_height_width"
+                            android:src="@drawable/eye"
+                            android:layout_centerInParent="true"
+                            android:layout_height="@dimen/user_edit_ioc_height_width" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:text="预览"
-                            android:textColor="@color/white"
+                            android:textSize="@dimen/sample_text_size"
+                            android:layout_marginTop="@dimen/n_padding_normal_s"
+                            android:textColor="@color/black"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                     <View
@@ -146,10 +155,18 @@
                         android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="@dimen/user_edit_ioc_height_width"
+                            android:src="@drawable/link"
+                            android:layout_centerInParent="true"
+                            android:layout_height="@dimen/user_edit_ioc_height_width" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:text="复制链接"
-                            android:textColor="@color/white"
+                            android:textSize="@dimen/sample_text_size"
+                            android:layout_marginTop="@dimen/n_padding_normal_s"
+                            android:textColor="@color/black"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                     <View
@@ -171,10 +188,18 @@
                         android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="@dimen/user_edit_ioc_height_width"
+                            android:src="@drawable/share2"
+                            android:layout_centerInParent="true"
+                            android:layout_height="@dimen/user_edit_ioc_height_width" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:text="分享"
-                            android:textColor="@color/white"
+                            android:textSize="@dimen/sample_text_size"
+                            android:layout_marginTop="@dimen/n_padding_normal_s"
+                            android:textColor="@color/black"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                     <View

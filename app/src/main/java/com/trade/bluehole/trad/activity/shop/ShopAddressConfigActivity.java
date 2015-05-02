@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,7 +71,7 @@ public class ShopAddressConfigActivity extends BaseActionBarActivity {
 
 
     @ViewById
-    TextView provinceShopName,cityName,districtName,addressName;
+    EditText provinceShopName,cityName,districtName,addressName;
 
     /**
      * 初始化数据
@@ -116,6 +117,7 @@ public class ShopAddressConfigActivity extends BaseActionBarActivity {
                  cityName.setText(cityNameNameExr);
                  districtName.setText(districtNameExr);
                  addressName.setText(addressNameExr);
+                //返回后直接更新
                  saveDataToServer();
             }
         }
@@ -135,15 +137,19 @@ public class ShopAddressConfigActivity extends BaseActionBarActivity {
         if(0!=longitude){
                 params.put("longitude", longitude);
         }
+        provinceNameExr=provinceShopName.getText().toString();
         if(null!="provinceNameExr"&&!"".equals(provinceNameExr)){
                 params.put("provinceName", provinceNameExr);
         }
+        cityNameNameExr=cityName.getText().toString();
         if(null!="cityNameNameExr"&&!"".equals(cityNameNameExr)){
                 params.put("cityName",cityNameNameExr);
         }
+        districtNameExr=districtName.getText().toString();
         if(null!="districtNameExr"&&!"".equals(districtNameExr)){
                 params.put("district", districtNameExr);
         }
+        addressNameExr=addressName.getText().toString();
         if(null!="addressNameExr"&&!"".equals(addressNameExr)){
                 params.put("address", addressNameExr);
         }
@@ -184,9 +190,17 @@ public class ShopAddressConfigActivity extends BaseActionBarActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_shop_address_config, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.address_update_data) {
+            saveDataToServer();
             return true;
         }else if(id==android.R.id.home){
             finish();
