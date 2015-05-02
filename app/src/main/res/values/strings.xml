@@ -59,6 +59,7 @@
     <string name="pro_out_sale">下架商品</string>
     <string name="pro_inner_sale">上架商品</string>
     <string name="pro_del_pro">删除商品</string>
+    <string name="pro_search">搜索</string>
 
     <string name="footer_button_close">取消</string>
     <string name="footer_button_confirm">确定</string>
@@ -218,4 +219,5 @@
     <string name="soft_updating">正在更新</string>
     <string name="soft_update_cancel">取消</string>
     <string name="title_activity_update_version">优商圈</string>
+    <string name="title_activity_search_product">查询</string>
 </resources>

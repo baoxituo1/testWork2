@@ -1,0 +1,110 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gainsboro"
+    tools:context="com.trade.bluehole.trad.activity.shop.SearchProductActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:padding="@dimen/n_padding_normal"
+        android:weightSum="12"
+        android:orientation="horizontal"
+        android:layout_height="@dimen/common_height">
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_action_back_item"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="9"
+            android:layout_width="0dp"
+            android:weightSum="11"
+            android:background="@color/gainsboro"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:src="@drawable/ic_drawer_search_normal"
+                android:layout_height="17dp" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/n_padding_normal"
+                android:background="@color/note" />
+            <EditText
+                android:id="@id/search_pro_name"
+                android:layout_width="0dp"
+                android:layout_weight="10"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/n_padding_normal"
+                android:background="@drawable/normal_edittext"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/small_text_size"
+                android:hint="请输入商品名称"
+                android:singleLine="true" />
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:padding="@dimen/n_padding_normal_s"
+            android:layout_height="match_parent">
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/pro_search_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:padding="@dimen/n_padding_normal"
+                fancy:borderColor="#FFFFFF"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="@color/primary"
+                fancy:focusColor="@color/white"
+                fancy:radius="5dp"
+                fancy:text="@string/pro_search"
+                fancy:textColor="#FFFFFF" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ListView
+        android:layout_marginTop="@dimen/n_padding_normal"
+        android:visibility="gone"
+        android:id="@id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <!--无数据视图-->
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:id="@id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pro_list_height">
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@id/no_item_add"
+                android:src="@drawable/icon_3"
+                android:scaleType="fitCenter"
+                android:layout_width="@dimen/pro_list_empty_width_height"
+                android:layout_height="@dimen/pro_list_empty_width_height" />
+            <TextView
+                android:id="@id/no_item_text"
+                android:layout_marginLeft="@dimen/n_padding_normal_h"
+                android:layout_width="wrap_content"
+                android:textSize="@dimen/small_text_size"
+                android:text="输入商品名称,搜索商品吧~"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

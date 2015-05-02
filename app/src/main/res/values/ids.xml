@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item type="id" name="listView" />
+
     <item type="id" name="login_top_layout" />
     <item type="id" name="login_user_layout" />
     <item type="id" name="login_user_login_btn" />
@@ -45,6 +47,9 @@
     <item type="id" name="btn_cover_ok_layout" />
     <item type="id" name="pro_cover_info_layout" />
     <item type="id" name="pro_update_btn_layout" />
+    <item type="id" name="shop_search_layout" />
+    <item type="id" name="pro_search_btn" />
+    <item type="id" name="search_pro_name" />
 
 
 

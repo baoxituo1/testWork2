@@ -65,8 +65,8 @@ dependencies {
     // Use the following if your project uses ActionBarCompat
     compile 'com.github.manuelpeinado.fadingactionbar:fadingactionbar-abc:3.1.2'
     //error view
-    compile 'com.github.xiprox.errorview:library:2.0.0'
-    //image design gpu
+    //compile 'com.github.xiprox.errorview:library:2.0.0'
+    //image design gpu 图片美化
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.2.3'
     //数据库操作
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'

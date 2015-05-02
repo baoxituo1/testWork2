@@ -26,6 +26,8 @@ import com.soundcloud.android.crop.Crop;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity;
 import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity_;
+import com.trade.bluehole.trad.activity.shop.SearchProductActivity;
+import com.trade.bluehole.trad.activity.shop.SearchProductActivity_;
 import com.trade.bluehole.trad.activity.webview.ShopWebViewActivity_;
 import com.trade.bluehole.trad.adaptor.pro.ProductCoverNumberAdapter;
 import com.trade.bluehole.trad.adaptor.pro.ProductListViewAdaptor;
@@ -242,7 +244,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         // 设置分享内容
         mController.setShareContent(shop.getSlogan()+_targetUrl);
         // 设置分享图片, 参数2为图片的url地址
-        mController.setShareMedia(new UMImage(this, DataUrlContents.IMAGE_HOST+ shop.getShopLogo()+DataUrlContents.img_logo_img));
+        mController.setShareMedia(new UMImage(this, DataUrlContents.IMAGE_HOST + shop.getShopLogo() + DataUrlContents.img_logo_img));
         mController.openShare(this, false);
 
     }
@@ -320,6 +322,14 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         }
         loadCoverListView();
     }
+
+    /**
+     * 点击查询商品
+     */
+     @Click(R.id.shop_search_layout)
+     void onClickSearchProduct(){
+         SearchProductActivity_.intent(this).start();
+     }
 
     /**
      * 点击列表为空的快速添加

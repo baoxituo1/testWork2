@@ -25,6 +25,7 @@ import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.NewProductActivity_;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity;
+import com.trade.bluehole.trad.activity.shop.SearchProductActivity;
 import com.trade.bluehole.trad.activity.webview.ProductWebViewActivity;
 import com.trade.bluehole.trad.activity.webview.ProductWebViewActivity_;
 import com.trade.bluehole.trad.activity.webview.WebViewActivity_;
@@ -145,6 +146,9 @@ public class ProductListViewAdaptor extends BaseAdapter {
                 public void onClick(View v) {
                     if("main".equals(type)){
                         HeaderAnimatorActivity haa=  (HeaderAnimatorActivity)context ;
+                        haa.shareProduct(obj.getProductCode(), obj.getProductName(), DataUrlContents.IMAGE_HOST + obj.getCoverMiddleImage() + DataUrlContents.img_list_head_img);
+                    }else if("search".equals(type)){
+                        SearchProductActivity haa=  (SearchProductActivity)context ;
                         haa.shareProduct(obj.getProductCode(), obj.getProductName(), DataUrlContents.IMAGE_HOST + obj.getCoverMiddleImage() + DataUrlContents.img_list_head_img);
                     }else{
                         ProductClassifyActivity haa=  (ProductClassifyActivity)context ;
