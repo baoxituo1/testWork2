@@ -168,6 +168,13 @@ public class FullscreenActivity extends Activity {
     void onGotoRegisterOnClick(){
         RegisterManageActivity_.intent(this).start();
     }
+
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        pDialog.dismiss();
+    }
 }
 
 

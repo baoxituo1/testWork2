@@ -135,9 +135,15 @@ public class UpdateManager {
                         Message msg = new Message();
                         msg.what = UPDATA_CLIENT;
                         handler.sendMessage(msg);
+                    }else{
+                        Log.i(TAG, "版本号相同 ,无需升级 ");
+                        Message msg = new Message();
+                        msg.what = NO_UPDATA_CLIENT;
+                        handler.sendMessage(msg);
+
                     }
                 }else {
-                    Log.i(TAG, "版本号相同无需升级");
+                    Log.e(TAG, "解析XML文件错误");
                 }
             } catch (Exception e) {
                 // 待处理
@@ -197,6 +203,8 @@ public class UpdateManager {
                     //showUpdataDialog(false);
                     if(isGoto==1){//需要跳转才跳转
                         LoginMain();
+                    }else{
+                        showUpdataDialog(false);
                     }
                     break;
                 case UPDATA_CLIENT:
@@ -399,7 +407,7 @@ public class UpdateManager {
  * 进入程序的主界面
  */
     private void LoginMain(){
-        FullscreenActivity_.intent(mContext).start();;
+        FullscreenActivity_.intent(mContext).start();
         //结束掉当前的activity
     }
 }
