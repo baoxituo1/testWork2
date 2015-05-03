@@ -4,6 +4,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import com.trade.bluehole.trad.activity.webview.WebViewActivity_;
 import com.trade.bluehole.trad.entity.ProductIndexVO;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +45,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
     LayoutInflater inflater;
     DisplayImageOptions options;
     String type;
+    DecimalFormat df   = new DecimalFormat("######0.0");
     public List<ProductIndexVO> getLists() {
         return lists;
     }
@@ -94,18 +97,23 @@ public class ProductListViewAdaptor extends BaseAdapter {
             viewHolder.product_name=(TextView)view.findViewById(R.id.pro_name);
             viewHolder.product_number=(TextView)view.findViewById(R.id.pro_number);
             viewHolder.product_price=(TextView)view.findViewById(R.id.pro_price);
+            viewHolder.pro_new_price=(TextView)view.findViewById(R.id.pro_new_price);
+            viewHolder.pro_old_price=(TextView)view.findViewById(R.id.pro_old_price);
+            viewHolder.pro_sale_num=(TextView)view.findViewById(R.id.pro_sale_num);
             viewHolder.progressBar=(ProgressBar)view.findViewById(R.id.progress);
             viewHolder.pro_view_btn=(RelativeLayout)view.findViewById(R.id.pro_view_btn);
             viewHolder.pro_edit_layout=(LinearLayout)view.findViewById(R.id.pro_edit_layout);
+            viewHolder.pro_sale_layout=(LinearLayout)view.findViewById(R.id.pro_sale_layout);
             viewHolder.pro_share_btn=(RelativeLayout)view.findViewById(R.id.pro_share_btn);
             viewHolder.pro_copy_btn=(RelativeLayout)view.findViewById(R.id.pro_copy_btn);
+            viewHolder.show_hot_flag=(RelativeLayout)view.findViewById(R.id.show_hot_flag);
             view.setTag(viewHolder);
         }else{
             viewHolder=(HoldObject) convertView.getTag();
         }
         if(!lists.isEmpty()&&lists.size()>position){
             ImageLoader.getInstance()
-                    .displayImage(DataUrlContents.IMAGE_HOST + lists.get(position).getCoverMiddleImage() + DataUrlContents.img_list_head_img, viewHolder.product_cover_image, options, new SimpleImageLoadingListener() {
+                    .displayImage(DataUrlContents.IMAGE_HOST + obj.getCoverMiddleImage() + DataUrlContents.img_list_head_img, viewHolder.product_cover_image, options, new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String imageUri, View view) {
                             viewHolder.progressBar.setProgress(0);
@@ -127,8 +135,28 @@ public class ProductListViewAdaptor extends BaseAdapter {
                             viewHolder.progressBar.setProgress(Math.round(100.0f * current / total));
                         }
                     });
-            viewHolder.product_name.setText(lists.get(position).getProductName());
-            viewHolder.product_price.setText("￥"+lists.get(position).getProductPrice());
+            //是否显示打折布局 pro_sale_layout
+            if(null!=obj.getSalePrice()&&obj.getSalePrice()>0){
+                /**有促销*/
+                viewHolder.product_price.setVisibility(View.GONE);
+                viewHolder.pro_sale_layout.setVisibility(View.VISIBLE);
+                viewHolder.pro_old_price.setText("￥" + obj.getProductPrice());
+                viewHolder.pro_old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//删除线
+                viewHolder.pro_new_price.setText("￥" + obj.getSalePrice());
+                viewHolder.pro_sale_num.setText(df.format((obj.getSalePrice() / obj.getProductPrice()) * 10) + " 折");
+            }else{
+                /**无促销*/
+                viewHolder.pro_sale_layout.setVisibility(View.GONE);
+                viewHolder.product_price.setVisibility(View.VISIBLE);
+                viewHolder.product_price.setText("￥"+obj.getProductPrice());
+            }
+            //判断是否推荐
+            if(null!=obj.getHotNum()&&obj.getHotNum()>0){
+                viewHolder.show_hot_flag.setVisibility(View.VISIBLE);
+            }else {
+                viewHolder.show_hot_flag.setVisibility(View.GONE);
+            }
+            viewHolder.product_name.setText(obj.getProductName());
             viewHolder.product_number.setText("库存量10件");
             //预览被点击
             viewHolder.pro_view_btn.setOnClickListener(new View.OnClickListener() {
@@ -185,10 +213,15 @@ public class ProductListViewAdaptor extends BaseAdapter {
         TextView product_name;
         TextView product_price;
         TextView product_number;
+        TextView pro_new_price;
+        TextView pro_old_price;
+        TextView pro_sale_num;
         RelativeLayout pro_view_btn;
         RelativeLayout pro_share_btn;
         RelativeLayout pro_copy_btn;
+        RelativeLayout show_hot_flag;
         LinearLayout pro_edit_layout;
+        LinearLayout pro_sale_layout;
         TextView pro_hot;
     }
 }

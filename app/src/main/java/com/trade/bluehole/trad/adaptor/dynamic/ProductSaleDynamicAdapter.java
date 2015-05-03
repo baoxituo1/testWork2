@@ -1,5 +1,6 @@
 package com.trade.bluehole.trad.adaptor.dynamic;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -18,7 +20,10 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.trade.bluehole.trad.DynamicManageActivity;
+import com.trade.bluehole.trad.HeaderAnimatorActivity;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity;
+import com.trade.bluehole.trad.activity.shop.SearchProductActivity;
 import com.trade.bluehole.trad.entity.dynamic.DynaicInfoVO;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 
@@ -89,6 +94,8 @@ public class ProductSaleDynamicAdapter extends BaseAdapter {
             viewHolder.dy_date = (TextView) view.findViewById(R.id.dy_date);
             viewHolder.progressBar = (ProgressBar) view.findViewById(R.id.progress);
             viewHolder.dy_del_data = (RelativeLayout) view.findViewById(R.id.dy_del_data);
+            viewHolder.dy_copy_data = (RelativeLayout) view.findViewById(R.id.dy_copy_data);
+            viewHolder.dy_share_data = (RelativeLayout) view.findViewById(R.id.dy_share_data);
             view.setTag(viewHolder);
         } else {
             viewHolder = (HoldObject) convertView.getTag();
@@ -121,13 +128,29 @@ public class ProductSaleDynamicAdapter extends BaseAdapter {
             viewHolder.dy_price.setText("￥" + obj.getSalePrice());
             viewHolder.dy_old_price.setText("￥" + obj.getOldPrice());
             viewHolder.dy_old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//添加删除线
-            viewHolder.dy_sale_num.setText(df.format((obj.getSalePrice()/obj.getOldPrice())*10)+" 折");
+            viewHolder.dy_sale_num.setText(df.format((obj.getSalePrice() / obj.getOldPrice()) * 10) + " 折");
             viewHolder.dy_date.setText(obj.getSaleStartDate() + " 至 " + obj.getSaleEndDate());
             //点击删除状态
             viewHolder.dy_del_data.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     context.showDelConfirm(obj.getProductCode());
+                }
+            });
+            //复制地址被点击
+            viewHolder.dy_copy_data.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ClipboardManager clip = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                    clip.setText(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode=" + obj.getProductCode() + "&shopCode=" + obj.getShopCode()); // 复制
+                    Toast.makeText(context, "成功复制到剪切板!", Toast.LENGTH_SHORT).show();
+                }
+            });
+            //分享被点击
+            viewHolder.dy_share_data.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.shareProduct(obj.getProductCode(), obj.getProductName(), DataUrlContents.IMAGE_HOST + obj.getProductImage() + DataUrlContents.img_list_head_img);
                 }
             });
         }
@@ -137,6 +160,8 @@ public class ProductSaleDynamicAdapter extends BaseAdapter {
     static class HoldObject {
         ProgressBar progressBar;
         RelativeLayout dy_del_data;
+        RelativeLayout dy_copy_data;
+        RelativeLayout dy_share_data;
         ImageView dy_image;
         TextView dy_name;
         TextView dy_price;

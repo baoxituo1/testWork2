@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="@dimen/n_padding_normal_b"
+    android:padding="@dimen/n_padding_normal"
     android:background="@color/white"
     android:layout_height="match_parent">
     <LinearLayout
@@ -18,16 +19,39 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@id/pro_image"
+                android:layout_margin="@dimen/n_padding_normal_h"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:scaleType="centerCrop"/>
+            <RelativeLayout
+                android:id="@id/show_hot_flag"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/shop_logo_image"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        app:border_width="3dp"
+                        android:src="@drawable/plus_chip_5"
+                        app:border_color="@color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="荐"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/small_text_size"
+                        android:layout_height="wrap_content" />
+            </RelativeLayout>
             <ProgressBar
                 android:id="@+id/progress"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:indeterminate="false"
                 android:max="100"
-                android:layout_gravity="bottom"
+                android:layout_alignParentBottom="true"
                 style="@style/ProgressBarStyle" />
         </RelativeLayout>
         <LinearLayout
@@ -46,6 +70,7 @@
                 android:textSize="@dimen/button_text_size"
                 android:layout_weight="1"
                 android:layout_height="0dp" />
+            <!--无促销-->
             <TextView
                 android:id="@id/pro_price"
                 android:layout_width="match_parent"
@@ -55,6 +80,47 @@
                 android:textColor="@color/primary"
                 android:layout_weight="1"
                 android:layout_height="0dp" />
+            <!--促销-->
+            <LinearLayout
+                android:id="@id/pro_sale_layout"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@id/pro_new_price"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="@dimen/n_padding_normal"
+                    android:textSize="@dimen/button_text_size"
+                    android:text="$0.00"
+                    android:textColor="@color/primary"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@id/pro_old_price"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="@dimen/n_padding_normal"
+                    android:textSize="@dimen/small_text_size"
+                    android:text="$0.00"
+                    android:textColor="@color/grey_light"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@id/pro_sale_num"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/n_padding_normal"
+                        android:textSize="@dimen/small_text_size"
+                        android:text="0.0折"
+                        android:background="@color/primary"
+                        android:textColor="@color/white"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_margin="@dimen/n_padding_normal"

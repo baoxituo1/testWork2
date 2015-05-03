@@ -70,6 +70,9 @@ dependencies {
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.2.3'
     //数据库操作
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    //SwipyRefreshLayout
+    compile 'com.github.orangegangsters:swipy:1.2.0@aar'
+
 }
 
 apt {

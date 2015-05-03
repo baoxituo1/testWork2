@@ -26,6 +26,11 @@
     <item type="id" name="pro_view_btn" />
     <item type="id" name="pro_copy_btn" />
     <item type="id" name="pro_share_btn" />
+    <item type="id" name="pro_sale_layout" />
+    <item type="id" name="pro_old_price" />
+    <item type="id" name="pro_new_price" />
+    <item type="id" name="pro_sale_num" />
+    <item type="id" name="show_hot_flag" />
 
 
     <item type="id" name="main_sale_ing_btn" />
@@ -114,6 +119,8 @@
     <item type="id" name="dy_sale_num" />
     <item type="id" name="dy_date" />
     <item type="id" name="dy_del_data" />
+    <item type="id" name="dy_copy_data" />
+    <item type="id" name="dy_share_data" />
     <!--选择促销商品-->
     <item type="id" name="sale_menu_done" />
     <item type="id" name="sale_image" />

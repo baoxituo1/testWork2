@@ -211,6 +211,8 @@ public class DynamicManageActivity extends BaseActionBarActivity {
     }
 
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_dynamic_manage2, menu);

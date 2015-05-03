@@ -5,8 +5,8 @@ public class ProductIndexVO {
 	public ProductIndexVO(){
 		
 	}
-	
-	public ProductIndexVO(String shopCode, String productCode, String productName, String coverMiddleImage, Double productPrice, String typeName, String brandName, Integer putAway,Integer hotNum, Integer coverNum) {
+
+	public ProductIndexVO(String shopCode, String productCode, String productName, String coverMiddleImage, Double productPrice, String typeName, String brandName, Integer putAway,Integer hotNum, Integer coverNum,Double salePrice) {
 		super();
 		this.shopCode = shopCode;
 		this.productCode = productCode;
@@ -17,7 +17,7 @@ public class ProductIndexVO {
 		this.brandName = brandName;
 		this.putAway = putAway;
 		this.coverNum = coverNum;
-		this.hotNum = hotNum;
+		this.salePrice = salePrice;
 	}
 
 	private String shopCode;
@@ -30,6 +30,15 @@ public class ProductIndexVO {
 	private Integer putAway;
 	private Integer hotNum;
 	private Integer coverNum;
+	private Double salePrice ;
+
+	public Double getSalePrice() {
+		return salePrice;
+	}
+
+	public void setSalePrice(Double salePrice) {
+		this.salePrice = salePrice;
+	}
 
 	public String getShopCode() {
 		return shopCode;

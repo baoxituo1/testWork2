@@ -18,7 +18,7 @@
         android:layout_centerInParent="true"
         android:src="@drawable/lib_icon"
         app:border_width="2dp"
-        app:border_color="@color/white"/>
+        app:border_color="@color/primary"/>
 
 
 </FrameLayout>

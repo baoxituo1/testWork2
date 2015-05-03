@@ -19,8 +19,10 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.TencentWBSsoHandler;
+import com.umeng.socialize.sso.UMQQSsoHandler;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -111,5 +113,24 @@ public class BaseActionBarActivity extends ActionBarActivity {
             Log.e("BaseActionBarActivity", "实例化Dialog时异常，配置错误，请检查" + e);
         }
         return pDialog;
+    }
+
+
+    public void shareProduct(String code,String proName,String imagUrl){
+        String _targetUrl=DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode=" + code + "&shopCode=" + user.getShopCode();
+        // 设置分享内容
+        mController.setShareContent(proName+_targetUrl);
+        // 设置分享图片, 参数2为图片的url地址
+        mController.setShareMedia(new UMImage(this, imagUrl));
+        // 添加QQ支持, 并且设置QQ分享内容的target url
+        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,  myApplication.qq_appId, myApplication.qq_appKey);
+        qqSsoHandler.setTitle(shop.getTitle());
+        qqSsoHandler.setTargetUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode=" + code + "&shopCode=" + user.getShopCode());
+        qqSsoHandler.addToSocialSDK();
+        // 添加QZone平台
+        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
+        qZoneSsoHandler.addToSocialSDK();
+
+        mController.openShare(this, false);
     }
 }
