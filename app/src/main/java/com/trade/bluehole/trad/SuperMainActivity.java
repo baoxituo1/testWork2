@@ -19,15 +19,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Delete;
+
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
 import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
-import com.trade.bluehole.trad.activity.msg.MessageAllActivity_;
 import com.trade.bluehole.trad.activity.msg.MessagePageviewActivity_;
 import com.trade.bluehole.trad.activity.user.AccountUserManageActivity_;
 import com.trade.bluehole.trad.activity.webview.WebViewActivity;
@@ -81,6 +84,7 @@ public class SuperMainActivity extends Activity {
     //站内信集合列表
     List<IndexProCommentVO> noticeList;
 
+    ShowcaseView showcaseView;
 
     @AfterViews
     void initData(){
@@ -126,14 +130,31 @@ public class SuperMainActivity extends Activity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent=WebViewActivity_.intent(SuperMainActivity.this).get();
-                    intent.putExtra(WebViewActivity.NOTICE_TYPE,noticeList.get(position).getState());
-                    intent.putExtra(WebViewActivity.NOTICE_CODE,noticeList.get(position).getMessAgeCode());
+                    Intent intent = WebViewActivity_.intent(SuperMainActivity.this).get();
+                    intent.putExtra(WebViewActivity.NOTICE_TYPE, noticeList.get(position).getState());
+                    intent.putExtra(WebViewActivity.NOTICE_CODE, noticeList.get(position).getMessAgeCode());
                     startActivity(intent);
                 }
             });
             //装载数据
             loadData();
+            //
+            Target viewTarget = new ViewTarget(R.id.main_btn_add_pro, this);
+            new ShowcaseView.Builder(this)
+                    .setTarget(viewTarget)
+                    .setContentTitle("添加新商品")
+                    .setContentText("点击新增按钮,快速添加一件商品")
+                    //.hideOnTouchOutside()
+                    .setStyle(R.style.CustomShowcaseTheme2)
+                    .singleShot(42)
+                    .build();
+
+            /*new ShowcaseView.Builder(this)
+                    .setTarget(new ActionViewTarget(this, ActionViewTarget.Type.HOME))
+                    .setContentTitle("ShowcaseView")
+                    .setContentText("This is highlighting the Home button")
+                    .hideOnTouchOutside()
+                    .build();*/
         }else{
             Toast.makeText(SuperMainActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
         }
