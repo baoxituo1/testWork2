@@ -1,2 +1,2 @@
-include ':app', ':dynamicgrid', ':ShowCaselibrary'
+include ':app', ':dynamicgrid'
 include ':social_sdk_library_project'
