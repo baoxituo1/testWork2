@@ -100,6 +100,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
             viewHolder.pro_new_price=(TextView)view.findViewById(R.id.pro_new_price);
             viewHolder.pro_old_price=(TextView)view.findViewById(R.id.pro_old_price);
             viewHolder.pro_sale_num=(TextView)view.findViewById(R.id.pro_sale_num);
+            viewHolder.pro_collect_num=(TextView)view.findViewById(R.id.pro_collect_num);
             viewHolder.progressBar=(ProgressBar)view.findViewById(R.id.progress);
             viewHolder.pro_view_btn=(RelativeLayout)view.findViewById(R.id.pro_view_btn);
             viewHolder.pro_edit_layout=(LinearLayout)view.findViewById(R.id.pro_edit_layout);
@@ -157,7 +158,8 @@ public class ProductListViewAdaptor extends BaseAdapter {
                 viewHolder.show_hot_flag.setVisibility(View.GONE);
             }
             viewHolder.product_name.setText(obj.getProductName());
-            viewHolder.product_number.setText("库存量10件");
+            viewHolder.pro_collect_num.setText("被收藏"+obj.getCollectNum()+"次");
+            viewHolder.product_number.setText("库存量"+obj.getProductNum()+"件");
             //预览被点击
             viewHolder.pro_view_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -216,6 +218,8 @@ public class ProductListViewAdaptor extends BaseAdapter {
         TextView pro_new_price;
         TextView pro_old_price;
         TextView pro_sale_num;
+        TextView pro_collect_num;
+        TextView pro_number;
         RelativeLayout pro_view_btn;
         RelativeLayout pro_share_btn;
         RelativeLayout pro_copy_btn;

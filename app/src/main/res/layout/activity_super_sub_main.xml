@@ -9,6 +9,7 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
+            android:background="@drawable/image1"
             android:padding="@dimen/n_padding_normal"
             android:orientation="horizontal"
             android:layout_height="@dimen/left_menu_item_width">
@@ -18,7 +19,6 @@
                 android:id="@id/shop_logo_image"
                 android:layout_width="@dimen/left_menu_shop_logo_width_height"
                 android:layout_height="@dimen/left_menu_shop_logo_width_height"
-                android:src="@drawable/lib_icon"
                 app:border_width="1dp"
                 app:border_color="#FFFFFF"/>
             <LinearLayout
@@ -30,7 +30,6 @@
                 <TextView
                     android:id="@id/reg_shop_name"
                     android:layout_width="wrap_content"
-                    android:text="@string/main_user_name"
                     android:textColor="@color/white"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -38,7 +37,6 @@
                     android:layout_marginTop="@dimen/n_padding_normal"
                     android:layout_width="wrap_content"
                     android:textColor="@color/white"
-                    android:text="@string/main_user_accound"
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>

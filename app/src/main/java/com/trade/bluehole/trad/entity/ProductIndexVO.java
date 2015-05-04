@@ -6,7 +6,11 @@ public class ProductIndexVO {
 		
 	}
 
-	public ProductIndexVO(String shopCode, String productCode, String productName, String coverMiddleImage, Double productPrice, String typeName, String brandName, Integer putAway,Integer hotNum, Integer coverNum,Double salePrice) {
+	public ProductIndexVO(String shopCode, String productCode,
+						  String productName, String coverMiddleImage, Double productPrice,
+						  String typeName, String brandName, Integer putAway, Integer hotNum,
+						  Integer coverNum, Double salePrice, Integer productNum,
+						  Integer collectNum) {
 		super();
 		this.shopCode = shopCode;
 		this.productCode = productCode;
@@ -16,8 +20,10 @@ public class ProductIndexVO {
 		this.typeName = typeName;
 		this.brandName = brandName;
 		this.putAway = putAway;
-		this.coverNum = coverNum;
+		this.hotNum = hotNum;
 		this.salePrice = salePrice;
+		this.productNum = productNum;
+		this.collectNum = collectNum;
 	}
 
 	private String shopCode;
@@ -30,7 +36,25 @@ public class ProductIndexVO {
 	private Integer putAway;
 	private Integer hotNum;
 	private Integer coverNum;
-	private Double salePrice ;
+	private Double salePrice;
+	private Integer productNum;
+	private Integer collectNum;
+
+	public Integer getProductNum() {
+		return productNum;
+	}
+
+	public void setProductNum(Integer productNum) {
+		this.productNum = productNum;
+	}
+
+	public Integer getCollectNum() {
+		return collectNum;
+	}
+
+	public void setCollectNum(Integer collectNum) {
+		this.collectNum = collectNum;
+	}
 
 	public Double getSalePrice() {
 		return salePrice;

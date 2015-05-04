@@ -31,6 +31,7 @@
     <item type="id" name="pro_new_price" />
     <item type="id" name="pro_sale_num" />
     <item type="id" name="show_hot_flag" />
+    <item type="id" name="pro_collect_num" />
 
 
     <item type="id" name="main_sale_ing_btn" />
