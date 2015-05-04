@@ -66,8 +66,8 @@ public class ShopWebViewActivity extends  ActionBarActivity {
         // webView.addJavascriptInterface(this, "java2js");
         webView.setWebViewClient(new WebViewClientDemo());
         webView.setWebChromeClient(new WebViewClient() );
-       // webView.loadUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?shopCode="+shopCode);
-        webView.loadUrl("http://192.168.1.169:8080/qqt_up/Mshop/showMshop.htm?shopCode="+shopCode);
+        webView.loadUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?shopCode="+shopCode);
+        webView.loadUrl("http://192.168.1.169:8080/qqt_up/mshop/showMshop.htm?shopCode="+shopCode);
     }
 
     private class WebViewClient extends WebChromeClient {
