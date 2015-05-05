@@ -44,6 +44,7 @@ import com.trade.bluehole.trad.MainActivity_;
 import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.RegisterManageActivity;
+import com.trade.bluehole.trad.SuperMainActivity_;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.shop.ShopLocationActivity;
 import com.trade.bluehole.trad.entity.User;
@@ -295,13 +296,13 @@ public class RegisterShopCreateActivity extends BaseActionBarActivity implements
                 Log.d(RegisterShopCreateActivity.class.getName(), statusCode + "");
                 if (null != response) {
                     if (response.isSuccess()) {
-                        //Toast.makeText(RegisterShopCreateActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterShopCreateActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                         myapplication.setUser(response.getBzseObj());
                         myapplication.setShop(response.getObj());
 
-                        MainActivity_.intent(RegisterShopCreateActivity.this).start();
+                        SuperMainActivity_.intent(RegisterShopCreateActivity.this).start();
                     } else {
-                       // Toast.makeText(RegisterShopCreateActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterShopCreateActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
