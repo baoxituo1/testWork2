@@ -47,7 +47,7 @@ public class IO2014HeaderAnimator extends HeaderStikkyAnimator {
         }
         mMinHeightTextHeader = mContext.getResources().getDimensionPixelSize(R.dimen.min_height_textheader_materiallike);
 
-        mHeightStartAnimation = actionBarHeight + mMinHeightTextHeader-50;
+        mHeightStartAnimation = actionBarHeight + mMinHeightTextHeader-100;
 
         valueAnimator = ValueAnimator.ofInt(0).setDuration(mContext.getResources().getInteger(android.R.integer.config_shortAnimTime));
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -56,7 +56,7 @@ public class IO2014HeaderAnimator extends HeaderStikkyAnimator {
 
                 ViewGroup.LayoutParams layoutParams = mHeaderText.getLayoutParams();
                 layoutParams.height = (Integer) animation.getAnimatedValue();
-                mHeaderText.setLayoutParams(layoutParams);
+                //mHeaderText.setLayoutParams(layoutParams);
 
             }
         });
@@ -73,7 +73,7 @@ public class IO2014HeaderAnimator extends HeaderStikkyAnimator {
 
         if (visibleHeightHeader <= mHeightStartAnimation && !isCovering) {
 
-            valueAnimator.setIntValues(mHeaderText.getHeight(), mHeightStartAnimation);
+            valueAnimator.setIntValues(mHeaderText.getHeight()-45, mHeightStartAnimation-45);
             if (valueAnimator.isRunning()) {
                 valueAnimator.end();
             }
@@ -83,7 +83,7 @@ public class IO2014HeaderAnimator extends HeaderStikkyAnimator {
 
         } else if (visibleHeightHeader > mHeightStartAnimation && isCovering) {
 
-            valueAnimator.setIntValues(mHeaderText.getHeight(), mMinHeightTextHeader);
+            valueAnimator.setIntValues(mHeaderText.getHeight()-45, mMinHeightTextHeader-45);
             if (valueAnimator.isRunning()) {
                 valueAnimator.end();
             }
