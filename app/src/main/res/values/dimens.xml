@@ -9,10 +9,10 @@
     <dimen name="pro_list_bottom">25dp</dimen>
     <dimen name="pro_grid_view_height">70dp</dimen>
     <!-- action_bar_user_header animator-->
-    <dimen name="min_height_header">42dp</dimen>
-    <dimen name="max_height_header">350dp</dimen>
     <dimen name="min_height_textheader_materiallike">42dp</dimen>
-    <dimen name="min_height_header_materiallike">42dp</dimen>
+    <dimen name="min_height_header_materiallike">60dp</dimen>
+    <dimen name="min_height_header">60dp</dimen>
+    <dimen name="max_height_header">350dp</dimen>
     <dimen name="min_cover_bottom_height">48dp</dimen>
     <dimen name="min_cover_list_item_height">90dp</dimen>
     <dimen name="lunch_bottom_height">100dp</dimen>

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.soundcloud.android.crop.Crop;
@@ -109,6 +110,10 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     EditText coverNameEdit;//修改商品分类 公用编辑框
     private String temp_coverCode;//临时类别更新code，注意清除.
     private Integer temp_position;//临时类别更新位置，注意清除.
+
+    //listviw anim
+    private static final int INITIAL_DELAY_MILLIS = 500;
+    SwingBottomInAnimationAdapter swingBottomInAnimationAdapter;
     /**
      * 登陆信息
      */
@@ -129,7 +134,14 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         shop = myApplication.getShop();
         initDialog();
         addQZoneQQPlatform();
+        //list 动画
         adaptor = new ProductListViewAdaptor(this,"main");
+        swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(adaptor);
+        swingBottomInAnimationAdapter.setAbsListView(listview);
+        assert swingBottomInAnimationAdapter.getViewAnimator() != null;
+        swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
+        listview.setAdapter(swingBottomInAnimationAdapter);
+
         coverNumberAdapter = new ProductCoverNumberAdapter(this);
         if (shop != null) {
             shopName.setText(shop.getTitle());
@@ -521,7 +533,8 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
                             mList.clear();
                             mList.addAll(response.getAaData());
                             adaptor.setLists(mList);
-                            listview.setAdapter(adaptor);
+                          //  listview.setAdapter(adaptor);
+                            listview.setAdapter(swingBottomInAnimationAdapter);
                             adaptor.notifyDataSetChanged();
                         } else {
                             Toast.makeText(HeaderAnimatorActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();

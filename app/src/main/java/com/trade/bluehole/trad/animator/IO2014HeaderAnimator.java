@@ -47,7 +47,7 @@ public class IO2014HeaderAnimator extends HeaderStikkyAnimator {
         }
         mMinHeightTextHeader = mContext.getResources().getDimensionPixelSize(R.dimen.min_height_textheader_materiallike);
 
-        mHeightStartAnimation = actionBarHeight + mMinHeightTextHeader-100;
+        mHeightStartAnimation = actionBarHeight + mMinHeightTextHeader-50;
 
         valueAnimator = ValueAnimator.ofInt(0).setDuration(mContext.getResources().getInteger(android.R.integer.config_shortAnimTime));
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -56,7 +56,7 @@ public class IO2014HeaderAnimator extends HeaderStikkyAnimator {
 
                 ViewGroup.LayoutParams layoutParams = mHeaderText.getLayoutParams();
                 layoutParams.height = (Integer) animation.getAnimatedValue();
-                //mHeaderText.setLayoutParams(layoutParams);
+                mHeaderText.setLayoutParams(layoutParams);
 
             }
         });
