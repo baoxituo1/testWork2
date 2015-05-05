@@ -74,6 +74,8 @@ dependencies {
     // compile 'com.github.orangegangsters:swipy:1.2.0@aar'
     //showcase
     compile 'com.github.amlcurran.showcaseview:library:5.1.1-SNAPSHOT'
+    //numberProgressBar
+    compile 'com.daimajia.numberprogressbar:library:1.2@aar'
 
 }
 

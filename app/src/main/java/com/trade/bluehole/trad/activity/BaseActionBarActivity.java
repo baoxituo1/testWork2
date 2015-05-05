@@ -23,6 +23,7 @@ import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -69,6 +70,15 @@ public class BaseActionBarActivity extends ActionBarActivity {
         mController.getConfig().setSsoHandler(new SinaSsoHandler());
         //设置腾讯微博SSO handler
         mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
+        String appID = "wx967daebe835fbeac";
+        String appSecret = "5fa9e68ca3970e87a1f83e563c8dcbce";
+       /* // 添加微信平台
+        UMWXHandler wxHandler = new UMWXHandler(this,appID,appSecret);
+        wxHandler.addToSocialSDK();
+        // 添加微信朋友圈
+        UMWXHandler wxCircleHandler = new UMWXHandler(this,appID,appSecret);
+        wxCircleHandler.setToCircle(true);
+        wxCircleHandler.addToSocialSDK();*/
         //竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }

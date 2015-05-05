@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 
@@ -34,7 +35,7 @@ public class ShopWebViewActivity extends  ActionBarActivity {
     @ViewById
     WebView webView;
     @ViewById
-    ProgressBar pb;
+    NumberProgressBar pb;
 
 
     @AfterViews
@@ -59,15 +60,17 @@ public class ShopWebViewActivity extends  ActionBarActivity {
         ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         ws.setLoadWithOverviewMode(true);
         ws.setDefaultTextEncodingName("utf-8"); //设置文本编码
-        // ws.setAppCacheEnabled(true);
-        // ws.setCacheMode(WebSettings.LOAD_DEFAULT);//设置缓存模式
+        //ws.setAppCacheEnabled(false);
+        //ws.setCacheMode(WebSettings.LOAD_NO_CACHE);//设置缓存模式
+         ws.setAppCacheEnabled(true);
+         ws.setCacheMode(WebSettings.LOAD_DEFAULT);//设置缓存模式
 
         //添加Javascript调用java对象
         // webView.addJavascriptInterface(this, "java2js");
         webView.setWebViewClient(new WebViewClientDemo());
         webView.setWebChromeClient(new WebViewClient() );
         webView.loadUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?shopCode="+shopCode);
-        webView.loadUrl("http://192.168.1.169:8080/qqt_up/mshop/showMshop.htm?shopCode="+shopCode);
+        //webView.loadUrl("http://192.168.1.169:8080/qqt_up/mshop/showMshop.htm?shopCode="+shopCode);
     }
 
     private class WebViewClient extends WebChromeClient {

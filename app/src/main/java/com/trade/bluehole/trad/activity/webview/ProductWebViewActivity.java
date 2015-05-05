@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.trade.bluehole.trad.util.view.ProgressWebView;
@@ -40,7 +41,7 @@ public class ProductWebViewActivity extends ActionBarActivity {
     @ViewById
     WebView webView;
     @ViewById
-    ProgressBar pb;
+    NumberProgressBar pb;
 
     @AfterViews
     void initData(){
@@ -64,8 +65,8 @@ public class ProductWebViewActivity extends ActionBarActivity {
         ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         ws.setLoadWithOverviewMode(true);
         ws.setDefaultTextEncodingName("utf-8"); //设置文本编码
-        ws.setAppCacheEnabled(false);
-        ws.setCacheMode(WebSettings.LOAD_NO_CACHE);//设置缓存模式
+        ws.setAppCacheEnabled(true);
+        ws.setCacheMode(WebSettings.LOAD_DEFAULT);//设置缓存模式
 
         //添加Javascript调用java对象
        // webView.addJavascriptInterface(this, "java2js");

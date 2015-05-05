@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -101,7 +102,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
             viewHolder.pro_old_price=(TextView)view.findViewById(R.id.pro_old_price);
             viewHolder.pro_sale_num=(TextView)view.findViewById(R.id.pro_sale_num);
             viewHolder.pro_collect_num=(TextView)view.findViewById(R.id.pro_collect_num);
-            viewHolder.progressBar=(ProgressBar)view.findViewById(R.id.progress);
+            viewHolder.progressBar=(NumberProgressBar)view.findViewById(R.id.progress);
             viewHolder.pro_view_btn=(RelativeLayout)view.findViewById(R.id.pro_view_btn);
             viewHolder.pro_edit_layout=(LinearLayout)view.findViewById(R.id.pro_edit_layout);
             viewHolder.pro_sale_layout=(LinearLayout)view.findViewById(R.id.pro_sale_layout);
@@ -210,7 +211,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
     }
 
     static  class HoldObject{
-        ProgressBar progressBar;
+        NumberProgressBar progressBar;
         ImageView product_cover_image;
         TextView product_name;
         TextView product_price;

@@ -28,8 +28,8 @@ public class DataUrlContents {
      * 服务器地址
      */
     //public final  static String SERVER_HOST="http://192.168.1.161:8080/qqt_up/";
-    //public final  static String SERVER_HOST="http://miss77.vicp.net/qqt_up/";
-    public final  static String SERVER_HOST="http://192.168.1.108:8080/qqt_up/";
+    public final  static String SERVER_HOST="http://miss77.vicp.net/qqt_up/";
+    //public final  static String SERVER_HOST="http://192.168.1.108:8080/qqt_up/";
     /**
      * 图片服务器地址
      */
