@@ -73,7 +73,7 @@ public class IO2014HeaderAnimator extends HeaderStikkyAnimator {
 
         if (visibleHeightHeader <= mHeightStartAnimation && !isCovering) {
 
-            valueAnimator.setIntValues(mHeaderText.getHeight()-45, mHeightStartAnimation-45);
+            valueAnimator.setIntValues(mHeaderText.getHeight()-10, mHeightStartAnimation-10);
             if (valueAnimator.isRunning()) {
                 valueAnimator.end();
             }
@@ -83,7 +83,7 @@ public class IO2014HeaderAnimator extends HeaderStikkyAnimator {
 
         } else if (visibleHeightHeader > mHeightStartAnimation && isCovering) {
 
-            valueAnimator.setIntValues(mHeaderText.getHeight()-45, mMinHeightTextHeader-45);
+            valueAnimator.setIntValues(mHeaderText.getHeight()-10, mMinHeightTextHeader-10);
             if (valueAnimator.isRunning()) {
                 valueAnimator.end();
             }

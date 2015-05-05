@@ -140,7 +140,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         swingBottomInAnimationAdapter.setAbsListView(listview);
         assert swingBottomInAnimationAdapter.getViewAnimator() != null;
         swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
-        listview.setAdapter(swingBottomInAnimationAdapter);
+       // listview.setAdapter(swingBottomInAnimationAdapter);
 
         coverNumberAdapter = new ProductCoverNumberAdapter(this);
         if (shop != null) {
