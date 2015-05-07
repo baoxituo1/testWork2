@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="@dimen/n_padding_normal_b"
+    android:padding="@dimen/n_padding_normal"
     android:orientation="horizontal"
     android:weightSum="6"
     android:layout_height="@dimen/min_cover_list_item_height">

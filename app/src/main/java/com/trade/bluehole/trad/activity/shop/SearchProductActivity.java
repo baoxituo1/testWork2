@@ -31,6 +31,8 @@ import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.weixin.media.CircleShareContent;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 import org.androidannotations.annotations.AfterExtras;
 import org.androidannotations.annotations.AfterViews;
@@ -195,6 +197,29 @@ public class SearchProductActivity extends Activity {
         // 添加QZone平台
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
         qZoneSsoHandler.addToSocialSDK();
+
+        UMImage urlImage = new UMImage(this,imagUrl);
+
+        //设置微信好友分享内容
+        WeiXinShareContent weixinContent = new WeiXinShareContent();
+        //设置分享文字
+        weixinContent.setShareContent(proName);
+        //设置title
+        weixinContent.setTitle(shop.getTitle());
+        //设置分享内容跳转URL
+        weixinContent.setTargetUrl(_targetUrl);
+        //设置分享图片
+        weixinContent.setShareImage(urlImage);
+        mController.setShareMedia(weixinContent);
+
+        //设置微信朋友圈分享内容
+        CircleShareContent circleMedia = new CircleShareContent();
+        circleMedia.setShareContent(proName);
+        //设置朋友圈title
+        circleMedia.setTitle(shop.getTitle());
+        circleMedia.setShareImage(urlImage);
+        circleMedia.setTargetUrl(_targetUrl);
+        mController.setShareMedia(circleMedia);
 
         mController.openShare(this, false);
     }

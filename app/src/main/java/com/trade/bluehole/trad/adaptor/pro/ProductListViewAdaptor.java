@@ -160,7 +160,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
             }
             viewHolder.product_name.setText(obj.getProductName());
             viewHolder.pro_collect_num.setText("被收藏"+obj.getCollectNum()+"次");
-            viewHolder.product_number.setText("库存量"+obj.getProductNum()+"件");
+            viewHolder.product_number.setText("库存"+obj.getProductNum()+"件");
             //预览被点击
             viewHolder.pro_view_btn.setOnClickListener(new View.OnClickListener() {
                 @Override

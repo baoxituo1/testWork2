@@ -360,6 +360,7 @@ public class SuperMainActivity extends Activity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        initData();
         mDrawerToggle.syncState();
     }
 

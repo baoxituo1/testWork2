@@ -53,6 +53,8 @@ import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
+import com.umeng.socialize.weixin.media.CircleShareContent;
+import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 
 import org.androidannotations.annotations.AfterViews;
@@ -78,11 +80,11 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     @ViewById(R.id.listview)
     ListView listview;
     @ViewById
-    TextView shopName,no_item_text;
+    TextView shopName, no_item_text;
     @ViewById
     CircleImageView shop_logo_image;
     @ViewById
-    ImageView header_image,no_item_add;
+    ImageView header_image, no_item_add;
     @ViewById
     RelativeLayout main_sale_ing_btn, main_sale_out_btn, main_sale_cover_btn;
     @ViewById
@@ -133,20 +135,20 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         user = myApplication.getUser();
         shop = myApplication.getShop();
         initDialog();
-        addQZoneQQPlatform();
+      //  addQZoneQQPlatform();
         //list 动画
-        adaptor = new ProductListViewAdaptor(this,"main");
+        adaptor = new ProductListViewAdaptor(this, "main");
         swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(adaptor);
         swingBottomInAnimationAdapter.setAbsListView(listview);
         assert swingBottomInAnimationAdapter.getViewAnimator() != null;
         swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
-       // listview.setAdapter(swingBottomInAnimationAdapter);
+        // listview.setAdapter(swingBottomInAnimationAdapter);
 
         coverNumberAdapter = new ProductCoverNumberAdapter(this);
         if (shop != null) {
             shopName.setText(shop.getTitle());
             if (null != shop.getShopLogo()) {
-                ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + shop.getShopLogo()+DataUrlContents.img_logo_img, shop_logo_image, ImageManager.options);
+                ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + shop.getShopLogo() + DataUrlContents.img_logo_img, shop_logo_image, ImageManager.options);
             }
         }
         IO2014HeaderAnimator animator = new IO2014HeaderAnimator(this);
@@ -166,12 +168,12 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     /**
      * 实例化弹出窗口 新增
      */
-    void initDialog(){
-        pDialog=getDialog(this);//获取进度实例化
-        myViewHold=new MyViewHold(R.layout.i_pro_cover_edit_item);
-        modifyViewHold=new MyViewHold(R.layout.i_pro_cover_edit_item);
+    void initDialog() {
+        pDialog = getDialog(this);//获取进度实例化
+        myViewHold = new MyViewHold(R.layout.i_pro_cover_edit_item);
+        modifyViewHold = new MyViewHold(R.layout.i_pro_cover_edit_item);
         //自定义类别 新增
-        coverDialog  = new DialogPlus.Builder(this)
+        coverDialog = new DialogPlus.Builder(this)
                 .setContentHolder(myViewHold)
                 .setHeader(R.layout.dialog_new_cover_header)
                 .setFooter(R.layout.dialog_footer)
@@ -180,7 +182,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
                         // .setOnItemClickListener(itemClickListener)
                 .create();
         //自定义类别 修改,取出编辑框 以备赋值变量使用
-        modifyCoverDialog  = new DialogPlus.Builder(this)
+        modifyCoverDialog = new DialogPlus.Builder(this)
                 .setContentHolder(modifyViewHold)
                 .setHeader(R.layout.dialog_edit_cover_header)
                 .setFooter(R.layout.dialog_footer)
@@ -203,14 +205,14 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
             //只有不显示编辑状态的时候 商品分类才能被点击
             if (!showCoverManager) {
                 ProductCoverRelVO pcr = coverList.get(position - 1);
-                if(pcr.getProNumber()!=null&&pcr.getProNumber()>0){
+                if (pcr.getProNumber() != null && pcr.getProNumber() > 0) {
                     Intent intent = ProductClassifyActivity_.intent(this).get();
                     intent.putExtra(ProductClassifyActivity.SHOP_CODE_EXTRA, user.getShopCode());
                     intent.putExtra(ProductClassifyActivity.USER_CODE_EXTRA, user.getUserCode());
                     intent.putExtra(ProductClassifyActivity.COVER_CODE_EXTRA, pcr.getCoverCode());
                     intent.putExtra(ProductClassifyActivity.COVER_NAME_EXTRA, pcr.getCoverName());
                     startActivity(intent);
-                }else{
+                } else {
                     Toast.makeText(HeaderAnimatorActivity.this, "该分类目前没有数据", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -231,36 +233,67 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
      * 当点击预览店铺
      */
     @Click(R.id.view_shop_layout)
-    void onClickViewShopBtn(){
+    void onClickViewShopBtn() {
         Intent intent = ShopWebViewActivity_.intent(this).get();
         intent.putExtra(ShopWebViewActivity_.SHOP_CODE, user.getShopCode());
         this.startActivity(intent);
     }
+
     /**
      * 当点击复制店铺地址
      */
     @Click(R.id.copy_shop_view_rul)
-    void onClickCopyShopUrlBtn(){
-        ClipboardManager clip = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+    void onClickCopyShopUrlBtn() {
+        ClipboardManager clip = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         clip.setText(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?&shopCode=" + user.getShopCode()); // 复制
         Toast.makeText(getApplication(), "成功复制到剪切板!", Toast.LENGTH_SHORT).show();
 
     }
+
     /**
      * 当点击分享店铺地址
      */
     @Click(R.id.share_shop_view_rul)
-    void onClickShareShopUrlBtn(){
+    void onClickShareShopUrlBtn() {
 
-        String _targetUrl=DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?&shopCode=" + user.getShopCode();
+        String _targetUrl = DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?&shopCode=" + user.getShopCode();
         // 设置分享内容
-        mController.setShareContent(shop.getSlogan()+_targetUrl);
+        mController.setShareContent(shop.getSlogan() + _targetUrl);
         // 设置分享图片, 参数2为图片的url地址
         mController.setShareMedia(new UMImage(this, DataUrlContents.IMAGE_HOST + shop.getShopLogo() + DataUrlContents.img_logo_img));
         mController.openShare(this, false);
+        // 添加QQ支持, 并且设置QQ分享内容的target url
+        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
+        qqSsoHandler.setTitle(shop.getTitle());
+        qqSsoHandler.setTargetUrl(_targetUrl);
+        qqSsoHandler.addToSocialSDK();
+        // 添加QZone平台
+        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
+        qZoneSsoHandler.addToSocialSDK();
 
+        UMImage urlImage = new UMImage(this,DataUrlContents.IMAGE_HOST + shop.getShopLogo() + DataUrlContents.img_logo_img);
+
+        //设置微信好友分享内容
+        WeiXinShareContent weixinContent = new WeiXinShareContent();
+        //设置分享文字
+        weixinContent.setShareContent(shop.getSlogan());
+        //设置title
+        weixinContent.setTitle(shop.getTitle());
+        //设置分享内容跳转URL
+        weixinContent.setTargetUrl(_targetUrl);
+        //设置分享图片
+        weixinContent.setShareImage(urlImage);
+        mController.setShareMedia(weixinContent);
+
+        //设置微信朋友圈分享内容
+        CircleShareContent circleMedia = new CircleShareContent();
+        circleMedia.setShareContent(shop.getSlogan());
+        //设置朋友圈title
+        circleMedia.setTitle(shop.getTitle());
+        circleMedia.setShareImage(urlImage);
+        circleMedia.setTargetUrl(_targetUrl);
+        mController.setShareMedia(circleMedia);
     }
-
 
 
     /**
@@ -268,8 +301,8 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
      */
     @Click(R.id.main_sale_ing_btn)
     void onSaleIngClick() {
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)listview.getLayoutParams();
-        params.bottomMargin=0;
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) listview.getLayoutParams();
+        params.bottomMargin = 0;
         listview.setLayoutParams(params);
         searchType = "1";
         //btn_cover_layout.setVisibility(View.GONE);
@@ -278,7 +311,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         main_sale_cover_txt.setTextColor(getResources().getColor(R.color.white));
         //设置无数据时候
         no_item_text.setText("还没有商品,赶快去添加~");
-        if(no_item_add.getVisibility()==View.GONE){
+        if (no_item_add.getVisibility() == View.GONE) {
             no_item_add.setVisibility(View.VISIBLE);
         }
         //隐藏完成按钮界面
@@ -291,8 +324,8 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
      */
     @Click(R.id.main_sale_out_btn)
     void onSaleOutClick() {
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)listview.getLayoutParams();
-        params.bottomMargin=0;
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) listview.getLayoutParams();
+        params.bottomMargin = 0;
         listview.setLayoutParams(params);
 
         searchType = "0";
@@ -303,7 +336,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         main_sale_cover_txt.setTextColor(getResources().getColor(R.color.white));
         //设置无数据时候
         no_item_text.setText("还没有下架的商品~");
-        if(no_item_add.getVisibility()==View.VISIBLE){
+        if (no_item_add.getVisibility() == View.VISIBLE) {
             no_item_add.setVisibility(View.GONE);
         }
         //隐藏完成按钮界面
@@ -317,19 +350,19 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     @Click(R.id.main_sale_cover_btn)
     void onCoverOutClick() {
         //设置list距离底部
-        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams)listview.getLayoutParams();
-        params.bottomMargin=100;
-        listview.setLayoutParams(params);
+       /* ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) listview.getLayoutParams();
+        params.bottomMargin = 100;
+        listview.setLayoutParams(params);*/
 
         searchType = "2";
         showCoverManager = false;//非可编辑状态
-       // btn_cover_layout.setVisibility(View.VISIBLE);
+        // btn_cover_layout.setVisibility(View.VISIBLE);
         main_sale_cover_txt.setTextColor(getResources().getColor(R.color.red_btn_bg_color));
         main_sale_ing_txt.setTextColor(getResources().getColor(R.color.white));
         main_sale_out_txt.setTextColor(getResources().getColor(R.color.white));
         //设置无数据时候
         no_item_text.setText("还没有分类,赶快添加~");
-        if(no_item_add.getVisibility()==View.VISIBLE){
+        if (no_item_add.getVisibility() == View.VISIBLE) {
             no_item_add.setVisibility(View.GONE);
         }
         loadCoverListView();
@@ -338,23 +371,23 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     /**
      * 点击查询商品
      */
-     @Click(R.id.shop_search_layout)
-     void onClickSearchProduct(){
-         SearchProductActivity_.intent(this).start();
-     }
+    @Click(R.id.shop_search_layout)
+    void onClickSearchProduct() {
+        SearchProductActivity_.intent(this).start();
+    }
 
     /**
      * 点击列表为空的快速添加
      */
     @Click(R.id.empty_view)
-    void onClickQuickAdd(){
-        if("1".equals(searchType)){
-            Intent intent=NewProductActivity_.intent(this).get();
-            intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA,user.getShopCode());
+    void onClickQuickAdd() {
+        if ("1".equals(searchType)) {
+            Intent intent = NewProductActivity_.intent(this).get();
+            intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA, user.getShopCode());
             startActivity(intent);
-        }else if("2".equals(searchType)){
-            temp_coverCode=null;
-            temp_position=null;
+        } else if ("2".equals(searchType)) {
+            temp_coverCode = null;
+            temp_position = null;
             coverDialog.show();
         }
     }
@@ -403,24 +436,25 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
      * 当新增分类按钮被点击
      */
     @Click(R.id.btn_cover_add)
-    void onAddCoverBtnOnClick(){
+    void onAddCoverBtnOnClick() {
         //清空便用code
-        temp_coverCode=null;
-        temp_position=null;
+        temp_coverCode = null;
+        temp_position = null;
         coverDialog.show();
     }
 
     /**
      * 当点击适配器里边某个类别编辑的时候弹出
+     *
      * @param coverName
      */
-    public void showCoverEditClick(String coverName,String coverCode,int position){
+    public void showCoverEditClick(String coverName, String coverCode, int position) {
         //临时赋值code
-        temp_coverCode=coverCode;
-        temp_position=position;
-        View v=modifyViewHold.contentView;
+        temp_coverCode = coverCode;
+        temp_position = position;
+        View v = modifyViewHold.contentView;
         coverNameEdit = (EditText) v.findViewById(R.id.main_cover_item_add);
-        if(null!=coverNameEdit&&null!=coverName){
+        if (null != coverNameEdit && null != coverName) {
             coverNameEdit.setText(coverName);
         }
         modifyCoverDialog.show();
@@ -430,11 +464,10 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
      * 点击店铺详情查看店铺详细设置
      */
     @Click(R.id.main_head_shop)
-    void onSopHeadClick(){
+    void onSopHeadClick() {
         //暂时注释掉
         //ShopConfigActivity_.intent(this).start();
     }
-
 
 
     /**
@@ -446,24 +479,24 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
             switch (view.getId()) {
                 case R.id.footer_confirm_button:
                     //新增
-                    if(null==temp_coverCode||"".equals(temp_coverCode)){
-                        if(null!=myViewHold.contentView){
-                            View c_view=myViewHold.contentView;
+                    if (null == temp_coverCode || "".equals(temp_coverCode)) {
+                        if (null != myViewHold.contentView) {
+                            View c_view = myViewHold.contentView;
                             EditText textView = (EditText) c_view.findViewById(R.id.main_cover_item_add);
-                            if(null!=textView.getText()){
-                                saveOrUpdateCovers(textView.getText().toString(),null);
-                            }else{
+                            if (null != textView.getText()) {
+                                saveOrUpdateCovers(textView.getText().toString(), null);
+                            } else {
                                 Toast.makeText(HeaderAnimatorActivity.this, "cover name can not null!", Toast.LENGTH_SHORT).show();
                             }
                         }
-                     //修改
-                    }else{
-                        if(null!=modifyViewHold.contentView){
-                            View v=modifyViewHold.contentView;
+                        //修改
+                    } else {
+                        if (null != modifyViewHold.contentView) {
+                            View v = modifyViewHold.contentView;
                             coverNameEdit = (EditText) v.findViewById(R.id.main_cover_item_add);
-                            if(null!=coverNameEdit&&coverNameEdit.getText()!=null){
-                                saveOrUpdateCovers(coverNameEdit.getText().toString(),temp_coverCode);
-                            }else{
+                            if (null != coverNameEdit && coverNameEdit.getText() != null) {
+                                saveOrUpdateCovers(coverNameEdit.getText().toString(), temp_coverCode);
+                            } else {
                                 Toast.makeText(HeaderAnimatorActivity.this, "cover name can not null!", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -471,15 +504,12 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
                     break;
                 case R.id.footer_close_button:
                     //清空便用code
-                    temp_coverCode=null;
+                    temp_coverCode = null;
                     break;
             }
             dialog.dismiss();
         }
     };
-
-
-
 
 
     /**
@@ -493,11 +523,11 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         int id = item.getItemId();
         if (id == R.id.new_product) {
             //NewProductActivity_.intent(this).start();
-            Intent intent=NewProductActivity_.intent(this).get();
-            intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA,user.getShopCode());
+            Intent intent = NewProductActivity_.intent(this).get();
+            intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA, user.getShopCode());
             startActivity(intent);
             return true;
-        }else if(id==android.R.id.home){
+        } else if (id == android.R.id.home) {
             SuperMainActivity_.intent(this).start();
             finish();
         }
@@ -533,7 +563,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
                             mList.clear();
                             mList.addAll(response.getAaData());
                             adaptor.setLists(mList);
-                          //  listview.setAdapter(adaptor);
+                            //  listview.setAdapter(adaptor);
                             listview.setAdapter(swingBottomInAnimationAdapter);
                             adaptor.notifyDataSetChanged();
                         } else {
@@ -611,8 +641,8 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     /**
      * 更新分类信息
      */
-    private void saveOrUpdateCovers(String coverTypeName,String coverTypeCode) {
-        final Integer _position=temp_position;
+    private void saveOrUpdateCovers(String coverTypeName, String coverTypeCode) {
+        final Integer _position = temp_position;
         User user = myApplication.getUser();
         if (user != null && user.getUserCode() != null) {
             pDialog.show();
@@ -620,7 +650,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
             params.put("userCode", user.getUserCode());
             params.put("shopCode", user.getShopCode());
             params.put("coverTypeName", coverTypeName);
-            if(null!=coverTypeCode){
+            if (null != coverTypeCode) {
                 params.put("coverTypeCode", coverTypeCode);
             }
             getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.save_shop_cover, params, new BaseJsonHttpResponseHandler<Result<ShopCoverType, String>>() {
@@ -673,8 +703,8 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         /**使用SSO授权必须添加如下代码 */
-        UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode) ;
-        if(ssoHandler != null){
+        UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
+        if (ssoHandler != null) {
             ssoHandler.authorizeCallBack(requestCode, resultCode, data);
         }
 
@@ -685,9 +715,9 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
      */
     private void addQZoneQQPlatform() {
         // 添加QQ支持, 并且设置QQ分享内容的target url
-        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,  myApplication.qq_appId, myApplication.qq_appKey);
+        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
         qqSsoHandler.setTitle(shop.getTitle());
-        qqSsoHandler.setTargetUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?shopCode="+user.getShopCode());
+        qqSsoHandler.setTargetUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?shopCode=" + user.getShopCode());
         qqSsoHandler.addToSocialSDK();
 
         // 添加QZone平台
@@ -695,20 +725,43 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         qZoneSsoHandler.addToSocialSDK();
     }
 
-    public void shareProduct(String code,String proName,String imagUrl){
-        String _targetUrl=DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode=" + code + "&shopCode=" + user.getShopCode();
+    public void shareProduct(String code, String proName, String imagUrl) {
+        String _targetUrl = DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode=" + code + "&shopCode=" + user.getShopCode();
         // 设置分享内容
-        mController.setShareContent(proName+_targetUrl);
+        mController.setShareContent(proName + _targetUrl);
         // 设置分享图片, 参数2为图片的url地址
         mController.setShareMedia(new UMImage(this, imagUrl));
         // 添加QQ支持, 并且设置QQ分享内容的target url
-        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,  myApplication.qq_appId, myApplication.qq_appKey);
+        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
         qqSsoHandler.setTitle(shop.getTitle());
         qqSsoHandler.setTargetUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_pro_web + "?productCode=" + code + "&shopCode=" + user.getShopCode());
         qqSsoHandler.addToSocialSDK();
         // 添加QZone平台
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
         qZoneSsoHandler.addToSocialSDK();
+
+        UMImage urlImage = new UMImage(this,imagUrl);
+
+        //设置微信好友分享内容
+        WeiXinShareContent weixinContent = new WeiXinShareContent();
+        //设置分享文字
+        weixinContent.setShareContent(proName);
+        //设置title
+        weixinContent.setTitle(shop.getTitle());
+        //设置分享内容跳转URL
+        weixinContent.setTargetUrl(_targetUrl);
+        //设置分享图片
+         weixinContent.setShareImage(urlImage);
+        mController.setShareMedia(weixinContent);
+
+        //设置微信朋友圈分享内容
+        CircleShareContent circleMedia = new CircleShareContent();
+        circleMedia.setShareContent(proName);
+        //设置朋友圈title
+        circleMedia.setTitle(shop.getTitle());
+        circleMedia.setShareImage(urlImage);
+        circleMedia.setTargetUrl(_targetUrl);
+        mController.setShareMedia(circleMedia);
 
         mController.openShare(this, false);
     }

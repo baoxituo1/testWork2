@@ -66,19 +66,35 @@ public class BaseActionBarActivity extends ActionBarActivity {
         mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
                 SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,SHARE_MEDIA.SINA,SHARE_MEDIA.TENCENT, SHARE_MEDIA.DOUBAN,
                 SHARE_MEDIA.RENREN, SHARE_MEDIA.YIXIN);
-        //设置新浪SSO handler
-        mController.getConfig().setSsoHandler(new SinaSsoHandler());
-        //设置腾讯微博SSO handler
-        mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
-        String appID = "wx967daebe835fbeac";
-        String appSecret = "5fa9e68ca3970e87a1f83e563c8dcbce";
-       /* // 添加微信平台
-        UMWXHandler wxHandler = new UMWXHandler(this,appID,appSecret);
-        wxHandler.addToSocialSDK();
-        // 添加微信朋友圈
-        UMWXHandler wxCircleHandler = new UMWXHandler(this,appID,appSecret);
-        wxCircleHandler.setToCircle(true);
-        wxCircleHandler.addToSocialSDK();*/
+        if(null!=shop&&null!=user){
+            // 添加QQ支持, 并且设置QQ分享内容的target url
+            UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
+            qqSsoHandler.setTitle(shop.getTitle());
+            qqSsoHandler.setTargetUrl(DataUrlContents.SERVER_HOST + DataUrlContents.show_view_shop_web + "?shopCode=" + user.getShopCode());
+            qqSsoHandler.addToSocialSDK();
+
+            // 添加QZone平台
+            QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
+            qZoneSsoHandler.addToSocialSDK();
+
+            //设置新浪SSO handler
+            mController.getConfig().setSsoHandler(new SinaSsoHandler());
+            //设置腾讯微博SSO handler
+            mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
+            String appID = "wx0e3efd036f185a84";
+            String appSecret = "7020c04d9239c752b76de75d34a9fe2e";
+            // 添加微信平台
+            UMWXHandler wxHandler = new UMWXHandler(this,appID,appSecret);
+            wxHandler.addToSocialSDK();
+            // 添加微信朋友圈
+            UMWXHandler wxCircleHandler = new UMWXHandler(this,appID,appSecret);
+            wxCircleHandler.setToCircle(true);
+            wxCircleHandler.addToSocialSDK();
+        }else{
+            //跳到登录
+            Log.e("BaseActionBarActivity", "user shop null，配置错误，请检查" );
+        }
+
         //竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
