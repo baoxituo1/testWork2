@@ -1,11 +1,17 @@
 package com.trade.bluehole.trad;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -17,9 +23,18 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
+import com.nhaarman.listviewanimations.ArrayAdapter;
+import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
+import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
+import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.OnItemMovedListener;
+import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
+import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.SimpleSwipeUndoAdapter;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
+import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity;
+import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity_;
 import com.trade.bluehole.trad.adaptor.cover.CoverManageListAdapter;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.pro.ProductCoverRelVO;
@@ -33,10 +48,12 @@ import com.trade.bluehole.trad.util.view.MyViewHold;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -49,14 +66,17 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class CoverManageActivity extends BaseActionBarActivity {
     @App
     MyApplication myApplication;
-    ListView listview;
+    DynamicListView listview;
     @ViewById
     RelativeLayout empty_view;
-    CoverManageListAdapter adapter;//商品分类适配器
+    ArrayAdapter<ProductCoverRelVO> adapter;//商品分类适配器
     ShopCommonInfo shop;
     User user;
     List<ProductCoverRelVO> coverList = new ArrayList<ProductCoverRelVO>();
 
+    private static final int INITIAL_DELAY_MILLIS = 300;
+
+    private int mNewItemCount;
     //页面进度条
     SweetAlertDialog pDialog;
     DialogPlus coverDialog;//商品自定义分类弹出框
@@ -70,7 +90,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+      //  setContentView(R.layout.activity_cover_manage);
         user=myApplication.getUser();
         //获取actionbar
         ActionBar actionBar = getSupportActionBar();
@@ -84,9 +104,28 @@ public class CoverManageActivity extends BaseActionBarActivity {
         setContentView(helper.createView(this));
         helper.initActionBar(this);
         //配置数据列表
-        listview = (ListView) findViewById(android.R.id.list);
+        listview = (DynamicListView) findViewById(android.R.id.list);
+        //listview.addHeaderView(LayoutInflater.from(this).inflate(R.layout.activity_dynamiclistview_header, listview, false));
         adapter=new CoverManageListAdapter(this);
-        listview.setAdapter(adapter);
+
+        SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapter, this, new MyOnDismissCallback(adapter));
+        AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
+        animAdapter.setAbsListView(listview);
+        assert animAdapter.getViewAnimator() != null;
+        animAdapter.getViewAnimator().setInitialDelayMillis(INITIAL_DELAY_MILLIS);
+        listview.setAdapter(animAdapter);
+
+         /* Enable drag and drop functionality */
+        listview.enableDragAndDrop();
+        listview.setDraggableManager(new TouchViewDraggableManager(R.id.list_row_draganddrop_touchview));
+        listview.setOnItemMovedListener(new MyOnItemMovedListener(adapter));
+        listview.setOnItemLongClickListener(new MyOnItemLongClickListener(listview));
+
+
+         /* Enable swipe to dismiss */
+        listview.enableSimpleSwipeUndo();
+        /* Add new items on item click */
+       // listview.setOnItemClickListener(new MyOnItemClickListener(listview));
         //初始化弹出
         initDialog();
         loadCoverListView();
@@ -131,6 +170,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
                         // .setOnItemClickListener(itemClickListener)
                 .create();
     }
+
 
     /**
      * 弹出框按钮点击事件
@@ -212,7 +252,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
                             //把数据添加到全局
                             coverList.clear();
                             coverList.addAll(response.getList());
-                            adapter.setLists(coverList);
+                            adapter.addAll(coverList);
                             adapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(CoverManageActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
@@ -273,7 +313,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
                                 obj.setProNumber(0);
                                 coverList.add(obj);
                             }
-                            adapter.setLists(coverList);
+                            adapter.addAll(coverList);
                             adapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(CoverManageActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
@@ -296,6 +336,93 @@ public class CoverManageActivity extends BaseActionBarActivity {
             });
         }
     }
+
+
+
+    private static class MyOnItemLongClickListener implements AdapterView.OnItemLongClickListener {
+
+        private final DynamicListView mListView;
+
+        MyOnItemLongClickListener(final DynamicListView listView) {
+            mListView = listView;
+        }
+
+        @Override
+        public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+            if (mListView != null) {
+                mListView.startDragging(position - mListView.getHeaderViewsCount());
+            }
+            return true;
+        }
+    }
+
+    private class MyOnDismissCallback implements OnDismissCallback {
+
+        private final ArrayAdapter<ProductCoverRelVO> mAdapter;
+
+        @Nullable
+        private Toast mToast;
+
+        MyOnDismissCallback(final ArrayAdapter<ProductCoverRelVO> adapter) {
+            mAdapter = adapter;
+        }
+
+        @Override
+        public void onDismiss(@NonNull final ViewGroup listView, @NonNull final int[] reverseSortedPositions) {
+            for (int position : reverseSortedPositions) {
+                //mAdapter.getLists().remove(position);
+                //mAdapter.notifyDataSetChanged();
+                mAdapter.remove(position);
+            }
+
+            if (mToast != null) {
+                mToast.cancel();
+            }
+            mToast = Toast.makeText(
+                    CoverManageActivity.this,
+                    getString(R.string.removed_positions, Arrays.toString(reverseSortedPositions)),
+                    Toast.LENGTH_LONG
+            );
+            mToast.show();
+        }
+    }
+
+    private class MyOnItemMovedListener implements OnItemMovedListener {
+
+        private final ArrayAdapter<ProductCoverRelVO> mAdapter;
+
+        private Toast mToast;
+
+        MyOnItemMovedListener(final ArrayAdapter<ProductCoverRelVO> adapter) {
+            mAdapter = adapter;
+        }
+
+        @Override
+        public void onItemMoved(final int originalPosition, final int newPosition) {
+            if (mToast != null) {
+                mToast.cancel();
+            }
+
+            mToast = Toast.makeText(getApplicationContext(), getString(R.string.moved, mAdapter.getItem(newPosition), newPosition), Toast.LENGTH_SHORT);
+            mToast.show();
+        }
+    }
+
+    private class MyOnItemClickListener implements AdapterView.OnItemClickListener {
+
+        private final DynamicListView mListView;
+
+        MyOnItemClickListener(final DynamicListView listView) {
+            mListView = listView;
+        }
+
+        @Override
+        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+            mListView.insert(position, getString(R.string.newly_added_item, mNewItemCount));
+            mNewItemCount++;
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

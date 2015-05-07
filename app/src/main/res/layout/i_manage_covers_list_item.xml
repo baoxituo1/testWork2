@@ -1,69 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:padding="@dimen/n_padding_normal_s"
-    android:layout_width="match_parent"
-    android:weightSum="5"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:padding="@dimen/n_padding_normal_s"
+              android:weightSum="5">
 
     <FrameLayout
-        android:layout_marginRight="16dp"
         android:layout_width="@dimen/cover_manage_item_width_height"
-        android:layout_height="@dimen/cover_manage_item_width_height">
+        android:layout_height="@dimen/cover_manage_item_width_height"
+        android:layout_marginRight="16dp">
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="@dimen/cover_manage_item_width_height"
-            android:layout_height="@dimen/cover_manage_item_width_height"
-            android:id="@+id/imageView"/>
+            android:layout_height="@dimen/cover_manage_item_width_height"/>
 
     </FrameLayout>
+
     <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="3"
         android:orientation="vertical"
-        android:weightSum="5"
-        android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:weightSum="5">
+
         <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
-            android:textColor="@color/eggplant"
-            android:textSize="@dimen/button_text_size"
-            android:text="类别名称"
             android:gravity="center_vertical"
-            android:id="@+id/textView"/>
+            android:text="类别名称"
+            android:textColor="@color/eggplant"
+            android:textSize="@dimen/button_text_size"/>
+
         <TextView
+            android:id="@id/pro_number"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:gravity="center_vertical"
-            android:textSize="@dimen/small_text_size"
             android:text="商品数量 0 件"
-            android:id="@id/pro_number"/>
+            android:textSize="@dimen/small_text_size"/>
     </LinearLayout>
+
     <LinearLayout
         android:id="@id/btn_cover_layout"
-        android:layout_weight="2"
         android:layout_width="0dp"
-        android:weightSum="2"
-        android:visibility="visible"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
         android:gravity="center_vertical"
-        android:layout_height="match_parent">
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:weightSum="2">
+
         <LinearLayout
             android:id="@id/main_cover_item_edit"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal">
+
             <ImageView
                 android:layout_width="@dimen/user_edit_ioc_height_width"
-                android:src="@drawable/modify_pencil"
-                android:layout_height="@dimen/user_edit_ioc_height_width" />
+                android:layout_height="@dimen/user_edit_ioc_height_width"
+                android:src="@drawable/modify_pencil"/>
         </LinearLayout>
-        <View
-            android:layout_width="1dp"
+        <!--<View
+            android:layout_width="0.1dp"
             android:layout_marginTop="@dimen/n_padding_normal_b"
             android:layout_marginBottom="@dimen/n_padding_normal_b"
             android:layout_marginLeft="@dimen/n_padding_normal_s"
@@ -80,6 +86,25 @@
                 android:layout_width="@dimen/user_edit_ioc_height_width"
                 android:src="@drawable/delete_bin"
                 android:layout_height="@dimen/user_edit_ioc_height_width" />
-        </LinearLayout>
+        </LinearLayout>-->
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/n_padding_normal_b"
+            android:layout_marginLeft="@dimen/n_padding_normal_s"
+            android:layout_marginRight="@dimen/n_padding_normal_s"
+            android:layout_marginTop="@dimen/n_padding_normal_b"
+            android:background="@color/gray"/>
+
+        <com.nhaarman.listviewanimations.itemmanipulation.dragdrop.GripView
+            android:id="@+id/list_row_draganddrop_touchview"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:color="@android:color/darker_gray"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp"/>
     </LinearLayout>
 </LinearLayout>

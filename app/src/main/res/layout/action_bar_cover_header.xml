@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="wrap_content"
-            android:text="*添加分类,以便顾客更好的筛选"
+            android:text="*长按类别可拖动排序,左右滑动删除分类."
             android:textColor="@color/white"
             android:layout_height="wrap_content" />
         <TextView

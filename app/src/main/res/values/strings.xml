@@ -220,4 +220,12 @@
     <string name="soft_update_cancel">取消</string>
     <string name="title_activity_update_version">优商圈</string>
     <string name="title_activity_search_product">查询</string>
+
+
+    <string name="removed_positions">删除位置: %s</string>
+    <string name="moved">\'%1$s\' 移动到位置 %2$s</string>
+    <string name="newly_added_item">这是新添加的项目 %d</string>
+    <string name="itemdeleted">删除分类</string>
+    <string name="taptoundo">点击取消</string>
+    <string name="activity_dynamiclistview_header">长按类别可拖动排序.\n左右滑动删除分类.\n</string>
 </resources>
