@@ -167,4 +167,8 @@ public class DataUrlContents {
      *预览商品
      */
     public final  static String edit_shop="shopjson/editShop.do";
+    /**
+     *更新店铺类别排序
+     */
+    public final  static String update_shop_cover_index="shopjson/updateShopCoverIndex.do";
 }

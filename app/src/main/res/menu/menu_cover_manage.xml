@@ -2,6 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.trade.bluehole.trad.CoverManageActivity">
+    <item android:id="@id/menu_done_cover" android:title="@string/common_done"
+        android:orderInCategory="100" app:showAsAction="always" />
     <item android:id="@id/menu_add_cover" android:title="@string/add"
         android:orderInCategory="100" app:showAsAction="always" />
 </menu>

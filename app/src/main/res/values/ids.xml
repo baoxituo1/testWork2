@@ -166,6 +166,7 @@
 
     <!--分类管理-->
     <item type="id" name="menu_add_cover" />
+    <item type="id" name="menu_done_cover" />
     <!--消息列表-->
     <item type="id" name="msg_page_view" />
     <item type="id" name="msg_notice_layout" />

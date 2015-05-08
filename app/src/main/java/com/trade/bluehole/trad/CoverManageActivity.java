@@ -6,11 +6,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -86,7 +88,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
     EditText coverNameEdit;//修改商品分类 公用编辑框
     private String temp_coverCode;//临时类别更新code，注意清除.
     private Integer temp_position;//临时类别更新位置，注意清除.
-
+    private boolean isUpdateIndex=false;//是否更新了排序
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -230,6 +232,241 @@ public class CoverManageActivity extends BaseActionBarActivity {
     }
 
 
+
+
+
+
+    private static class MyOnItemLongClickListener implements AdapterView.OnItemLongClickListener {
+
+        private final DynamicListView mListView;
+
+        MyOnItemLongClickListener(final DynamicListView listView) {
+            mListView = listView;
+        }
+
+        @Override
+        public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+            if (mListView != null) {
+                mListView.startDragging(position - mListView.getHeaderViewsCount());
+            }
+            return true;
+        }
+    }
+
+    private class MyOnDismissCallback implements OnDismissCallback {
+
+        private final ArrayAdapter<ProductCoverRelVO> mAdapter;
+
+        @Nullable
+        private Toast mToast;
+
+        MyOnDismissCallback(final ArrayAdapter<ProductCoverRelVO> adapter) {
+            mAdapter = adapter;
+        }
+
+        @Override
+        public void onDismiss(@NonNull final ViewGroup listView, @NonNull final int[] reverseSortedPositions) {
+            for (int position : reverseSortedPositions) {
+                //mAdapter.getLists().remove(position);
+                //mAdapter.notifyDataSetChanged();
+                mAdapter.remove(position);
+            }
+
+            if (mToast != null) {
+                mToast.cancel();
+            }
+            mToast = Toast.makeText(
+                    CoverManageActivity.this,
+                    getString(R.string.removed_positions, Arrays.toString(reverseSortedPositions)),
+                    Toast.LENGTH_LONG
+            );
+            mToast.show();
+        }
+    }
+
+    private class MyOnItemMovedListener implements OnItemMovedListener {
+
+        private final ArrayAdapter<ProductCoverRelVO> mAdapter;
+
+        private Toast mToast;
+
+        MyOnItemMovedListener(final ArrayAdapter<ProductCoverRelVO> adapter) {
+            mAdapter = adapter;
+        }
+
+        @Override
+        public void onItemMoved(final int originalPosition, final int newPosition) {
+            if (mToast != null) {
+                mToast.cancel();
+            }
+            //标致顺序已经修改
+            isUpdateIndex=true;
+            //调用重新实例化按钮
+            CoverManageActivity.this.invalidateOptionsMenu();
+
+
+            mToast = Toast.makeText(getApplicationContext(), getString(R.string.moved, mAdapter.getItem(newPosition), newPosition), Toast.LENGTH_SHORT);
+            mToast.show();
+        }
+    }
+
+    private class MyOnItemClickListener implements AdapterView.OnItemClickListener {
+
+        private final DynamicListView mListView;
+
+        MyOnItemClickListener(final DynamicListView listView) {
+            mListView = listView;
+        }
+
+        @Override
+        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+            mListView.insert(position, getString(R.string.newly_added_item, mNewItemCount));
+            mNewItemCount++;
+        }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_cover_manage, menu);
+        MenuItem actionDone = menu.findItem(R.id.menu_done_cover);
+        //判断是否显示 同步按钮
+        if(isUpdateIndex){
+            actionDone.setVisible(true);
+        }else{
+            actionDone.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_add_cover) {
+            //清空便用code
+            temp_coverCode=null;
+            temp_position=null;
+            coverDialog.show();
+            return true;
+        }else if(id==R.id.menu_done_cover){
+            //保存排序
+            updateCoverShowIndex();
+        }else if(id==android.R.id.home){
+            //如果修改过排序 提示
+            if(isUpdateIndex){
+                showDialogSaveIndex();
+            }else{
+                //点击后退跳转到 主页
+               // SuperMainActivity_.intent(this).start();
+                finish();
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * 保存用户新的排序
+     */
+    void updateCoverShowIndex(){
+        List<ProductCoverRelVO>list=adapter.getItems();
+        StringBuffer buf=new StringBuffer();
+        for(ProductCoverRelVO ls:list){
+            if(null!=ls){
+                buf.append(ls.getCoverCode()).append(",");
+            }
+        }
+        updateCoverIndex(buf.toString());
+    }
+
+    /**
+     * 处理后退事件
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(keyCode == KeyEvent.KEYCODE_BACK ){
+            //如果修改过排序 提示
+            if(isUpdateIndex){
+                showDialogSaveIndex();
+            }else{
+                //点击后退跳转到 主页
+                // SuperMainActivity_.intent(this).start();
+                finish();
+            }
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 如果修改了排序 弹出提示同步
+     */
+    void showDialogSaveIndex(){
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("是否要保存?")
+                .setContentText("类别的顺序已经被更改!")
+                .setConfirmText("是的,保存!")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
+                        //同步分类排序
+                        updateCoverShowIndex();
+                    }
+                })
+                .setCancelText("不,继续退出!")
+                .showCancelButton(true)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
+                        finish();
+                    }
+                })
+                .show();
+    }
+
+    /**
+     * 更新分类排序
+     */
+    private void updateCoverIndex(String codes) {
+        pDialog.show();
+        User user = myApplication.getUser();
+        if (user != null && user.getUserCode() != null) {
+            RequestParams params = new RequestParams();
+            params.put("shopCode", user.getShopCode());
+            params.put("coverCodes", codes);
+            getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.update_shop_cover_index, params, new BaseJsonHttpResponseHandler<Result<String, String>>() {
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<String, String> response) {
+                        pDialog.hide();
+                        //标致顺序已经同步隐藏
+                        isUpdateIndex=false;
+                        //调用重新实例化按钮
+                        CoverManageActivity.this.invalidateOptionsMenu();
+                        Toast.makeText(getApplicationContext(), "分类排序同步成功", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<String, String> errorResponse) {
+                    Toast.makeText(CoverManageActivity.this,"系统错误:"+statusCode, Toast.LENGTH_SHORT).show();
+                    pDialog.hide();
+                }
+
+                @Override
+                protected Result<String, String> parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                    // return new ObjectMapper().readValues(new JsonFactory().createParser(rawJsonData), Result.class).next();
+                    return gson.fromJson(rawJsonData, new TypeToken<Result<String, String>>() {
+                    }.getType());
+                }
+            });
+        }
+    }
+
     /**
      * load数据
      */
@@ -252,6 +489,8 @@ public class CoverManageActivity extends BaseActionBarActivity {
                             //把数据添加到全局
                             coverList.clear();
                             coverList.addAll(response.getList());
+                            //不显示未分配的
+                            coverList.remove(0);
                             adapter.addAll(coverList);
                             adapter.notifyDataSetChanged();
                         } else {
@@ -336,118 +575,6 @@ public class CoverManageActivity extends BaseActionBarActivity {
             });
         }
     }
-
-
-
-    private static class MyOnItemLongClickListener implements AdapterView.OnItemLongClickListener {
-
-        private final DynamicListView mListView;
-
-        MyOnItemLongClickListener(final DynamicListView listView) {
-            mListView = listView;
-        }
-
-        @Override
-        public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-            if (mListView != null) {
-                mListView.startDragging(position - mListView.getHeaderViewsCount());
-            }
-            return true;
-        }
-    }
-
-    private class MyOnDismissCallback implements OnDismissCallback {
-
-        private final ArrayAdapter<ProductCoverRelVO> mAdapter;
-
-        @Nullable
-        private Toast mToast;
-
-        MyOnDismissCallback(final ArrayAdapter<ProductCoverRelVO> adapter) {
-            mAdapter = adapter;
-        }
-
-        @Override
-        public void onDismiss(@NonNull final ViewGroup listView, @NonNull final int[] reverseSortedPositions) {
-            for (int position : reverseSortedPositions) {
-                //mAdapter.getLists().remove(position);
-                //mAdapter.notifyDataSetChanged();
-                mAdapter.remove(position);
-            }
-
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            mToast = Toast.makeText(
-                    CoverManageActivity.this,
-                    getString(R.string.removed_positions, Arrays.toString(reverseSortedPositions)),
-                    Toast.LENGTH_LONG
-            );
-            mToast.show();
-        }
-    }
-
-    private class MyOnItemMovedListener implements OnItemMovedListener {
-
-        private final ArrayAdapter<ProductCoverRelVO> mAdapter;
-
-        private Toast mToast;
-
-        MyOnItemMovedListener(final ArrayAdapter<ProductCoverRelVO> adapter) {
-            mAdapter = adapter;
-        }
-
-        @Override
-        public void onItemMoved(final int originalPosition, final int newPosition) {
-            if (mToast != null) {
-                mToast.cancel();
-            }
-
-            mToast = Toast.makeText(getApplicationContext(), getString(R.string.moved, mAdapter.getItem(newPosition), newPosition), Toast.LENGTH_SHORT);
-            mToast.show();
-        }
-    }
-
-    private class MyOnItemClickListener implements AdapterView.OnItemClickListener {
-
-        private final DynamicListView mListView;
-
-        MyOnItemClickListener(final DynamicListView listView) {
-            mListView = listView;
-        }
-
-        @Override
-        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-            mListView.insert(position, getString(R.string.newly_added_item, mNewItemCount));
-            mNewItemCount++;
-        }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_cover_manage, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.menu_add_cover) {
-            //清空便用code
-            temp_coverCode=null;
-            temp_position=null;
-            coverDialog.show();
-            return true;
-        }else if(id==android.R.id.home){
-            //点击后退跳转到 主页
-            SuperMainActivity_.intent(this).start();
-            finish();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

@@ -139,7 +139,7 @@ public class SuperMainActivity extends Activity {
             //装载数据
             loadData();
             //
-            Target viewTarget = new ViewTarget(R.id.main_btn_add_pro, this);
+           /* Target viewTarget = new ViewTarget(R.id.main_btn_add_pro, this);
             new ShowcaseView.Builder(this)
                     .setTarget(viewTarget)
                     .setContentTitle("添加新商品")
@@ -147,7 +147,7 @@ public class SuperMainActivity extends Activity {
                     //.hideOnTouchOutside()
                     .setStyle(R.style.CustomShowcaseTheme2)
                     .singleShot(42)
-                    .build();
+                    .build();*/
 
             /*new ShowcaseView.Builder(this)
                     .setTarget(new ActionViewTarget(this, ActionViewTarget.Type.HOME))

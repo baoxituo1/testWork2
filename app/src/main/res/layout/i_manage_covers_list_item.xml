@@ -5,7 +5,7 @@
               android:layout_height="match_parent"
               android:orientation="horizontal"
               android:padding="@dimen/n_padding_normal_s"
-              android:weightSum="5">
+              android:weightSum="7">
 
     <FrameLayout
         android:layout_width="@dimen/cover_manage_item_width_height"
@@ -22,7 +22,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="5"
         android:orientation="vertical"
         android:weightSum="5">
 

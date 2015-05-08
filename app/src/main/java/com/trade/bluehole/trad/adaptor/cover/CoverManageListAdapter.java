@@ -91,13 +91,14 @@ public class CoverManageListAdapter extends ArrayAdapter<ProductCoverRelVO> impl
         final TextDrawable drawable = TextDrawable.builder().buildRoundRect(header, mGenerator.getColor(header), toPx(10));
         holdObject.imageView.setImageDrawable(drawable);
         //判断是否是未分类
-       /* if(null==title||"".equals(title)){
+        if(null==title||"".equals(title)){
             holdObject.coverName.setText("未分类");
             //隐藏删除编辑图片
             holdObject.btn_cover_layout.setVisibility(View.GONE);
-        }else{*/
+            holdObject.editImage.setVisibility(View.GONE);
+        }else{
             holdObject.coverName.setText(title);
-       // }
+        }
         holdObject.coverNumber.setText("共"+obj.getProNumber()+"件商品");
 
 
