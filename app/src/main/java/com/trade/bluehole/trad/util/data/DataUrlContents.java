@@ -22,14 +22,16 @@ public class DataUrlContents {
     /**
      * 更新服务器地址
      */
-    public final  static String UPDATE_SERVER_HOST="http://miss77.vicp.net/";
+    //public final  static String UPDATE_SERVER_HOST="http://miss77.vicp.net/";
+    public final  static String UPDATE_SERVER_HOST="http://178tb.com/";
 
     /**
      * 服务器地址
      */
     //public final  static String SERVER_HOST="http://192.168.1.161:8080/qqt_up/";
-    public final  static String SERVER_HOST="http://miss77.vicp.net/qqt_up/";
-    //public final  static String SERVER_HOST="http://192.168.1.108:8080/qqt_up/";
+    //public final  static String SERVER_HOST="http://178tb.com/";
+    //public final  static String SERVER_HOST="http://miss77.vicp.net/qqt_up/";
+    public final  static String SERVER_HOST="http://192.168.1.108:8080/qqt_up/";
     /**
      * 图片服务器地址
      */
@@ -158,7 +160,7 @@ public class DataUrlContents {
     /**
      *预览商品
      */
-    public final  static String show_view_pro_web="mobile/detailProduct.htm";
+    public final  static String show_view_pro_web="mshop/msProDetail.htm";
     /**
      *预览店铺
      */

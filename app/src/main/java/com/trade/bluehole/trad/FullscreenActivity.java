@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -22,6 +23,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
+import com.trade.bluehole.trad.activity.BaseActivity;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.MyApplication;
@@ -50,12 +52,14 @@ import mehdi.sakout.fancybuttons.FancyButton;
  * @see
  */
 @EActivity(R.layout.activity_fullscreen)
-public class FullscreenActivity extends Activity {
+public class FullscreenActivity extends BaseActivity {
 
     @App
     MyApplication myapplication;
     @ViewById
     LinearLayout bottom_layout;
+    @ViewById
+    RelativeLayout re_error_login;
 
     private static AsyncHttpClient client=new AsyncHttpClient();
     public static Gson gson = new Gson();
@@ -64,6 +68,7 @@ public class FullscreenActivity extends Activity {
 
      @AfterViews
      void initData() {
+         client.setTimeout(50000);//30秒
          //初始化等待dialog
          pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
          pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -118,6 +123,7 @@ public class FullscreenActivity extends Activity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<User, ShopCommonInfo> response) {
                 Log.d(LoginSystemActivity.class.getName(), statusCode + "");
+                re_error_login.setVisibility(View.GONE);
                 if (null != response) {
                     pDialog.hide();
                     //登录成功跳转到首页
@@ -137,6 +143,7 @@ public class FullscreenActivity extends Activity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<User, ShopCommonInfo> errorResponse) {
                 Toast.makeText(FullscreenActivity.this, "服务器繁忙", Toast.LENGTH_SHORT).show();
+                re_error_login.setVisibility(View.VISIBLE);
                 pDialog.hide();
             }
 
@@ -149,8 +156,13 @@ public class FullscreenActivity extends Activity {
         });
     }
 
-
-
+    /**
+     * 点击重试
+     */
+    @Click(R.id.re_to_login)
+    void onReLoading(){
+        isFirst();
+    }
 
 
     /**

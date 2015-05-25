@@ -39,7 +39,7 @@
             android:layout_alignParentRight="true"
             android:textSize="@dimen/button_text_size"
             android:layout_width="wrap_content"
-            android:text="中国 >"
+            android:text="中国"
             android:layout_height="wrap_content" />
     </RelativeLayout>
     <LinearLayout

@@ -1,6 +1,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">优商圈</string>
 
+    <string name="re_lunch_login">重试</string>
     <string name="lunch_login">登录</string>
     <string name="lunch_sign">新用户</string>
     <string name="hello_world">你好请登陆!</string>

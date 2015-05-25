@@ -93,6 +93,7 @@
     <orderEntry type="library" exported="" name="library-1.3" level="project" />
     <orderEntry type="library" exported="" name="oss-0.3.0" level="project" />
     <orderEntry type="library" exported="" name="library-0.0.2" level="project" />
+    <orderEntry type="library" exported="" name="picasso-2.3.2" level="project" />
     <orderEntry type="library" exported="" name="materialish-progress-1.0" level="project" />
     <orderEntry type="library" exported="" name="library-1.2" level="project" />
     <orderEntry type="library" exported="" name="phoenix-1.1.0" level="project" />
@@ -122,6 +123,7 @@
     <orderEntry type="library" exported="" name="baidumapapi_v3_3_0" level="project" />
     <orderEntry type="library" exported="" name="androidannotations-api-3.2" level="project" />
     <orderEntry type="library" exported="" name="com.amulyakhare.textdrawable-1.0.1" level="project" />
+    <orderEntry type="library" exported="" name="library-1.1.5" level="project" />
     <orderEntry type="library" exported="" name="dialogplus-1.4" level="project" />
     <orderEntry type="module" module-name="social_sdk_library_project" exported="" />
     <orderEntry type="module" module-name="dynamicgrid" exported="" />

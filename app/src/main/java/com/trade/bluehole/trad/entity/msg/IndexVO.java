@@ -74,7 +74,20 @@ public class IndexVO {
 	 */
 	private List<IndexProCommentVO> messAge;
 
-	public List<IndexProCommentVO> getMessAge() {
+    /**
+     * 头5条新闻
+     */
+    List<Notice> notices ;
+
+    public List<Notice> getNotices() {
+        return notices;
+    }
+
+    public void setNotices(List<Notice> notices) {
+        this.notices = notices;
+    }
+
+    public List<IndexProCommentVO> getMessAge() {
 		return messAge;
 	}
 

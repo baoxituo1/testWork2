@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -20,6 +21,10 @@ import android.widget.Toast;
 
 import com.activeandroid.query.Delete;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
 import com.github.amlcurran.showcaseview.targets.Target;
@@ -31,6 +36,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
+import com.trade.bluehole.trad.activity.BaseActivity;
 import com.trade.bluehole.trad.activity.msg.MessagePageviewActivity_;
 import com.trade.bluehole.trad.activity.user.AccountUserManageActivity_;
 import com.trade.bluehole.trad.activity.webview.WebViewActivity;
@@ -39,27 +45,31 @@ import com.trade.bluehole.trad.adaptor.main.MainNoticeAdapter;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.msg.IndexProCommentVO;
 import com.trade.bluehole.trad.entity.msg.IndexVO;
+import com.trade.bluehole.trad.entity.msg.Notice;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.trade.bluehole.trad.util.model.UserModel;
 import com.trade.bluehole.trad.util.update.UpdateManager;
+import com.trade.bluehole.trad.util.view.InnerListView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
 
+import java.util.HashMap;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-@EActivity(R.layout.activity_super_main)
-public class SuperMainActivity extends Activity {
+@EActivity
+public class SuperMainActivity extends BaseActivity implements  BaseSliderView.OnSliderClickListener{
     public static final int REFRESH_DELAY = 2000;
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerList;
@@ -74,17 +84,28 @@ public class SuperMainActivity extends Activity {
     ShopCommonInfo shop;
     MainNoticeAdapter adapter;//站内通知适配器
     @ViewById
-    ListView listView;//站内信和新闻公告
+    InnerListView listView;//站内信和新闻公告
     @ViewById //商品数 浏览量 收藏量 商品收藏 店铺名 账号信息
     TextView all_pro_number,all_view_number,all_shop_collect_number,all_pro_collect_number,reg_shop_name,account;
     @ViewById
     CircleImageView shop_logo_image;//左侧边栏logo
     @ViewById
     LinearLayout main_left_home_layout,main_left_user_layout,main_left_message_layout;
+
     //站内信集合列表
     List<IndexProCommentVO> noticeList;
 
     ShowcaseView showcaseView;
+    private SliderLayout mDemoSlider;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_super_main);
+        mDemoSlider = (SliderLayout)findViewById(R.id.slider);
+    }
+
 
     @AfterViews
     void initData(){
@@ -137,7 +158,7 @@ public class SuperMainActivity extends Activity {
                 }
             });
             //装载数据
-            loadData();
+           loadData();
             //
            /* Target viewTarget = new ViewTarget(R.id.main_btn_add_pro, this);
             new ShowcaseView.Builder(this)
@@ -159,6 +180,8 @@ public class SuperMainActivity extends Activity {
             Toast.makeText(SuperMainActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
     /**
      * 点击新增商品
@@ -295,6 +318,58 @@ public class SuperMainActivity extends Activity {
     }
 
     /**
+     * 实例化头部新闻
+     */
+    @UiThread
+    void initDataHead(List<Notice> notices){
+        //HashMap<String,String> url_maps = new HashMap<String, String>();
+        if(notices!=null&&!notices.isEmpty()){
+            for(Notice ls:notices){
+                TextSliderView textSliderView = new TextSliderView(this);
+                // url_maps.put(ls.getTitle(), ls.getSource());
+                textSliderView
+                        .description(ls.getTitle())
+                        .image(DataUrlContents.IMAGE_HOST+ls.getSource())
+                        .setScaleType(BaseSliderView.ScaleType.CenterCrop)
+                        .setOnSliderClickListener(this);
+                textSliderView.bundle(new Bundle());
+                textSliderView.getBundle().putString("extra", ls.getNewCode());
+                mDemoSlider.addSlider(textSliderView);
+            }
+        }
+
+       /* for(String name : url_maps.keySet()){
+            TextSliderView textSliderView = new TextSliderView(this);
+            // initialize a SliderLayout
+            textSliderView
+                    .description(name)
+                    .image(url_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit);
+            //.setOnSliderClickListener(this);
+
+            //add your extra information
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle()
+                    .putString("extra",name);
+
+            mDemoSlider.addSlider(textSliderView);
+        }*/
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOut);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(6000);
+        // mDemoSlider.addOnPageChangeListener(this);
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+       // Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+        Intent intent = WebViewActivity_.intent(SuperMainActivity.this).get();
+        intent.putExtra(WebViewActivity.NOTICE_TYPE, "0");
+        intent.putExtra(WebViewActivity.NOTICE_CODE, slider.getBundle().get("extra")+"");
+        startActivity(intent);
+    }
+    /**
      * 读取数据
      */
     private void loadData(){
@@ -325,6 +400,7 @@ public class SuperMainActivity extends Activity {
                         all_pro_collect_number.setText(obj.getAllshopcollectNum()+"");
                     }
 
+                    initDataHead(obj.getNotices());
                     noticeList=obj.getMessAge();
                     adapter.setLists(noticeList);
                     listView.setAdapter(adapter);
@@ -360,7 +436,7 @@ public class SuperMainActivity extends Activity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        initData();
+       // initData();
         mDrawerToggle.syncState();
     }
 
@@ -368,5 +444,28 @@ public class SuperMainActivity extends Activity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    private long firstTime = 0;
+    /**
+     * 处理后退事件
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK ){
+            long secondTime = System.currentTimeMillis();
+            if (secondTime - firstTime > 2000) {                                         //如果两次按键时间间隔大于2秒，则不退出
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                firstTime = secondTime;//更新firstTime
+                return true;
+            } else {                                                    //两次按键小于2秒时，退出应用
+                super.AppExit(this);
+            }
+        }
+        return true;
     }
 }

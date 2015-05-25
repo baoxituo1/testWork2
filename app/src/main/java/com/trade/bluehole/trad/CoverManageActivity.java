@@ -490,7 +490,9 @@ public class CoverManageActivity extends BaseActionBarActivity {
                             coverList.clear();
                             coverList.addAll(response.getList());
                             //不显示未分配的
-                            coverList.remove(0);
+                            if(!coverList.isEmpty()){
+                                coverList.remove(0);
+                            }
                             adapter.addAll(coverList);
                             adapter.notifyDataSetChanged();
                         } else {

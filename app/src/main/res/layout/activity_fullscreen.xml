@@ -12,6 +12,35 @@
         android:scaleType="centerCrop"
         android:layout_height="match_parent" />
 
+    <!--出错按钮-->
+    <RelativeLayout
+        android:id="@id/re_error_login"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        android:layout_height="@dimen/lunch_bottom_height">
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_centerInParent="true"
+            android:layout_height="90dp">
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@id/re_to_login"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/n_padding_normal_b"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                fancy:borderColor="@color/grey_line"
+                fancy:borderWidth="1dp"
+                fancy:defaultColor="@color/white"
+                fancy:focusColor="@color/gray"
+                fancy:radius="5dp"
+                fancy:text="@string/re_lunch_login"
+                fancy:textColor="#0099cc" />
+        </LinearLayout>
+    </RelativeLayout>
     <LinearLayout
         android:id="@id/bottom_layout"
         android:visibility="gone"

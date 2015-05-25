@@ -43,7 +43,7 @@
     </style>
 
     <style name="ActionBar" parent="android:Widget.ActionBar">
-        <item name="android:background">@color/base_color_green_2</item>
+        <item name="android:background">@color/base_color_red_1</item>
         <item name="android:icon">@android:color/transparent</item>
         <item name="android:titleTextStyle">@style/ActionBar.TitleText</item>
     </style>

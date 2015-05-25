@@ -13,6 +13,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.Shop;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
+import com.trade.bluehole.trad.service.ActivityStackMgr;
+import com.trade.bluehole.trad.service.AppManager;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -51,6 +53,9 @@ public class BaseActionBarActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        AppManager.getAppManager().addActivity(this);
+
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
@@ -158,5 +163,18 @@ public class BaseActionBarActivity extends ActionBarActivity {
         qZoneSsoHandler.addToSocialSDK();
 
         mController.openShare(this, false);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 结束Activity&从堆栈中移除
+        AppManager.getAppManager().finishActivity(this);
+    }
+
+    public void finish() {
+        ActivityStackMgr.getActivityStackMgr().popNofinishActivity(this);
+        super.finish();
     }
 }

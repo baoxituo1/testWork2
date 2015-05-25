@@ -9,12 +9,13 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.BaseActivity;
 import com.trade.bluehole.trad.util.update.UpdateManager;
 
-public class UpdateVersionActivity extends Activity {
+public class UpdateVersionActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_version);
         // 检查软件更新

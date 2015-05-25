@@ -84,9 +84,9 @@ public class ShopGroundConfigActivity extends BaseActionBarActivity {
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setTitleText("Loading");
         pDialog.setCancelable(false);
-        pDialog.show();
         //如果有背景 加载
         if(null!=shopBackGroundUrl){
+           // pDialog.show();
             doInUiThread(shopBackGroundUrl);
         }
     }
@@ -100,7 +100,7 @@ public class ShopGroundConfigActivity extends BaseActionBarActivity {
         //加载店铺logo
         if(null!=backGroundUrl){
             ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + backGroundUrl,shopBackGround,ImageManager.options);
-            pDialog.hide();
+           // pDialog.hide();
         }
     }
 

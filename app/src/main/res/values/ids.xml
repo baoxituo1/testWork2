@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item type="id" name="listView" />
+    <item type="id" name="re_to_login" />
 
     <item type="id" name="login_top_layout" />
     <item type="id" name="login_user_layout" />
@@ -205,4 +206,7 @@
 
     <!--店铺地址-->
     <item type="id" name="address_update_data" />
+    <!--错误-->
+    <item type="id" name="re_error_login" />
+
 </resources>

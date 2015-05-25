@@ -52,7 +52,8 @@
                 android:layout_marginLeft="@dimen/n_padding_normal_b"
                 android:drawableBottom="@color/white"
                 android:background="@drawable/rounded_edittext"
-                android:text="baoxituo1"
+                android:text=""
+                android:hint="请输入账号/手机号"
                 android:gravity="center_vertical"
                 android:singleLine="true" />
         </LinearLayout>
@@ -83,7 +84,8 @@
                 android:background="@drawable/rounded_edittext"
                 android:gravity="center_vertical"
                 android:password="true"
-                android:text="qqqqqq"
+                android:text=""
+                android:hint="请输入密码"
                 android:singleLine="true" />
         </LinearLayout>
     </LinearLayout>
