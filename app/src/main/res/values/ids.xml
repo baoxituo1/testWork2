@@ -98,6 +98,8 @@
     <item type="id" name="account" />
     <item type="id" name="main_quit_layout" />
     <item type="id" name="main_update_layout" />
+    <item type="id" name="main_feed_back" />
+    <item type="id" name="main_help" />
 
     <!--活动-->
     <item type="id" name="activity_menu_add" />
@@ -208,5 +210,9 @@
     <item type="id" name="address_update_data" />
     <!--错误-->
     <item type="id" name="re_error_login" />
+    <!--反馈-->
+    <item type="id" name="user_feed_back" />
+    <item type="id" name="user_feed_content" />
+    <item type="id" name="user_feed_submit" />
 
 </resources>

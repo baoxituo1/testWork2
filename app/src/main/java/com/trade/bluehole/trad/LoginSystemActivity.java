@@ -120,7 +120,7 @@ public class LoginSystemActivity extends BaseActionBarActivity {
                         // MainActivity_.intent(LoginSystemActivity.this).start();
                         SuperMainActivity_.intent(LoginSystemActivity.this).start();
                     } else {
-                        Toast.makeText(LoginSystemActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginSystemActivity.this, "账号或者密码错误", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

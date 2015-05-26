@@ -294,7 +294,7 @@ public class AccountUserManageActivity  extends BaseActionBarActivity {
             if(null!=base.getNickName()){//昵称
                 user_nick_label.setTextColor(getResources().getColor(R.color.eggplant));
                 user_nick_text.setTextColor(getResources().getColor(R.color.eggplant));
-                user_nick_text.setText(user.getAccount());
+                user_nick_text.setText(user.getNickName());
             }
             if(null!=base.getRealName()){//真实姓名
                 user_name_label.setTextColor(getResources().getColor(R.color.eggplant));
@@ -360,7 +360,7 @@ public class AccountUserManageActivity  extends BaseActionBarActivity {
                 params.put("age", val);
             }
 
-            getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.update_user_base, params, new BaseJsonHttpResponseHandler<UserBase>() {
+            getClient().post(DataUrlContents.SERVER_HOST + DataUrlContents.update_user_base, params, new BaseJsonHttpResponseHandler<UserBase>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, UserBase response) {

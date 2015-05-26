@@ -1,0 +1,113 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:fancy="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context="com.trade.bluehole.trad.activity.feedback.UserFeedBackActivity">
+
+   <EditText
+       android:id="@id/user_feed_back"
+       android:layout_width="match_parent"
+       android:padding="@dimen/n_padding_normal_h"
+       android:background="@drawable/rounded_edittext_5"
+       android:hint="您的问题或者建议"
+       android:gravity="top"
+       android:textSize="@dimen/sample_text_size"
+       android:layout_height="100dp"/>
+
+
+    <EditText
+        android:id="@id/user_feed_content"
+        android:layout_marginTop="@dimen/n_padding_normal_h"
+        android:layout_width="match_parent"
+        android:padding="@dimen/n_padding_normal_h"
+        android:background="@drawable/rounded_edittext_5"
+        android:hint="QQ,邮件或者电话"
+        android:gravity="top"
+        android:textSize="@dimen/sample_text_size"
+        android:singleLine="true"
+        android:layout_height="wrap_content"/>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@id/user_feed_submit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/n_padding_normal_h"
+        android:paddingBottom="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="5dp"
+        fancy:borderColor="@color/grey_line"
+        fancy:borderWidth="1dp"
+        fancy:defaultColor="@color/primary"
+        fancy:focusColor="@color/gray"
+        fancy:radius="5dp"
+        fancy:text="@string/submit_done"
+        fancy:textColor="@color/white" />
+
+    <TextView
+        android:layout_marginTop="@dimen/n_padding_normal_h"
+        android:padding="@dimen/n_padding_normal"
+        android:text="联系我们"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/n_padding_normal_h"
+        android:padding="@dimen/n_padding_normal"
+        android:text="官方网站"
+        android:textSize="@dimen/sample_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="@dimen/n_padding_normal"
+        android:padding="@dimen/n_padding_normal"
+        android:text="http://178tb.com"
+        android:textSize="@dimen/sample_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="@dimen/n_padding_normal_h"
+        android:padding="@dimen/n_padding_normal"
+        android:text="客服邮箱"
+        android:textSize="@dimen/sample_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="@dimen/n_padding_normal"
+        android:padding="@dimen/n_padding_normal"
+        android:text="http://service@178tb.com"
+        android:textSize="@dimen/sample_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="@dimen/n_padding_normal_h"
+        android:padding="@dimen/n_padding_normal"
+        android:text="客服电话"
+        android:textSize="@dimen/sample_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="@dimen/n_padding_normal"
+        android:padding="@dimen/n_padding_normal"
+        android:text="周一至周日,早9:00到晚9:00"
+        android:textSize="@dimen/sample_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="@dimen/n_padding_normal"
+        android:padding="@dimen/n_padding_normal"
+        android:text="0315-3840206"
+        android:textSize="@dimen/title_text_size"
+        android:textColor="@color/base_color_blue_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

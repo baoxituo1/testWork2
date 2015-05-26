@@ -208,6 +208,7 @@
         </LinearLayout>
         <!--反馈-->
         <LinearLayout
+            android:id="@id/main_feed_back"
             android:layout_width="match_parent"
             android:weightSum="4"
             android:layout_height="@dimen/left_menu_item_sub_width">
@@ -225,6 +226,7 @@
         </LinearLayout>
         <!--获得帮助-->
         <LinearLayout
+            android:id="@id/main_help"
             android:layout_width="match_parent"
             android:weightSum="4"
             android:layout_height="@dimen/left_menu_item_sub_width">

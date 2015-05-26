@@ -173,4 +173,8 @@ public class DataUrlContents {
      *更新店铺类别排序
      */
     public final  static String update_shop_cover_index="shopjson/updateShopCoverIndex.do";
+    /**
+     *用户反馈
+     */
+    public final  static String save_user_feed_back="shopjson/saveFeedBack.do";
 }

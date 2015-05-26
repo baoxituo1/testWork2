@@ -37,6 +37,8 @@ import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.BaseActivity;
+import com.trade.bluehole.trad.activity.feedback.HelpInfoActivity_;
+import com.trade.bluehole.trad.activity.feedback.UserFeedBackActivity_;
 import com.trade.bluehole.trad.activity.msg.MessagePageviewActivity_;
 import com.trade.bluehole.trad.activity.user.AccountUserManageActivity_;
 import com.trade.bluehole.trad.activity.webview.WebViewActivity;
@@ -297,6 +299,20 @@ public class SuperMainActivity extends BaseActivity implements  BaseSliderView.O
     }
 
 
+    /**
+     * 当点击用户反馈
+     */
+    @Click(R.id.main_help)
+    void onClickHelp(){
+        HelpInfoActivity_.intent(this).start();
+    }
+    /**
+     * 当点击用户反馈
+     */
+    @Click(R.id.main_feed_back)
+    void onClickFeedBack(){
+        UserFeedBackActivity_.intent(this).start();
+    }
     /**
      * 当点击更新版本
      */

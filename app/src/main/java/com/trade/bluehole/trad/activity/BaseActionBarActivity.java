@@ -169,6 +169,9 @@ public class BaseActionBarActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(null!=pDialog){
+            pDialog.dismiss();
+        }
         // 结束Activity&从堆栈中移除
         AppManager.getAppManager().finishActivity(this);
     }
@@ -177,4 +180,5 @@ public class BaseActionBarActivity extends ActionBarActivity {
         ActivityStackMgr.getActivityStackMgr().popNofinishActivity(this);
         super.finish();
     }
+
 }

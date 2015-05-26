@@ -7,6 +7,7 @@
     <string name="hello_world">你好请登陆!</string>
     <string name="common_done">完成</string>
     <string name="update_done">同步</string>
+    <string name="submit_done">提交</string>
 
     <string name="register_title">请输入您的手机号</string>
     <string name="register_title_edit">手机号码</string>
@@ -229,4 +230,20 @@
     <string name="itemdeleted">删除分类</string>
     <string name="taptoundo">点击取消</string>
     <string name="activity_dynamiclistview_header">长按类别可拖动排序.\n左右滑动删除分类.\n</string>
+    <string name="title_activity_user_feed_back">用户反馈</string>
+    <string name="title_activity_help_info">常见问题</string>
+
+
+    <string name="help_add_new_pro">在首页，点击“新增”按钮或者在商品列表页面，点击右上角“添加”，都可以进行商品的新增。</string>
+    <string name="help_del_out_pro">在首页，点击“商品”按钮进入商品管理，点击列表中任意商品，跳转到商品详情页，滑动到底部，点击“下架商品”和“删除商品”按钮进行操作。</string>
+    <string name="help_img_add_edit">在商品详情页，点击头部“加号”图片，选择相册中的图片进行添加；点击图片下方的“调整顺序”按钮，可以对多张图片的显示顺序进行调整，排在第一位的图片默认为封面图片；单击图片进入图片滤镜效果能
+        简单的对图片进行美化处理，用户通过拖动底部滑块可以调整强度。</string>
+    <string name="help_add_more_info">在商品详情页，点击“添加商品参数”，能过添加多条描述，输入“型号”，“描述”，用户都是可以自定义的。</string>
+    <string name="help_cover_hot_label">“分类”能够让用户更快速和准确的检索定位到商品；“掌柜推荐”会被推荐到店铺首页，同时也能被优先检索和查找到，适当的设置会提高检索几率；标签功能暂时未开放。以上功能都能在商品信息页设置。</string>
+    <string name="help_share">在商品列表页面，点击店铺名称下方的分享按钮，或者点击商品列表下方右侧的分享按钮，都能实现分享操作。</string>
+    <string name="help_copy">在商品列表页面，点击店铺名称下方的预览和复制链接按钮，或者点击商品列表下方预览和复制链接按钮，都能实现预览操作。发送后用户可以通过浏览器浏览网页版内容。</string>
+    <string name="help_modify_shop">在首页点击“店铺”按钮，即可进行信息修改。店铺位置需要调用定位数据，需要用户允许操作。</string>
+    <string name="help_dy_sale">在首页点击“活动”和“折扣”按钮，即可进行相应设置，活动会被推荐到“买家版”动态首页展示。</string>
+    <string name="help_cover_index">在首页点击“分类”按钮，即可进行分类的添加修改删除；拖动想要排序的列即可进行排序操作。</string>
+    <string name="help_link_us">邮件servers@178tb.com,100919133@qq.com,电话0315-3840206，或者直接反馈给我们，我们会尽快联系您。</string>
 </resources>
