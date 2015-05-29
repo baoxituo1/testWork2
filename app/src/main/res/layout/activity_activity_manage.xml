@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gainsboro"
     tools:context="com.trade.bluehole.trad.ActivityManageActivity">
     <com.yalantis.phoenix.PullToRefreshView
         android:id="@+id/pull_to_refresh"
@@ -15,6 +14,7 @@
     </com.yalantis.phoenix.PullToRefreshView>
     <!--无数据视图-->
     <RelativeLayout
+        android:background="@color/gainsboro"
         android:layout_centerInParent="true"
         android:id="@id/empty_view"
         android:layout_width="match_parent"

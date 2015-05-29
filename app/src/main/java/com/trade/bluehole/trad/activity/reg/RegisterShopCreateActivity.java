@@ -53,6 +53,7 @@ import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.Result;
 import com.trade.bluehole.trad.util.StreamUtil;
+import com.trade.bluehole.trad.util.base.EncryptUrlPara;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import org.androidannotations.annotations.AfterViews;
@@ -236,9 +237,9 @@ public class RegisterShopCreateActivity extends BaseActionBarActivity implements
         RequestParams params=new RequestParams();
         if(null!=phoneNumber&&null!=passWord&&!"".equals(reg_shop_name.getText())){
                 //用户信息
-                params.put("account", phoneNumber);
-                params.put("mobile",  phoneNumber);
-                params.put("password", passWord);
+                params.put("account", EncryptUrlPara.encrypt(phoneNumber));
+                params.put("mobile",  EncryptUrlPara.encrypt(phoneNumber));
+                params.put("password",EncryptUrlPara.encrypt( passWord));
                 //店铺信息
                  params.put("title",  reg_shop_name.getText());
                  params.put("shopName",  reg_shop_name.getText());
@@ -288,8 +289,8 @@ public class RegisterShopCreateActivity extends BaseActionBarActivity implements
      */
     void loginMain(){
         RequestParams params=new RequestParams();
-        params.put("account",phoneNumber);
-        params.put("password", passWord);
+        params.put("account",EncryptUrlPara.encrypt(phoneNumber));
+        params.put("password", EncryptUrlPara.encrypt(passWord));
         getClient().get(DataUrlContents.SERVER_HOST+DataUrlContents.user_login, params, new BaseJsonHttpResponseHandler<Result<User, ShopCommonInfo>>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<User, ShopCommonInfo> response) {

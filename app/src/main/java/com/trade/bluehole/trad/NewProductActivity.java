@@ -357,11 +357,11 @@ public class NewProductActivity extends BaseActionBarActivity {
         coverName="";
         coverValue="";
         if(coverAdapter.state2.size()>0){
-            System.out.println(coverAdapter.state2);
+           // System.out.println(coverAdapter.state2);
             HashMap<Integer, Boolean> state =coverAdapter.state2;
             //String options="选择的项是:";
             for(int j=0;j<coverAdapter.getCount();j++){
-                System.out.println("state.get("+j+")=="+state.get(j));
+               // System.out.println("state.get("+j+")=="+state.get(j));
                 if(state.get(j)!=null){
                     ShopCoverType coverType=(ShopCoverType)coverAdapter.getItem(j);
                     //String username=coverType.getCoverTypeName();
@@ -390,11 +390,11 @@ public class NewProductActivity extends BaseActionBarActivity {
         labelName = "";
         labelValue = "";
         if(labelAdapter.state.size()>0) {
-            System.out.println(labelAdapter.state);
+           // System.out.println(labelAdapter.state);
             HashMap<Integer, Boolean> state = labelAdapter.state;
             //String options = "选择的项是:";
             for (int j = 0; j < labelAdapter.getCount(); j++) {
-                System.out.println("state.get(" + j + ")==" + state.get(j));
+               // System.out.println("state.get(" + j + ")==" + state.get(j));
                 if (state.get(j) != null) {
                     ProductLabel obj = (ProductLabel) labelAdapter.getItem(j);
                     String username = obj.getLabelName();

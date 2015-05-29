@@ -28,6 +28,7 @@ import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.Result;
+import com.trade.bluehole.trad.util.base.EncryptUrlPara;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.trade.bluehole.trad.util.full.SystemUiHider;
 import com.trade.bluehole.trad.util.model.FirstVisitModel;
@@ -114,8 +115,10 @@ public class FullscreenActivity extends BaseActivity {
         pDialog.show();
         // Toast.makeText(this,"account:"+account.getText()+",password:"+password.getText(),Toast.LENGTH_SHORT).show();
         RequestParams params=new RequestParams();
-        params.put("account",account);
-        params.put("password", password);
+       // params.put("account",account);
+        //params.put("password", password);
+        params.put("account", EncryptUrlPara.encrypt(account));
+        params.put("password", EncryptUrlPara.encrypt(password));
         params.put("md5Flag", "true");
         client.get(DataUrlContents.SERVER_HOST + DataUrlContents.user_login, params, new BaseJsonHttpResponseHandler<Result<User, ShopCommonInfo>>() {
 
