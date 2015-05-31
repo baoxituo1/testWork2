@@ -11,6 +11,7 @@
             android:layout_width="match_parent"
             android:dividerHeight="0dp"
             android:divider="@null"
+            android:background="@color/gainsboro"
             android:layout_height="match_parent"></ListView>
     </com.yalantis.phoenix.PullToRefreshView>
     <!--无数据视图-->

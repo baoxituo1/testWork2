@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="90.0dip"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@id/eshoppings_item_image"
+        android:padding="@dimen/n_padding_normal"
+        android:layout_width="90.0dip"
+        android:layout_height="90.0dip"
+        android:src="@mipmap/logo_launcher"/>
+
+    <View
+        android:layout_width="0.100000024dip"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:layout_marginRight="10.0dip"
+        android:background="@color/HoloLightDivider"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10.0dip">
+
+        <TextView
+            android:id="@id/eshoppings_item_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="10.0dip"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="标题"
+            android:textColor="@color/DarkGray"
+            android:textSize="14.0sp"/>
+
+        <LinearLayout
+            android:id="@id/eshoppings_item_Start_End"
+            android:layout_marginTop="@dimen/n_padding_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/eshoppings_item_title"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@id/eshoppings_item_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="创建时间"
+                android:textSize="12.0sp"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/n_padding_normal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@id/eshoppings_item_on_sale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="熱銷中"
+                    android:textColor="@color/FireBrick"
+                    android:textSize="12.0sp"/>
+                <ImageView
+                    android:layout_marginLeft="@dimen/n_padding_normal_h"
+                    android:id="@id/eshoppings_item_fave"
+                    android:layout_width="20.0dip"
+                    android:layout_height="20.0dip"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ing"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/eshoppings_item_Start_End"
+            android:layout_below="@id/eshoppings_item_title"
+            android:layout_marginLeft="10.0dip"
+            android:layout_toRightOf="@id/eshoppings_item_Start_End"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@id/eshoppings_item_countdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="已開始 剩5天"
+                android:textSize="12.0sp"/>
+
+            <TextView
+                android:id="@id/eshoppings_item_end_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="结束"
+                android:textSize="12.0sp"/>
+        </LinearLayout>
+
+            <TextView
+                android:id="@id/eshoppings_item_category"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
+                android:layout_below="@id/eshoppings_item_Start_End"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="展覽活動"
+                android:textSize="12.0sp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@id/eshoppings_item_eid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+</LinearLayout>

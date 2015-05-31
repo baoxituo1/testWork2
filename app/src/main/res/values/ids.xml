@@ -2,6 +2,7 @@
 <resources>
     <item type="id" name="listView" />
     <item type="id" name="re_to_login" />
+    <item type="id" name="back" />
 
     <item type="id" name="login_top_layout" />
     <item type="id" name="login_user_layout" />
@@ -216,5 +217,19 @@
     <item type="id" name="user_feed_back" />
     <item type="id" name="user_feed_content" />
     <item type="id" name="user_feed_submit" />
+
+    <!--商品活动-->
+    <item type="id" name="eshoppings_item_image" />
+    <item type="id" name="eshoppings_item_title" />
+    <item type="id" name="eshoppings_item_Start_End" />
+    <item type="id" name="eshoppings_item_start" />
+    <item type="id" name="eshoppings_item_on_sale" />
+    <item type="id" name="eshoppings_item_end" />
+    <item type="id" name="eshoppings_item_fave" />
+    <item type="id" name="eshoppings_item_countdown" />
+    <item type="id" name="eshoppings_item_category" />
+    <item type="id" name="eshoppings_item_pageviews" />
+    <item type="id" name="eshoppings_item_eid" />
+    <item type="id" name="eshoppings_item_end_label" />
 
 </resources>

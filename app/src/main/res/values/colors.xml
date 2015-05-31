@@ -195,6 +195,10 @@
     <color name="my_color_4">#ff7268</color>
     <color name="my_color_5">#41bca4</color>
 
+    <color name="HoloLightDivider">#ffd6dae1</color>
+    <color name="DarkGray">#ff323232</color>
+    <color name="FireBrick">#ffb22222</color>
+
     <integer-array name="custom_theme">
         <item>@color/collect_green</item> <!-- a bit darker color of your main color -->
         <item>@color/pocket_color_1</item> <!-- main color of your theme -->
