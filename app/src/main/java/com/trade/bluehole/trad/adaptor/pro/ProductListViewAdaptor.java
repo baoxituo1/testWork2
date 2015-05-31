@@ -32,6 +32,7 @@ import com.trade.bluehole.trad.activity.webview.ProductWebViewActivity;
 import com.trade.bluehole.trad.activity.webview.ProductWebViewActivity_;
 import com.trade.bluehole.trad.activity.webview.WebViewActivity_;
 import com.trade.bluehole.trad.entity.ProductIndexVO;
+import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import java.text.DecimalFormat;
@@ -60,7 +61,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
         context=ctx;
         this.type=type;
         inflater =LayoutInflater.from(context);
-        options = new DisplayImageOptions.Builder()
+       /* options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.drawable.abc_cab_background_internal_bg)
                         // .showImageForEmptyUri(R.drawable.ic_empty)
                         // .showImageOnFail(R.drawable.ic_error)
@@ -68,7 +69,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
                 .cacheOnDisk(true)
                 .considerExifParams(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
+                .build();*/
     }
 
     @Override
@@ -114,29 +115,39 @@ public class ProductListViewAdaptor extends BaseAdapter {
             viewHolder=(HoldObject) convertView.getTag();
         }
         if(!lists.isEmpty()&&lists.size()>position){
-            ImageLoader.getInstance()
+            //设置图片
+            options = new DisplayImageOptions.Builder()
+                    .showImageOnLoading(ImageManager.getImage(obj.getProductName()))
+                    .showImageForEmptyUri(R.mipmap.logo_launcher)
+                    .showImageOnFail(R.mipmap.logo_launcher)
+                    .cacheInMemory(true)
+                    .cacheOnDisk(true)
+                    .considerExifParams(true)
+                    .bitmapConfig(Bitmap.Config.RGB_565)
+                    .build();
+            ImageManager.imageLoader
                     .displayImage(DataUrlContents.IMAGE_HOST + obj.getCoverMiddleImage() + DataUrlContents.img_list_head_img, viewHolder.product_cover_image, options, new SimpleImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String imageUri, View view) {
-                            viewHolder.progressBar.setProgress(0);
-                            viewHolder.progressBar.setVisibility(View.VISIBLE);
-                        }
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+                    viewHolder.progressBar.setProgress(0);
+                    viewHolder.progressBar.setVisibility(View.VISIBLE);
+                }
 
-                        @Override
-                        public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                            viewHolder.progressBar.setVisibility(View.GONE);
-                        }
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                    viewHolder.progressBar.setVisibility(View.GONE);
+                }
 
-                        @Override
-                        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                            viewHolder.progressBar.setVisibility(View.GONE);
-                        }
-                    }, new ImageLoadingProgressListener() {
-                        @Override
-                        public void onProgressUpdate(String imageUri, View view, int current, int total) {
-                            viewHolder.progressBar.setProgress(Math.round(100.0f * current / total));
-                        }
-                    });
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    viewHolder.progressBar.setVisibility(View.GONE);
+                }
+            }, new ImageLoadingProgressListener() {
+                @Override
+                public void onProgressUpdate(String imageUri, View view, int current, int total) {
+                    viewHolder.progressBar.setProgress(Math.round(100.0f * current / total));
+                }
+            });
             //是否显示打折布局 pro_sale_layout
             if(null!=obj.getSalePrice()&&obj.getSalePrice()>0){
                 /**有促销*/

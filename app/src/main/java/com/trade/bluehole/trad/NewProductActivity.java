@@ -62,6 +62,7 @@ import com.trade.bluehole.trad.entity.pro.ProductResultVO;
 import com.trade.bluehole.trad.entity.pro.ShopCoverType;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
+import com.trade.bluehole.trad.util.view.InnerGridView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -128,7 +129,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     @ViewById(R.id.tv)
     TextView mTextView;
     @ViewById(R.id.gridview)
-    GridView gridView;
+    InnerGridView gridView;
     @ViewById
     TextView product_price,product_number,product_cover_name,product_label_name;
     @ViewById
@@ -710,7 +711,7 @@ public class NewProductActivity extends BaseActionBarActivity {
                 dataList.add(new Photo());
             }
             mList.addAll(dataList);
-            reDrawGridLayout();
+           // reDrawGridLayout();
             mAdapter.setmList(mList);
             mAdapter.notifyDataSetChanged();
             //图片区域是否需要重新计算
@@ -833,7 +834,7 @@ public class NewProductActivity extends BaseActionBarActivity {
                 }
                 mAdapter.notifyDataSetChanged();
                 mTextView.setText(getString(R.string.check_length, selctImage));
-                reDrawGridLayout();
+               // reDrawGridLayout();
             }
         }else if(requestCode==PRODUCT_DESIGN_PHOTO&&resultCode == RESULT_OK){//图片优化修改后返回结果
             Integer position= result.getIntExtra(PhotoDesignActivity.IMAGE_URI_POSITION,-1);
@@ -875,8 +876,8 @@ public class NewProductActivity extends BaseActionBarActivity {
         }
     }
 
-    public void shrinkDrawGridLayout(){
-        if(null!=mList&&mList.size()<=4&&!shrinkViewDraw_1){
+    //public void shrinkDrawGridLayout(){
+        /*if(null!=mList&&mList.size()<=4&&!shrinkViewDraw_1){
             LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) gridView.getLayoutParams(); // 取控件mGrid当前的布局参数
             linearParams.height-=common_height-10;
             gridView.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件mGrid2
@@ -887,8 +888,8 @@ public class NewProductActivity extends BaseActionBarActivity {
             linearParams.height-=common_height-15;
             gridView.setLayoutParams(linearParams); // 使设置好的布局参数应用到控件mGrid2
             shrinkViewDraw_2=true;
-        }
-    }
+        }*/
+   // }
 
     /**
      * 实例化弹出窗口

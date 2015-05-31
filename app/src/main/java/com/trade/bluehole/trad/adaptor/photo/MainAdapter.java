@@ -92,7 +92,7 @@ public class MainAdapter extends MyBaseAdapter<Photo>
                     }
                     mList.remove(index);
                     ctx.changeImageSelectNum(mList.size());
-                    ctx.shrinkDrawGridLayout();
+                    //ctx.shrinkDrawGridLayout();
                     MainAdapter.this.notifyDataSetChanged();
                 }
             });

@@ -118,6 +118,14 @@ public class SearchProductActivity extends Activity {
         }
     }
 
+    /**
+     * 点击后退
+     */
+    @Click(R.id.back)
+    void onClickBack(){
+        finish();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
