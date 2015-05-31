@@ -28,9 +28,9 @@ public class DataUrlContents {
     /**
      * 服务器地址
      */
-   // public final  static String SERVER_HOST="http://192.168.1.161:8080/qqt_up/";
-   // public final  static String SERVER_HOST="http://178tb.com/";
-    public final  static String SERVER_HOST="http://miss77.vicp.net/qqt_up/";
+    public final  static String SERVER_HOST="http://192.168.1.161:8080/qqt_up/";
+    //public final  static String SERVER_HOST="http://178tb.com/";
+    //public final  static String SERVER_HOST="http://miss77.vicp.net/qqt_up/";
     //public final  static String SERVER_HOST="http://192.168.1.108:8080/qqt_up/";
     /**
      * 图片服务器地址
@@ -42,6 +42,7 @@ public class DataUrlContents {
     public final  static String user_login="shopjson/userLogin.do";
     /**
      * 读取店铺自定义分类商品数量集合
+     *
      */
     public final  static String load_pro_covers_number_list="shopjson/searchProCovers.do";
     /**
@@ -177,4 +178,8 @@ public class DataUrlContents {
      *用户反馈
      */
     public final  static String save_user_feed_back="shopjson/saveFeedBack.do";
+    /**
+     *删除商品分类
+     */
+    public final  static String del_shop_cover_type="shopjson/delShopCoverType.do";
 }

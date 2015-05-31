@@ -14,7 +14,6 @@ import com.trade.bluehole.trad.R;
 /**
  * 图片加载工具类。<br/>
  * <br/>
- * Created by yanglw on 2014/8/15.
  */
 public class ImageManager
 {

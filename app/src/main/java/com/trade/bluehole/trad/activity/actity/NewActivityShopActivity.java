@@ -180,11 +180,14 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
          * @param source
          */
     private void beginCrop(Uri source) {
-        Uri outputUri = Uri.fromFile(new File(getCacheDir(), "cropped"));
+       // Uri outputUri = Uri.fromFile(new File(getCacheDir(), "cropped"));
        // Crop cp=new Crop(source);
        // cp.withAspect(300,150);
         //cp.output(outputUri).start(this);
-        new Crop(source).output(outputUri).asSquare().start(this);
+       // new Crop(source).output(outputUri).asSquare().start(this);
+
+        Uri destination = Uri.fromFile(new File(getCacheDir(), "cropped"));
+        Crop.of(source, destination).asSquare().start(this);
     }
 
     /**

@@ -826,8 +826,13 @@ public class NewProductActivity extends BaseActionBarActivity {
                     p.id="99911111";
                     mList.add(p);
                 }
+                //提示选中几张图片
+                int selctImage=mAdapter.getCount()-1;
+                if(selctImage<0){
+                    selctImage=0;
+                }
                 mAdapter.notifyDataSetChanged();
-                mTextView.setText(getString(R.string.check_length, mAdapter.getCount()));
+                mTextView.setText(getString(R.string.check_length, selctImage));
                 reDrawGridLayout();
             }
         }else if(requestCode==PRODUCT_DESIGN_PHOTO&&resultCode == RESULT_OK){//图片优化修改后返回结果
@@ -969,8 +974,10 @@ public class NewProductActivity extends BaseActionBarActivity {
     }
 
     private void beginCrop(Uri source) {
-        Uri outputUri = Uri.fromFile(new File(getCacheDir(), "cropped"));
-        new Crop(source).output(outputUri).asSquare().start(this);
+        //Uri outputUri = Uri.fromFile(new File(getCacheDir(), "cropped"));
+        //new Crop(source).output(outputUri).asSquare().start(this);
+        Uri destination = Uri.fromFile(new File(getCacheDir(), "cropped"));
+        Crop.of(source, destination).asSquare().start(this);
     }
 
     private void handleCrop(int resultCode, Intent result) {
@@ -978,6 +985,20 @@ public class NewProductActivity extends BaseActionBarActivity {
             resultView.setImageURI(Crop.getOutput(result));
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /***
+     * 改变选中图片提示
+     * @param number
+     */
+    public void changeImageSelectNum(int number){
+        //提示选中几张图片
+        int selctImage=number-1;
+        if(selctImage<=0){
+            mTextView.setText("请选择图片");
+        }else{
+            mTextView.setText(getString(R.string.check_length, selctImage));
         }
     }
 

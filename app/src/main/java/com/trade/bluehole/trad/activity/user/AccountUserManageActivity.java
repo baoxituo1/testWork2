@@ -37,6 +37,7 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -64,7 +65,8 @@ public class AccountUserManageActivity  extends BaseActionBarActivity {
     EditText commonEdit;//修改 公用编辑框
     private String  temp_userCode;//临时类别更新code，注意清除.
     private Integer temp_position=0;//临时类别更新位置，注意清除.
-
+    //页面进度条
+    SweetAlertDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,9 @@ public class AccountUserManageActivity  extends BaseActionBarActivity {
         user=myApplication.getUser();
         shop = myApplication.getShop();
         temp_userCode=user.getUserCode();
-
+        //初始化等待dialog
+        pDialog = getDialog(this);
+        pDialog.show();
 
         //获取actionbar
         ActionBar actionBar = getSupportActionBar();
@@ -162,7 +166,7 @@ public class AccountUserManageActivity  extends BaseActionBarActivity {
     @Click(R.id.user_age_layout)
     void onEditAgelick(){
         temp_position=8;
-        showEditClick(user_age_label.getText().toString(),base.getAge()==null?"":base.getAge().toString());
+        showEditClick(user_age_label.getText().toString(), base.getAge() == null ? "" : base.getAge().toString());
     }
 
 
@@ -265,11 +269,15 @@ public class AccountUserManageActivity  extends BaseActionBarActivity {
                 if (null != obj) {
                     base = obj;
                     setDataInThread();
+                } else {
+                    pDialog.hide();
+                    Toast.makeText(AccountUserManageActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, UserBase errorResponse) {
+                pDialog.hide();
                 Toast.makeText(AccountUserManageActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
             }
 
@@ -294,18 +302,18 @@ public class AccountUserManageActivity  extends BaseActionBarActivity {
             if(null!=base.getNickName()){//昵称
                 user_nick_label.setTextColor(getResources().getColor(R.color.eggplant));
                 user_nick_text.setTextColor(getResources().getColor(R.color.eggplant));
-                user_nick_text.setText(user.getNickName());
+                user_nick_text.setText(base.getNickName());
             }
             if(null!=base.getRealName()){//真实姓名
                 user_name_label.setTextColor(getResources().getColor(R.color.eggplant));
                 user_name_text.setTextColor(getResources().getColor(R.color.eggplant));
                 user_name_text.setText(base.getRealName());
             }
-            if(null!=base.getRealName()){//真实姓名
+           /* if(null!=base.getRealName()){//真实姓名
                 user_name_label.setTextColor(getResources().getColor(R.color.eggplant));
                 user_name_text.setTextColor(getResources().getColor(R.color.eggplant));
                 user_name_text.setText(base.getRealName());
-            }
+            }*/
             if(null!=base.getMobile()){//手机号
                 user_phone_label.setTextColor(getResources().getColor(R.color.eggplant));
                 user_phone_text.setTextColor(getResources().getColor(R.color.eggplant));
@@ -331,6 +339,12 @@ public class AccountUserManageActivity  extends BaseActionBarActivity {
                 user_sex_text.setTextColor(getResources().getColor(R.color.eggplant));
                 user_sex_text.setText(base.getSex());
             }
+            if(null!=base.getAge()){//性别
+                user_age_label.setTextColor(getResources().getColor(R.color.eggplant));
+                user_age_text.setTextColor(getResources().getColor(R.color.eggplant));
+                user_age_text.setText(base.getAge()+"");
+            }
+            pDialog.hide();
         }
     }
 

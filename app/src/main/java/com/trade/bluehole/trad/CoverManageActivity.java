@@ -253,6 +253,9 @@ public class CoverManageActivity extends BaseActionBarActivity {
         }
     }
 
+    /**
+     * 左右滑动删除选项
+     */
     private class MyOnDismissCallback implements OnDismissCallback {
 
         private final ArrayAdapter<ProductCoverRelVO> mAdapter;
@@ -269,18 +272,16 @@ public class CoverManageActivity extends BaseActionBarActivity {
             for (int position : reverseSortedPositions) {
                 //mAdapter.getLists().remove(position);
                 //mAdapter.notifyDataSetChanged();
-                mAdapter.remove(position);
+                ProductCoverRelVO pro=mAdapter.getItem(position);
+                deleteCover(pro.getCoverCode(),position);
+                //mAdapter.remove(position);
             }
 
             if (mToast != null) {
                 mToast.cancel();
             }
-            mToast = Toast.makeText(
-                    CoverManageActivity.this,
-                    getString(R.string.removed_positions, Arrays.toString(reverseSortedPositions)),
-                    Toast.LENGTH_LONG
-            );
-            mToast.show();
+           // mToast = Toast.makeText( CoverManageActivity.this, getString(R.string.removed_positions, Arrays.toString(reverseSortedPositions)), Toast.LENGTH_LONG);
+           // mToast.show();
         }
     }
 
@@ -533,7 +534,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
             if(null!=coverTypeCode){
                 params.put("coverTypeCode", coverTypeCode);
             }
-            getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.save_shop_cover, params, new BaseJsonHttpResponseHandler<Result<ShopCoverType, String>>() {
+            getClient().post(DataUrlContents.SERVER_HOST + DataUrlContents.save_shop_cover, params, new BaseJsonHttpResponseHandler<Result<ShopCoverType, String>>() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<ShopCoverType, String> response) {
@@ -542,23 +543,26 @@ public class CoverManageActivity extends BaseActionBarActivity {
                         if (response.isSuccess()) {
                             //Toast.makeText(HeaderAnimatorActivity.this, "获取数据成功", Toast.LENGTH_SHORT).show();
                             //把数据添加到全局
-                            ProductCoverRelVO obj=new ProductCoverRelVO();
-                            if(_position!=null){
+                            ProductCoverRelVO obj = new ProductCoverRelVO();
+                            if (_position != null) {
                                 coverList.get(_position).setCoverName(response.getBzseObj().getCoverTypeName());
                                 //coverList.set(_position,response.getBzseObj());
-                            }else{
-                                ShopCoverType cover=response.getBzseObj();
+                            } else {
+                                ShopCoverType cover = response.getBzseObj();
                                 obj.setCoverName(cover.getCoverTypeName());
                                 obj.setCoverCode(cover.getCoverTypeCode());
                                 obj.setShopCode(cover.getShopCode());
                                 obj.setProNumber(0);
                                 coverList.add(obj);
                             }
+                            adapter.clear();
                             adapter.addAll(coverList);
                             adapter.notifyDataSetChanged();
                         } else {
-                            Toast.makeText(CoverManageActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CoverManageActivity.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                         }
+                    } else {
+                        Toast.makeText(CoverManageActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -577,6 +581,50 @@ public class CoverManageActivity extends BaseActionBarActivity {
             });
         }
     }
+
+
+
+
+    /**
+     * 删除分类数据
+     */
+    private void deleteCover(String coverTypeCode,final int position) {
+        pDialog.show();
+        User user = myApplication.getUser();
+        if (user != null && user.getUserCode() != null) {
+            RequestParams params = new RequestParams();
+            params.put("coverTypeCode", coverTypeCode);
+            getClient().get(DataUrlContents.SERVER_HOST + DataUrlContents.del_shop_cover_type, params, new BaseJsonHttpResponseHandler<Result<String, String>>() {
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<String, String> response) {
+                    if (null != response) {
+                        pDialog.hide();
+                        if (response.isSuccess()) {
+                            Toast.makeText(CoverManageActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+                            adapter.remove(position);
+                        } else {
+                            Toast.makeText(CoverManageActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, Result<String, String> errorResponse) {
+                    Toast.makeText(CoverManageActivity.this, R.string.load_data_error, Toast.LENGTH_SHORT).show();
+                    pDialog.hide();
+                }
+
+                @Override
+                protected Result<String, String> parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                    // return new ObjectMapper().readValues(new JsonFactory().createParser(rawJsonData), Result.class).next();
+                    return gson.fromJson(rawJsonData, new TypeToken<Result<String, String>>() {
+                    }.getType());
+                }
+            });
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

@@ -36,7 +36,8 @@ dependencies {
     //下拉动画
     compile 'com.yalantis:phoenix:1.1.0'
     //图片裁剪
-    compile 'com.soundcloud.android:android-crop:0.9.10@aar'
+    //compile 'com.soundcloud.android:android-crop:0.9.10@aar'
+    compile 'com.soundcloud.android:android-crop:1.0.0@aar'
     //photoView
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     //FlatUI 按钮

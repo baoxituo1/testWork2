@@ -94,6 +94,27 @@ public class RegisterManageActivity extends BaseActionBarActivity {
                 Toast.makeText(RegisterManageActivity.this,"请输入手机号",Toast.LENGTH_SHORT).show();
             }
             return true;
+        }else if(id==android.R.id.home){
+            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("确定要放弃注册?")
+                    .setContentText("编辑的内容不会被保存!")
+                    .setConfirmText("是的,退出!")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.cancel();
+                            finish();
+                        }
+                    })
+                    .setCancelText("不退出!")
+                    .showCancelButton(true)
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.cancel();
+                        }
+                    })
+                    .show();
         }
 
         return super.onOptionsItemSelected(item);

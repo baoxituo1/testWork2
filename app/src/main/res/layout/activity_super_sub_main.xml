@@ -8,6 +8,7 @@
         android:background="@color/white"
         android:layout_height="match_parent">
         <LinearLayout
+            android:id="@id/super_left_head"
             android:layout_width="match_parent"
             android:background="@drawable/image1"
             android:padding="@dimen/n_padding_normal"

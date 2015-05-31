@@ -72,6 +72,8 @@
     <item type="id" name="reg_input_pwd_repeated" />
     <item type="id" name="reg_shop_name" />
     <item type="id" name="reg_shop_address" />
+    <item type="id" name="reg_set_shop_address" />
+    <item type="id" name="super_left_head" />
 
 
     <!--super_lunch-->

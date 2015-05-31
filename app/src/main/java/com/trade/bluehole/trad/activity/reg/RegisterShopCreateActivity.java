@@ -46,6 +46,7 @@ import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.RegisterManageActivity;
 import com.trade.bluehole.trad.SuperMainActivity_;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
+import com.trade.bluehole.trad.activity.shop.ShopAddressConfigActivity;
 import com.trade.bluehole.trad.activity.shop.ShopLocationActivity;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.Shop;
@@ -176,6 +177,14 @@ public class RegisterShopCreateActivity extends BaseActionBarActivity implements
         Crop.pickImage(this);
     }
 
+    /**
+     * 当点击设置店铺地址
+     */
+    @Click(R.id.reg_set_shop_address)
+    void onSetShopAddress(){
+        Intent intent=new Intent(this,ShopLocationActivity.class);
+        this.startActivityForResult(intent, 271);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -258,10 +267,16 @@ public class RegisterShopCreateActivity extends BaseActionBarActivity implements
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, Result<User, Shop> response) {
                     pDialog.hide();
-                    Log.d(NewProductActivity.class.getName(), response.toString());
+                    //Log.d(NewProductActivity.class.getName(), response.toString());
                     if (null != response) {
-                        Toast.makeText(RegisterShopCreateActivity.this, "数据提交成功：转到登录主界面", Toast.LENGTH_SHORT).show();
-                        loginMain();
+                        if(response.isSuccess()){
+                            loginMain();
+                            Toast.makeText(RegisterShopCreateActivity.this, "数据提交成功：转到登录主界面", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(RegisterShopCreateActivity.this, response.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(RegisterShopCreateActivity.this, "服务器繁忙,请稍后重试", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -335,6 +350,18 @@ public class RegisterShopCreateActivity extends BaseActionBarActivity implements
             beginCrop(result.getData());
         } else if (requestCode == Crop.REQUEST_CROP) {
             handleCrop(resultCode, result);
+        }else if(requestCode==271&&resultCode == RESULT_OK){
+            if (result != null)
+            {
+                latitude = result.getDoubleExtra(ShopAddressConfigActivity.SHOP_latitude_EXTRA, 0);
+                longitude = result.getDoubleExtra(ShopAddressConfigActivity.SHOP_longitude_EXTRA, 0);
+                provinceName = result.getStringExtra(ShopAddressConfigActivity.SHOP_provinceName_EXTRA);
+                cityName = result.getStringExtra(ShopAddressConfigActivity.SHOP_cityNameName_EXTRA);
+                district = result.getStringExtra(ShopAddressConfigActivity.SHOP_districtName_EXTRA);
+                address = result.getStringExtra(ShopAddressConfigActivity.SHOP_address_EXTRA);
+                reg_shop_address.setText(address);
+                //返回后直接更新
+            }
         }
     }
 
@@ -345,8 +372,10 @@ public class RegisterShopCreateActivity extends BaseActionBarActivity implements
      * @param source
      */
     private void beginCrop(Uri source) {
-        Uri outputUri = Uri.fromFile(new File(getCacheDir(), "cropped"));
-        new Crop(source).output(outputUri).asSquare().start(this);
+        //Uri outputUri = Uri.fromFile(new File(getCacheDir(), "cropped"));
+       // new Crop(source).output(outputUri).asSquare().start(this);
+        Uri destination = Uri.fromFile(new File(getCacheDir(), "cropped"));
+        Crop.of(source, destination).asSquare().start(this);
     }
 
     /**

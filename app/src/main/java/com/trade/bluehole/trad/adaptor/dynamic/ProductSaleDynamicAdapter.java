@@ -129,7 +129,9 @@ public class ProductSaleDynamicAdapter extends BaseAdapter {
             viewHolder.dy_old_price.setText("￥" + obj.getOldPrice());
             viewHolder.dy_old_price.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//添加删除线
             viewHolder.dy_sale_num.setText(df.format((obj.getSalePrice() / obj.getOldPrice()) * 10) + " 折");
-            viewHolder.dy_date.setText(obj.getSaleStartDate() + " 至 " + obj.getSaleEndDate());
+            if(null!=obj.getSaleStartDate()&&null!=obj.getSaleEndDate()){
+                viewHolder.dy_date.setText(obj.getSaleStartDate() + " 至 " + obj.getSaleEndDate());
+            }
             //点击删除状态
             viewHolder.dy_del_data.setOnClickListener(new View.OnClickListener() {
                 @Override
