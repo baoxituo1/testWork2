@@ -79,6 +79,11 @@ public class IndexVO {
      */
     List<Notice> notices ;
 
+    /**
+     * 认证状态
+     */
+    private Integer authenticState;
+
     public List<Notice> getNotices() {
         return notices;
     }
@@ -198,7 +203,13 @@ public class IndexVO {
 	public void setTalkAbout(List<IndexProCommentVO> talkAbout) {
 		this.talkAbout = talkAbout;
 	}
-	
-	
+
+    public Integer getAuthenticState() {
+        return authenticState;
+    }
+
+    public void setAuthenticState(Integer authenticState) {
+        this.authenticState = authenticState;
+    }
 	
 }

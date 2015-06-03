@@ -86,6 +86,9 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
+
+    //EasyCamera
+    //compile 'net.bozho.easycamera:easycamera:0.0.1:aar@aar'
 }
 
 apt {

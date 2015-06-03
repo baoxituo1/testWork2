@@ -247,4 +247,10 @@
     <string name="help_dy_sale">在首页点击“活动”和“折扣”按钮，即可进行相应设置，活动会被推荐到“买家版”动态首页展示。</string>
     <string name="help_cover_index">在首页点击“分类”按钮，即可进行分类的添加修改删除；拖动想要排序的列即可进行排序操作。</string>
     <string name="help_link_us">邮件servers@178tb.com,100919133@qq.com,电话0315-3840206，或者直接反馈给我们，我们会尽快联系您。</string>
+    <string name="title_activity_shop_authentic">上传认证资料</string>
+
+
+
+    <string name="camera_result_ok">使用图片</string>
+    <string name="camera_result_cancel">取消</string>
 </resources>

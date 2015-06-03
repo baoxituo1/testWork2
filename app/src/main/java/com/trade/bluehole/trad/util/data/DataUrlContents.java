@@ -28,8 +28,8 @@ public class DataUrlContents {
     /**
      * 服务器地址
      */
-    //public final  static String SERVER_HOST="http://192.168.1.161:8080/qqt_up/";
-    public final  static String SERVER_HOST="http://178tb.com/";
+    public final  static String SERVER_HOST="http://192.168.1.161:8080/qqt_up/";
+    //public final  static String SERVER_HOST="http://178tb.com/";
     //public final  static String SERVER_HOST="http://miss77.vicp.net/qqt_up/";
     //public final  static String SERVER_HOST="http://192.168.1.108:8080/qqt_up/";
     /**
@@ -182,4 +182,13 @@ public class DataUrlContents {
      *删除商品分类
      */
     public final  static String del_shop_cover_type="shopjson/delShopCoverType.do";
+
+    /**
+     *保存店铺认证
+     */
+    public final  static String save_shop_authentic="shopjson/saveShopAuthentic.do";
+    /**
+     *读取店铺认证
+     */
+    public final  static String load_shop_authentic="shopjson/loadAuthentic.do";
 }

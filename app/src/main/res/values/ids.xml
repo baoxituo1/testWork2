@@ -93,6 +93,9 @@
     <item type="id" name="main_btn_manage_send" />
     <item type="id" name="main_btn_manage_sale" />
     <item type="id" name="main_btn_manage_cover" />
+    <item type="id" name="main_shop_authentic_no" />
+    <item type="id" name="main_shop_authentic_ok" />
+    <item type="id" name="main_shop_authentic_no_text" />
     <!--left menu-->
     <item type="id" name="main_left_home_layout" />
     <item type="id" name="main_left_user_layout" />
@@ -231,5 +234,17 @@
     <item type="id" name="eshoppings_item_pageviews" />
     <item type="id" name="eshoppings_item_eid" />
     <item type="id" name="eshoppings_item_end_label" />
+
+    <!--商铺认证-->
+    <item type="id" name="authentic_top_layout" />
+    <item type="id" name="authentic_add_image_1" />
+    <item type="id" name="authentic_add_image_2" />
+    <item type="id" name="authentic_to_submit" />
+    <item type="id" name="camera_image_to_cancel" />
+    <item type="id" name="camera_image_to_submit" />
+    <item type="id" name="authentic_applyDescribe" />
+    <item type="id" name="authentic_message_layout" />
+    <item type="id" name="authentic_message_title" />
+    <item type="id" name="authentic_message_content" />
 
 </resources>

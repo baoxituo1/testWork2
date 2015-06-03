@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ import com.trade.bluehole.trad.activity.BaseActivity;
 import com.trade.bluehole.trad.activity.feedback.HelpInfoActivity_;
 import com.trade.bluehole.trad.activity.feedback.UserFeedBackActivity_;
 import com.trade.bluehole.trad.activity.msg.MessagePageviewActivity_;
+import com.trade.bluehole.trad.activity.shop.ShopAuthenticActivity_;
 import com.trade.bluehole.trad.activity.user.AccountUserManageActivity_;
 import com.trade.bluehole.trad.activity.webview.WebViewActivity;
 import com.trade.bluehole.trad.activity.webview.WebViewActivity_;
@@ -85,6 +88,8 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerArrowDrawable drawerArrow;
     private boolean drawerArrowColor;
+    //认证状态
+    private int authenticState;
     AsyncHttpClient client = BaseActionBarActivity.getClient();
     Gson gson = new Gson();
     @App
@@ -95,11 +100,13 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
     @ViewById
     InnerListView listView;//站内信和新闻公告
     @ViewById //商品数 浏览量 收藏量 商品收藏 店铺名 账号信息
-            TextView all_pro_number, all_view_number, all_shop_collect_number, all_pro_collect_number, reg_shop_name, account;
+    TextView all_pro_number, all_view_number, all_shop_collect_number, all_pro_collect_number, reg_shop_name, account,main_shop_authentic_no_text;
     @ViewById
     CircleImageView shop_logo_image;//左侧边栏logo
     @ViewById
     LinearLayout main_left_home_layout, main_left_user_layout, main_left_message_layout;
+    @ViewById
+    RelativeLayout main_shop_authentic_ok,main_shop_authentic_no;
 
     //站内信集合列表
     List<IndexProCommentVO> noticeList;
@@ -261,6 +268,25 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
         CoverManageActivity_.intent(this).start();
         // startActivity(intent);
     }
+
+    /**
+     * 点击上传认证资料
+     */
+    @Click(R.id.main_shop_authentic_no)
+    void uploadAuthentiClick(){
+        //authenticState
+        Intent intent= ShopAuthenticActivity_.intent(this).get();
+        startActivityForResult(intent,111);
+       // intent.putExtra("authenticState", authenticState);
+    }
+   /* *//**
+     * 点击查看上传资料
+     *//*
+    @Click(R.id.main_shop_authentic_no)
+    void noAuthentiClick(){
+        //authenticState
+       ShopAuthenticActivity_.intent(this).start();
+    }*/
 
     /*****************
      *               *
@@ -447,7 +473,24 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
                     if (null != obj.getAllshopcollectNum()) {
                         all_pro_collect_number.setText(obj.getAllshopcollectNum() + "");
                     }
-
+                    //店铺认证
+                    if (null != obj.getAuthenticState()) {
+                        authenticState = obj.getAuthenticState();
+                        if (authenticState == 3) {
+                            main_shop_authentic_no.setVisibility(View.GONE);
+                            main_shop_authentic_ok.setVisibility(View.VISIBLE);
+                        } else {
+                            main_shop_authentic_no.setVisibility(View.VISIBLE);
+                            main_shop_authentic_ok.setVisibility(View.GONE);
+                            if (authenticState == 1) {
+                                main_shop_authentic_no_text.setText("申请中");
+                            } else if (authenticState == 2) {
+                                main_shop_authentic_no_text.setText("处理中");
+                            } else if (authenticState == 4) {
+                                main_shop_authentic_no_text.setText("未通过");
+                            }
+                        }
+                    }
                     initDataHead(obj.getNotices());
                     noticeList = obj.getMessAge();
                     adapter.setLists(noticeList);
@@ -468,6 +511,34 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
             }
         });
     }
+
+
+
+
+    /**
+     * 返回结果回调
+     * @param requestCode
+     * @param resultCode
+     * @param result
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent result) {
+        if(requestCode==111&& resultCode == RESULT_OK){
+            authenticState=result.getIntExtra("authState",0);
+            if (authenticState == 1) {
+                main_shop_authentic_no_text.setText("申请中");
+            } else if (authenticState == 2) {
+                main_shop_authentic_no_text.setText("处理中");
+            } else if (authenticState == 3) {
+                main_shop_authentic_no.setVisibility(View.GONE);
+                main_shop_authentic_ok.setVisibility(View.VISIBLE);
+            }else if (authenticState == 4) {
+                main_shop_authentic_no_text.setText("未通过");
+            }
+            main_shop_authentic_no_text.setText("申请中");
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
