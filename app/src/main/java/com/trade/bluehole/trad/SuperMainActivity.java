@@ -45,6 +45,7 @@ import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.BaseActivity;
+import com.trade.bluehole.trad.activity.feedback.CustomActivity_;
 import com.trade.bluehole.trad.activity.feedback.HelpInfoActivity_;
 import com.trade.bluehole.trad.activity.feedback.UserFeedBackActivity_;
 import com.trade.bluehole.trad.activity.msg.MessagePageviewActivity_;
@@ -64,6 +65,10 @@ import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.trade.bluehole.trad.util.model.UserModel;
 import com.trade.bluehole.trad.util.update.UpdateManager;
 import com.trade.bluehole.trad.util.view.InnerListView;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.message.PushAgent;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UpdateConfig;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -118,10 +123,20 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
 
     DisplayImageOptions options;
 
+    //友盟反馈
+    FeedbackAgent agent;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_super_main);
+        //UpdateConfig.setDebug(true);
+        //友盟检查更新
+       /* UmengUpdateAgent.setUpdateAutoPopup(true);
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        UmengUpdateAgent.forceUpdate(this);
+        UmengUpdateAgent.setDeltaUpdate(false);*/
+        UmengUpdateAgent.update(this);
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
         broderService = new SuperActivityReceiver();
         //创建intentFilter
@@ -130,6 +145,9 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
         filter.addAction(UPDATE_ACTION);
         //注册BroadcastReceiver
         registerReceiver(broderService, filter);
+        //友盟反馈
+        agent = new FeedbackAgent(this);
+        agent.sync();
     }
 
 
@@ -357,7 +375,7 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
 
 
     /**
-     * 当点击用户反馈
+     * 当点击帮助
      */
     @Click(R.id.main_help)
     void onClickHelp() {
@@ -369,7 +387,10 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
      */
     @Click(R.id.main_feed_back)
     void onClickFeedBack() {
-        UserFeedBackActivity_.intent(this).start();
+        //FeedbackAgent agent = new FeedbackAgent(this);
+        //agent.startFeedbackActivity();
+       // UserFeedBackActivity_.intent(this).start();
+        CustomActivity_.intent(this).start();
     }
 
     /**
@@ -377,9 +398,11 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
      */
     @Click(R.id.main_update_layout)
     void onClickUpdateVision() {
-        UpdateManager manager = new UpdateManager(SuperMainActivity.this);
+       /* UpdateManager manager = new UpdateManager(SuperMainActivity.this);
         // 检查软件更新
-        manager.checkUpdate(0);
+        manager.checkUpdate(0);*/
+        //友盟检查更新
+        UmengUpdateAgent.update(this);
     }
 
     /**

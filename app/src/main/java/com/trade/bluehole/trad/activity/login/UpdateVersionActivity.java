@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 
 import com.activeandroid.query.Select;
 import com.nineoldandroids.view.animation.AnimatorProxy;
+import com.trade.bluehole.trad.FullscreenActivity_;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.activity.BaseActivity;
 import com.trade.bluehole.trad.util.model.FirstVisitModel;
@@ -56,8 +57,9 @@ public class UpdateVersionActivity extends BaseActivity implements Animator.Anim
         }else{
             setContentView(R.layout.activity_update_version);
             // 检查软件更新
-            UpdateManager manager = new UpdateManager(this);
-            manager.checkUpdate(1);
+           // UpdateManager manager = new UpdateManager(this);
+            //manager.checkUpdate(1);
+            FullscreenActivity_.intent(this).start();
         }
 
     }
@@ -65,8 +67,9 @@ public class UpdateVersionActivity extends BaseActivity implements Animator.Anim
     @UiThread(delay = 6000)
     void doUpdate(){
         // 检查软件更新
-        UpdateManager manager = new UpdateManager(this);
-        manager.checkUpdate(1);
+       // UpdateManager manager = new UpdateManager(this);
+       // manager.checkUpdate(1);
+        FullscreenActivity_.intent(this).start();
     }
 
     private ImageView createNewView(){

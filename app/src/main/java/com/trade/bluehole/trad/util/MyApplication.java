@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
+import com.umeng.fb.push.FeedbackPush;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -84,6 +85,8 @@ public class MyApplication extends com.activeandroid.app.Application {
         OSSLog.enableLog(true);
         OSSClient.setApplicationContext(getApplicationContext()); // 传入应用程序context
         ActiveAndroid.initialize(this);
+        //友盟消息推送
+       // FeedbackPush.getInstance(this).init(false);
     }
 
 

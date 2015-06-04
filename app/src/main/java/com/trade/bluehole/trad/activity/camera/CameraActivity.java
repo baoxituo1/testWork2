@@ -155,7 +155,7 @@ public class CameraActivity extends Activity implements CameraInterface.CamOpenO
 
     private static Bitmap smallBimap(Bitmap bitmap) {
         Matrix matrix = new Matrix();
-        matrix.postScale(0.7f,0.7f); //长和宽放大缩小的比例
+        matrix.postScale(0.5f,0.5f); //长和宽放大缩小的比例
         Bitmap resizeBmp = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
         return resizeBmp;
     }

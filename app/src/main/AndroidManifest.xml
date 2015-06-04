@@ -346,6 +346,21 @@
             android:name=".activity.camera.CameraActivity_"
             android:label="@string/title_activity_shop_authentic" >
         </activity>
+        <!--友盟反馈-->
+        <activity   android:name="com.umeng.fb.ConversationActivity"/>
+        <activity
+            android:name=".activity.feedback.CustomActivity_"
+            android:label="@string/title_activity_user_feed_back" >
+        </activity>
+        <!--友盟自动更新-->
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>
