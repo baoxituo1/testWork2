@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.trade.bluehole.trad.service.ActivityStackMgr;
 import com.trade.bluehole.trad.service.AppManager;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by Administrator on 2015-05-25.
@@ -31,6 +32,14 @@ public class BaseActivity extends Activity{
         super.finish();
     }
 
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     /**
      * 退出应用程序
      */

@@ -233,19 +233,19 @@ public class ShopLocationActivity extends BaseActionBarActivity implements OnCli
 
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         mMapView.onPause();
         super.onPause();
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         mMapView.onResume();
         super.onResume();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         // 退出时销毁定位
         mLocClient.stop();
         // 关闭定位图层

@@ -7,6 +7,7 @@ buildscript {
     }
 }
 
+
 repositories {
     mavenCentral()
     mavenLocal()
@@ -93,6 +94,8 @@ dependencies {
     compile 'com.umeng:fb:5.3.0'
     //友盟 推送
     //compile 'com.umeng:message:1.4.1'
+    //友盟 分析
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }
 
 apt {

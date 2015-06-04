@@ -1,7 +1,6 @@
 package com.trade.bluehole.trad;
 
 import android.app.ActionBar;
-import android.app.Activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,10 +9,11 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -21,7 +21,7 @@ import android.view.View;
 
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,11 +33,8 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
-import com.github.amlcurran.showcaseview.targets.Target;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
 import com.google.gson.Gson;
-import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
 import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
@@ -63,12 +60,16 @@ import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.trade.bluehole.trad.util.model.UserModel;
-import com.trade.bluehole.trad.util.update.UpdateManager;
+
 import com.trade.bluehole.trad.util.view.InnerListView;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.fb.FeedbackAgent;
-import com.umeng.message.PushAgent;
+
 import com.umeng.update.UmengUpdateAgent;
-import com.umeng.update.UpdateConfig;
+import com.umeng.update.UmengUpdateListener;
+
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -91,6 +92,7 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private com.ikimuhendis.ldrawer.ActionBarDrawerToggle mDrawerToggle2;
     private DrawerArrowDrawable drawerArrow;
     private boolean drawerArrowColor;
     //认证状态
@@ -125,18 +127,17 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
 
     //友盟反馈
     FeedbackAgent agent;
+    //工具条
+    Toolbar mToolbar ;
 
+    int sdkLevel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_super_main);
         //UpdateConfig.setDebug(true);
         //友盟检查更新
-       /* UmengUpdateAgent.setUpdateAutoPopup(true);
-        UmengUpdateAgent.setUpdateOnlyWifi(false);
-        UmengUpdateAgent.forceUpdate(this);
-        UmengUpdateAgent.setDeltaUpdate(false);*/
-        UmengUpdateAgent.update(this);
+        initUpdate();
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
         broderService = new SuperActivityReceiver();
         //创建intentFilter
@@ -150,9 +151,47 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
         agent.sync();
     }
 
+    /**
+     * 检查版本更新
+     */
+   void  initUpdate(){
+        UmengUpdateAgent.update(this);
+        UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+            @Override
+            public void onUpdateReturned(
+                    int updateStatus,
+                    UpdateResponse updateInfo) {
+                switch (updateStatus) {
+                    case UpdateStatus.Yes: // has update
+                        Toast.makeText(SuperMainActivity.this, "发现更新", Toast.LENGTH_SHORT).show();
+                        break;
+                    case UpdateStatus.No: // has no
+                        // update
+                        Toast.makeText(SuperMainActivity.this, "没有更新", Toast.LENGTH_SHORT).show();
+                        break;
+                    case UpdateStatus.NoneWifi: // none
+                        // wifi
+                        Toast.makeText(SuperMainActivity.this, "没有wifi连接， 只在wifi下更新", Toast.LENGTH_SHORT).show();
+                        break;
+                    case UpdateStatus.Timeout: // time
+                        // out
+                        Toast.makeText(SuperMainActivity.this, "连接超时", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+
+        });
+    }
+
 
     @AfterViews
     void initData() {
+        //当前版本号
+        String version_sdk = android.os.Build.VERSION.SDK;
+        sdkLevel=Integer.valueOf(version_sdk);
+        mToolbar=new Toolbar(this);
+        mToolbar.setNavigationIcon(R.drawable.menu_check);
+        mToolbar.setLogo(R.drawable.logo_icon);
         user = myApplication.getUser();
         shop = myApplication.getShop();
         //是否有登陆信息
@@ -184,20 +223,38 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
                     return false;
                 }
             };
-            mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, drawerArrow, R.string.drawer_open, R.string.drawer_close) {
+            if(sdkLevel>=19){
+                mDrawerToggle2 = new com.ikimuhendis.ldrawer.ActionBarDrawerToggle(this, mDrawerLayout, drawerArrow, R.string.drawer_open, R.string.drawer_close) {
 
-                public void onDrawerClosed(View view) {
-                    super.onDrawerClosed(view);
-                    invalidateOptionsMenu();
-                }
+                    public void onDrawerClosed(View view) {
+                        super.onDrawerClosed(view);
+                        invalidateOptionsMenu();
+                    }
 
-                public void onDrawerOpened(View drawerView) {
-                    super.onDrawerOpened(drawerView);
-                    invalidateOptionsMenu();
-                }
-            };
-            mDrawerLayout.setDrawerListener(mDrawerToggle);
-            mDrawerToggle.syncState();
+                    public void onDrawerOpened(View drawerView) {
+                        super.onDrawerOpened(drawerView);
+                        invalidateOptionsMenu();
+                    }
+                };
+                mDrawerLayout.setDrawerListener(mDrawerToggle2);
+                mDrawerToggle2.syncState();
+            }else{
+                mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close) {
+
+                    public void onDrawerClosed(View view) {
+                        super.onDrawerClosed(view);
+                        invalidateOptionsMenu();
+                    }
+
+                    public void onDrawerOpened(View drawerView) {
+                        super.onDrawerOpened(drawerView);
+                        invalidateOptionsMenu();
+                    }
+                };
+                mDrawerLayout.setDrawerListener(mDrawerToggle);
+                mDrawerToggle.syncState();
+            }
+
             //实例化adapter
             adapter = new MainNoticeAdapter(this, null);
             //当站内信列表被点击
@@ -383,6 +440,13 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
     }
 
     /**
+     * 当点击联系我们
+     */
+    @Click(R.id.main_link)
+    void onClickLinkUs() {
+        UserFeedBackActivity_.intent(this).start();
+    }
+    /**
      * 当点击用户反馈
      */
     @Click(R.id.main_feed_back)
@@ -557,8 +621,9 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
                 main_shop_authentic_ok.setVisibility(View.VISIBLE);
             }else if (authenticState == 4) {
                 main_shop_authentic_no_text.setText("未通过");
+            }else{
+                main_shop_authentic_no_text.setText("未认证");
             }
-            main_shop_authentic_no_text.setText("申请中");
         }
     }
 
@@ -579,13 +644,30 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // initData();
-        mDrawerToggle.syncState();
+        if(sdkLevel>=19){
+            mDrawerToggle2.syncState();
+        }else{
+            mDrawerToggle.syncState();
+        }
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        if(sdkLevel>=19){
+            mDrawerToggle2.syncState();
+        }else {
+            mDrawerToggle.onConfigurationChanged(newConfig);
+        }
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 
@@ -615,6 +697,7 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
 
     @UiThread
     public void reloadImage(String url){
+        ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + url + DataUrlContents.img_logo_img, shop_logo_image, options);
         ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + url + DataUrlContents.img_logo_img, shop_logo_image, options);
     }
 

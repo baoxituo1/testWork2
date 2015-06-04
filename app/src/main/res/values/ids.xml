@@ -106,6 +106,7 @@
     <item type="id" name="main_update_layout" />
     <item type="id" name="main_feed_back" />
     <item type="id" name="main_help" />
+    <item type="id" name="main_link" />
 
     <!--活动-->
     <item type="id" name="activity_menu_add" />

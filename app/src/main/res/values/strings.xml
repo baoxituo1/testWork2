@@ -138,10 +138,11 @@
     <string name="main_user_message">系统消息</string>
     <string name="main_shop_index">店铺首页</string>
     <string name="main_get_quit">退出</string>
-    <string name="main_user_update">更新</string>
+    <string name="main_user_update">检查更新</string>
     <string name="main_user_setting">设置</string>
-    <string name="main_user_give_back">反馈</string>
-    <string name="main_user_get_help">帮助</string>
+    <string name="main_user_give_back">意见反馈</string>
+    <string name="main_user_get_help">获取帮助</string>
+    <string name="main_user_get_link">联系我们</string>
 
     <!--购物车-->
     <string name="icon_gou_wu_che">&#xf07a;</string>
@@ -231,7 +232,7 @@
     <string name="itemdeleted">继续滑动删除分类</string>
     <string name="taptoundo">点击取消</string>
     <string name="activity_dynamiclistview_header">长按类别可拖动排序.\n左右滑动删除分类.\n</string>
-    <string name="title_activity_user_feed_back">用户反馈</string>
+    <string name="title_activity_user_feed_back">联系我们</string>
     <string name="title_activity_help_info">常见问题</string>
 
 
