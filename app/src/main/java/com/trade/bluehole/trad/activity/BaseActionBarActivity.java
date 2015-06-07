@@ -56,7 +56,6 @@ public class BaseActionBarActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         AppManager.getAppManager().addActivity(this);
-
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
@@ -189,5 +188,12 @@ public class BaseActionBarActivity extends ActionBarActivity {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    /**
+     * 退出应用程序
+     */
+    public void AppExit(Context context) {
+        AppManager.getAppManager().AppExit(context);
     }
 }

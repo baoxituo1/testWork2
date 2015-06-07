@@ -131,6 +131,9 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
     Toolbar mToolbar ;
 
     int sdkLevel;
+
+    //是否首次检查更新
+    boolean firstCheckVersion=true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,8 +169,11 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
                         Toast.makeText(SuperMainActivity.this, "发现更新", Toast.LENGTH_SHORT).show();
                         break;
                     case UpdateStatus.No: // has no
-                        // update
-                        Toast.makeText(SuperMainActivity.this, "没有更新", Toast.LENGTH_SHORT).show();
+                        if(!firstCheckVersion){
+                            // update
+                            Toast.makeText(SuperMainActivity.this, "已经是最新版本", Toast.LENGTH_SHORT).show();
+                        }
+                        firstCheckVersion=false;
                         break;
                     case UpdateStatus.NoneWifi: // none
                         // wifi

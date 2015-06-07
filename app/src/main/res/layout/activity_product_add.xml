@@ -110,6 +110,9 @@
             <LinearLayout
                 android:id="@+id/user_info_layout4"
                 android:layout_below="@id/user_info_layout3"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:padding="@dimen/n_padding_normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -133,6 +136,7 @@
                     android:lines="3"
                     android:maxLines="3"
                     android:gravity="top"
+                    android:imeOptions="actionDone"
                     android:textSize="@dimen/page_body_text_size"
                     app:met_floatingLabel="highlight"
                     app:met_maxCharacters="50"
@@ -267,7 +271,7 @@
                 android:layout_below="@id/user_info_layout5"
                 android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/n_padding_normal_h"
@@ -287,12 +291,12 @@
                         android:layout_height="20dp" />
 
                     <RelativeLayout
+                        android:id="@+id/pro_cover_list_layout"
                         android:layout_weight="0.7"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent">
 
                         <LinearLayout
-                            android:id="@+id/pro_cover_list_layout"
                             android:layout_width="wrap_content"
                             android:layout_alignParentRight="true"
                             android:orientation="horizontal"

@@ -87,8 +87,13 @@ public class ProductClassifyActivity extends BaseActionBarActivity {
 
     @AfterViews
     void initData(){
-       // ActionBar actionBar = getActionBar();
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
        // actionBar.setDisplayHomeAsUpEnabled(true);
+        if(null==coverName||"".equals(coverName)){
+            actionBar.setTitle("未分类");
+        }else{
+            actionBar.setTitle(coverName);
+        }
         user = myApplication.getUser();
         shop = myApplication.getShop();
         adaptor=new ProductListViewAdaptor(this,"class");

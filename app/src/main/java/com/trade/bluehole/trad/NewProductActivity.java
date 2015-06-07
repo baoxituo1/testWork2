@@ -1,5 +1,6 @@
 package com.trade.bluehole.trad;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -141,7 +143,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     @ViewById //商品类别设置
     LinearLayout pro_cover_info_layout;
     @ViewById //商品属性根视图
-    LinearLayout pro_attr_root_layout;
+    LinearLayout pro_attr_root_layout,user_info_layout4;
     @ViewById
     FancyButton btn_pro_up_down,btn_pro_del,change_image_index;
     @ViewById
@@ -351,6 +353,16 @@ public class NewProductActivity extends BaseActionBarActivity {
     void onDeleteProductBtnOnClick(){
         confirmDialog.show();
     }
+
+    @Click(R.id.product_name)
+    void onClickProductName(){
+        // 获取编辑框焦点
+        product_name.requestFocus();
+        //打开软键盘
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
     /**
      * 记录商品类别选择变化
      */
@@ -854,6 +866,7 @@ public class NewProductActivity extends BaseActionBarActivity {
         }else if(requestCode==PRODUCT_ORDER_PHOTO&&resultCode == RESULT_OK){//图片排序后返回结果
             mAdapter.setmList(mList);
             mAdapter.notifyDataSetChanged();
+            user_info_layout4.requestFocus();
         }
     }
 

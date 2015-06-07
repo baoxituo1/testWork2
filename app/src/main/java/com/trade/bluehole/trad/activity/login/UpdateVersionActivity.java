@@ -36,8 +36,8 @@ public class UpdateVersionActivity extends BaseActivity implements Animator.Anim
     ImageView mView;
     int mIndex=0;
     Random mRandom=new Random();
-    int ANIM_COUNT=3;
-    Integer []PHOTO=new Integer[]{R.drawable.index_show1,R.drawable.index_show2,R.drawable.super_luncher_index};
+    int ANIM_COUNT=2;
+    Integer []PHOTO=new Integer[]{R.drawable.index_show1,R.drawable.index_show2};
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -211,8 +211,8 @@ public class CameraInterface {
                 //设置FOCUS_MODE_CONTINUOUS_VIDEO)之后，myParam.set("rotation", 90)失效。
                 //图片竟然不能旋转了，故这里要旋转下
                 Bitmap rotaBitmap = ImageUtil.getRotateBitmap(b, 90.0f);
-                ctx.showResultImage(rotaBitmap);
-                FileUtil.saveBitmap(rotaBitmap);
+                String path=FileUtil.saveBitmap(rotaBitmap);
+                ctx.showResultImage(rotaBitmap, path);
             }
             //再次进入预览
            // mCamera.startPreview();

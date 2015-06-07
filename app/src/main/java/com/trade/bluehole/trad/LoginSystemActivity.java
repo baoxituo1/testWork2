@@ -145,6 +145,30 @@ public class LoginSystemActivity extends BaseActionBarActivity {
     }
 
 
+    private long firstTime = 0;
+
+    /**
+     * 处理后退事件
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            long secondTime = System.currentTimeMillis();
+            if (secondTime - firstTime > 2000) {                                         //如果两次按键时间间隔大于2秒，则不退出
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                firstTime = secondTime;//更新firstTime
+                return true;
+            } else {                                                    //两次按键小于2秒时，退出应用
+                super.AppExit(this);
+            }
+        }
+        return true;
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -156,21 +180,6 @@ public class LoginSystemActivity extends BaseActionBarActivity {
         RegisterManageActivity_.intent(this).start();
     }
 
-    /**
-     * 处理后退事件
-     *
-     * @param keyCode
-     * @param event
-     * @return
-     */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            return true;
-        }
-        return false;
-    }
 }
 
 

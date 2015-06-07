@@ -24,8 +24,8 @@ dependencies {
     compile project(':dynamicgrid')
     compile project(':social_sdk_library_project')
     compile fileTree(dir: 'libs', include: '*.jar')
-    compile 'com.android.support:appcompat-v7:22.0.0'
-    compile 'com.android.support:support-v4:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:support-v4:22.2.0'
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations:$AAVersion"
   // compile 'com.google.android.gms:play-services:7.0.0'
@@ -58,7 +58,7 @@ dependencies {
     //TextDrawable
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     //MaterialEditText 标题提示
-    compile 'com.rengwuxian.materialedittext:library:2.0.3'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
     //dateTimePicker
     compile 'com.github.flavienlaurent.datetimepicker:library:0.0.2'
     //FadingActionBar

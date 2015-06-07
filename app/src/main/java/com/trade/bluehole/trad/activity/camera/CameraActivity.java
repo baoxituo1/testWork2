@@ -38,6 +38,7 @@ public class CameraActivity extends Activity implements CameraInterface.CamOpenO
     ImageButton shutterBtn;
     ImageView show_result_image;
     Bitmap bitmap;
+    String path;
 
     float previewRate = -1f;
     @ViewById
@@ -112,11 +113,12 @@ public class CameraActivity extends Activity implements CameraInterface.CamOpenO
     @Click(R.id.camera_image_to_submit)
     void onSubmitImageClick(){
         Intent intent =new Intent(CameraActivity.this,ShopAuthenticActivity.class);
-        bitmap=smallBimap(bitmap);
-        ByteArrayOutputStream baos=new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte [] bitmapByte =baos.toByteArray();
-        intent.putExtra("bitmap", bitmapByte);
+       // bitmap=smallBimap(bitmap);
+       // ByteArrayOutputStream baos=new ByteArrayOutputStream();
+       // bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+       // byte [] bitmapByte =baos.toByteArray();
+       // intent.putExtra("bitmap", bitmapByte);
+        intent.putExtra("path", path);
         this.setResult(RESULT_OK,intent);
         this.finish();
     }
@@ -142,8 +144,9 @@ public class CameraActivity extends Activity implements CameraInterface.CamOpenO
      * 显示拍照结果
      * @param b
      */
-    public void showResultImage(Bitmap b){
+    public void showResultImage(Bitmap b,String path){
         bitmap=b;
+        this.path=path;
         //隐藏摄像界面
         camera_texture_layout.setVisibility(View.GONE);
         shutterBtn.setVisibility(View.GONE);
