@@ -36,7 +36,7 @@
     <string name="action_settings">设置</string>
     <string name="title_activity_product_manager">商品</string>
     <string name="title_activity_user_info">用户信息</string>
-    <string name="title_activity_product_manage">新增商品</string>
+    <string name="title_activity_product_manage">商品信息</string>
     <string name="title_activity_image_dir">选择目录</string>
     <string name="title_activity_images">选择图片</string>
     <string name="title_activity_images_preview">预览</string>

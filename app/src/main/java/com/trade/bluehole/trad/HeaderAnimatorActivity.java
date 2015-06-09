@@ -1,10 +1,13 @@
 package com.trade.bluehole.trad;
 
+import android.content.BroadcastReceiver;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,6 +65,7 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ItemClick;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.apache.http.Header;
 
@@ -112,7 +116,8 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     EditText coverNameEdit;//修改商品分类 公用编辑框
     private String temp_coverCode;//临时类别更新code，注意清除.
     private Integer temp_position;//临时类别更新位置，注意清除.
-
+    //变更店铺信息广播
+    SuperActivityReceiver broderService;
     //listviw anim
     private static final int INITIAL_DELAY_MILLIS = 500;
     SwingBottomInAnimationAdapter swingBottomInAnimationAdapter;
@@ -161,9 +166,23 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         populateListView();
         //初始化弹出框
         listview.setEmptyView(empty_view);
+        //注册店铺更新广播
+        initShopBorder();
 
     }
 
+    /**
+     * 初始化广播接收
+     */
+    void initShopBorder(){
+        broderService = new SuperActivityReceiver();
+        //创建intentFilter
+        IntentFilter filter = new IntentFilter();
+        //制定BroadCastReceiver监听的Action
+        filter.addAction(SuperMainActivity.UPDATE_ACTION);
+        //注册BroadcastReceiver
+        registerReceiver(broderService, filter);
+    }
 
     /**
      * 实例化弹出窗口 新增
@@ -466,7 +485,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     @Click(R.id.main_head_shop)
     void onSopHeadClick() {
         //暂时注释掉
-        //ShopConfigActivity_.intent(this).start();
+        ShopConfigActivity_.intent(this).start();
     }
 
 
@@ -525,6 +544,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
             //NewProductActivity_.intent(this).start();
             Intent intent = NewProductActivity_.intent(this).get();
             intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA, user.getShopCode());
+            intent.putExtra("from", "items");
             startActivity(intent);
             return true;
         } else if (id == android.R.id.home) {
@@ -766,6 +786,46 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         mController.setShareMedia(circleMedia);
 
         mController.openShare(this, false);
+    }
+
+    @UiThread
+    public void reloadImage(String url){
+        ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + url + DataUrlContents.img_logo_img, shop_logo_image, ImageManager.options);
+        ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + url + DataUrlContents.img_logo_img, shop_logo_image, ImageManager.options);
+    }
+    /**
+     * 接收广播
+     */
+    public class SuperActivityReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String fileName = intent.getStringExtra("fileName");
+            String _shopName = intent.getStringExtra("shopName");
+           // Toast.makeText(HeaderAnimatorActivity.this, "接收到广播header,fileName:" + fileName, Toast.LENGTH_SHORT).show();
+            if(null!=fileName){
+                reloadImage(fileName);
+            }else if(null!=_shopName){
+                shopName.setText(_shopName);
+            }
+        }
+    }
+
+    /**
+     * 处理后退事件
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(keyCode == KeyEvent.KEYCODE_BACK ){
+            SuperMainActivity_.intent(this).start();
+            finish();
+            return true;
+        }
+        return false;
     }
 
     @Override

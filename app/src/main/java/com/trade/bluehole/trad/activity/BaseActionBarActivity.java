@@ -69,8 +69,8 @@ public class BaseActionBarActivity extends ActionBarActivity {
         mController.getConfig().setPlatformOrder(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QZONE,
                 SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.TENCENT, SHARE_MEDIA.RENREN, SHARE_MEDIA.YIXIN);*/
         mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
-                SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,SHARE_MEDIA.SINA,SHARE_MEDIA.TENCENT, SHARE_MEDIA.DOUBAN,
-                SHARE_MEDIA.RENREN, SHARE_MEDIA.YIXIN);
+                SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE,SHARE_MEDIA.SINA,SHARE_MEDIA.TENCENT/*, SHARE_MEDIA.DOUBAN,
+                SHARE_MEDIA.RENREN, SHARE_MEDIA.YIXIN*/);
         if(null!=shop&&null!=user){
             // 添加QQ支持, 并且设置QQ分享内容的target url
             UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);

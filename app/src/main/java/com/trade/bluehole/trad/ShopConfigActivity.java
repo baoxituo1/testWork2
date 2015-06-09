@@ -44,6 +44,7 @@ import com.trade.bluehole.trad.activity.shop.ShopSloganConfigActivity_;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.photo.Photo;
 import com.trade.bluehole.trad.entity.pro.ProductResultVO;
+import com.trade.bluehole.trad.entity.shop.Shop;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
@@ -82,6 +83,7 @@ public class ShopConfigActivity extends BaseActionBarActivity {
     String shopLogoFleName = null;
     ShopCommonInfo shopInfo = null;
     User user = null;
+    ShopCommonInfo shop = null;
     //页面进度条
     SweetAlertDialog pDialog;
     @App
@@ -102,6 +104,7 @@ public class ShopConfigActivity extends BaseActionBarActivity {
     void initData() {
         //获取用户
         user = myapplication.getUser();
+        shop=myapplication.getShop();
         //加载数据
         if (null != user) {
             loadServerData();
@@ -433,12 +436,16 @@ public class ShopConfigActivity extends BaseActionBarActivity {
                             shopName.setText(obj.getTitle());
                             //发送广播通知改变头像
                             Intent sendIntent=new Intent(SuperMainActivity.UPDATE_ACTION);
-                            sendIntent.putExtra("shopName",obj.getTitle());
+                            sendIntent.putExtra("shopName", obj.getTitle());
                             sendBroadcast(sendIntent);
                         } else if (null != obj.getSlogan() && !"".equals(obj.getSlogan())) {
                             message = "修改店铺公告!";
                             shopSlogan.setText(obj.getSlogan());
                         }
+                        //更新session
+                        shop.setShopLogo(obj.getShopLogo());
+                        myapplication.setShop(shop);
+                        //弹出提示
                         new SweetAlertDialog(ShopConfigActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                                 .setTitleText("同步成功!")
                                 .setContentText(message)

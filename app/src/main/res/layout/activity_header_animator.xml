@@ -87,9 +87,19 @@
                     android:layout_width="96dp"
                     android:layout_height="96dp"
                     android:layout_centerInParent="true"
+                    android:background="@drawable/logo_icon"
                     app:border_width="2dp"
                     app:border_color="#FF000000"/>
 
+                <ImageView
+                    android:paddingBottom="@dimen/n_padding_normal_h"
+                    android:paddingRight="@dimen/n_padding_normal_h"
+                    android:visibility="gone"
+                    android:src="@drawable/crown"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignTop="@id/shop_logo_image"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"/>
                 <TextView
                     android:id="@+id/shopName"
                     android:text=""
@@ -101,6 +111,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_action_next_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
             </RelativeLayout>
 
             <LinearLayout
@@ -131,7 +147,7 @@
                             android:layout_height="@dimen/user_edit_ioc_height_width" />
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="预览"
+                            android:text="预览店铺"
                             android:textSize="@dimen/sample_text_size"
                             android:layout_marginTop="@dimen/n_padding_normal_s"
                             android:textColor="@color/black"
@@ -197,7 +213,7 @@
                             android:layout_height="@dimen/user_edit_ioc_height_width" />
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="分享"
+                            android:text="分享店铺"
                             android:textSize="@dimen/sample_text_size"
                             android:layout_marginTop="@dimen/n_padding_normal_s"
                             android:textColor="@color/black"

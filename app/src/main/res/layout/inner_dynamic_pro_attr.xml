@@ -51,7 +51,7 @@
                     app:met_floatingLabel="highlight"
                     app:met_hideUnderline="true"
                     app:met_floatingLabelText="商品型号"
-                    android:hint="输入型号"/>
+                    android:hint="例：颜色"/>
             </LinearLayout>
             <View
                 android:layout_width="fill_parent"
@@ -80,7 +80,7 @@
                     app:met_floatingLabel="highlight"
                     app:met_hideUnderline="true"
                     app:met_floatingLabelText="商品参数"
-                    android:hint="输入内容"/>
+                    android:hint="红色 紫色"/>
             </LinearLayout>
 
         </LinearLayout>

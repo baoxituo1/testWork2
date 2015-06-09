@@ -40,6 +40,8 @@
 
                     <TextView
                         android:id="@+id/tv"
+                        android:focusableInTouchMode="true"
+                        android:focusable="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
@@ -110,8 +112,6 @@
             <LinearLayout
                 android:id="@+id/user_info_layout4"
                 android:layout_below="@id/user_info_layout3"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:padding="@dimen/n_padding_normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -137,6 +137,7 @@
                     android:maxLines="3"
                     android:gravity="top"
                     android:imeOptions="actionDone"
+                    android:maxLength="50"
                     android:textSize="@dimen/page_body_text_size"
                     app:met_floatingLabel="highlight"
                     app:met_maxCharacters="50"
@@ -173,6 +174,7 @@
                         android:layout_weight="0.7"
                         android:layout_width="0dp"
                         android:numeric="decimal"
+                        android:maxLength="8"
                         android:layout_height="@dimen/pro_inout_text_height"
                         android:hint="请输入商品价格"
                         android:background="@drawable/rounded_edittext"
@@ -206,6 +208,7 @@
                         android:layout_weight="0.7"
                         android:layout_width="0dp"
                         android:numeric="integer"
+                        android:maxLength="5"
                         android:layout_height="@dimen/pro_inout_text_height"
                         android:background="@drawable/rounded_edittext"
                         android:hint="请输入商品库存"
@@ -271,7 +274,7 @@
                 android:layout_below="@id/user_info_layout5"
                 android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/n_padding_normal_h"

@@ -1,6 +1,7 @@
 package com.trade.bluehole.trad;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -231,6 +232,22 @@ public class DynamicManageActivity extends BaseActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 处理后退事件
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(keyCode == KeyEvent.KEYCODE_BACK ){
+            SuperMainActivity_.intent(this).start();
+            finish();
+            return true;
+        }
+        return false;
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

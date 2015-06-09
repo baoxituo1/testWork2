@@ -134,7 +134,6 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
          */
         @Click(R.id.addImage)
             void onClickAddImage(){
-            addImage.setImageDrawable(null);
             Crop.pickImage(this);
          }
         /**
@@ -199,6 +198,7 @@ public class NewActivityShopActivity extends BaseActionBarActivity {
     private void handleCrop(int resultCode, Intent result) {
         ContentResolver resolver = getContentResolver();
         if (resultCode == RESULT_OK) {
+            addImage.setImageDrawable(null);
             Uri uri=Crop.getOutput(result);
             addImage.setImageURI(uri);
             addImage.setScaleType(ImageView.ScaleType.CENTER_CROP);

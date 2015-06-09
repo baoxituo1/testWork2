@@ -602,6 +602,7 @@ public class CoverManageActivity extends BaseActionBarActivity {
                         pDialog.hide();
                         if (response.isSuccess()) {
                             Toast.makeText(CoverManageActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+                            coverList.remove(position);
                             adapter.remove(position);
                         } else {
                             Toast.makeText(CoverManageActivity.this, "获取数据失败", Toast.LENGTH_SHORT).show();

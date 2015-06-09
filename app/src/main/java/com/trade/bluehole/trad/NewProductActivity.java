@@ -153,6 +153,8 @@ public class NewProductActivity extends BaseActionBarActivity {
     String proCode;
     @Extra(SHOP_CODE_EXTRA)
     String shopCode;
+    @Extra("from")
+    String form;//来源
 
     @AfterViews
     void initData(){
@@ -192,6 +194,16 @@ public class NewProductActivity extends BaseActionBarActivity {
         });
         //实例化弹出窗口
         initDialog();
+        //顶部焦点
+        getFocus();
+    }
+
+    /**
+     * 顶部获取焦点
+     */
+    @UiThread(delay = 1000)
+    void getFocus(){
+        mTextView.requestFocus();
     }
 
     /**
@@ -354,14 +366,14 @@ public class NewProductActivity extends BaseActionBarActivity {
         confirmDialog.show();
     }
 
-    @Click(R.id.product_name)
+   /* @Click(R.id.product_name)
     void onClickProductName(){
         // 获取编辑框焦点
-        product_name.requestFocus();
+        //product_name.requestFocus();
         //打开软键盘
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-    }
+        //InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        //imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+    }*/
 
     /**
      * 记录商品类别选择变化
@@ -810,9 +822,11 @@ public class NewProductActivity extends BaseActionBarActivity {
             if (delFlag == 1) {
                 Toast.makeText(NewProductActivity.this, "商品已下架", Toast.LENGTH_SHORT).show();
                 btn_pro_up_down.setText(getResources().getString(R.string.pro_inner_sale));
+                delFlag=0;
             } else if (delFlag == 0) {
                 Toast.makeText(NewProductActivity.this, "商品已上架", Toast.LENGTH_SHORT).show();
                 btn_pro_up_down.setText(getResources().getString(R.string.pro_out_sale));
+                delFlag=1;
             }
          }
     }
@@ -866,7 +880,7 @@ public class NewProductActivity extends BaseActionBarActivity {
         }else if(requestCode==PRODUCT_ORDER_PHOTO&&resultCode == RESULT_OK){//图片排序后返回结果
             mAdapter.setmList(mList);
             mAdapter.notifyDataSetChanged();
-            user_info_layout4.requestFocus();
+           // user_info_layout4.requestFocus();
         }
     }
 
@@ -965,7 +979,7 @@ public class NewProductActivity extends BaseActionBarActivity {
                         public void onClick(SweetAlertDialog sDialog) {
                             sDialog.cancel();
                             //点击后退跳转到 主页
-                            if(proCode!=null&&!"".equals(proCode)){
+                            if((proCode!=null&&!"".equals(proCode))||"items".equals(form)){
                                 HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
                             }else{
                                 SuperMainActivity_.intent(NewProductActivity.this).start();
@@ -1035,7 +1049,7 @@ public class NewProductActivity extends BaseActionBarActivity {
                         public void onClick(SweetAlertDialog sDialog) {
                             sDialog.cancel();
                             //点击后退跳转到 主页
-                            if(proCode!=null&&!"".equals(proCode)){
+                            if((proCode!=null&&!"".equals(proCode))||"items".equals(form)){
                                HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
                             }else{
                                 SuperMainActivity_.intent(NewProductActivity.this).start();

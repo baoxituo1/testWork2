@@ -10,6 +10,8 @@
         android:id="@+id/shopName"
         android:layout_width="match_parent"
         android:hint="店铺名称"
+        android:maxLength="20"
+        android:textSize="@dimen/small_text_size"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/shopNameDoneBtn"

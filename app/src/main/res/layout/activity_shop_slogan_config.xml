@@ -11,10 +11,12 @@
         android:layout_width="match_parent"
         android:gravity="top"
         android:padding="5dp"
+        android:maxLength="30"
+        android:textSize="@dimen/small_text_size"
         android:hint="店铺公告"
         android:textColor="@color/eggplant"
         android:background="#ffffff"
-        android:lines="3"
+        android:lines="2"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/shopSloganDoneBtn"

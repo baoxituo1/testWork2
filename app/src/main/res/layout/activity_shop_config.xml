@@ -58,6 +58,7 @@
                         android:id="@+id/shopLogoImage"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
+                        android:src="@drawable/logo_icon"
                         android:layout_centerInParent="true"
                         app:border_width="2dp"
                         app:border_color="#FF000000"/>
@@ -106,7 +107,7 @@
                         android:id="@+id/shopName"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="丽影伊人   >"
+                        android:text="未填写   >"
                         android:textColor="@color/grey_light" />
                 </LinearLayout>
 
@@ -221,7 +222,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
+                    android:layout_weight="0.3"
                     android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:orientation="vertical">
@@ -237,12 +238,13 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.7"
                     android:layout_gravity="center_vertical"
                     android:gravity="right"
                     android:orientation="vertical">
 
                     <TextView
+                        android:textSize="@dimen/sample_text_size"
                         android:id="@+id/shopAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"

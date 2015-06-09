@@ -305,6 +305,7 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
     void onClickAddProBtn() {
         Intent intent = NewProductActivity_.intent(this).get();
         intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA, user.getShopCode());
+        intent.putExtra("from", "home");
         startActivity(intent);
     }
 

@@ -54,6 +54,7 @@
                         android:id="@+id/provinceShopName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:maxLength="10"
                         android:layout_marginLeft="@dimen/n_padding_normal_b"
                         android:drawableBottom="@color/white"
                         android:background="@drawable/rounded_edittext"
@@ -105,6 +106,7 @@
                         android:id="@+id/cityName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:maxLength="10"
                         android:layout_marginLeft="@dimen/n_padding_normal_b"
                         android:drawableBottom="@color/white"
                         android:background="@drawable/rounded_edittext"
@@ -157,6 +159,7 @@
                         android:id="@+id/districtName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:maxLength="10"
                         android:layout_marginLeft="@dimen/n_padding_normal_b"
                         android:drawableBottom="@color/white"
                         android:background="@drawable/rounded_edittext"
@@ -183,7 +186,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
+                    android:layout_weight="0.3"
                     android:layout_gravity="center_vertical"
                     android:gravity="left"
                     android:orientation="vertical">
@@ -200,7 +203,7 @@
                     android:id="@+id/addressNameLayout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.7"
                     android:gravity="left"
                     android:orientation="vertical">
 
@@ -208,10 +211,11 @@
                         android:id="@+id/addressName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:maxLength="100"
                         android:layout_marginLeft="@dimen/n_padding_normal_b"
                         android:drawableBottom="@color/white"
                         android:background="@drawable/rounded_edittext"
-                        android:textSize="@dimen/small_text_size"
+                        android:textSize="@dimen/sample_text_size"
                         android:hint="填写详细地址"
                         android:gravity="center_vertical"
                         android:singleLine="true" />

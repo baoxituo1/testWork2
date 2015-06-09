@@ -32,8 +32,8 @@
             <LinearLayout
                 android:padding="@dimen/n_padding_normal"
                 android:orientation="vertical"
-                android:layout_weight="10"
-                android:layout_width="wrap_content"
+                android:layout_weight="9"
+                android:layout_width="0dp"
                 android:layout_height="match_parent">
                 <TextView
                     android:text="实体店铺认证"
@@ -55,10 +55,10 @@
                 android:id="@id/main_shop_authentic_no"
                 android:visibility="visible"
                 android:background="@drawable/back_ground_click_note"
-                android:layout_weight="2"
-                android:layout_width="wrap_content"
+                android:layout_weight="3"
+                android:layout_width="0dp"
                 android:layout_height="match_parent">
-                <TextView
+               <TextView
                     android:id="@id/main_shop_authentic_no_text"
                     android:text="未认证"
                     android:textColor="@color/white"
@@ -71,17 +71,16 @@
             <RelativeLayout
                 android:visibility="gone"
                 android:id="@id/main_shop_authentic_ok"
-                android:layout_weight="2"
-                android:layout_width="wrap_content"
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:padding="@dimen/n_padding_normal"
                 android:layout_height="match_parent">
-                <TextView
-                    android:text="已认证"
-                    android:textColor="@color/white"
-                    android:gravity="center_vertical"
-                    android:drawableLeft="@drawable/del_cb_c"
+                <ImageView
+                    android:src="@drawable/authentic_done"
                     android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:scaleType="centerInside"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
             </RelativeLayout>
 
         </LinearLayout>
