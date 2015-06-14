@@ -53,6 +53,7 @@ import com.trade.bluehole.trad.adaptor.photo.MainAdapter;
 import com.trade.bluehole.trad.adaptor.pro.ProductLabelAdapter;
 import com.trade.bluehole.trad.entity.Product;
 import com.trade.bluehole.trad.entity.ProductBase;
+import com.trade.bluehole.trad.entity.ProductIndexVO;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.photo.Photo;
 import com.trade.bluehole.trad.entity.pro.ProductAttribute;
@@ -155,6 +156,8 @@ public class NewProductActivity extends BaseActionBarActivity {
     String shopCode;
     @Extra("from")
     String form;//来源
+    @Extra("position")
+    int position;//如果修改的化操作的位置
 
     @AfterViews
     void initData(){
@@ -600,11 +603,11 @@ public class NewProductActivity extends BaseActionBarActivity {
         params.put("imageNames",imageNames);
 
         Log.d("NewProductActivity", "imageUrls:" + imageNames);
-        getClient().post(DataUrlContents.SERVER_HOST + methodName, params, new BaseJsonHttpResponseHandler<String>() {
+        getClient().post(DataUrlContents.SERVER_HOST + methodName, params, new BaseJsonHttpResponseHandler<ProductIndexVO>() {
 
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, ProductIndexVO response) {
                 pDialog.hide();
                 if (null != response) {
                     // Toast.makeText(NewProductActivity.this, response, Toast.LENGTH_SHORT).show();
@@ -614,21 +617,32 @@ public class NewProductActivity extends BaseActionBarActivity {
                     }else{
                         Toast.makeText(getApplicationContext(), "提交成功", Toast.LENGTH_SHORT).show();
                     }
-                    HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
+                    //HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
                     mList.clear();
+                    //finish();
+                    if("items".equals(form)){
+                        //返回结果 通知变更
+                        Intent intent=HeaderAnimatorActivity_.intent(NewProductActivity.this).get();
+                        intent.putExtra("product",response);//商品实体
+                        intent.putExtra("position",position);//商品位置
+                        intent.putExtra("delFlag",delFlag);//商品状态
+                        setResult(RESULT_OK,intent);
+                    }else if("home".equals(form)){
+                        HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
+                    }
                     finish();
                 }
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, ProductIndexVO errorResponse) {
                 Toast.makeText(NewProductActivity.this, "请求失败:" + statusCode, Toast.LENGTH_SHORT).show();
                 pDialog.hide();
             }
 
             @Override
-            protected String parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
-                return rawJsonData;
+            protected ProductIndexVO parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                return gson.fromJson(rawJsonData, ProductIndexVO.class);
             }
         });
 
@@ -671,7 +685,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     /**
      * 更新商品状态 上架、下架、删除
      */
-    void updateProductStateData(String type,Integer state){
+    void updateProductStateData(String type, final Integer state){
         pDialog.show();
         RequestParams params=new RequestParams();
         params.put("productCode", proCode);
@@ -685,7 +699,7 @@ public class NewProductActivity extends BaseActionBarActivity {
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
                 //Log.d(NewProductActivity.class.getName(), response.toString());
                 pDialog.hide();
-                doInProUiThread(response);
+                doInProUiThread(response,state);
             }
 
             @Override
@@ -747,7 +761,7 @@ public class NewProductActivity extends BaseActionBarActivity {
             }*/
         }
         //组装扩展标签
-        inflaterProAttr(obj.getAttrs());
+       // inflaterProAttr(obj.getAttrs());
 
 
 
@@ -813,10 +827,15 @@ public class NewProductActivity extends BaseActionBarActivity {
      * @param obj
      */
     @UiThread
-    void doInProUiThread(String obj) {
+    void doInProUiThread(String obj,int state) {
         if ("2".equals(obj)) {
             Toast.makeText(NewProductActivity.this, "商品已删除", Toast.LENGTH_SHORT).show();
-            HeaderAnimatorActivity_.intent(this).start();
+            Intent intent=HeaderAnimatorActivity_.intent(this).get();
+            //删除商品
+            intent.putExtra("delPro", HeaderAnimatorActivity.OperType.REMOVE.ordinal());
+            intent.putExtra("position",position);
+            //HeaderAnimatorActivity_.intent(this).start();
+            setResult(RESULT_OK,intent);
             finish();
         } else {
             if (delFlag == 1) {
@@ -980,7 +999,14 @@ public class NewProductActivity extends BaseActionBarActivity {
                             sDialog.cancel();
                             //点击后退跳转到 主页
                             if((proCode!=null&&!"".equals(proCode))||"items".equals(form)){
-                                HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
+                                //HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
+                               // finish();
+                                Intent intent=HeaderAnimatorActivity_.intent(NewProductActivity.this).get();
+                                //intent.putExtra("product",response);//商品实体
+                                intent.putExtra("position",position);//商品位置
+                                intent.putExtra("delFlag",delFlag);//商品状态
+                                setResult(RESULT_OK, intent);
+                                finish();
                             }else{
                                 SuperMainActivity_.intent(NewProductActivity.this).start();
                             }
@@ -1050,7 +1076,13 @@ public class NewProductActivity extends BaseActionBarActivity {
                             sDialog.cancel();
                             //点击后退跳转到 主页
                             if((proCode!=null&&!"".equals(proCode))||"items".equals(form)){
-                               HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
+                              // HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
+                                Intent intent=HeaderAnimatorActivity_.intent(NewProductActivity.this).get();
+                                //intent.putExtra("product",response);//商品实体
+                                intent.putExtra("position",position);//商品位置
+                                intent.putExtra("delFlag",delFlag);//商品状态
+                                setResult(RESULT_OK, intent);
+                                finish();
                             }else{
                                 SuperMainActivity_.intent(NewProductActivity.this).start();
                             }

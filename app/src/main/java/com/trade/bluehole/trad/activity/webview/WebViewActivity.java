@@ -14,9 +14,11 @@ import android.webkit.WebViewClient;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.manuelpeinado.fadingactionbar.extras.actionbarcompat.FadingActionBarHelper;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
@@ -35,6 +37,8 @@ public class WebViewActivity extends ActionBarActivity {
     WebView webView;
     @ViewById
     NumberProgressBar pb;
+    @App
+    MyApplication myApplication;
 
     @AfterViews
     void initData(){
@@ -52,7 +56,7 @@ public class WebViewActivity extends ActionBarActivity {
         //webView.setWebViewClient(new WebViewClient());
         ws.setJavaScriptEnabled(true);
         if("0".equals(state)){//新闻
-            webView.loadUrl(DataUrlContents.SERVER_HOST+DataUrlContents.load_notice_for_web_view+code);
+            webView.loadUrl(DataUrlContents.SERVER_HOST+DataUrlContents.load_notice_for_web_view+code+"&shopCode="+ myApplication.getShop().getShopCode());
         }else{//站内信
             webView.loadUrl(DataUrlContents.SERVER_HOST+DataUrlContents.load_letter_for_web_view+code);
         }

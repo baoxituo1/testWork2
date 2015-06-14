@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.trade.bluehole.trad"
-    android:versionCode="9"
-    android:versionName="0.1.5" >
+    android:versionCode="12"
+    android:versionName="0.1.8" >
 
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />

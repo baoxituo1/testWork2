@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,6 +50,7 @@ import com.trade.bluehole.trad.util.view.MyViewHold;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.QZoneShareContent;
 import com.umeng.socialize.media.SinaShareContent;
 import com.umeng.socialize.media.TencentWbShareContent;
 import com.umeng.socialize.media.UMImage;
@@ -127,20 +129,26 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     ShopCommonInfo shop;
     User user;
 
-   /* @Override
+    /**
+     * 操作类型
+     */
+    public enum OperType {
+        ADD, REMOVE, UPDATE, UP_ITEM, DOWN_ITEM
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_header_animator);
-        mListView = (ListView) this.findViewById(R.id.listview);
-        initData();
-    }*/
+        broderService = new SuperActivityReceiver();
+    }
 
     @AfterViews
     void initData() {
         user = myApplication.getUser();
         shop = myApplication.getShop();
         initDialog();
-      //  addQZoneQQPlatform();
+        //  addQZoneQQPlatform();
         //list 动画
         adaptor = new ProductListViewAdaptor(this, "main");
         swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(adaptor);
@@ -167,15 +175,15 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         //初始化弹出框
         listview.setEmptyView(empty_view);
         //注册店铺更新广播
-        initShopBorder();
+        //initShopBorder();
 
     }
 
     /**
      * 初始化广播接收
      */
-    void initShopBorder(){
-        broderService = new SuperActivityReceiver();
+    void initShopBorder() {
+        // broderService = new SuperActivityReceiver();
         //创建intentFilter
         IntentFilter filter = new IntentFilter();
         //制定BroadCastReceiver监听的Action
@@ -230,6 +238,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
                     intent.putExtra(ProductClassifyActivity.USER_CODE_EXTRA, user.getUserCode());
                     intent.putExtra(ProductClassifyActivity.COVER_CODE_EXTRA, pcr.getCoverCode());
                     intent.putExtra(ProductClassifyActivity.COVER_NAME_EXTRA, pcr.getCoverName());
+                    intent.putExtra("", new ProductCoverRelVO());
                     startActivity(intent);
                 } else {
                     Toast.makeText(HeaderAnimatorActivity.this, "该分类目前没有数据", Toast.LENGTH_SHORT).show();
@@ -289,8 +298,16 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         // 添加QZone平台
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
         qZoneSsoHandler.addToSocialSDK();
+        // 设置QQ空间分享内容
+        QZoneShareContent qzone = new QZoneShareContent();
+        qzone.setShareContent(shop.getSlogan());
+        qzone.setTargetUrl(_targetUrl);
+        qzone.setTitle(shop.getTitle());
+        qzone.setShareMedia(new UMImage(this, DataUrlContents.IMAGE_HOST + shop.getShopLogo() + DataUrlContents.img_logo_img));
+//        qzone.setShareMedia(uMusic);
+        mController.setShareMedia(qzone);
 
-        UMImage urlImage = new UMImage(this,DataUrlContents.IMAGE_HOST + shop.getShopLogo() + DataUrlContents.img_logo_img);
+        UMImage urlImage = new UMImage(this, DataUrlContents.IMAGE_HOST + shop.getShopLogo() + DataUrlContents.img_logo_img);
 
         //设置微信好友分享内容
         WeiXinShareContent weixinContent = new WeiXinShareContent();
@@ -545,7 +562,9 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
             Intent intent = NewProductActivity_.intent(this).get();
             intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA, user.getShopCode());
             intent.putExtra("from", "items");
-            startActivity(intent);
+            //startActivity(intent);
+            //启动新增 并标记为新增
+            startActivityForResult(intent, OperType.ADD.ordinal());
             return true;
         } else if (id == android.R.id.home) {
             SuperMainActivity_.intent(this).start();
@@ -721,9 +740,53 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     }
 
 
+    /**
+     * 接收返回结果
+     * @param requestCode 请求代码
+     * @param resultCode 结果代码
+     * @param data 数据
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //新增数据
+        if (resultCode == RESULT_OK && requestCode == OperType.ADD.ordinal()) {
+            ProductIndexVO obj = (ProductIndexVO) data.getSerializableExtra("product");
+            if(null!=obj&&obj.getProductCode()!=null){
+                adaptor.getLists().add(0, obj);
+                adaptor.notifyDataSetChanged();
+            }
+        //修改 删除 上下架
+        }else  if (resultCode == RESULT_OK && requestCode == OperType.UPDATE.ordinal()) {
+            ProductIndexVO obj = (ProductIndexVO) data.getSerializableExtra("product");
+            int local=data.getIntExtra("position", -1);
+            int delPro=data.getIntExtra("delPro", -1);
+            int delFlag=data.getIntExtra("delFlag", -1);
+            //有指定位置
+            if(local>=0){
+                //更新商品
+                if(null!=obj){
+                    adaptor.getLists().set(local,obj);
+                }
+                //是否删除了
+                if(delPro==OperType.REMOVE.ordinal()){
+                    adaptor.getLists().remove(local);
+
+               //查看返回的商品状体，在上架列表返回的是下架移除，在下架列表返回的是上架移除，其它不处理
+                }else if("1".equals(searchType)&&delFlag==0){//上架列表 且被下架
+                    adaptor.getLists().remove(local);
+                }else if("0".equals(searchType)&&delFlag==1){//下架列表 且被上架
+                    adaptor.getLists().remove(local);
+                }
+
+
+
+                adaptor.notifyDataSetChanged();
+            }
+
+        } else {
+
+        }
         /**使用SSO授权必须添加如下代码 */
         UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
         if (ssoHandler != null) {
@@ -761,8 +824,16 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         // 添加QZone平台
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, myApplication.qq_appId, myApplication.qq_appKey);
         qZoneSsoHandler.addToSocialSDK();
+        // 设置QQ空间分享内容
+        QZoneShareContent qzone = new QZoneShareContent();
+        qzone.setShareContent(proName);
+        qzone.setTargetUrl(_targetUrl);
+        qzone.setTitle(shop.getTitle());
+        qzone.setShareMedia(new UMImage(this, imagUrl));
+//        qzone.setShareMedia(uMusic);
+        mController.setShareMedia(qzone);
 
-        UMImage urlImage = new UMImage(this,imagUrl);
+        UMImage urlImage = new UMImage(this, imagUrl);
 
         //设置微信好友分享内容
         WeiXinShareContent weixinContent = new WeiXinShareContent();
@@ -773,14 +844,14 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         //设置分享内容跳转URL
         weixinContent.setTargetUrl(_targetUrl);
         //设置分享图片
-         weixinContent.setShareImage(urlImage);
+        weixinContent.setShareImage(urlImage);
         mController.setShareMedia(weixinContent);
 
         //设置微信朋友圈分享内容
         CircleShareContent circleMedia = new CircleShareContent();
         circleMedia.setShareContent(proName);
         //设置朋友圈title
-        circleMedia.setTitle(shop.getTitle());
+        circleMedia.setTitle(proName);
         circleMedia.setShareImage(urlImage);
         circleMedia.setTargetUrl(_targetUrl);
         mController.setShareMedia(circleMedia);
@@ -789,10 +860,11 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     }
 
     @UiThread
-    public void reloadImage(String url){
+    public void reloadImage(String url) {
         ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + url + DataUrlContents.img_logo_img, shop_logo_image, ImageManager.options);
         ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + url + DataUrlContents.img_logo_img, shop_logo_image, ImageManager.options);
     }
+
     /**
      * 接收广播
      */
@@ -802,10 +874,10 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
         public void onReceive(Context context, Intent intent) {
             String fileName = intent.getStringExtra("fileName");
             String _shopName = intent.getStringExtra("shopName");
-           // Toast.makeText(HeaderAnimatorActivity.this, "接收到广播header,fileName:" + fileName, Toast.LENGTH_SHORT).show();
-            if(null!=fileName){
+            // Toast.makeText(HeaderAnimatorActivity.this, "接收到广播header,fileName:" + fileName, Toast.LENGTH_SHORT).show();
+            if (null != fileName) {
                 reloadImage(fileName);
-            }else if(null!=_shopName){
+            } else if (null != _shopName) {
                 shopName.setText(_shopName);
             }
         }
@@ -813,6 +885,7 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
 
     /**
      * 处理后退事件
+     *
      * @param keyCode
      * @param event
      * @return
@@ -820,8 +893,8 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if(keyCode == KeyEvent.KEYCODE_BACK ){
-            SuperMainActivity_.intent(this).start();
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //SuperMainActivity_.intent(this).start();
             finish();
             return true;
         }
@@ -829,7 +902,15 @@ public class HeaderAnimatorActivity extends BaseActionBarActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        //注册店铺更新广播
+        initShopBorder();
+    }
+
+    @Override
     public void onDestroy() {
+        unregisterReceiver(broderService);
         super.onDestroy();
         pDialog.dismiss();
     }

@@ -88,7 +88,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View view=convertView;
         final  HoldObject viewHolder;
         final ProductIndexVO obj=lists.get(position);
@@ -214,7 +214,14 @@ public class ProductListViewAdaptor extends BaseAdapter {
                     Intent intent = NewProductActivity_.intent(context).get();
                     intent.putExtra(NewProductActivity.PRODUCT_CODE_EXTRA, obj.getProductCode());
                     intent.putExtra(NewProductActivity.SHOP_CODE_EXTRA, obj.getShopCode());
-                    context.startActivity(intent);
+                    intent.putExtra("position", position);
+                    intent.putExtra("from", "items");
+                    if("main".equals(type)){
+                        HeaderAnimatorActivity haa=  (HeaderAnimatorActivity)context ;
+                        haa.startActivityForResult(intent,HeaderAnimatorActivity.OperType.UPDATE.ordinal());
+                    }else{
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

@@ -25,7 +25,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:contentDescription="@string/UMGprsCondition"
-                android:src="@drawable/umeng_update_wifi_disable" />
+                android:src="@drawable/stack" />
 
             <TextView
                 android:layout_width="wrap_content"

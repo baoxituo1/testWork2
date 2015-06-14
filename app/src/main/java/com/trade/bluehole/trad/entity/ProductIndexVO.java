@@ -1,6 +1,8 @@
 package com.trade.bluehole.trad.entity;
 
-public class ProductIndexVO {
+import java.io.Serializable;
+
+public class ProductIndexVO implements Serializable {
 	
 	public ProductIndexVO(){
 		
