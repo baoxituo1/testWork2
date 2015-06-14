@@ -45,6 +45,7 @@ import org.apache.http.Header;
 import org.askerov.dynamicgrid.DynamicGridView;
 
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
+import com.trade.bluehole.trad.activity.camera.MediaRecorderActivity;
 import com.trade.bluehole.trad.activity.photo.ImageDirActivity;
 import com.trade.bluehole.trad.activity.photo.ImageOrderChangeActivity_;
 import com.trade.bluehole.trad.activity.photo.PhotoDesignActivity;
@@ -207,6 +208,15 @@ public class NewProductActivity extends BaseActionBarActivity {
     @UiThread(delay = 1000)
     void getFocus(){
         mTextView.requestFocus();
+    }
+
+    /**
+     * 点击录制视频
+     */
+    @Click(R.id.pro_add_video)
+    void onCLickUploadVideo(){
+        Intent intent=new Intent(this, MediaRecorderActivity.class);
+        startActivity(intent);
     }
 
     /**

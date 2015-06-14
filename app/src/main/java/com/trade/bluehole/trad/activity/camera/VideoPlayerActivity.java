@@ -1,11 +1,14 @@
 package com.trade.bluehole.trad.activity.camera;
 
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnErrorListener;
 import android.media.MediaPlayer.OnInfoListener;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -13,11 +16,25 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 
+import com.aliyun.mbaas.oss.callback.SaveCallback;
+import com.aliyun.mbaas.oss.model.OSSException;
+import com.aliyun.mbaas.oss.storage.OSSData;
+import com.soundcloud.android.crop.Crop;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.SuperMainActivity;
+import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.trade.bluehole.trad.record.ui.BaseActivity;
 import com.trade.bluehole.trad.record.widget.SurfaceVideoView;
+import com.trade.bluehole.trad.util.MyApplication;
+import com.trade.bluehole.trad.util.StreamUtil;
+import com.yixia.camera.demo.utils.ToastUtils;
 import com.yixia.weibo.sdk.util.DeviceUtils;
 import com.yixia.weibo.sdk.util.StringUtils;
+
+import java.io.File;
+import java.util.UUID;
+
+import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
  * 通用单独播放界面
@@ -37,6 +54,8 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceVideoVie
 	private String mPath;
 	/** 是否需要回复播放 */
 	private boolean mNeedResume;
+    /** 上传按钮 */
+    FancyButton uploadButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +71,7 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceVideoVie
 
 		setContentView(R.layout.rd_activity_video_player);
 		mVideoView = (SurfaceVideoView) findViewById(R.id.videoview);
+        uploadButton = (FancyButton) findViewById(R.id.pro_upload_video);
 		mPlayerStatus = findViewById(R.id.play_status);
 		mLoading = findViewById(R.id.loading);
 
@@ -65,6 +85,7 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceVideoVie
 		mVideoView.getLayoutParams().height = DeviceUtils.getScreenWidth(this);
 
 		findViewById(R.id.root).setOnClickListener(this);
+        uploadButton.setOnClickListener(this);
 		mVideoView.setVideoPath(mPath);
 	}
 
@@ -156,6 +177,15 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceVideoVie
 			else
 				mVideoView.start();
 			break;
+        case R.id.pro_upload_video:
+            ToastUtils.showToast(this.getApplicationContext(), "点击上传!");
+            try {
+                doUploadFile(mPath);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            break;
+
 		}
 	}
 
@@ -190,5 +220,52 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceVideoVie
 		}
 		return false;
 	}
+
+
+
+    /**
+     * 上传视频到阿里云代码
+     *
+     * @param mPath 视频本地路径
+     * @throws Exception
+     */
+    public void doUploadFile(String mPath) throws Exception {
+        ToastUtils.showToast(this.getApplicationContext(), "mPath:"+mPath);
+        ContentResolver resolver = getContentResolver();
+        byte[] bytes=null;
+        try {
+           // Uri uri = Uri.parse(mPath);
+            Uri uri =Uri.fromFile(new File(mPath));
+            bytes = StreamUtil.readStream(resolver.openInputStream(uri));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // if(fileName==null||"".equals(fileName)){
+        String fileName = "video/" + "p_video_" + UUID.randomUUID() + ".mp4";
+        ShopCommonInfo sc = new ShopCommonInfo();
+        sc.setShopLogo(fileName);
+        //saveDataToServer(sc);
+        // }
+        OSSData ossData = new OSSData(MyApplication.getOssBucket(), fileName);
+        ossData.setData(bytes, "raw"); // 指定需要上传的数据和它的类型
+        ossData.enableUploadCheckMd5sum(); // 开启上传MD5校验
+        ossData.uploadInBackground(new SaveCallback() {
+            @Override
+            public void onSuccess(String objectKey) {
+                //ToastUtils.showToast(VideoPlayerActivity.this, "视频上传成功:"+objectKey);
+            }
+
+            @Override
+            public void onProgress(String objectKey, int byteCount, int totalSize) {
+
+            }
+
+            @Override
+            public void onFailure(String objectKey, OSSException ossException) {
+
+            }
+        });
+    }
 
 }

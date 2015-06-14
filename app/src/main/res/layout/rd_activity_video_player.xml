@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:fancy="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/root"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -29,4 +30,26 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/n_padding_normal_s"
+        android:layout_height="@dimen/common_height">
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@id/pro_upload_video"
+            android:visibility="visible"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/n_padding_normal"
+            android:layout_margin="@dimen/n_padding_normal_s"
+            android:layout_centerInParent="true"
+            fancy:borderColor="@color/grey_light"
+            fancy:borderWidth="1dp"
+            fancy:defaultColor="@color/white"
+            fancy:focusColor="@color/gray"
+            fancy:fontIconResource="@string/icon_exchange"
+            fancy:iconPosition="left"
+            fancy:radius="5dp"
+            fancy:text="上传"
+            fancy:textColor="@color/primary" />
+    </RelativeLayout>
 </RelativeLayout>

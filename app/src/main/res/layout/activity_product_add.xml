@@ -67,26 +67,48 @@
                     android:layout_margin="@dimen/n_padding_normal"
                     android:horizontalSpacing="@dimen/n_padding_normal_s"
                     android:verticalSpacing="@dimen/n_padding_normal" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <mehdi.sakout.fancybuttons.FancyButton
+                        android:id="@id/change_image_index"
+                        android:visibility="visible"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/n_padding_normal"
+                        android:layout_margin="@dimen/n_padding_normal_s"
+                       android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        fancy:borderColor="@color/grey_light"
+                        fancy:borderWidth="1dp"
+                        fancy:defaultColor="@color/white"
+                        fancy:focusColor="@color/gray"
+                        fancy:fontIconResource="@string/icon_exchange"
+                        fancy:iconPosition="left"
+                        fancy:radius="5dp"
+                        fancy:text="@string/order_img_index"
+                        fancy:textColor="@color/primary" />
+                    <mehdi.sakout.fancybuttons.FancyButton
+                        android:id="@id/pro_add_video"
+                        android:visibility="visible"
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/n_padding_normal"
+                        android:layout_margin="@dimen/n_padding_normal_s"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        fancy:borderColor="@color/grey_light"
+                        fancy:borderWidth="1dp"
+                        fancy:defaultColor="@color/white"
+                        fancy:focusColor="@color/gray"
+                        fancy:fontIconResource="@string/icon_exchange"
+                        fancy:iconPosition="left"
+                        fancy:radius="5dp"
+                        fancy:text="添加视频"
+                        fancy:textColor="@color/primary" />
+                </RelativeLayout>
 
-                <mehdi.sakout.fancybuttons.FancyButton
-                    android:id="@id/change_image_index"
-                    android:visibility="visible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/n_padding_normal_s"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:paddingTop="5dp"
-                    fancy:borderColor="@color/grey_light"
-                    fancy:borderWidth="1dp"
-                    fancy:defaultColor="@color/white"
-                    fancy:focusColor="@color/gray"
-                    fancy:fontIconResource="@string/icon_exchange"
-                    fancy:iconPosition="left"
-                    fancy:radius="5dp"
-                    fancy:text="@string/order_img_index"
-                    fancy:textColor="@color/primary" />
+
             </LinearLayout>
 
             <LinearLayout

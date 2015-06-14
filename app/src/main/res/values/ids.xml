@@ -208,6 +208,8 @@
     <item type="id" name="pro_scroll" />
     <item type="id" name="product_name" />
     <item type="id" name="change_image_index" />
+    <item type="id" name="pro_add_video" />
+    <item type="id" name="pro_upload_video" />
     <!--商品列表-->
     <item type="id" name="view_shop_layout" />
     <item type="id" name="copy_shop_view_rul" />

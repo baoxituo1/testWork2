@@ -184,8 +184,7 @@ public class MediaPreviewActivity extends BaseActivity implements
      */
     private boolean prepareActivity() {
         // 获取传入参数
-        if (Environment.MEDIA_MOUNTED.equals(Environment
-                .getExternalStorageState()) && !isExternalStorageRemovable())
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) && !isExternalStorageRemovable())
             mThemeCacheDir = new File(getExternalCacheDir(), "Theme");
         else
             mThemeCacheDir = new File(getCacheDir(), "Theme");
@@ -240,12 +239,10 @@ public class MediaPreviewActivity extends BaseActivity implements
         mTitleNext.setText(R.string.record_camera_preview_next);
         /** 设置播放区域 */
         View preview_layout = findViewById(R.id.preview_layout);
-        LinearLayout.LayoutParams mPreviewParams = (LinearLayout.LayoutParams) preview_layout
-                .getLayoutParams();
+        LinearLayout.LayoutParams mPreviewParams = (LinearLayout.LayoutParams) preview_layout .getLayoutParams();
         mPreviewParams.height = DeviceUtils.getScreenWidth(this);
 
-        videoProcessEngine = VideoProcessEngine.createVideoProcessEngine(
-                mVideoTempPath, mThemeSufaceView.getHolder(), this);
+        videoProcessEngine = VideoProcessEngine.createVideoProcessEngine(mVideoTempPath, mThemeSufaceView.getHolder(), this);
         if (videoProcessEngine == null) {
             Toast.makeText(this, "授权过期", Toast.LENGTH_SHORT);
             return;
@@ -285,36 +282,28 @@ public class MediaPreviewActivity extends BaseActivity implements
                 if (resultData != null && resultData.size() > 0) {
                     musicViews = new HashMap<Integer, TextView>();
                     for (VideoMusicModel theme : resultData) {
-                        TextView musicView = new TextView(
-                                MediaPreviewActivity.this);
-                        musicView.setTextColor(getResources().getColor(
-                                R.color.white));
+                        TextView musicView = new TextView(MediaPreviewActivity.this);
+                        musicView.setTextColor(getResources().getColor(R.color.white));
                         if (theme.effectID == VideoEffectModel.EFFECT_ID_NONE_MUSIC) {
                             musicView.setText(theme.effectNameChinese);
                             android.util.Log.e("miaopai", "none music");
                         } else if (theme.isDownloaded()) {
-                            musicView.setTextColor(getResources().getColor(
-                                    R.color.yellow));
-                            musicView
-                                    .setText(theme.effectNameChinese + "(已下载)");
+                            musicView.setTextColor(getResources().getColor(R.color.yellow));
+                            musicView.setText(theme.effectNameChinese + "(已下载)");
                         } else if (theme.isOnline()) {
                             musicView.setText(theme.effectNameChinese + "(在线)");
                         } else {
                             musicView.setText(theme.effectNameChinese + "(本地)");
                         }
 
-                        musicView
-                                .setOnClickListener(mMusicDownloadClickListener);
+                        musicView.setOnClickListener(mMusicDownloadClickListener);
                         musicView.setTag(theme);
                         musicViews.put(theme.effectID, musicView);
-                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT);// mThemeItemWH,
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);// mThemeItemWH,
                         // mThemeItemWH
                         lp.topMargin = 20;
                         if (theme.effectID == videoProcessEngine.getCurrentVideoMusicEffectId()) {
-                            musicView.setTextColor(getResources().getColor(
-                                    R.color.green));
+                            musicView.setTextColor(getResources().getColor(R.color.green));
                         }
                         musicListLayout.addView(musicView, lp);
                     }
@@ -340,9 +329,7 @@ public class MediaPreviewActivity extends BaseActivity implements
                 new OnStoreDataLoadListener<VideoEffectStoreModel>() {
 
                     @Override
-                    public void onCompeltedFromNet(
-                            VideoEffectStoreModel resultData,
-                            boolean isSuccess, int errorCode) {
+                    public void onCompeltedFromNet(VideoEffectStoreModel resultData,boolean isSuccess, int errorCode) {
                         if (isSuccess) {
                             processData(resultData.getVideoEffectModels());
                         }
@@ -370,8 +357,7 @@ public class MediaPreviewActivity extends BaseActivity implements
                 mLinearLayout.setVisibility(View.VISIBLE);
 
                 for (VideoEffectModel theme : resultData) {
-                    ThemeView themeView = new ThemeView(
-                            MediaPreviewActivity.this, theme);
+                    ThemeView themeView = new ThemeView(MediaPreviewActivity.this, theme);
                     if (StringUtils.isNotEmpty(theme.effectIconPath)) {
                         // themeView.getIcon().setImagePath(theme.effectIconPath);
                         themeView.getIcon().setImageResource(R.drawable.empty);
@@ -379,13 +365,9 @@ public class MediaPreviewActivity extends BaseActivity implements
 
                     themeView.setOnClickListener(mThemeDownloadClickListener);
                     themeView.setTag(theme);
-                    Logger.e("videoProcessEngine.theme.previewVideoPath "
-                            + theme.previewVideoPath);
-                    Logger.e("videoProcessEngine.theme.effectPreviewVideoIcon "
-                            + theme.effectPreviewVideoIcon);
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT);// mThemeItemWH,
+                    Logger.e("videoProcessEngine.theme.previewVideoPath "+ theme.previewVideoPath);
+                    Logger.e("videoProcessEngine.theme.effectPreviewVideoIcon " + theme.effectPreviewVideoIcon);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);// mThemeItemWH,
                     // mThemeItemWH
                     mLinearLayout.addView(themeView, lp);
 
@@ -418,22 +400,12 @@ public class MediaPreviewActivity extends BaseActivity implements
                 break;
             case R.id.video_preview_theme_volume:// 静音主题音
                 // 隐藏动画
-                ToastUtils
-                        .showToastImage(
-                                this,
-                                mThemeVolumn.isChecked() ? R.drawable.priview_theme_volumn_close
-                                        : R.drawable.priview_theme_volumn_open);
-                videoProcessEngine.applyMute(mThemeVolumn.isChecked(),
-                        mVideoVolumn.isChecked());
+                ToastUtils.showToastImage(this,mThemeVolumn.isChecked() ? R.drawable.priview_theme_volumn_close : R.drawable.priview_theme_volumn_open);
+                videoProcessEngine.applyMute(mThemeVolumn.isChecked(), mVideoVolumn.isChecked());
                 break;
             case R.id.video_preview_video_volume:// 静音原声
-                ToastUtils
-                        .showToastImage(
-                                this,
-                                mVideoVolumn.isChecked() ? R.drawable.priview_orig_volumn_close
-                                        : R.drawable.priview_orig_volumn_open);
-                videoProcessEngine.applyMute(mThemeVolumn.isChecked(),
-                        mVideoVolumn.isChecked());
+                ToastUtils.showToastImage(this,mVideoVolumn.isChecked() ? R.drawable.priview_orig_volumn_close: R.drawable.priview_orig_volumn_open);
+                videoProcessEngine.applyMute(mThemeVolumn.isChecked(), mVideoVolumn.isChecked());
                 break;
             case R.id.tab_theme:
                 mThemeLayout.setVisibility(View.VISIBLE);
@@ -453,14 +425,9 @@ public class MediaPreviewActivity extends BaseActivity implements
      * 显示音乐列表 根据用户权限控制是否显示在线的音乐列表
      */
     private void showMusicList() {
-        Logger.e("videoProcessEngine.getCurrentVideoMusicEffectId() "
-                + videoProcessEngine.getCurrentVideoMusicEffectId());
-        Logger.e("videoProcessEngine.musicName() "
-                + videoProcessEngine.getVideoMusicModel(videoProcessEngine
-                .getCurrentVideoMusicEffectId()).musicName);
-        Logger.e("videoProcessEngine.musicPath() "
-                + videoProcessEngine.getVideoMusicModel(videoProcessEngine
-                .getCurrentVideoMusicEffectId()).musicPath);
+        Logger.e("videoProcessEngine.getCurrentVideoMusicEffectId() " + videoProcessEngine.getCurrentVideoMusicEffectId());
+        Logger.e("videoProcessEngine.musicName() " + videoProcessEngine.getVideoMusicModel(videoProcessEngine.getCurrentVideoMusicEffectId()).musicName);
+        Logger.e("videoProcessEngine.musicPath() " + videoProcessEngine.getVideoMusicModel(videoProcessEngine.getCurrentVideoMusicEffectId()).musicPath);
         // Logger.e("videoProcessEngine.getCurrentVideoMusicEffectId() " +
         // videoProcessEngine.getCurrentVideoMusicEffectId());
         // Logger.e("videoProcessEngine.getCurrentVideoMusicEffectId() " +
@@ -483,8 +450,7 @@ public class MediaPreviewActivity extends BaseActivity implements
 
         musicListLayout.setVisibility(View.VISIBLE);
 
-        videoProcessEngine
-                .loadMusicStore(new OnStoreDataLoadListener<List<VideoMusicModel>>() {
+        videoProcessEngine .loadMusicStore(new OnStoreDataLoadListener<List<VideoMusicModel>>() {
 
                     @Override
                     public void onCompeltedFromCache(
@@ -537,8 +503,7 @@ public class MediaPreviewActivity extends BaseActivity implements
         // 检测是否需要重新编译
         mStartEncoding = true;
         showProgress("", getString(R.string.record_preview_encoding));
-        videoProcessEngine
-                .saveVideoToPath(mVideoPath, mOnVideoEncodingListener);
+        videoProcessEngine.saveVideoToPath(mVideoPath, mOnVideoEncodingListener);
 
     }
 
@@ -556,10 +521,7 @@ public class MediaPreviewActivity extends BaseActivity implements
                 videoFuncList = videoProcessEngine.getVideoFunctions(MediaPreviewActivity.this);
                 if (videoFuncList != null) {
                     mThemeCacheDir = videoProcessEngine.getThemeCacheDir();
-
-                    videoProcessEngine.init(new File(mThemeCacheDir,
-                                    ThemeHelper.THEME_VIDEO_COMMON).getAbsolutePath(),
-                            1500, mMediaObject.getDuration());
+                    videoProcessEngine.init(new File(mThemeCacheDir, ThemeHelper.THEME_VIDEO_COMMON).getAbsolutePath(), 1500, mMediaObject.getDuration());
                     return videoProcessEngine.getThemeDefaultDir();
                 }
                 return null;
@@ -569,16 +531,12 @@ public class MediaPreviewActivity extends BaseActivity implements
             protected void onPostExecute(File result) {
                 super.onPostExecute(result);
                 File themeDir = result;
-                if (themeDir != null && !isFinishing() && videoFuncList != null
-                        && videoFuncList.effectFuncModels != null
-                        && videoFuncList.effectFuncModels.size() > 1) {
+                if (themeDir != null && !isFinishing() && videoFuncList != null  && videoFuncList.effectFuncModels != null && videoFuncList.effectFuncModels.size() > 1) {
                     /** 循环添加单个主题到主题容器中 */
                     mThemes.removeAllViews();
                     mFilters.removeAllViews();
                     for (VideoEffectFuncModel funcModels : videoFuncList.effectFuncModels) {
-                        if (funcModels != null
-                                && funcModels.currentEffectModels != null
-                                && funcModels.currentEffectModels.size() > 0) {
+                        if (funcModels != null&& funcModels.currentEffectModels != null&& funcModels.currentEffectModels.size() > 0) {
                             for (VideoEffectModel effect : funcModels.currentEffectModels) {
                                 switch (funcModels.effectFuncTypeID) {
                                     case VideoEffectFuncModel.THEME_TYPE_MV:
@@ -604,16 +562,14 @@ public class MediaPreviewActivity extends BaseActivity implements
     private void refreshThemeView(ThemeView themeView, VideoEffectModel theme) {
         themeView.setTheme(theme);
         if (StringUtils.isNotEmpty(theme.effectIconPath)) {
-            if (theme.effectIconPath.startsWith("http://")
-                    || theme.effectIconPath.startsWith("https://")) {
+            if (theme.effectIconPath.startsWith("http://") || theme.effectIconPath.startsWith("https://")) {
                 themeView.getIcon().setImageResource(R.drawable.empty);
             } else {
                 themeView.getIcon().setImagePath(theme.effectIconPath);
             }
             if (theme.isOnline() || theme.isDownloading()) {
                 mDownloaderViews.add(themeView);
-                themeView
-                        .setOnClickListener(mThemeRecommendDownloadClickListener);
+                themeView.setOnClickListener(mThemeRecommendDownloadClickListener);
             } else {
                 themeView.setOnClickListener(mThemeClickListener);
                 mDownloaderViews.remove(themeView);
@@ -628,8 +584,7 @@ public class MediaPreviewActivity extends BaseActivity implements
                                    VideoEffectModel theme, int index) {
         ThemeView themeView = new ThemeView(MediaPreviewActivity.this, theme);
         if (StringUtils.isNotEmpty(theme.effectIconPath)) {
-            if (theme.effectIconPath.startsWith("http://")
-                    || theme.effectIconPath.startsWith("https://")) {
+            if (theme.effectIconPath.startsWith("http://")  || theme.effectIconPath.startsWith("https://")) {
                 themeView.getIcon().setImageResource(R.drawable.empty);
             } else {
                 themeView.getIcon().setImagePath(theme.effectIconPath);
@@ -650,9 +605,7 @@ public class MediaPreviewActivity extends BaseActivity implements
         themeView.refreshView();
 
         themeView.setTag(theme);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);// mThemeItemWH,
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);// mThemeItemWH,
         // mThemeItemWH
         lp.leftMargin = mLeftMargin;
         if (index == -1)
@@ -675,8 +628,7 @@ public class MediaPreviewActivity extends BaseActivity implements
     private synchronized void restart() {
         mStopPlayer = false;
         mHandler.removeMessages(UtilityAdapter.NOTIFYVALUE_PLAYFINISH);
-        mHandler.sendEmptyMessageDelayed(UtilityAdapter.NOTIFYVALUE_PLAYFINISH,
-                100);
+        mHandler.sendEmptyMessageDelayed(UtilityAdapter.NOTIFYVALUE_PLAYFINISH,  100);
     }
 
     private void releaseVideo() {
@@ -710,8 +662,7 @@ public class MediaPreviewActivity extends BaseActivity implements
             switch (msg.what) {
                 case HANDLER_ENCODING_START:
                     if (!isFinishing()) {
-                        showProgress("",
-                                getString(R.string.record_preview_encoding));
+                        showProgress("",getString(R.string.record_preview_encoding));
                         // WindowManager.LayoutParams lp =
                         // dialog.getWindow().getAttributes();
                         // lp.y = -ConvertToUtils.dipToPX(MediaPreviewActivity.this,
@@ -721,14 +672,12 @@ public class MediaPreviewActivity extends BaseActivity implements
                         // getString(R.string.progressbar_message_preview_making));
                         // releaseVideo();
                         // mThemeSufaceView.startEncoding();
-                        videoProcessEngine.saveVideoToPath(mVideoPath,
-                                mOnVideoEncodingListener);
+                        videoProcessEngine.saveVideoToPath(mVideoPath, mOnVideoEncodingListener);
                         sendEmptyMessage(HANDLER_ENCODING_PROGRESS);
                     }
                     break;
                 case HANDLER_ENCODING_PROGRESS:// 读取进度
-                    int progress = UtilityAdapter
-                            .FilterParserInfo(UtilityAdapter.FILTERINFO_PROGRESS);
+                    int progress = UtilityAdapter.FilterParserInfo(UtilityAdapter.FILTERINFO_PROGRESS);
                     mOnVideoEncodingListener.onProgressChanged(progress);
                     if (progress == -1) {
                         mOnVideoEncodingListener.onFailed(progress);
@@ -834,18 +783,11 @@ public class MediaPreviewActivity extends BaseActivity implements
         //
         // }
 
-        if (mCurrentTheme == null
-                || !IsUtils.equals(mCurrentTheme.effectName, theme.effectName)) {
+        if (mCurrentTheme == null || !IsUtils.equals(mCurrentTheme.effectName, theme.effectName)) {
             String key = theme.effectName;
-            mThemes.mObservable.notifyObservers(new String[]{key,
-                    String.valueOf(theme.isMV())});
-
-            ((ThemeGroupLayout) v.getParent()).mObservable
-                    .notifyObservers(new String[]{key,
-                            String.valueOf(theme.isMV())});
-
+            mThemes.mObservable.notifyObservers(new String[]{key, String.valueOf(theme.isMV())});
+            ((ThemeGroupLayout) v.getParent()).mObservable .notifyObservers(new String[]{key, String.valueOf(theme.isMV())});
             mCurrentTheme = theme;
-
             if (mMediaObject.mThemeObject == null)
                 mMediaObject.mThemeObject = new MediaThemeObject();
 
@@ -854,15 +796,13 @@ public class MediaPreviewActivity extends BaseActivity implements
             mPlayStatus.setVisibility(View.GONE);
 
             // videoProcessEngine.applyEffect(theme, mOnVideoPlayListener);
-            videoProcessEngine.applyEffect(theme.effectType, theme.effectID,
-                    mOnVideoPlayListener);
+            videoProcessEngine.applyEffect(theme.effectType, theme.effectID,   mOnVideoPlayListener);
             if (theme.isMV()) {
                 mCurrentMusicTitle = mCurrentTheme.musicTitle;
                 updateMusicTextView();
 
                 // 清空静音状态
-                if (theme.effectName.contains("Empty")
-                        || theme.effectName.contains("Filter")) {
+                if (theme.effectName.contains("Empty") || theme.effectName.contains("Filter")) {
                     mThemeVolumn.setChecked(true);
                 } else {
                     mThemeVolumn.setChecked(false);
@@ -880,8 +820,7 @@ public class MediaPreviewActivity extends BaseActivity implements
                 // 清空静音状态
                 // mThemeVolumn.setChecked(false);
                 if (mThemes != null) {
-                    mThemes.mObservable.notifyObservers(new String[]{
-                            POThemeSingle.THEME_EMPTY, "true"});
+                    mThemes.mObservable.notifyObservers(new String[]{POThemeSingle.THEME_EMPTY, "true"});
                 }
 
             }
@@ -905,15 +844,12 @@ public class MediaPreviewActivity extends BaseActivity implements
             if (theme == null)
                 return;
 
-            if (theme.downloadStatus == DownloadStatus.DOWNLOADING
-                    || theme.downloadStatus == DownloadStatus.DOWNLOADED) {
+            if (theme.downloadStatus == DownloadStatus.DOWNLOADING  || theme.downloadStatus == DownloadStatus.DOWNLOADED) {
                 processTheme(theme, v);
                 return;
             }
 
-            videoProcessEngine.downloadEffectAsset(
-                    VideoEffectFuncModel.THEME_TYPE_RECOMMEND_MV,
-                    theme.effectID, new OnAssetDownloadListener() {
+            videoProcessEngine.downloadEffectAsset( VideoEffectFuncModel.THEME_TYPE_RECOMMEND_MV, theme.effectID, new OnAssetDownloadListener() {
 
                         @Override
                         public void onSuccess() {
@@ -934,8 +870,7 @@ public class MediaPreviewActivity extends BaseActivity implements
                         public void onFailed(int errorCode) {
 
                             if (MediaPreviewActivity.this != null) {
-                                ToastUtils.showToast(MediaPreviewActivity.this,
-                                        R.string.download_error + " errorCode");
+                                ToastUtils.showToast(MediaPreviewActivity.this,  R.string.download_error + " errorCode");
                             }
 
                         }
@@ -943,8 +878,7 @@ public class MediaPreviewActivity extends BaseActivity implements
                         @Override
                         public void onSuccess(
                                 final VideoEffectModel videoEffectModel) {
-                            Logger.e("videoProcessEngine videoEffectModel.musicName "
-                                    + videoEffectModel.musicName);
+                            Logger.e("videoProcessEngine videoEffectModel.musicName " + videoEffectModel.musicName);
                             theme.downloadStatus = DownloadStatus.DOWNLOADED;
                             runOnUiThread(new Runnable() {
                                 public void run() {
@@ -983,8 +917,7 @@ public class MediaPreviewActivity extends BaseActivity implements
         if (DeviceUtils.hasGingerbread())
             return Environment.isExternalStorageRemovable();
         else
-            return Environment.MEDIA_REMOVED.equals(Environment
-                    .getExternalStorageState());
+            return Environment.MEDIA_REMOVED.equals(Environment.getExternalStorageState());
     }
 
     private OnVideoEncodingListener mOnVideoEncodingListener = new OnVideoEncodingListener() {
@@ -995,8 +928,7 @@ public class MediaPreviewActivity extends BaseActivity implements
             videoProcessEngine.release();
             hideProgress();
             mStartEncoding = false;
-            startActivity(new Intent(MediaPreviewActivity.this,
-                    VideoPlayerActivity.class).putExtra("path", mVideoPath));
+            startActivity(new Intent(MediaPreviewActivity.this, VideoPlayerActivity.class).putExtra("path", mVideoPath));
         }
 
         @Override
@@ -1029,8 +961,7 @@ public class MediaPreviewActivity extends BaseActivity implements
         public void downloadAssetsProcess(final int progress) {
             runOnUiThread(new Runnable() {
                 public void run() {
-                    clickedMusicView.setText(clickedMusicString + "---"
-                            + progress + "%");
+                    clickedMusicView.setText(clickedMusicString + "---"+ progress + "%");
                 }
             });
         }
@@ -1042,8 +973,7 @@ public class MediaPreviewActivity extends BaseActivity implements
                 public void run() {
                     ToastUtils.showToast(clickedMusicView.getContext(), "下载成功!");
                     // addThemeItem(videoEffectModel, -1);
-                    clickedMusicView.setTextColor(getResources().getColor(
-                            R.color.yellow));
+                    clickedMusicView.setTextColor(getResources().getColor( R.color.yellow));
                     clickedMusicView.setText(clickedMusicString + "(已下载)");
                     clickedMusicView.setTag(videoEffectModel);
 
@@ -1055,8 +985,7 @@ public class MediaPreviewActivity extends BaseActivity implements
         @Override
         public void onFailed(int errorCode) {
             if (MediaPreviewActivity.this != null) {
-                ToastUtils.showToast(MediaPreviewActivity.this,
-                        R.string.download_error + " errorCode");
+                ToastUtils.showToast(MediaPreviewActivity.this, R.string.download_error + " errorCode");
             }
         }
 
@@ -1105,10 +1034,8 @@ public class MediaPreviewActivity extends BaseActivity implements
                             && videoEffectFuncModel.currentEffectModels != null
                             && videoEffectFuncModel.currentEffectModels.size() > 0) {
                         for (VideoEffectModel effect : videoEffectFuncModel.currentEffectModels) {
-                            if (effect.effectName
-                                    .equalsIgnoreCase(theme.effectName)) {
-                                ToastUtils.showToast(MediaPreviewActivity.this,
-                                        "主题已存在");
+                            if (effect.effectName.equalsIgnoreCase(theme.effectName)) {
+                                ToastUtils.showToast(MediaPreviewActivity.this,"主题已存在");
                                 return;
                             }
                         }
@@ -1123,9 +1050,7 @@ public class MediaPreviewActivity extends BaseActivity implements
                 return;
             }
 
-            videoProcessEngine.downloadEffectAsset(
-                    VideoEffectFuncModel.THEME_TYPE_MV, theme.effectID,
-                    new OnAssetDownloadListener() {
+            videoProcessEngine.downloadEffectAsset(VideoEffectFuncModel.THEME_TYPE_MV, theme.effectID, new OnAssetDownloadListener() {
 
                         @Override
                         public void onSuccess() {
@@ -1141,8 +1066,7 @@ public class MediaPreviewActivity extends BaseActivity implements
                         public void onFailed(int errorCode) {
 
                             if (MediaPreviewActivity.this != null) {
-                                ToastUtils.showToast(MediaPreviewActivity.this,
-                                        R.string.download_error + " errorCode");
+                                ToastUtils.showToast(MediaPreviewActivity.this, R.string.download_error + " errorCode");
                             }
                         }
 
@@ -1153,9 +1077,7 @@ public class MediaPreviewActivity extends BaseActivity implements
                                 public void run() {
                                     ToastUtils.showToast(v.getContext(), "下载成功");
                                     // addThemeItem(videoEffectModel, -1);
-                                    addThemeItem(videoProcessEngine
-                                                    .addThemeToList(videoEffectModel),
-                                            mThemes.getChildCount() - 1);
+                                    addThemeItem(videoProcessEngine.addThemeToList(videoEffectModel),mThemes.getChildCount() - 1);
                                 }
                             });
 
@@ -1179,14 +1101,10 @@ public class MediaPreviewActivity extends BaseActivity implements
                 return;
             Logger.e("theme.getGroup() " + theme.getGroup());
 
-            videoProcessEngine.applyMusic(theme, mOnVideoPlayListener,
-                    mOnMusicApplyListener);
+            videoProcessEngine.applyMusic(theme, mOnVideoPlayListener,  mOnMusicApplyListener);
             mThemeVolumn.setChecked(false);
-            Logger.e("[mMusicDownloadClickListener]videoProcessEngine.getCurrentVideoMusicEffectId() "
-                    + videoProcessEngine.getCurrentVideoMusicEffectId());
-            Logger.e("[mMusicDownloadClickListener]videoProcessEngine.getCurrentVideoMusicEffectId() "
-                    + videoProcessEngine.getVideoMusicModel(videoProcessEngine
-                    .getCurrentVideoMusicEffectId()).musicName);
+            Logger.e("[mMusicDownloadClickListener]videoProcessEngine.getCurrentVideoMusicEffectId() "   + videoProcessEngine.getCurrentVideoMusicEffectId());
+            Logger.e("[mMusicDownloadClickListener]videoProcessEngine.getCurrentVideoMusicEffectId() "   + videoProcessEngine.getVideoMusicModel(videoProcessEngine .getCurrentVideoMusicEffectId()).musicName);
         }
     };
 }
