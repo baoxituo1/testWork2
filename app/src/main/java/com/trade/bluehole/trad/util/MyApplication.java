@@ -3,6 +3,8 @@ package com.trade.bluehole.trad.util;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Environment;
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
@@ -20,6 +22,9 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.trade.bluehole.trad.entity.User;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
 import com.umeng.fb.push.FeedbackPush;
+import com.yixia.camera.demo.service.AssertService;
+import com.yixia.weibo.sdk.VCamera;
+import com.yixia.weibo.sdk.util.DeviceUtils;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -27,6 +32,8 @@ import org.androidannotations.annotations.EApplication;
 import org.androidannotations.annotations.OrmLiteDao;
 import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.rest.RestService;
+
+import java.io.File;
 
 @EApplication
 public class MyApplication extends com.activeandroid.app.Application {
@@ -87,9 +94,34 @@ public class MyApplication extends com.activeandroid.app.Application {
         ActiveAndroid.initialize(this);
         //友盟消息推送
        // FeedbackPush.getInstance(this).init(false);
+        //初始化视频组件
+        initRecord();
     }
 
 
+    /**
+     * 初始化视频组件
+     */
+    void initRecord(){
+        // 设置拍摄视频缓存路径
+        File dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+        if (DeviceUtils.isZte()) {
+            if (dcim.exists()) {
+                VCamera.setVideoCachePath(dcim + "/Camera/VCameraDemo/");
+            } else {
+                VCamera.setVideoCachePath(dcim.getPath().replace("/sdcard/", "/sdcard-ext/") + "/Camera/VCameraDemo/");
+            }
+        } else {
+            VCamera.setVideoCachePath(dcim + "/Camera/VCameraDemo/");
+        }
+        // 开启log输出,ffmpeg输出到logcat
+        VCamera.setDebugMode(true);
+        // 初始化拍摄SDK，必须
+        VCamera.initialize(this);
+
+        //解压assert里面的文件
+        startService(new Intent(this, AssertService.class));
+    }
 
     /**
      * oss请求

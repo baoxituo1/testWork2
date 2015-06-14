@@ -12,7 +12,7 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    maven { url 'http://dl.bintray.com/amulyakhare/maven'  }
+    maven { url 'http://dl.bintray.com/amulyakhare/maven' }
     maven { url "https://raw.githubusercontent.com/umeng/mvn-repo-umeng/master/repository" }
 }
 
@@ -28,10 +28,10 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.0'
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations:$AAVersion"
-  // compile 'com.google.android.gms:play-services:7.0.0'
+    // compile 'com.google.android.gms:play-services:7.0.0'
     compile 'com.loopj.android:android-async-http:1.4.6'
 
-  //  compile 'com.fasterxml.jackson.core:jackson-databind:2.4.3'
+    //  compile 'com.fasterxml.jackson.core:jackson-databind:2.4.3'
     compile 'com.google.code.gson:gson:2.3.1'
     //下拉动画
     compile 'com.yalantis:phoenix:1.1.0'
@@ -52,7 +52,7 @@ dependencies {
     //list heard
     compile 'com.github.carlonzo.stikkyheader:core:0.0.2-SNAPSHOT'
     //Context-Menu
-   // compile 'com.yalantis:contextmenu:1.0.2'
+    // compile 'com.yalantis:contextmenu:1.0.2'
     //left menu
     compile 'com.ikimuhendis:ldrawer:0.1'
     //TextDrawable
@@ -120,7 +120,7 @@ android {
             java.srcDirs = ['src/main/java', 'build/generated/source/apt/${variant.dirName}']
             resources.srcDirs = ['src/main/res']
             res.srcDirs = ['src/main/res']
-            assets.srcDirs = ['assets']
+            assets.srcDirs = ['assets', 'src/main/assets', 'src/main/assets/']
         }
     }
 
