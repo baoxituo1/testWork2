@@ -12,7 +12,7 @@ public class ProductIndexVO implements Serializable {
 						  String productName, String coverMiddleImage, Double productPrice,
 						  String typeName, String brandName, Integer putAway, Integer hotNum,
 						  Integer coverNum, Double salePrice, Integer productNum,
-						  Integer collectNum) {
+						  Integer collectNum,String videoAddress,String videoThumbAddress) {
 		super();
 		this.shopCode = shopCode;
 		this.productCode = productCode;
@@ -26,6 +26,8 @@ public class ProductIndexVO implements Serializable {
 		this.salePrice = salePrice;
 		this.productNum = productNum;
 		this.collectNum = collectNum;
+        this.videoAddress = videoAddress;
+        this.videoThumbAddress = videoThumbAddress;
 	}
 
 	private String shopCode;
@@ -41,8 +43,26 @@ public class ProductIndexVO implements Serializable {
 	private Double salePrice;
 	private Integer productNum;
 	private Integer collectNum;
+    private String videoAddress;
+    private String videoThumbAddress;
 
-	public Integer getProductNum() {
+    public String getVideoAddress() {
+        return videoAddress;
+    }
+
+    public void setVideoAddress(String videoAddress) {
+        this.videoAddress = videoAddress;
+    }
+
+    public String getVideoThumbAddress() {
+        return videoThumbAddress;
+    }
+
+    public void setVideoThumbAddress(String videoThumbAddress) {
+        this.videoThumbAddress = videoThumbAddress;
+    }
+
+    public Integer getProductNum() {
 		return productNum;
 	}
 

@@ -16,7 +16,7 @@ public class BaseActivity extends Activity{
     @Override
     public void onCreate(Bundle paramBundle) {
         super.onCreate(paramBundle);
-        ActivityStackMgr.getActivityStackMgr().pushActivity(this);
+        //ActivityStackMgr.getActivityStackMgr().pushActivity(this);
         AppManager.getAppManager().addActivity(this);
     }
 
@@ -28,7 +28,7 @@ public class BaseActivity extends Activity{
     }
 
     public void finish() {
-        ActivityStackMgr.getActivityStackMgr().popNofinishActivity(this);
+       // ActivityStackMgr.getActivityStackMgr().popNofinishActivity(this);
         super.finish();
     }
 

@@ -166,7 +166,7 @@ public class MediaPreviewActivity extends BaseActivity implements
     private String clickedMusicString;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMediaObject = (MediaObject) getIntent().getSerializableExtra(CommonIntentExtra.EXTRA_MEDIA_OBJECT);
         if (mMediaObject == null) {
@@ -247,7 +247,7 @@ public class MediaPreviewActivity extends BaseActivity implements
             Toast.makeText(this, "授权过期", Toast.LENGTH_SHORT);
             return;
         }
-        videoProcessEngine.setVideoAuthor("aaaaa");
+        videoProcessEngine.setVideoAuthor("星语心愿");
 
         loadThemes();
     }

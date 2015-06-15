@@ -109,7 +109,7 @@ public class MediaRecorderActivity extends BaseActivity implements OnErrorListen
 	private int mWindowWidth;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		mCreated = false;
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); // 防止锁屏

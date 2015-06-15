@@ -54,7 +54,7 @@ public class BaseActionBarActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ActivityStackMgr.getActivityStackMgr().pushActivity(this);
         AppManager.getAppManager().addActivity(this);
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

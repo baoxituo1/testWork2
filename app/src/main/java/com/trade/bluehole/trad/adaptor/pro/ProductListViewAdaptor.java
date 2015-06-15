@@ -26,6 +26,7 @@ import com.trade.bluehole.trad.HeaderAnimatorActivity;
 import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.NewProductActivity_;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.activity.camera.ProVideoPlayerActivity_;
 import com.trade.bluehole.trad.activity.shop.ProductClassifyActivity;
 import com.trade.bluehole.trad.activity.shop.SearchProductActivity;
 import com.trade.bluehole.trad.activity.webview.ProductWebViewActivity;
@@ -110,6 +111,7 @@ public class ProductListViewAdaptor extends BaseAdapter {
             viewHolder.pro_share_btn=(RelativeLayout)view.findViewById(R.id.pro_share_btn);
             viewHolder.pro_copy_btn=(RelativeLayout)view.findViewById(R.id.pro_copy_btn);
             viewHolder.show_hot_flag=(RelativeLayout)view.findViewById(R.id.show_hot_flag);
+            viewHolder.pro_video_layout=(RelativeLayout)view.findViewById(R.id.pro_video_layout);
             view.setTag(viewHolder);
         }else{
             viewHolder=(HoldObject) convertView.getTag();
@@ -163,6 +165,22 @@ public class ProductListViewAdaptor extends BaseAdapter {
                 viewHolder.product_price.setVisibility(View.VISIBLE);
                 viewHolder.product_price.setText("￥"+obj.getProductPrice());
             }
+            //判断是否有视频
+            if(null!=obj.getVideoAddress()&&!"".equals(obj.getVideoAddress())){
+                viewHolder.pro_video_layout.setVisibility(View.VISIBLE);
+            }else{
+                viewHolder.pro_video_layout.setVisibility(View.GONE);
+            }
+            viewHolder.pro_video_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "点击视频播放!", Toast.LENGTH_SHORT).show();
+                    Intent intent=ProVideoPlayerActivity_.intent(context).get();
+                    intent.putExtra("path",DataUrlContents.VIDEO_HOST +obj.getVideoAddress());
+                    context.startActivity(intent);
+                }
+            });
+
             //判断是否推荐
             if(null!=obj.getHotNum()&&obj.getHotNum()>0){
                 viewHolder.show_hot_flag.setVisibility(View.VISIBLE);
@@ -246,5 +264,6 @@ public class ProductListViewAdaptor extends BaseAdapter {
         LinearLayout pro_edit_layout;
         LinearLayout pro_sale_layout;
         TextView pro_hot;
+        RelativeLayout pro_video_layout;
     }
 }

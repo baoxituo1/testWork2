@@ -12,6 +12,10 @@ public class ProductBase {
     private Integer productNumber;
     private String productInfo;
     private Integer delFlag;
+    private String videoAddress;
+    private String videoThumbAddress;
+    private Integer videoState;
+    private String videoBak;
 
     public Integer getId() {
         return id;
@@ -75,5 +79,37 @@ public class ProductBase {
 
     public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
+    }
+
+    public String getVideoAddress() {
+        return videoAddress;
+    }
+
+    public void setVideoAddress(String videoAddress) {
+        this.videoAddress = videoAddress;
+    }
+
+    public String getVideoThumbAddress() {
+        return videoThumbAddress;
+    }
+
+    public void setVideoThumbAddress(String videoThumbAddress) {
+        this.videoThumbAddress = videoThumbAddress;
+    }
+
+    public Integer getVideoState() {
+        return videoState;
+    }
+
+    public void setVideoState(Integer videoState) {
+        this.videoState = videoState;
+    }
+
+    public String getVideoBak() {
+        return videoBak;
+    }
+
+    public void setVideoBak(String videoBak) {
+        this.videoBak = videoBak;
     }
 }

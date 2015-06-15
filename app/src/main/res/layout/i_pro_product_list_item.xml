@@ -67,26 +67,52 @@
             android:padding="@dimen/n_padding_normal"
             android:weightSum="3"
             android:layout_height="wrap_content">
-            <TextView
-                android:id="@id/pro_name"
-                android:layout_margin="@dimen/n_padding_normal"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:text="美丽的商品还是我的最爱"
-                android:lines="2"
-                android:textColor="@color/eggplant"
-                android:textSize="@dimen/button_text_size"
-                android:layout_weight="1"
-                android:layout_height="0dp" />
-            <!--无促销-->
-            <TextView
-                android:id="@id/pro_price"
-                android:layout_width="match_parent"
-                android:layout_marginLeft="@dimen/n_padding_normal"
-                android:textSize="@dimen/button_text_size"
-                android:text="$200.00"
-                android:textColor="@color/primary"
-                android:layout_weight="1"
-                android:layout_height="0dp" />
+                android:weightSum="10"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_weight="8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@id/pro_name"
+                        android:layout_margin="@dimen/n_padding_normal"
+                        android:layout_width="match_parent"
+                        android:text="美丽的商品还是我的最爱"
+                        android:lines="2"
+                        android:textColor="@color/eggplant"
+                        android:textSize="@dimen/small_text_size"
+                        android:layout_weight="1"
+                        android:layout_height="0dp" />
+                    <!--无促销-->
+                    <TextView
+                        android:id="@id/pro_price"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="@dimen/n_padding_normal"
+                        android:textSize="@dimen/button_text_size"
+                        android:text="$200.00"
+                        android:textColor="@color/primary"
+                        android:layout_weight="1"
+                        android:layout_height="0dp" />
+                </LinearLayout>
+                <RelativeLayout
+                    android:id="@id/pro_video_layout"
+                    android:background="@drawable/back_ground_click_note"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:src="@drawable/video_link"
+                        android:layout_centerInParent="true"
+                        android:layout_width="@dimen/common_min_height"
+                        android:layout_height="@dimen/common_min_height"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+
             <!--促销-->
             <LinearLayout
                 android:visibility="gone"

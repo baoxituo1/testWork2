@@ -30,27 +30,4 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:padding="@dimen/n_padding_normal_s"
-        android:layout_alignParentBottom="true"
-        android:layout_height="@dimen/common_height">
-        <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@id/pro_upload_video"
-            android:visibility="visible"
-            android:layout_width="90dp"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/n_padding_normal"
-            android:layout_margin="@dimen/n_padding_normal_s"
-            android:layout_centerInParent="true"
-            fancy:borderColor="@color/yellow"
-            fancy:borderWidth="2dp"
-            fancy:defaultColor="@color/white"
-            fancy:focusColor="@color/gray"
-            fancy:fontIconResource="@string/icon_exchange"
-            fancy:iconPosition="left"
-            fancy:radius="5dp"
-            fancy:text="确定"
-            fancy:textColor="@color/darkorange" />
-    </RelativeLayout>
 </RelativeLayout>

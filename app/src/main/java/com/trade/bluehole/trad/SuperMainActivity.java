@@ -651,10 +651,12 @@ public class SuperMainActivity extends BaseActivity implements BaseSliderView.On
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // initData();
-        if(sdkLevel>=19){
-            mDrawerToggle2.syncState();
-        }else{
-            mDrawerToggle.syncState();
+        if(null!=mDrawerToggle2||null!=mDrawerToggle){
+            if(sdkLevel>=19){
+                mDrawerToggle2.syncState();
+            }else{
+                mDrawerToggle.syncState();
+            }
         }
     }
 

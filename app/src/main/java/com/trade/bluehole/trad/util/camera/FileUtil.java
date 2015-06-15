@@ -19,7 +19,7 @@ public class FileUtil {
     /**初始化保存路径
      * @return
      */
-    private static String initPath(){
+    public static String initPath(){
         if(storagePath.equals("")){
             storagePath = parentPath.getAbsolutePath()+"/" + DST_FOLDER_NAME;
             File f = new File(storagePath);

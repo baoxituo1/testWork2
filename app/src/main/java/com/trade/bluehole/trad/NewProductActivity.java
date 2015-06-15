@@ -1,8 +1,14 @@
 package com.trade.bluehole.trad;
 
+import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -23,6 +29,7 @@ import android.widget.Toast;
 
 import com.aliyun.mbaas.oss.callback.SaveCallback;
 import com.aliyun.mbaas.oss.model.OSSException;
+import com.aliyun.mbaas.oss.storage.OSSData;
 import com.aliyun.mbaas.oss.storage.OSSFile;
 import com.cengalabs.flatui.views.FlatToggleButton;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
@@ -46,6 +53,7 @@ import org.askerov.dynamicgrid.DynamicGridView;
 
 import com.trade.bluehole.trad.activity.BaseActionBarActivity;
 import com.trade.bluehole.trad.activity.camera.MediaRecorderActivity;
+import com.trade.bluehole.trad.activity.camera.ProVideoPlayerActivity_;
 import com.trade.bluehole.trad.activity.photo.ImageDirActivity;
 import com.trade.bluehole.trad.activity.photo.ImageOrderChangeActivity_;
 import com.trade.bluehole.trad.activity.photo.PhotoDesignActivity;
@@ -64,7 +72,10 @@ import com.trade.bluehole.trad.entity.pro.ProductLabel;
 import com.trade.bluehole.trad.entity.pro.ProductLabelRelVO;
 import com.trade.bluehole.trad.entity.pro.ProductResultVO;
 import com.trade.bluehole.trad.entity.pro.ShopCoverType;
+import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
+import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.MyApplication;
+import com.trade.bluehole.trad.util.StreamUtil;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.trade.bluehole.trad.util.view.InnerGridView;
 
@@ -79,6 +90,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 @EActivity(R.layout.activity_product_add)
 public class NewProductActivity extends BaseActionBarActivity {
+    public static final String UPDATE_NEW_VIEDO = "com.trade.bluehole.trad.UPDATE_NEW_VIEDO";
     //商品和店铺编码标志
     public static final String SHOP_CODE_EXTRA = "shopCode";
     public static final String PRODUCT_CODE_EXTRA = "productCode";
@@ -125,6 +137,14 @@ public class NewProductActivity extends BaseActionBarActivity {
     private Integer delFlag;//商品删除标志
     LayoutInflater inflater;
     List<View>allAttrView=new ArrayList<>();//所有添加的参数子视图
+    String locl_video_address;//商品视频地址
+    String locl_video_thumb_address;//商品视频缩略图地址
+    String oss_video;//视频数据库地址
+    String oss_thnumb;//视频数据库地址
+    boolean  video_updat=false;//是否需要更新视频
+
+    NewActivityReceiver videoReceiver;//视频接收广播
+
     //页面进度条
     SweetAlertDialog pDialog;
     int allUploadImgNum=0;//待上传图片数
@@ -135,13 +155,13 @@ public class NewProductActivity extends BaseActionBarActivity {
     @ViewById(R.id.gridview)
     InnerGridView gridView;
     @ViewById
-    TextView product_price,product_number,product_cover_name,product_label_name;
+    TextView product_price,product_number,product_cover_name,product_label_name,pro_video_title;
     @ViewById
     MaterialEditText product_name;
     @ViewById
     FlatToggleButton toggle_checked_hot;
     @ViewById //商品底部删除上下架按钮
-    LinearLayout pro_update_btn_layout;
+    LinearLayout pro_update_btn_layout,user_info_layout2;
     @ViewById //商品类别设置
     LinearLayout pro_cover_info_layout;
     @ViewById //商品属性根视图
@@ -150,6 +170,9 @@ public class NewProductActivity extends BaseActionBarActivity {
     FancyButton btn_pro_up_down,btn_pro_del,change_image_index;
     @ViewById
     ScrollView pro_scroll;
+    @ViewById
+    ImageView pro_video_thumb;//视频预览截图
+
 
     @Extra(PRODUCT_CODE_EXTRA)
     String proCode;
@@ -159,6 +182,12 @@ public class NewProductActivity extends BaseActionBarActivity {
     String form;//来源
     @Extra("position")
     int position;//如果修改的化操作的位置
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        videoReceiver = new NewActivityReceiver();
+    }
 
     @AfterViews
     void initData(){
@@ -203,11 +232,24 @@ public class NewProductActivity extends BaseActionBarActivity {
     }
 
     /**
+     * 初始化广播接收
+     */
+    void initShopBorder() {
+        // broderService = new SuperActivityReceiver();
+        //创建intentFilter
+        IntentFilter filter = new IntentFilter();
+        //制定BroadCastReceiver监听的Action
+        filter.addAction(this.UPDATE_NEW_VIEDO);
+        //注册BroadcastReceiver
+        registerReceiver(videoReceiver, filter);
+    }
+
+    /**
      * 顶部获取焦点
      */
-    @UiThread(delay = 1000)
+    @UiThread(delay = 2000)
     void getFocus(){
-        mTextView.requestFocus();
+        //user_info_layout2.requestFocus();
     }
 
     /**
@@ -215,8 +257,14 @@ public class NewProductActivity extends BaseActionBarActivity {
      */
     @Click(R.id.pro_add_video)
     void onCLickUploadVideo(){
-        Intent intent=new Intent(this, MediaRecorderActivity.class);
-        startActivity(intent);
+        if(null!=oss_video&&!"".equals(oss_video)){
+            Intent intent= ProVideoPlayerActivity_.intent(this).get();
+            intent.putExtra("path",oss_video);
+            this.startActivity(intent);
+        }else{
+            Intent intent=new Intent(this, MediaRecorderActivity.class);
+            startActivity(intent);
+        }
     }
 
     /**
@@ -515,12 +563,84 @@ public class NewProductActivity extends BaseActionBarActivity {
                             e.printStackTrace();
                         }
                     }
+
+
+                    //上传视频  有更新才上传
+                    if(video_updat&&locl_video_address!=null&&!"".equals(locl_video_address)){
+                        String nameUuid=UUID.randomUUID().toString();
+                        oss_video = "video/" + "p_video_" + nameUuid + ".mp4";
+                        oss_thnumb = "video/" + "p_thumb_" + nameUuid + ".jpg";
+                        uploadVideoInfo(oss_video,oss_thnumb);
+                    }
+
+                    //提交到数据库
                     uploadProImg(names,values);
                 }
             }
         }else{
             Toast.makeText(this,"至少选择一张图片",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * 准备上传到阿里云视频
+     */
+    void uploadVideoInfo(String videoName,String thumbName){
+        //转换
+        ContentResolver resolver = getContentResolver();
+
+        byte[] bytes=null;
+        byte[] bytesImage=null;
+        try {
+            // Uri uri = Uri.parse(mPath);
+            //获取数据URI
+            Uri uri =Uri.fromFile(new File(locl_video_address));
+            Uri uriImage =Uri.fromFile(new File(locl_video_thumb_address));
+            //转换
+            bytes = StreamUtil.readStream(resolver.openInputStream(uri));
+            bytesImage = StreamUtil.readStream(resolver.openInputStream(uriImage));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // if(fileName==null||"".equals(fileName)){
+        //String fileName = "video/" + "p_video_" + nameUuid + ".mp4";
+        //String fileImage = "video/" + "p_thumb_" + nameUuid + ".jpg";
+
+        doIngUploadOss(bytes, videoName);
+        doIngUploadOss(bytesImage, thumbName);
+    }
+
+
+    /**
+     * 执行上传视频到oss
+     * @param data 数据
+     * @param fileName 文件名
+     */
+    void doIngUploadOss(byte[]data,String fileName){
+        ShopCommonInfo sc = new ShopCommonInfo();
+        sc.setShopLogo(fileName);
+        //saveDataToServer(sc);
+        // }
+        OSSData ossData = new OSSData(MyApplication.getOssBucket(), fileName);
+        ossData.setData(data, "raw"); // 指定需要上传的数据和它的类型
+        ossData.enableUploadCheckMd5sum(); // 开启上传MD5校验
+        ossData.uploadInBackground(new SaveCallback() {
+            @Override
+            public void onSuccess(String objectKey) {
+                //ToastUtils.showToast(VideoPlayerActivity.this, "视频上传成功:"+objectKey);
+            }
+
+            @Override
+            public void onProgress(String objectKey, int byteCount, int totalSize) {
+
+            }
+
+            @Override
+            public void onFailure(String objectKey, OSSException ossException) {
+
+            }
+        });
     }
 
     /**
@@ -602,6 +722,13 @@ public class NewProductActivity extends BaseActionBarActivity {
         params.put("productPrice", product_price.getText());
         params.put("productNumber",product_number.getText());
         params.put("imageUrls",imageUrls);
+        //视频有更新
+        if(video_updat){
+            params.put("videoAddress",oss_video);
+            params.put("videoThumbAddress",oss_thnumb);
+            params.put("videoState",1);
+
+        }
 
         //组织最新的图片名称 并插入到服务器
         String imageNames="";
@@ -745,7 +872,12 @@ public class NewProductActivity extends BaseActionBarActivity {
         product_name.setText(pro.getProductName());
         product_price.setText(pro.getProductPrice() + "");
         product_number.setText(base.getProductNumber()+"");
-
+        //是否有视频
+        if(null!=base.getVideoAddress()&&!"".equals(base.getVideoAddress())){
+            oss_video=DataUrlContents.VIDEO_HOST+base.getVideoAddress();
+            ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + base.getVideoThumbAddress(), pro_video_thumb, ImageManager.options);
+            pro_video_title.setText("点击浏览视频...");
+        }
         if(images!=null&&!images.isEmpty()){
             mList.clear();
             for(ProductImage ls:images){
@@ -1066,6 +1198,42 @@ public class NewProductActivity extends BaseActionBarActivity {
         }
     }
 
+
+    /**
+     * 接收添加完视频广播
+     */
+    public class NewActivityReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+             locl_video_address = intent.getStringExtra("video_address");
+             locl_video_thumb_address = intent.getStringExtra("thumb_address");
+            /**临时充当播放地址，修改进来有的话会被修改成网络地址 **/
+             oss_video=locl_video_address;
+            if(locl_video_address!=null&&!"".equals(locl_video_address)){
+                Toast.makeText(NewProductActivity.this, "接收到广播header,video_address:" + locl_video_address, Toast.LENGTH_SHORT).show();
+                video_updat=true;
+                reloadThumb(locl_video_thumb_address);
+            }
+        }
+    }
+
+
+    /**
+     * 加载视频截图
+     * @param url
+     */
+    @UiThread
+    public void reloadThumb(String url){
+        pro_video_title.setText("点击浏览视频...");
+       // ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + url + DataUrlContents.img_logo_img, pro_video_thumb, ImageManager.options);
+        //ImageManager.imageLoader.displayImage(DataUrlContents.IMAGE_HOST + url + DataUrlContents.img_logo_img, pro_video_thumb, ImageManager.options);
+        File file = new File(url);
+        if (file.exists()) {
+            Bitmap _bitMap = BitmapFactory.decodeFile(url);
+            pro_video_thumb.setImageBitmap(_bitMap);
+        }
+    }
     /**
      * 处理后退事件
      * @param keyCode
@@ -1113,8 +1281,20 @@ public class NewProductActivity extends BaseActionBarActivity {
         }
         return false;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //注册视频更新广播
+        initShopBorder();
+    }
+
+
+
     @Override
     public void onDestroy(){
+        //解除广播
+        unregisterReceiver(videoReceiver);
         super.onDestroy();
         pDialog.dismiss();
     }

@@ -5,9 +5,14 @@ import java.io.FileOutputStream;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.Bundle;
 import android.view.Window;
 
 import com.google.gson.Gson;
+import com.trade.bluehole.trad.service.ActivityStackMgr;
+import com.trade.bluehole.trad.service.ActivityVideoStackMgr;
+import com.trade.bluehole.trad.service.AppManager;
 import com.yixia.camera.demo.log.Logger;
 import com.yixia.weibo.sdk.model.MediaObject;
 import com.yixia.weibo.sdk.model.MediaObject.MediaPart;
@@ -18,6 +23,12 @@ import com.yixia.weibo.sdk.util.StringUtils;
 public class BaseActivity extends Activity {
 
 	protected ProgressDialog mProgressDialog;
+
+    @Override
+    public void onCreate(Bundle paramBundle) {
+        super.onCreate(paramBundle);
+        ActivityVideoStackMgr.getActivityStackMgr().pushActivity(this);
+    }
 
 	public ProgressDialog showProgress(String title, String message) {
 		return showProgress(title, message, -1);
@@ -102,4 +113,12 @@ public class BaseActivity extends Activity {
 		}
 		return false;
 	}
+
+
+    /**
+     * 退出应用程序
+     */
+    public void AppExit(Context context) {
+        ActivityVideoStackMgr.getActivityStackMgr().popAllActivity();
+    }
 }

@@ -88,7 +88,7 @@
                         fancy:radius="5dp"
                         fancy:text="@string/order_img_index"
                         fancy:textColor="@color/primary" />
-                    <mehdi.sakout.fancybuttons.FancyButton
+                    <!--<mehdi.sakout.fancybuttons.FancyButton
                         android:id="@id/pro_add_video"
                         android:visibility="visible"
                         android:layout_width="150dp"
@@ -105,7 +105,7 @@
                         fancy:iconPosition="left"
                         fancy:radius="5dp"
                         fancy:text="添加视频"
-                        fancy:textColor="@color/primary" />
+                        fancy:textColor="@color/primary" />-->
                 </RelativeLayout>
 
 
@@ -114,7 +114,7 @@
             <LinearLayout
                 android:id="@+id/user_info_layout3"
                 android:layout_below="@id/new_drag_layout"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/n_padding_normal_h"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,10 +131,50 @@
                     android:layout_height="wrap_content" />-->
             </LinearLayout>
 
+            <RelativeLayout
+                android:id="@id/pro_add_video"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/n_padding_normal"
+                android:layout_height="120dp">
+                        <ImageView
+                            android:id="@id/pro_video_thumb"
+                            android:src="@color/white"
+                            android:scaleType="centerCrop"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                        <ImageView
+                            android:id="@id/pro_video_link"
+                            android:src="@drawable/video_link"
+                            android:layout_centerInParent="true"
+                            android:layout_width="@dimen/common_height"
+                            android:layout_height="@dimen/common_height"/>
+                        <TextView
+                            android:id="@+id/pro_video_title"
+                            android:text="点击录制商品微视频..."
+                            android:layout_marginTop="@dimen/n_padding_normal"
+                            android:layout_below="@id/pro_video_link"
+                            android:layout_centerHorizontal="true"
+                            android:textSize="@dimen/sample_text_size"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:text="商品秒拍"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/small_text_size"
+                            android:padding="@dimen/n_padding_normal"
+                            android:layout_margin="@dimen/n_padding_normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
             <LinearLayout
                 android:id="@+id/user_info_layout4"
+                android:layout_marginTop="@dimen/n_padding_normal"
+                android:layout_marginBottom="@dimen/n_padding_normal"
                 android:layout_below="@id/user_info_layout3"
                 android:padding="@dimen/n_padding_normal"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

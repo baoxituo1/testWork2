@@ -11,6 +11,7 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +21,7 @@ import com.aliyun.mbaas.oss.callback.SaveCallback;
 import com.aliyun.mbaas.oss.model.OSSException;
 import com.aliyun.mbaas.oss.storage.OSSData;
 import com.soundcloud.android.crop.Crop;
+import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.SuperMainActivity;
 import com.trade.bluehole.trad.entity.shop.ShopCommonInfo;
@@ -27,7 +29,9 @@ import com.trade.bluehole.trad.record.ui.BaseActivity;
 import com.trade.bluehole.trad.record.widget.SurfaceVideoView;
 import com.trade.bluehole.trad.util.MyApplication;
 import com.trade.bluehole.trad.util.StreamUtil;
+import com.trade.bluehole.trad.util.camera.FileUtil;
 import com.yixia.camera.demo.utils.ToastUtils;
+import com.yixia.weibo.sdk.FFMpegUtils;
 import com.yixia.weibo.sdk.util.DeviceUtils;
 import com.yixia.weibo.sdk.util.StringUtils;
 
@@ -43,7 +47,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
  *
  */
 public class VideoPlayerActivity extends BaseActivity implements SurfaceVideoView.OnPlayStateListener, OnErrorListener, OnPreparedListener, OnClickListener, OnCompletionListener, OnInfoListener {
-
+    private static final  String TAG = "VideoPlayerActivity";
 	/** 播放控件 */
 	private SurfaceVideoView mVideoView;
 	/** 暂停按钮 */
@@ -58,7 +62,7 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceVideoVie
     FancyButton uploadButton;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// 防止锁屏
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -231,41 +235,24 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceVideoVie
      */
     public void doUploadFile(String mPath) throws Exception {
         ToastUtils.showToast(this.getApplicationContext(), "mPath:"+mPath);
-        ContentResolver resolver = getContentResolver();
-        byte[] bytes=null;
-        try {
-           // Uri uri = Uri.parse(mPath);
-            Uri uri =Uri.fromFile(new File(mPath));
-            bytes = StreamUtil.readStream(resolver.openInputStream(uri));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String nameUuid=UUID.randomUUID().toString();
+        /**获取视频截图**/
+        //截图保存路径
+        String thumbPath = FileUtil.initPath();
+        String jpegName = thumbPath + "/" + nameUuid +".jpg";
+        Log.e(TAG, "saveBitmap:jpegName = " + jpegName);
+        //获取截图
+        FFMpegUtils.captureThumbnails(mPath,jpegName,"900*600");
+        ToastUtils.showToast(this.getApplicationContext(), "thumbPath:" + jpegName);
 
-        // if(fileName==null||"".equals(fileName)){
-        String fileName = "video/" + "p_video_" + UUID.randomUUID() + ".mp4";
-        ShopCommonInfo sc = new ShopCommonInfo();
-        sc.setShopLogo(fileName);
-        //saveDataToServer(sc);
-        // }
-        OSSData ossData = new OSSData(MyApplication.getOssBucket(), fileName);
-        ossData.setData(bytes, "raw"); // 指定需要上传的数据和它的类型
-        ossData.enableUploadCheckMd5sum(); // 开启上传MD5校验
-        ossData.uploadInBackground(new SaveCallback() {
-            @Override
-            public void onSuccess(String objectKey) {
-                //ToastUtils.showToast(VideoPlayerActivity.this, "视频上传成功:"+objectKey);
-            }
-
-            @Override
-            public void onProgress(String objectKey, int byteCount, int totalSize) {
-
-            }
-
-            @Override
-            public void onFailure(String objectKey, OSSException ossException) {
-
-            }
-        });
+        //发送广播通知制作了视频
+        Intent sendIntent=new Intent(NewProductActivity.UPDATE_NEW_VIEDO);
+        sendIntent.putExtra("video_address", mPath);
+        sendIntent.putExtra("thumb_address", jpegName);
+        sendBroadcast(sendIntent);
+        //退出全部选择视频应用
+        super.AppExit(this);
     }
+
 
 }

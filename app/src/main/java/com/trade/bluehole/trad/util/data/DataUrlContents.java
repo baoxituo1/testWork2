@@ -36,6 +36,7 @@ public class DataUrlContents {
      * 图片服务器地址
      */
     public final  static String IMAGE_HOST="http://ossimg.178tb.com/";
+    public final  static String VIDEO_HOST="http://125.oss-cn-beijing.aliyuncs.com/";
     /**
      * 用户登录
      */
