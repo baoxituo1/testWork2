@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.trade.bluehole.trad.R;
 import com.trade.bluehole.trad.record.common.CommonIntentExtra;
+import com.trade.bluehole.trad.util.MyApplication;
 import com.yixia.camera.demo.log.Logger;
 import com.trade.bluehole.trad.record.po.POThemeSingle;
 import com.trade.bluehole.trad.record.ui.BaseActivity;
@@ -247,7 +248,7 @@ public class MediaPreviewActivity extends BaseActivity implements
             Toast.makeText(this, "授权过期", Toast.LENGTH_SHORT);
             return;
         }
-        videoProcessEngine.setVideoAuthor("星语心愿");
+        videoProcessEngine.setVideoAuthor(MyApplication.getShop().getTitle());
 
         loadThemes();
     }

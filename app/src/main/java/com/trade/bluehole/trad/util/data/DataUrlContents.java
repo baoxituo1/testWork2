@@ -192,4 +192,8 @@ public class DataUrlContents {
      *读取店铺认证
      */
     public final  static String load_shop_authentic="shopjson/loadAuthentic.do";
+    /**
+     *删除视频
+     */
+    public final  static String del_shop_video="shopjson/deleteProductVideo.do";
 }

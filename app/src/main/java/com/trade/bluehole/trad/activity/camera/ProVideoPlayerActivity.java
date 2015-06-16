@@ -2,28 +2,43 @@ package com.trade.bluehole.trad.activity.camera;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.BaseJsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.trade.bluehole.trad.HeaderAnimatorActivity_;
 import com.trade.bluehole.trad.NewProductActivity;
 import com.trade.bluehole.trad.R;
+import com.trade.bluehole.trad.SuperMainActivity_;
+import com.trade.bluehole.trad.entity.pro.ProductResultVO;
 import com.trade.bluehole.trad.record.ui.BaseActivity;
 import com.trade.bluehole.trad.record.widget.SurfaceVideoView;
 import com.trade.bluehole.trad.util.camera.FileUtil;
+import com.trade.bluehole.trad.util.data.DataUrlContents;
 import com.yixia.camera.demo.utils.ToastUtils;
 import com.yixia.weibo.sdk.FFMpegUtils;
 import com.yixia.weibo.sdk.util.DeviceUtils;
 import com.yixia.weibo.sdk.util.StringUtils;
 
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.apache.http.Header;
 
 import java.util.UUID;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 @EActivity
@@ -37,8 +52,13 @@ public class ProVideoPlayerActivity extends BaseActivity implements SurfaceVideo
 
     /** 播放路径 */
     private String mPath;
+    private String proCode;
     /** 是否需要回复播放 */
     private boolean mNeedResume;
+    public static Gson gson = new Gson();
+    SweetAlertDialog pDialog;
+
+    private static AsyncHttpClient client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,8 +66,14 @@ public class ProVideoPlayerActivity extends BaseActivity implements SurfaceVideo
         // 防止锁屏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("交互中...");
+        pDialog.setCancelable(false);
+
         mPath = getIntent().getStringExtra("path");
-        if (StringUtils.isEmpty(mPath)) {
+        proCode = getIntent().getStringExtra("proCode");
+        if (StringUtils.isEmpty(mPath)||StringUtils.isEmpty(proCode)) {
             finish();
             return;
         }
@@ -68,7 +94,106 @@ public class ProVideoPlayerActivity extends BaseActivity implements SurfaceVideo
 
         findViewById(R.id.root).setOnClickListener(this);
         mVideoView.setVideoPath(mPath);
+
+        if (client == null) {
+            Log.i("BaseActionBarActivity", "实例化网络请求client");
+            client = new AsyncHttpClient();
+            client.setTimeout(30000);//30秒
+        }
     }
+
+    /**
+     * 当点击后退
+     */
+    @Click(R.id.video_play_back)
+    void onClickBack(){
+        finish();
+    }
+    /**
+     * 当点击删除
+     */
+    @Click(R.id.video_play_delete)
+    void onClickDelete(){
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("确定要删除?")
+                .setContentText("确定要删除该商品视频么？")
+                .setConfirmText("是的,删除!")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
+                       /* //点击后退跳转到 主页
+                        if((proCode!=null&&!"".equals(proCode))||"items".equals(form)){
+                            //HeaderAnimatorActivity_.intent(NewProductActivity.this).start();
+                            // finish();
+                            Intent intent= HeaderAnimatorActivity_.intent(NewProductActivity.this).get();
+                            //intent.putExtra("product",response);//商品实体
+                            intent.putExtra("position",position);//商品位置
+                            intent.putExtra("delFlag",delFlag);//商品状态
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }else{
+                            SuperMainActivity_.intent(NewProductActivity.this).start();
+                        }
+                        mList.clear();
+                        finish();*/
+                        delServerData();
+                    }
+                })
+                .setCancelText("否，取消")
+                .showCancelButton(true)
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.cancel();
+                    }
+                })
+                .show();
+    }
+
+
+
+    /**
+     * 删除商品视频
+     */
+    void delServerData(){
+        pDialog.show();
+        RequestParams params=new RequestParams();
+        params.put("productCode",proCode);
+        Log.e("NewProductActivity", "productCode:" + proCode);
+        client.post(DataUrlContents.SERVER_HOST + DataUrlContents.del_shop_video, params, new BaseJsonHttpResponseHandler<String>() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, String response) {
+                //Log.d(NewProductActivity.class.getName(), response.toString());
+                pDialog.hide();
+                if(null!=response){
+                    //弹出提示
+                    new SweetAlertDialog(ProVideoPlayerActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                            .setTitleText("成功!")
+                            .setContentText("删除商品视频成功")
+                            .show();
+                    //
+                    Intent intent=new Intent(ProVideoPlayerActivity.this,NewProductActivity.class);
+                    intent.putExtra("delVideo","ok");
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, String errorResponse) {
+                Toast.makeText(ProVideoPlayerActivity.this, "请求失败:" + statusCode, Toast.LENGTH_SHORT).show();
+                pDialog.hide();
+            }
+
+            @Override
+            protected String parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                return gson.fromJson(rawJsonData, String.class);
+            }
+        });
+    }
+
 
     @Override
     public void onResume() {
@@ -232,5 +357,23 @@ public class ProVideoPlayerActivity extends BaseActivity implements SurfaceVideo
         super.AppExit(this);
     }
 
+
+
+   /* @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_pro_video_player, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }*/
 
 }

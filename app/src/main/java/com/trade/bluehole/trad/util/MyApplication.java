@@ -49,8 +49,8 @@ public class MyApplication extends com.activeandroid.app.Application {
     public static final String qq_appId = "1102370118"; //
     public static final String qq_appKey = "i0yuEJzTDCyYemhM";
     public static  OSSBucket sampleBucket;//阿里云 oss
-    private User user;
-    private ShopCommonInfo shop;
+    private static User user;
+    private static ShopCommonInfo shop;
     /** 表示通过Intent传递到下一个Activity的图片列表 */
     public static final String ARG_PHOTO_LIST = "trade.android.app.chooseimages.PHOTO_LIST";
     /** 表示通过Intent传递到上一个Activity的图片列表 */
@@ -176,11 +176,11 @@ public class MyApplication extends com.activeandroid.app.Application {
     }
 
 
-    public User getUser() {
+    public static User getUser() {
         return user;
     }
 
-    public ShopCommonInfo getShop() {
+    public static ShopCommonInfo getShop() {
         return shop;
     }
 

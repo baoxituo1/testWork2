@@ -5,7 +5,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/transparent_black_85" >
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="12"
+        android:background="@color/base_color_red_1"
+        android:layout_height="@dimen/common_height">
+        <RelativeLayout
+            android:id="@id/video_play_back"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/title_text_left"
+                android:layout_centerInParent="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="8"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:text="商品视频详情"
+                android:textSize="@dimen/title_text_size"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@id/video_play_delete"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:src="@drawable/record_delete_check_press"
+                android:layout_centerInParent="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+        </RelativeLayout>
+    </LinearLayout>
     <com.trade.bluehole.trad.record.widget.SurfaceVideoView
         android:id="@+id/videoview"
         android:layout_width="match_parent"

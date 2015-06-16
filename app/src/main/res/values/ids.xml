@@ -253,4 +253,8 @@
     <item type="id" name="authentic_message_title" />
     <item type="id" name="authentic_message_content" />
 
+    <!--视频浏览-->
+    <item type="id" name="video_play_back" />
+    <item type="id" name="video_play_delete" />
+
 </resources>

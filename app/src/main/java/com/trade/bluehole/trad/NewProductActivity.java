@@ -97,6 +97,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     public static final int GIRD_VIEW_SIZE = 12;//grid最大图片数量
     public static final int PRODUCT_DESIGN_PHOTO = 15;//优化图片返回结果
     public static final int PRODUCT_ORDER_PHOTO = 16;//优化图片排序
+    public static final int PRODUCT_PLAY_VIDEO = 17;//播放视频
     //选中的类别
     public HashMap<Integer, Boolean> state = new HashMap<Integer, Boolean>();
     //需要提交的类型名称
@@ -148,6 +149,7 @@ public class NewProductActivity extends BaseActionBarActivity {
     //页面进度条
     SweetAlertDialog pDialog;
     int allUploadImgNum=0;//待上传图片数
+    int allUploadVideoNum=2;//待上传视频
     @ViewById(R.id.result_image)
     ImageView resultView;
     @ViewById(R.id.tv)
@@ -239,7 +241,7 @@ public class NewProductActivity extends BaseActionBarActivity {
         //创建intentFilter
         IntentFilter filter = new IntentFilter();
         //制定BroadCastReceiver监听的Action
-        filter.addAction(this.UPDATE_NEW_VIEDO);
+        filter.addAction(UPDATE_NEW_VIEDO);
         //注册BroadcastReceiver
         registerReceiver(videoReceiver, filter);
     }
@@ -260,7 +262,8 @@ public class NewProductActivity extends BaseActionBarActivity {
         if(null!=oss_video&&!"".equals(oss_video)){
             Intent intent= ProVideoPlayerActivity_.intent(this).get();
             intent.putExtra("path",oss_video);
-            this.startActivity(intent);
+            intent.putExtra("proCode",proCode);
+            this.startActivityForResult(intent,PRODUCT_PLAY_VIDEO);
         }else{
             Intent intent=new Intent(this, MediaRecorderActivity.class);
             startActivity(intent);
@@ -629,6 +632,8 @@ public class NewProductActivity extends BaseActionBarActivity {
             @Override
             public void onSuccess(String objectKey) {
                 //ToastUtils.showToast(VideoPlayerActivity.this, "视频上传成功:"+objectKey);
+                Log.e("NewProductActivity", "上传成功视频");
+                uploadVideoCallBack();
             }
 
             @Override
@@ -641,6 +646,16 @@ public class NewProductActivity extends BaseActionBarActivity {
 
             }
         });
+    }
+
+    @UiThread
+    void uploadVideoCallBack(){
+        --allUploadVideoNum;
+        if(allUploadVideoNum<=0){
+            Toast.makeText(NewProductActivity.this, "视频上传成功", Toast.LENGTH_SHORT).show();
+        }else{
+            //Toast.makeText(NewProductActivity.this, "视频上传中", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -657,17 +672,17 @@ public class NewProductActivity extends BaseActionBarActivity {
 
             @Override
             public void onProgress(String objectKey, int byteCount, int totalSize) {
-                Log.e("NewProductActivity", "objectKey:" + objectKey + ",byteCount:" + byteCount + ",totalSize:" + totalSize);
+               // Log.e("NewProductActivity", "objectKey:" + objectKey + ",byteCount:" + byteCount + ",totalSize:" + totalSize);
             }
 
             @Override
             public void onFailure(String arg0, OSSException arg1) {
-                Log.e("NewProductActivity", arg1.toString());
+                //Log.e("NewProductActivity", arg1.toString());
             }
 
             @Override
             public void onSuccess(String arg0) {
-                Log.e("NewProductActivity", "上传成功");
+                //Log.e("NewProductActivity", "上传成功");
                 uploadImageCallBack();
             }
         });
@@ -1042,6 +1057,12 @@ public class NewProductActivity extends BaseActionBarActivity {
             mAdapter.setmList(mList);
             mAdapter.notifyDataSetChanged();
            // user_info_layout4.requestFocus();
+        }else  if(requestCode==PRODUCT_PLAY_VIDEO&&resultCode == RESULT_OK){//删除图片视频
+            oss_video=null;
+            pro_video_thumb.setImageResource(R.drawable.white);
+            pro_video_title.setText("点击录制商品微视频...");
+            //不需要更新视频
+            video_updat=false;
         }
     }
 
@@ -1211,7 +1232,7 @@ public class NewProductActivity extends BaseActionBarActivity {
             /**临时充当播放地址，修改进来有的话会被修改成网络地址 **/
              oss_video=locl_video_address;
             if(locl_video_address!=null&&!"".equals(locl_video_address)){
-                Toast.makeText(NewProductActivity.this, "接收到广播header,video_address:" + locl_video_address, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(NewProductActivity.this, "接收到广播header,video_address:" + locl_video_address, Toast.LENGTH_SHORT).show();
                 video_updat=true;
                 reloadThumb(locl_video_thumb_address);
             }

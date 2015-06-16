@@ -35,6 +35,7 @@ import com.trade.bluehole.trad.activity.webview.WebViewActivity_;
 import com.trade.bluehole.trad.entity.ProductIndexVO;
 import com.trade.bluehole.trad.util.ImageManager;
 import com.trade.bluehole.trad.util.data.DataUrlContents;
+import com.yixia.weibo.sdk.util.StringUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -174,10 +175,15 @@ public class ProductListViewAdaptor extends BaseAdapter {
             viewHolder.pro_video_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "点击视频播放!", Toast.LENGTH_SHORT).show();
-                    Intent intent=ProVideoPlayerActivity_.intent(context).get();
-                    intent.putExtra("path",DataUrlContents.VIDEO_HOST +obj.getVideoAddress());
-                    context.startActivity(intent);
+                   // Toast.makeText(context, "点击视频播放!", Toast.LENGTH_SHORT).show();
+                    if(!StringUtils.isEmpty(obj.getVideoAddress())){
+                        Intent intent=ProVideoPlayerActivity_.intent(context).get();
+                        intent.putExtra("path",DataUrlContents.VIDEO_HOST +obj.getVideoAddress());
+                        intent.putExtra("proCode",obj.getProductCode());
+                        context.startActivity(intent);
+                    }else{
+                        Toast.makeText(context, "该商品没有视频!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 

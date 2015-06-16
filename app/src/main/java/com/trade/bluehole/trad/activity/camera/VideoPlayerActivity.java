@@ -234,7 +234,7 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceVideoVie
      * @throws Exception
      */
     public void doUploadFile(String mPath) throws Exception {
-        ToastUtils.showToast(this.getApplicationContext(), "mPath:"+mPath);
+       // ToastUtils.showToast(this.getApplicationContext(), "mPath:"+mPath);
         String nameUuid=UUID.randomUUID().toString();
         /**获取视频截图**/
         //截图保存路径
@@ -243,7 +243,7 @@ public class VideoPlayerActivity extends BaseActivity implements SurfaceVideoVie
         Log.e(TAG, "saveBitmap:jpegName = " + jpegName);
         //获取截图
         FFMpegUtils.captureThumbnails(mPath,jpegName,"900*600");
-        ToastUtils.showToast(this.getApplicationContext(), "thumbPath:" + jpegName);
+        //ToastUtils.showToast(this.getApplicationContext(), "thumbPath:" + jpegName);
 
         //发送广播通知制作了视频
         Intent sendIntent=new Intent(NewProductActivity.UPDATE_NEW_VIEDO);
